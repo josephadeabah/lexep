@@ -34,7 +34,13 @@ def _mastery_label(score: float) -> str:
 
 def _question_out(q: AssessmentQuestion) -> QuestionOut:
     return QuestionOut(
-        id=q.id, order=q.order, topic=q.topic, title=q.title, prompt=q.prompt, image_url=q.image_url, options=q.options
+        id=q.id,
+        order=q.order,
+        topic=q.topic,
+        title=q.title,
+        prompt=q.prompt,
+        image_url=q.image_url,
+        options=q.options,
     )
 
 
@@ -53,7 +59,9 @@ def list_assessments(db: Session = Depends(get_db)):
 @router.get("/attempts/mine", response_model=list[AttemptSummaryOut])
 def my_attempts(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """Powers the 'In Progress' list on the hub."""
-    attempts = db.query(AssessmentAttempt).filter(AssessmentAttempt.user_id == user.id).all()
+    attempts = (
+        db.query(AssessmentAttempt).filter(AssessmentAttempt.user_id == user.id).all()
+    )
     out = []
     for attempt in attempts:
         assessment = db.get(Assessment, attempt.assessment_id)
@@ -64,8 +72,14 @@ def my_attempts(db: Session = Depends(get_db), user: User = Depends(get_current_
     return out
 
 
-@router.post("/{assessment_id}/attempts", response_model=AttemptProgressOut, status_code=201)
-def start_attempt(assessment_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+@router.post(
+    "/{assessment_id}/attempts", response_model=AttemptProgressOut, status_code=201
+)
+def start_attempt(
+    assessment_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     """Powers 'Start Assessment' / 'New Assessment'."""
     assessment = db.get(Assessment, assessment_id)
     if not assessment:
@@ -88,7 +102,11 @@ def start_attempt(assessment_id: int, db: Session = Depends(get_db), user: User 
 
 
 @router.get("/attempts/{attempt_id}", response_model=AttemptProgressOut)
-def get_attempt_progress(attempt_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+def get_attempt_progress(
+    attempt_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     """Powers resuming the quiz-taking screen (question map + current question)."""
     attempt = db.get(AssessmentAttempt, attempt_id)
     if not attempt or attempt.user_id != user.id:
@@ -96,7 +114,10 @@ def get_attempt_progress(attempt_id: int, db: Session = Depends(get_db), user: U
 
     assessment = db.get(Assessment, attempt.assessment_id)
     questions = assessment.questions
-    is_complete = attempt.status == AssessmentAttemptStatus.COMPLETED or attempt.current_index >= len(questions)
+    is_complete = (
+        attempt.status == AssessmentAttemptStatus.COMPLETED
+        or attempt.current_index >= len(questions)
+    )
     question = questions[attempt.current_index] if not is_complete else None
 
     return AttemptProgressOut(
@@ -111,7 +132,10 @@ def get_attempt_progress(attempt_id: int, db: Session = Depends(get_db), user: U
 
 @router.post("/attempts/{attempt_id}/answer", response_model=AttemptProgressOut)
 def submit_answer(
-    attempt_id: int, payload: AnswerSubmit, db: Session = Depends(get_db), user: User = Depends(get_current_user)
+    attempt_id: int,
+    payload: AnswerSubmit,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     """Powers 'Next Question' — records the answer and advances the quiz."""
     attempt = db.get(AssessmentAttempt, attempt_id)
@@ -145,7 +169,9 @@ def submit_answer(
     )
 
 
-def _finalize_attempt(attempt: AssessmentAttempt, assessment: Assessment, db: Session) -> None:
+def _finalize_attempt(
+    attempt: AssessmentAttempt, assessment: Assessment, db: Session
+) -> None:
     correct = 0
     topic_correct: dict[str, int] = defaultdict(int)
     topic_total: dict[str, int] = defaultdict(int)
@@ -160,14 +186,19 @@ def _finalize_attempt(attempt: AssessmentAttempt, assessment: Assessment, db: Se
     total = len(assessment.questions) or 1
     attempt.score = round((correct / total) * 100, 1)
     attempt.topic_breakdown = {
-        topic: round((topic_correct[topic] / topic_total[topic]) * 100, 1) for topic in topic_total
+        topic: round((topic_correct[topic] / topic_total[topic]) * 100, 1)
+        for topic in topic_total
     }
     attempt.status = AssessmentAttemptStatus.COMPLETED
     attempt.completed_at = datetime.now(timezone.utc)
 
 
 @router.get("/attempts/{attempt_id}/results", response_model=AttemptResultsOut)
-def get_results(attempt_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+def get_results(
+    attempt_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     """Powers the 'Assessment Complete' results screen."""
     attempt = db.get(AssessmentAttempt, attempt_id)
     if not attempt or attempt.user_id != user.id:
@@ -181,6 +212,8 @@ def get_results(attempt_id: int, db: Session = Depends(get_db), user: User = Dep
         assessment_title=assessment.title,
         score=attempt.score or 0,
         mastery_label=_mastery_label(attempt.score or 0),
-        topic_breakdown=[TopicScore(topic=k, percent=v) for k, v in attempt.topic_breakdown.items()],
+        topic_breakdown=[
+            TopicScore(topic=k, percent=v) for k, v in attempt.topic_breakdown.items()
+        ],
         completed_at=attempt.completed_at,
     )

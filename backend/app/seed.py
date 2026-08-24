@@ -4,6 +4,7 @@ Seeds demo data so the frontend has something to render immediately
 
     python -m app.seed
 """
+
 from datetime import datetime, timedelta, timezone
 
 from app.core.database import SessionLocal
@@ -23,7 +24,13 @@ from app.models.enums import (
 )
 from app.models.grant import Contribution, GrantGroup
 from app.models.opportunity import Application, Opportunity
-from app.models.user import CompanyProfile, LearnerProfile, MentorPackage, MentorProfile, User
+from app.models.user import (
+    CompanyProfile,
+    LearnerProfile,
+    MentorPackage,
+    MentorProfile,
+    User,
+)
 
 
 def run():
@@ -69,14 +76,38 @@ def run():
 
         # --- Learners / applicants ------------------------------------
         applicants = [
-            dict(name="Amina Diop", email="amina@example.com", institution="University of Nairobi",
-                 field="B.Sc. Computer Science (Expected 2025)", skills=["React", "Python", "Node.js"], score=95),
-            dict(name="Kwame Osei", email="kwame@example.com", institution="Ashesi University",
-                 field="B.Eng. Software Engineering (2024)", skills=["Java", "Spring Boot", "SQL"], score=82),
-            dict(name="Zola Mbeki", email="zola@example.com", institution="University of Cape Town",
-                 field="B.Sc. Information Systems (2025)", skills=["HTML/CSS", "Python", "Design"], score=68),
-            dict(name="Chinedu Eze", email="chinedu@example.com", institution="Lagos State University",
-                 field="M.Sc. Computer Science (2024)", skills=["Go", "Kubernetes", "AWS"], score=91),
+            dict(
+                name="Amina Diop",
+                email="amina@example.com",
+                institution="University of Nairobi",
+                field="B.Sc. Computer Science (Expected 2025)",
+                skills=["React", "Python", "Node.js"],
+                score=95,
+            ),
+            dict(
+                name="Kwame Osei",
+                email="kwame@example.com",
+                institution="Ashesi University",
+                field="B.Eng. Software Engineering (2024)",
+                skills=["Java", "Spring Boot", "SQL"],
+                score=82,
+            ),
+            dict(
+                name="Zola Mbeki",
+                email="zola@example.com",
+                institution="University of Cape Town",
+                field="B.Sc. Information Systems (2025)",
+                skills=["HTML/CSS", "Python", "Design"],
+                score=68,
+            ),
+            dict(
+                name="Chinedu Eze",
+                email="chinedu@example.com",
+                institution="Lagos State University",
+                field="M.Sc. Computer Science (2024)",
+                skills=["Go", "Kubernetes", "AWS"],
+                score=91,
+            ),
         ]
         for a in applicants:
             learner = User(
@@ -191,9 +222,17 @@ def run():
                 focus_area="Urban Design",
                 linkedin_url="https://linkedin.com/in/eliasthorne",
                 education=[
-                    {"degree": "Master of Architecture (MArch)", "institution": "University of Cape Town", "year": "2008"}
+                    {
+                        "degree": "Master of Architecture (MArch)",
+                        "institution": "University of Cape Town",
+                        "year": "2008",
+                    }
                 ],
-                credentials=[{"label": "Professional Architect — SACAP Registration: PrArch 7890"}],
+                credentials=[
+                    {
+                        "label": "Professional Architect — SACAP Registration: PrArch 7890"
+                    }
+                ],
                 credential_checklist={},
                 skills=["Urban Design", "Regulatory Compliance", "Design Philosophy"],
                 application_status=MentorApplicationStatus.PENDING,
@@ -201,7 +240,11 @@ def run():
             )
         )
         db.flush()
-        applicant_profile = db.query(MentorProfile).filter(MentorProfile.user_id == applicant_user.id).first()
+        applicant_profile = (
+            db.query(MentorProfile)
+            .filter(MentorProfile.user_id == applicant_user.id)
+            .first()
+        )
         db.add_all(
             [
                 MentorPackage(
@@ -353,9 +396,15 @@ def run():
         db.flush()
         db.add_all(
             [
-                Contribution(group_id=group.id, contributor_name="Anonymous Donor", amount=5000),
-                Contribution(group_id=group.id, contributor_name="David K.", amount=2500),
-                Contribution(group_id=group.id, contributor_name="Amara Ventures", amount=1000),
+                Contribution(
+                    group_id=group.id, contributor_name="Anonymous Donor", amount=5000
+                ),
+                Contribution(
+                    group_id=group.id, contributor_name="David K.", amount=2500
+                ),
+                Contribution(
+                    group_id=group.id, contributor_name="Amara Ventures", amount=1000
+                ),
             ]
         )
 
@@ -373,38 +422,93 @@ def run():
         db.add(company_profile)
 
         for name, email, industry, location, tier, status in [
-            ("Pan-African Finance", "hiring@panafricanfinance.example", "Finance", "Nairobi, KE", "pro", "pending_review"),
-            ("Creative Hub Ltd", "hiring@creativehub.example", "Design", "Accra, GH", "basic", "active"),
+            (
+                "Pan-African Finance",
+                "hiring@panafricanfinance.example",
+                "Finance",
+                "Nairobi, KE",
+                "pro",
+                "pending_review",
+            ),
+            (
+                "Creative Hub Ltd",
+                "hiring@creativehub.example",
+                "Design",
+                "Accra, GH",
+                "basic",
+                "active",
+            ),
         ]:
             firm_user = User(
-                email=email, full_name=name, hashed_password=hash_password("password123"),
-                role=UserRole.COMPANY, onboarding_completed=True,
+                email=email,
+                full_name=name,
+                hashed_password=hash_password("password123"),
+                role=UserRole.COMPANY,
+                onboarding_completed=True,
             )
             db.add(firm_user)
             db.flush()
             db.add(
                 CompanyProfile(
-                    user_id=firm_user.id, company_name=name, industry_category=industry,
-                    location=location, subscription_tier=tier, onboarding_status=status,
+                    user_id=firm_user.id,
+                    company_name=name,
+                    industry_category=industry,
+                    location=location,
+                    subscription_tier=tier,
+                    onboarding_status=status,
                 )
             )
 
         for name, email, location, track, progress, status in [
-            ("Amina Olayinka", "amina.o@example.com", "Lagos, NG", "Frontend Engineering", 100, "competency_verified"),
-            ("Kwame Mensah", "k.mensah@example.com", "Accra, GH", "Backend Architecture", 65, "in_progress"),
-            ("Nneka Uzo", "n.uzo@example.com", "Nairobi, KE", "Data Science Foundation", 82, "in_progress"),
-            ("Tunde Jaja", "t.jaja@example.com", "Lagos, NG", "UI/UX Principles", 100, "needs_review"),
+            (
+                "Amina Olayinka",
+                "amina.o@example.com",
+                "Lagos, NG",
+                "Frontend Engineering",
+                100,
+                "competency_verified",
+            ),
+            (
+                "Kwame Mensah",
+                "k.mensah@example.com",
+                "Accra, GH",
+                "Backend Architecture",
+                65,
+                "in_progress",
+            ),
+            (
+                "Nneka Uzo",
+                "n.uzo@example.com",
+                "Nairobi, KE",
+                "Data Science Foundation",
+                82,
+                "in_progress",
+            ),
+            (
+                "Tunde Jaja",
+                "t.jaja@example.com",
+                "Lagos, NG",
+                "UI/UX Principles",
+                100,
+                "needs_review",
+            ),
         ]:
             learner_user = User(
-                email=email, full_name=name, hashed_password=hash_password("password123"),
-                role=UserRole.LEARNER, onboarding_completed=True,
+                email=email,
+                full_name=name,
+                hashed_password=hash_password("password123"),
+                role=UserRole.LEARNER,
+                onboarding_completed=True,
             )
             db.add(learner_user)
             db.flush()
             db.add(
                 LearnerProfile(
-                    user_id=learner_user.id, location=location, primary_track=track,
-                    progress_percent=progress, verification_status=status,
+                    user_id=learner_user.id,
+                    location=location,
+                    primary_track=track,
+                    progress_percent=progress,
+                    verification_status=status,
                 )
             )
 
@@ -412,23 +516,38 @@ def run():
 
         # --- Premium subscriptions demo data -----------------------------
         john = User(
-            email="john.d@example.com", full_name="John Doe",
-            hashed_password=hash_password("password123"), role=UserRole.LEARNER, onboarding_completed=True,
+            email="john.d@example.com",
+            full_name="John Doe",
+            hashed_password=hash_password("password123"),
+            role=UserRole.LEARNER,
+            onboarding_completed=True,
         )
         db.add(john)
         db.flush()
         db.add(
             Subscription(
-                user_id=john.id, plan=SubscriptionPlan.LEARNER_PLUS, billing_cycle=BillingCycle.MONTHLY,
-                status=SubscriptionStatus.ACTIVE, amount=49, currency="USD", provider="mock",
-                provider_reference="seed_sub_john", renews_at=datetime.now(timezone.utc) + timedelta(days=20),
+                user_id=john.id,
+                plan=SubscriptionPlan.LEARNER_PLUS,
+                billing_cycle=BillingCycle.MONTHLY,
+                status=SubscriptionStatus.ACTIVE,
+                amount=49,
+                currency="USD",
+                provider="mock",
+                provider_reference="seed_sub_john",
+                renews_at=datetime.now(timezone.utc) + timedelta(days=20),
             )
         )
         db.add(
             Subscription(
-                user_id=company_user.id, plan=SubscriptionPlan.ENTERPRISE, billing_cycle=BillingCycle.MONTHLY,
-                status=SubscriptionStatus.ACTIVE, amount=2499, currency="USD", provider="mock",
-                provider_reference="seed_sub_technova", renews_at=datetime.now(timezone.utc) + timedelta(days=32),
+                user_id=company_user.id,
+                plan=SubscriptionPlan.ENTERPRISE,
+                billing_cycle=BillingCycle.MONTHLY,
+                status=SubscriptionStatus.ACTIVE,
+                amount=2499,
+                currency="USD",
+                provider="mock",
+                provider_reference="seed_sub_technova",
+                renews_at=datetime.now(timezone.utc) + timedelta(days=32),
             )
         )
         db.commit()

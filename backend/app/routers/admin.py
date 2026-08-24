@@ -36,12 +36,18 @@ def list_mentor_applications(
 ):
     """Powers the 'Mentor Application Queue' table."""
     query = db.query(MentorProfile).filter(
-        MentorProfile.application_status.in_([MentorApplicationStatus.PENDING, MentorApplicationStatus.IN_REVIEW])
+        MentorProfile.application_status.in_(
+            [MentorApplicationStatus.PENDING, MentorApplicationStatus.IN_REVIEW]
+        )
     )
     if status_filter == "pending":
-        query = query.filter(MentorProfile.application_status == MentorApplicationStatus.PENDING)
+        query = query.filter(
+            MentorProfile.application_status == MentorApplicationStatus.PENDING
+        )
     elif status_filter == "in_review":
-        query = query.filter(MentorProfile.application_status == MentorApplicationStatus.IN_REVIEW)
+        query = query.filter(
+            MentorProfile.application_status == MentorApplicationStatus.IN_REVIEW
+        )
 
     profiles = query.order_by(MentorProfile.application_submitted_at.desc()).all()
     results = []
@@ -63,34 +69,60 @@ def list_mentor_applications(
 
 
 @router.get("/mentor-applications/stats")
-def mentor_application_stats(db: Session = Depends(get_db), admin: User = Depends(require_role(UserRole.ADMIN))):
+def mentor_application_stats(
+    db: Session = Depends(get_db), admin: User = Depends(require_role(UserRole.ADMIN))
+):
     """Powers the queue's TOTAL PENDING / AVG. REVIEW TIME / NEW TODAY cards."""
     pending = (
         db.query(MentorProfile)
-        .filter(MentorProfile.application_status.in_([MentorApplicationStatus.PENDING, MentorApplicationStatus.IN_REVIEW]))
+        .filter(
+            MentorProfile.application_status.in_(
+                [MentorApplicationStatus.PENDING, MentorApplicationStatus.IN_REVIEW]
+            )
+        )
         .all()
     )
     reviewed = (
         db.query(MentorProfile)
-        .filter(MentorProfile.application_reviewed_at.isnot(None), MentorProfile.application_submitted_at.isnot(None))
+        .filter(
+            MentorProfile.application_reviewed_at.isnot(None),
+            MentorProfile.application_submitted_at.isnot(None),
+        )
         .all()
     )
     if reviewed:
-        avg_days = sum(
-            (p.application_reviewed_at - p.application_submitted_at).total_seconds() for p in reviewed
-        ) / len(reviewed) / 86400
+        avg_days = (
+            sum(
+                (p.application_reviewed_at - p.application_submitted_at).total_seconds()
+                for p in reviewed
+            )
+            / len(reviewed)
+            / 86400
+        )
     else:
         avg_days = 0.0
 
     today = datetime.now(timezone.utc).date()
-    new_today = len([p for p in pending if p.application_submitted_at and p.application_submitted_at.date() == today])
+    new_today = len(
+        [
+            p
+            for p in pending
+            if p.application_submitted_at and p.application_submitted_at.date() == today
+        ]
+    )
 
-    return {"total_pending": len(pending), "avg_review_days": round(avg_days, 1), "new_today": new_today}
+    return {
+        "total_pending": len(pending),
+        "avg_review_days": round(avg_days, 1),
+        "new_today": new_today,
+    }
 
 
 @router.get("/mentor-applications/{user_id}", response_model=MentorProfileOut)
 def get_mentor_application(
-    user_id: int, db: Session = Depends(get_db), admin: User = Depends(require_role(UserRole.ADMIN))
+    user_id: int,
+    db: Session = Depends(get_db),
+    admin: User = Depends(require_role(UserRole.ADMIN)),
 ):
     profile = db.query(MentorProfile).filter(MentorProfile.user_id == user_id).first()
     if not profile:
@@ -141,7 +173,9 @@ def save_note(
     return profile
 
 
-@router.post("/mentor-applications/{user_id}/request-info", response_model=MentorProfileOut)
+@router.post(
+    "/mentor-applications/{user_id}/request-info", response_model=MentorProfileOut
+)
 def request_more_info(
     user_id: int,
     payload: MentorApplicationDecision,
@@ -192,7 +226,9 @@ def decline_application(
     profile.application_status = MentorApplicationStatus.REJECTED
     profile.application_reviewed_at = datetime.now(timezone.utc)
     if payload.reason:
-        profile.admin_notes = (profile.admin_notes or "") + f"\n[Decline reason] {payload.reason}"
+        profile.admin_notes = (
+            profile.admin_notes or ""
+        ) + f"\n[Decline reason] {payload.reason}"
     db.add(profile)
     db.commit()
     db.refresh(profile)
@@ -200,6 +236,7 @@ def decline_application(
 
 
 # --- User Management (learners) -----------------------------------------
+
 
 @router.get("/users/learners")
 def list_learners(
@@ -257,14 +294,20 @@ def invite_learner(email: str, admin: User = Depends(require_role(UserRole.ADMIN
 
 # --- Premium Subscriptions dashboard --------------------------------------
 
+
 @router.get("/subscriptions")
 def list_subscriptions(
     db: Session = Depends(get_db), admin: User = Depends(require_role(UserRole.ADMIN))
 ):
     """Powers the 'Premium Subscriptions' metrics + recent subscriptions table."""
-    subscriptions = db.query(Subscription).order_by(Subscription.created_at.desc()).all()
+    subscriptions = (
+        db.query(Subscription).order_by(Subscription.created_at.desc()).all()
+    )
     active = [s for s in subscriptions if s.status == SubscriptionStatus.ACTIVE]
-    mrr = sum(s.amount if s.billing_cycle.value == "monthly" else s.amount / 12 for s in active)
+    mrr = sum(
+        s.amount if s.billing_cycle.value == "monthly" else s.amount / 12
+        for s in active
+    )
 
     rows = []
     for s in subscriptions[:20]:
@@ -292,6 +335,7 @@ def list_subscriptions(
 
 # --- Partner Firms Management (companies) ---------------------------------
 
+
 @router.get("/companies")
 def list_companies(
     tier: Optional[str] = None,
@@ -314,15 +358,26 @@ def list_companies(
     rows = []
     for profile in profiles:
         user = db.get(User, profile.user_id)
-        opportunity_ids = [o.id for o in db.query(Opportunity).filter(Opportunity.company_id == profile.user_id).all()]
+        opportunity_ids = [
+            o.id
+            for o in db.query(Opportunity)
+            .filter(Opportunity.company_id == profile.user_id)
+            .all()
+        ]
         active_internships = (
             db.query(Opportunity)
-            .filter(Opportunity.company_id == profile.user_id, Opportunity.status == "published")
+            .filter(
+                Opportunity.company_id == profile.user_id,
+                Opportunity.status == "published",
+            )
             .count()
         )
         total_hires = (
             db.query(Application)
-            .filter(Application.opportunity_id.in_(opportunity_ids), Application.status == "accepted")
+            .filter(
+                Application.opportunity_id.in_(opportunity_ids),
+                Application.status == "accepted",
+            )
             .count()
             if opportunity_ids
             else 0
@@ -330,7 +385,8 @@ def list_companies(
         rows.append(
             {
                 "user_id": profile.user_id,
-                "company_name": profile.company_name or (user.full_name if user else "Unknown"),
+                "company_name": profile.company_name
+                or (user.full_name if user else "Unknown"),
                 "industry": profile.industry_category or profile.industry,
                 "location": profile.location,
                 "subscription_tier": profile.subscription_tier,

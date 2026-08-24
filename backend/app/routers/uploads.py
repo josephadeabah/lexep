@@ -8,7 +8,9 @@ from app.models.user import User
 
 router = APIRouter(prefix="/api/uploads", tags=["uploads"])
 
-MAX_UPLOAD_BYTES = 10 * 1024 * 1024  # 10MB, matches the "up to 10MB" copy on the apply wizard
+MAX_UPLOAD_BYTES = (
+    10 * 1024 * 1024
+)  # 10MB, matches the "up to 10MB" copy on the apply wizard
 ALLOWED_CONTENT_TYPES = {
     "application/pdf",
     "application/msword",
@@ -19,7 +21,9 @@ ALLOWED_CONTENT_TYPES = {
 
 
 @router.post("")
-async def upload_file(file: UploadFile = File(...), user: User = Depends(get_current_user)):
+async def upload_file(
+    file: UploadFile = File(...), user: User = Depends(get_current_user)
+):
     """Generic authenticated file upload — used for resumes, credential
     documents, and avatars. Goes through the storage provider abstraction
     (Supabase Storage when SUPABASE_ENABLED=true, else local disk) so the
@@ -31,7 +35,11 @@ async def upload_file(file: UploadFile = File(...), user: User = Depends(get_cur
     if len(content) > MAX_UPLOAD_BYTES:
         raise HTTPException(status_code=400, detail="File is larger than 10MB.")
 
-    extension = (file.filename or "").rsplit(".", 1)[-1] if "." in (file.filename or "") else "bin"
+    extension = (
+        (file.filename or "").rsplit(".", 1)[-1]
+        if "." in (file.filename or "")
+        else "bin"
+    )
     path = f"user-{user.id}/{uuid.uuid4().hex}.{extension}"
 
     provider = get_storage_provider()

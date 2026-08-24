@@ -84,23 +84,34 @@ def public_config():
 @router.get("/plans", response_model=list[PricingPlanOut])
 def list_plans():
     """Powers the public Pricing page."""
-    return [PricingPlanOut(id=plan_id, **data) for plan_id, data in PLAN_PRICING.items()]
+    return [
+        PricingPlanOut(id=plan_id, **data) for plan_id, data in PLAN_PRICING.items()
+    ]
 
 
 def _price_for(plan: SubscriptionPlan, cycle: BillingCycle) -> float:
     data = PLAN_PRICING.get(plan)
     if not data or data.get("is_custom"):
-        raise HTTPException(status_code=400, detail="This plan requires contacting sales.")
-    return data["annual_price"] if cycle == BillingCycle.ANNUAL else data["monthly_price"]
+        raise HTTPException(
+            status_code=400, detail="This plan requires contacting sales."
+        )
+    return (
+        data["annual_price"] if cycle == BillingCycle.ANNUAL else data["monthly_price"]
+    )
 
 
 @router.post("/checkout/subscription", response_model=CheckoutResponse)
 def checkout_subscription(
-    payload: CheckoutSubscriptionRequest, db: Session = Depends(get_db), user: User = Depends(get_current_user)
+    payload: CheckoutSubscriptionRequest,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     """Powers the 'Select Your Plan' -> Checkout flow."""
     if not settings.PREMIUM_FEATURES_ENABLED:
-        raise HTTPException(status_code=403, detail="Premium features are not enabled on this platform yet.")
+        raise HTTPException(
+            status_code=403,
+            detail="Premium features are not enabled on this platform yet.",
+        )
 
     amount = _price_for(payload.plan, payload.billing_cycle)
     reference = f"sub_{secrets.token_hex(8)}"
@@ -140,14 +151,19 @@ def checkout_subscription(
         metadata={"purpose": "subscription", "subscription_id": subscription.id},
     )
     return CheckoutResponse(
-        reference=initialized.reference, authorization_url=initialized.authorization_url,
-        provider=initialized.provider, amount=amount, currency="USD",
+        reference=initialized.reference,
+        authorization_url=initialized.authorization_url,
+        provider=initialized.provider,
+        amount=amount,
+        currency="USD",
     )
 
 
 @router.post("/checkout/contribution", response_model=CheckoutResponse)
 def checkout_contribution(
-    payload: CheckoutContributionRequest, db: Session = Depends(get_db), user: User = Depends(get_current_user)
+    payload: CheckoutContributionRequest,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     """Powers the 'Contribute Now' payment flow on a grant group page."""
     group = db.get(GrantGroup, payload.group_id)
@@ -178,29 +194,47 @@ def checkout_contribution(
         metadata={"purpose": "grant_contribution", "group_id": group.id},
     )
     return CheckoutResponse(
-        reference=initialized.reference, authorization_url=initialized.authorization_url,
-        provider=initialized.provider, amount=payload.amount, currency="USD",
+        reference=initialized.reference,
+        authorization_url=initialized.authorization_url,
+        provider=initialized.provider,
+        amount=payload.amount,
+        currency="USD",
     )
 
 
 @router.post("/checkout/verify/{reference}", response_model=VerifyPaymentResponse)
-def verify_payment(reference: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+def verify_payment(
+    reference: str,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     """Powers the checkout callback / 'Upgrade Successful' page — call this
     after redirect back from the payment provider (or immediately, when
     running with the mock provider) to finalize the transaction."""
-    transaction = db.query(Transaction).filter(Transaction.provider_reference == reference).first()
+    transaction = (
+        db.query(Transaction)
+        .filter(Transaction.provider_reference == reference)
+        .first()
+    )
     if not transaction:
         raise HTTPException(status_code=404, detail="Transaction not found.")
 
     if transaction.status == TransactionStatus.SUCCESS:
         return VerifyPaymentResponse(
-            reference=reference, status=transaction.status, purpose=transaction.purpose, amount=transaction.amount
+            reference=reference,
+            status=transaction.status,
+            purpose=transaction.purpose,
+            amount=transaction.amount,
         )
 
     provider = get_payment_provider()
     verified = provider.verify_transaction(reference)
 
-    transaction.status = TransactionStatus.SUCCESS if verified.status == "success" else TransactionStatus.FAILED
+    transaction.status = (
+        TransactionStatus.SUCCESS
+        if verified.status == "success"
+        else TransactionStatus.FAILED
+    )
     db.add(transaction)
 
     if transaction.status == TransactionStatus.SUCCESS:
@@ -217,7 +251,8 @@ def verify_payment(reference: str, db: Session = Depends(get_db), user: User = D
                     Contribution(
                         group_id=group.id,
                         contributor_id=user.id,
-                        contributor_name=transaction.meta.get("contributor_name") or user.full_name,
+                        contributor_name=transaction.meta.get("contributor_name")
+                        or user.full_name,
                         amount=transaction.amount,
                     )
                 )
@@ -225,15 +260,23 @@ def verify_payment(reference: str, db: Session = Depends(get_db), user: User = D
 
     db.commit()
     return VerifyPaymentResponse(
-        reference=reference, status=transaction.status, purpose=transaction.purpose, amount=transaction.amount
+        reference=reference,
+        status=transaction.status,
+        purpose=transaction.purpose,
+        amount=transaction.amount,
     )
 
 
 @router.get("/subscriptions/me", response_model=Optional[SubscriptionOut])
-def my_subscription(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+def my_subscription(
+    db: Session = Depends(get_db), user: User = Depends(get_current_user)
+):
     sub = (
         db.query(Subscription)
-        .filter(Subscription.user_id == user.id, Subscription.status == SubscriptionStatus.ACTIVE)
+        .filter(
+            Subscription.user_id == user.id,
+            Subscription.status == SubscriptionStatus.ACTIVE,
+        )
         .order_by(Subscription.created_at.desc())
         .first()
     )

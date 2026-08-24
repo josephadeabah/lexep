@@ -12,6 +12,7 @@ a feature on — no code changes required. When a flag is `false`, the app uses
 a no-op/mock implementation so every flow still works end-to-end for demos
 and local development without any real accounts.
 """
+
 from functools import lru_cache
 from typing import List
 

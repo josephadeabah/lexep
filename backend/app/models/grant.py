@@ -19,10 +19,16 @@ class Grant(Base):
     amount_requested: Mapped[float] = mapped_column(Float, nullable=False)
     purpose: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     details: Mapped[Optional[str]] = mapped_column(String(8000), nullable=True)
-    documents: Mapped[list] = mapped_column(JSON, default=list)  # uploaded supporting-doc URLs/filenames
+    documents: Mapped[list] = mapped_column(
+        JSON, default=list
+    )  # uploaded supporting-doc URLs/filenames
 
-    status: Mapped[GrantStatus] = mapped_column(Enum(GrantStatus), default=GrantStatus.DRAFT)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    status: Mapped[GrantStatus] = mapped_column(
+        Enum(GrantStatus), default=GrantStatus.DRAFT
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
 
 
 class GrantGroup(Base):
@@ -37,7 +43,9 @@ class GrantGroup(Base):
     tagline: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     description: Mapped[Optional[str]] = mapped_column(String(4000), nullable=True)
     category: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
-    visibility: Mapped[str] = mapped_column(String(20), default="public")  # "public" | "private"
+    visibility: Mapped[str] = mapped_column(
+        String(20), default="public"
+    )  # "public" | "private"
     invite_link: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     image_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
 
@@ -45,7 +53,9 @@ class GrantGroup(Base):
     raised_amount: Mapped[float] = mapped_column(Float, default=0)
     youth_sponsored: Mapped[int] = mapped_column(default=0)
 
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
 
     contributions: Mapped[list["Contribution"]] = relationship(
         back_populates="group", cascade="all, delete-orphan"
@@ -57,10 +67,16 @@ class Contribution(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     group_id: Mapped[int] = mapped_column(ForeignKey("grant_groups.id"))
-    contributor_id: Mapped[Optional[int]] = mapped_column(ForeignKey("users.id"), nullable=True)
-    contributor_name: Mapped[str] = mapped_column(String(255), default="Anonymous Donor")
+    contributor_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("users.id"), nullable=True
+    )
+    contributor_name: Mapped[str] = mapped_column(
+        String(255), default="Anonymous Donor"
+    )
 
     amount: Mapped[float] = mapped_column(Float, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
 
     group: Mapped["GrantGroup"] = relationship(back_populates="contributions")

@@ -3,7 +3,12 @@ from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
-from app.models.enums import ApplicationStatus, InterviewStatus, OpportunityStatus, WorkMode
+from app.models.enums import (
+    ApplicationStatus,
+    InterviewStatus,
+    OpportunityStatus,
+    WorkMode,
+)
 
 
 class OpportunityCreate(BaseModel):
@@ -61,6 +66,7 @@ class ApplicationStatusUpdate(BaseModel):
 
 class ApplicantOut(BaseModel):
     """Shape used by the Applicant Review board."""
+
     model_config = ConfigDict(from_attributes=True)
 
     id: int
@@ -75,6 +81,7 @@ class ApplicantOut(BaseModel):
 
 class MyApplicationOut(BaseModel):
     """Shape used by 'My Applications'."""
+
     id: int
     opportunity_title: str
     company_name: str
@@ -93,6 +100,7 @@ class InterviewCreate(BaseModel):
 
 class InterviewPropose(BaseModel):
     """Company proposes several candidate time slots (Schedule Interview modal)."""
+
     application_id: int
     interview_type: Optional[str] = None
     meeting_service: Optional[str] = "Google Meet"
@@ -103,6 +111,7 @@ class InterviewPropose(BaseModel):
 
 class InterviewSelectTime(BaseModel):
     """Candidate confirms one of the proposed time slots."""
+
     selected_time: datetime
 
 

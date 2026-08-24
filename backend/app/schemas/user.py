@@ -57,6 +57,7 @@ class MentorOnboarding(BaseModel):
 
 class MentorApplicationStep1(BaseModel):
     """'Personal & Professional Info' — Mentor Application, step 1 of 3."""
+
     title: Optional[str] = None  # Current Role
     company: Optional[str] = None
     years_experience: Optional[str] = None

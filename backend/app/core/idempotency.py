@@ -13,6 +13,7 @@ internship" action can never be double-applied against the database.
 Only requests that actually carry the header are affected; normal online
 traffic is untouched.
 """
+
 import json
 
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -33,7 +34,9 @@ class IdempotencyMiddleware(BaseHTTPMiddleware):
 
         db = SessionLocal()
         try:
-            existing = db.query(IdempotencyRecord).filter(IdempotencyRecord.key == key).first()
+            existing = (
+                db.query(IdempotencyRecord).filter(IdempotencyRecord.key == key).first()
+            )
             if existing:
                 return Response(
                     content=json.dumps(existing.response_body),

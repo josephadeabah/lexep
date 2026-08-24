@@ -6,7 +6,18 @@ from fastapi.staticfiles import StaticFiles
 
 from app.core.config import settings
 from app.core.idempotency import IdempotencyMiddleware
-from app.routers import admin, assessments, auth, grants, interviews, mentors, opportunities, payments, uploads, users
+from app.routers import (
+    admin,
+    assessments,
+    auth,
+    grants,
+    interviews,
+    mentors,
+    opportunities,
+    payments,
+    uploads,
+    users,
+)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,

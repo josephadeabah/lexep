@@ -49,11 +49,14 @@ def list_opportunities(
     user: User | None = Depends(get_current_user_optional),
 ):
     """Powers both the company's 'Active Listings' table and the learner-facing
-    'Internship Board' browse view (pass published_only=true for the latter, no auth required)."""
+    'Internship Board' browse view (pass published_only=true for the latter, no auth required).
+    """
     query = db.query(Opportunity)
     if company_only_mine:
         if not user:
-            raise HTTPException(status_code=401, detail="Sign in to view your listings.")
+            raise HTTPException(
+                status_code=401, detail="Sign in to view your listings."
+            )
         query = query.filter(Opportunity.company_id == user.id)
     if published_only:
         query = query.filter(Opportunity.status == "published")
@@ -78,15 +81,17 @@ def list_applicants(
 ):
     """Populates the 'Applicant Review' board, sorted by match score by default."""
     applications = (
-        db.query(Application)
-        .filter(Application.opportunity_id == opportunity_id)
-        .all()
+        db.query(Application).filter(Application.opportunity_id == opportunity_id).all()
     )
 
     results: list[ApplicantOut] = []
     for app in applications:
         applicant = db.get(User, app.applicant_id)
-        learner_profile = db.query(LearnerProfile).filter(LearnerProfile.user_id == applicant.id).first()
+        learner_profile = (
+            db.query(LearnerProfile)
+            .filter(LearnerProfile.user_id == applicant.id)
+            .first()
+        )
         results.append(
             ApplicantOut(
                 id=app.id,
@@ -117,11 +122,16 @@ def apply_to_opportunity(
 
     existing = (
         db.query(Application)
-        .filter(Application.opportunity_id == opportunity.id, Application.applicant_id == learner.id)
+        .filter(
+            Application.opportunity_id == opportunity.id,
+            Application.applicant_id == learner.id,
+        )
         .first()
     )
     if existing:
-        raise HTTPException(status_code=400, detail="You already applied to this opportunity.")
+        raise HTTPException(
+            status_code=400, detail="You already applied to this opportunity."
+        )
 
     application = Application(
         opportunity_id=opportunity.id,
@@ -150,9 +160,14 @@ def apply_to_opportunity(
 
 
 @router.get("/applications/mine", response_model=list[MyApplicationOut])
-def my_applications(db: Session = Depends(get_db), learner: User = Depends(require_role(UserRole.LEARNER))):
+def my_applications(
+    db: Session = Depends(get_db),
+    learner: User = Depends(require_role(UserRole.LEARNER)),
+):
     """Powers the 'My Applications' screen."""
-    applications = db.query(Application).filter(Application.applicant_id == learner.id).all()
+    applications = (
+        db.query(Application).filter(Application.applicant_id == learner.id).all()
+    )
 
     out: list[MyApplicationOut] = []
     for app in applications:
@@ -188,7 +203,9 @@ def update_application_status(
     db.refresh(application)
 
     applicant = db.get(User, application.applicant_id)
-    learner_profile = db.query(LearnerProfile).filter(LearnerProfile.user_id == applicant.id).first()
+    learner_profile = (
+        db.query(LearnerProfile).filter(LearnerProfile.user_id == applicant.id).first()
+    )
     return ApplicantOut(
         id=application.id,
         applicant_name=applicant.full_name,

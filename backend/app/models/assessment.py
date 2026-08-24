@@ -16,14 +16,18 @@ class Assessment(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     category: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
-    level: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)  # Beginner/Intermediate/Advanced
+    level: Mapped[Optional[str]] = mapped_column(
+        String(50), nullable=True
+    )  # Beginner/Intermediate/Advanced
     description: Mapped[Optional[str]] = mapped_column(String(2000), nullable=True)
     image_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     duration_minutes: Mapped[int] = mapped_column(Integer, default=45)
     featured: Mapped[bool] = mapped_column(default=False)
 
     questions: Mapped[list["AssessmentQuestion"]] = relationship(
-        back_populates="assessment", cascade="all, delete-orphan", order_by="AssessmentQuestion.order"
+        back_populates="assessment",
+        cascade="all, delete-orphan",
+        order_by="AssessmentQuestion.order",
     )
 
 
@@ -34,8 +38,12 @@ class AssessmentQuestion(Base):
     assessment_id: Mapped[int] = mapped_column(ForeignKey("assessments.id"))
 
     order: Mapped[int] = mapped_column(Integer, default=0)
-    topic: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)  # for topic-breakdown scoring
-    title: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)  # short sidebar label
+    topic: Mapped[Optional[str]] = mapped_column(
+        String(120), nullable=True
+    )  # for topic-breakdown scoring
+    title: Mapped[Optional[str]] = mapped_column(
+        String(255), nullable=True
+    )  # short sidebar label
     prompt: Mapped[str] = mapped_column(String(2000), nullable=False)
     image_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     options: Mapped[list] = mapped_column(JSON, default=list)  # [{id, text}]
@@ -56,9 +64,17 @@ class AssessmentAttempt(Base):
         Enum(AssessmentAttemptStatus), default=AssessmentAttemptStatus.IN_PROGRESS
     )
     current_index: Mapped[int] = mapped_column(Integer, default=0)
-    answers: Mapped[dict] = mapped_column(JSON, default=dict)  # {question_id: option_id}
+    answers: Mapped[dict] = mapped_column(
+        JSON, default=dict
+    )  # {question_id: option_id}
     score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
-    topic_breakdown: Mapped[dict] = mapped_column(JSON, default=dict)  # {topic: percent}
+    topic_breakdown: Mapped[dict] = mapped_column(
+        JSON, default=dict
+    )  # {topic: percent}
 
-    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
-    completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+    started_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    completed_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
