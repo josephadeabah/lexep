@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, Inter } from "next/font/google";
+// @ts-ignore — Next.js processes this global stylesheet at build time.
 import "./globals.css";
 import { OfflineProvider } from "@/components/OfflineProvider";
 

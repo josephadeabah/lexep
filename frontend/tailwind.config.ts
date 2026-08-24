@@ -4,6 +4,7 @@ import type { Config } from "tailwindcss";
 // Keeping the token names identical to the spec (e.g. `surface-container-low`)
 // means new screens can be built by reading the design doc and reaching for
 // the matching Tailwind class, with no translation step.
+
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
@@ -68,14 +69,20 @@ const config: Config = {
       },
       fontSize: {
         "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "display-md": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
         "headline-lg": [
           "32px",
           { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" },
         ],
         "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
         "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+        "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+        "title-lg": ["18px", { lineHeight: "26px", fontWeight: "500" }],
+        "title-md": ["16px", { lineHeight: "24px", fontWeight: "500" }],
         "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
         "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+        "label-lg": ["16px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }],
         "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }],
         "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
       },
@@ -93,16 +100,54 @@ const config: Config = {
         md: "24px",
         lg: "48px",
         xl: "80px",
+        "2xl": "120px",
+        "3xl": "160px",
+        gutter: "24px",
+      },
+      padding: {
+        gutter: "24px",
+        xs: "4px",
+        sm: "12px",
+        md: "24px",
+        lg: "48px",
+        xl: "80px",
+        "2xl": "120px",
+        "3xl": "160px",
+      },
+      margin: {
+        gutter: "24px",
+        xs: "4px",
+        sm: "12px",
+        md: "24px",
+        lg: "48px",
+        xl: "80px",
+        "2xl": "120px",
+        "3xl": "160px",
       },
       maxWidth: {
         "container-max": "1280px",
+        "container-sm": "640px",
+        "container-md": "768px",
+        "container-lg": "1024px",
+        "container-xl": "1280px",
       },
       boxShadow: {
+        level0: "none",
         level1: "0px 4px 20px rgba(0,0,0,0.04)",
         level2: "0px 8px 30px rgba(0,0,0,0.08)",
+        level3: "0px 16px 48px rgba(0,0,0,0.12)",
       },
       width: {
         sidebar: "280px",
+      },
+      minHeight: {
+        screen: "100vh",
+      },
+      transitionDuration: {
+        DEFAULT: "300ms",
+      },
+      transitionTimingFunction: {
+        DEFAULT: "cubic-bezier(0.4, 0, 0.2, 1)",
       },
     },
   },
