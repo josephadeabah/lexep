@@ -64,9 +64,9 @@ const STEPS = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-on-background">
+    <div className="min-h-screen overflow-x-hidden bg-surface text-on-surface">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-outline-variant/30 bg-background/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-outline-variant/20 bg-surface/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
           <Link href="/" className="shrink-0" aria-label="Lexep home">
             <Logo variant="light" size={56} />
@@ -132,15 +132,26 @@ export default function LandingPage() {
       <main>
         {/* Hero */}
         <section className="relative overflow-hidden">
+          {/* Ambient lighting layers */}
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -right-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-primary-container/10 blur-3xl" />
-            <div className="absolute left-1/3 top-1/2 h-72 w-72 rounded-full bg-primary-container/5 blur-3xl" />
+            <div className="absolute -right-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-primary-container/15 blur-3xl" />
+            <div className="absolute left-1/3 top-1/2 h-72 w-72 rounded-full bg-primary-container/10 blur-3xl" />
+            <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-surface-tint/5 blur-3xl" />
           </div>
+
+          {/* Noise overlay */}
+          <div 
+            className="pointer-events-none absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+            }}
+          />
 
           <div className="relative mx-auto grid max-w-container-max items-center gap-xl px-gutter py-xl lg:grid-cols-[0.95fr_1.05fr] lg:py-2xl">
             {/* Hero copy */}
             <div className="relative z-10">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-container/20 bg-primary-container/10 px-4 py-2 text-label-md text-primary">
+              {/* Premium badge with glow */}
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-container/20 bg-primary-container/10 px-4 py-2 text-label-md text-primary backdrop-blur-sm">
                 <Sparkles className="h-4 w-4" />
                 <span>Built for Africa&apos;s next generation</span>
               </div>
@@ -148,7 +159,7 @@ export default function LandingPage() {
               <h1 className="max-w-3xl text-display-lg text-on-background">
                 Stop waiting for a job.
                 <br />
-                <span className="text-primary-container">Start building a career.</span>
+                <span className="text-gradient-gold">Start building a career.</span>
               </h1>
 
               <p className="mt-6 max-w-xl text-body-lg leading-relaxed text-on-surface-variant">
@@ -173,7 +184,7 @@ export default function LandingPage() {
                   {["1", "2", "3", "4"].map((person) => (
                     <div
                       key={person}
-                      className="relative h-11 w-11 overflow-hidden rounded-full border-2 border-background bg-surface-container-high"
+                      className="relative h-11 w-11 overflow-hidden rounded-full border-2 border-surface bg-surface-container-high shadow-level1"
                     >
                       <Image
                         src={`/images/avatar-${person}.png`}
@@ -195,7 +206,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Hero image */}
+            {/* Hero visual composition */}
             <div className="relative">
               <div className="relative min-h-[420px] overflow-hidden rounded-2xl bg-surface-container-high shadow-level2 sm:min-h-[520px]">
                 <Image
@@ -207,12 +218,12 @@ export default function LandingPage() {
                   className="object-cover"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-                {/* Floating internship card */}
-                <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-white/20 bg-black/70 p-4 text-white backdrop-blur-md sm:left-8 sm:right-auto sm:w-[280px] sm:p-5">
+                {/* Floating internship card with glass effect */}
+                <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-white/20 bg-black/60 p-4 text-white backdrop-blur-xl shadow-level2 sm:left-8 sm:right-auto sm:w-[280px] sm:p-5">
                   <div className="mb-3 flex items-center justify-between">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container text-on-primary-container">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
                       <BriefcaseBusiness className="h-5 w-5" />
                     </div>
 
@@ -230,9 +241,24 @@ export default function LandingPage() {
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 </div>
+
+                {/* Floating glass card */}
+                <div className="absolute top-6 right-6 hidden rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-xl shadow-level2 sm:block">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-container/20">
+                      <CheckCircle2 className="h-5 w-5 text-primary-container" />
+                    </div>
+                    <div>
+                      <p className="text-label-sm text-white/70">Mentorship Match</p>
+                      <p className="text-title-md text-white">92% success rate</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
+              {/* Glow accents */}
               <div className="absolute -bottom-8 -left-8 hidden h-32 w-32 rounded-full border border-primary-container/20 bg-primary-container/10 blur-2xl lg:block" />
+              <div className="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-primary-container/10 blur-2xl" />
             </div>
           </div>
         </section>
@@ -241,21 +267,21 @@ export default function LandingPage() {
         <section className="border-y border-outline-variant/30 bg-surface-container-low">
           <div className="mx-auto grid max-w-container-max gap-lg px-gutter py-xl md:grid-cols-3">
             <div>
-              <p className="text-display-md text-primary-container">300K+</p>
+              <p className="text-display-md text-gradient-gold">300K+</p>
               <p className="mt-2 text-body-md text-on-surface-variant">
                 graduates enter Ghana&apos;s job market every year.
               </p>
             </div>
 
             <div>
-              <p className="text-display-md text-primary-container">Skills + Experience</p>
+              <p className="text-display-md text-gradient-gold">Skills + Experience</p>
               <p className="mt-2 text-body-md text-on-surface-variant">
                 are what turn education into career readiness.
               </p>
             </div>
 
             <div>
-              <p className="text-display-md text-primary-container">One platform</p>
+              <p className="text-display-md text-gradient-gold">One platform</p>
               <p className="mt-2 text-body-md text-on-surface-variant">
                 to connect learning, mentorship, and opportunities.
               </p>
@@ -290,12 +316,14 @@ export default function LandingPage() {
                 return (
                   <div
                     key={feature.title}
-                    className="group relative overflow-hidden rounded-xl border border-outline-variant/50 bg-surface-container-lowest p-lg shadow-level1 transition duration-300 hover:-translate-y-1 hover:shadow-level2"
+                    className="group relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1 transition duration-300 hover:-translate-y-1 hover:shadow-level2"
                   >
+                    {/* Glass highlight effect */}
                     <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-primary-container/5 blur-2xl transition group-hover:bg-primary-container/10" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
 
                     <div className="relative">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary-container text-on-primary-container">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
                         <Icon className="h-7 w-7" />
                       </div>
 
@@ -356,9 +384,9 @@ export default function LandingPage() {
                 {STEPS.map((step) => (
                   <div
                     key={step.number}
-                    className="flex gap-5 rounded-xl border border-outline-variant/40 bg-surface-container-lowest p-lg"
+                    className="flex gap-5 rounded-xl border border-outline-variant/20 bg-surface-container-lowest p-lg shadow-level1 transition hover:shadow-level2"
                   >
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-container/15 text-label-lg font-semibold text-primary">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary-container to-primary text-label-lg font-semibold text-on-primary-container shadow-level1">
                       {step.number}
                     </span>
 
@@ -390,61 +418,83 @@ export default function LandingPage() {
             </div>
 
             <div className="grid gap-md md:grid-cols-3">
-              <div className="rounded-xl bg-[#1a1a1a] p-lg text-inverse-on-surface">
-                <GraduationCap className="h-8 w-8 text-primary-fixed-dim" />
+              {/* Dark glass card */}
+              <div className="relative overflow-hidden rounded-xl bg-[#1a1a1a] p-lg text-inverse-on-surface">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
+                <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-primary-container/10 blur-2xl" />
+                
+                <div className="relative">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
+                    <GraduationCap className="h-6 w-6" />
+                  </div>
 
-                <h3 className="mt-8 text-headline-md">For learners</h3>
+                  <h3 className="mt-8 text-headline-md">For learners</h3>
 
-                <p className="mt-3 text-body-md leading-relaxed text-[#c9c7c6]">
-                  Build practical skills, find mentors, discover internships, and start developing a
-                  career you are proud of.
-                </p>
+                  <p className="mt-3 text-body-md leading-relaxed text-[#c9c7c6]">
+                    Build practical skills, find mentors, discover internships, and start developing a
+                    career you are proud of.
+                  </p>
 
-                <Link
-                  href="/sign-up"
-                  className="mt-8 inline-flex items-center gap-2 text-label-md text-primary-fixed-dim"
-                >
-                  Start your journey
-                  <ChevronRight className="h-4 w-4" />
-                </Link>
+                  <Link
+                    href="/sign-up"
+                    className="mt-8 inline-flex items-center gap-2 text-label-md text-primary-fixed-dim"
+                  >
+                    Start your journey
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
 
-              <div className="rounded-xl border border-outline-variant/50 bg-surface-container-lowest p-lg">
-                <HeartHandshake className="h-8 w-8 text-primary" />
+              {/* Glass card with highlight */}
+              <div className="relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
+                
+                <div className="relative">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
+                    <HeartHandshake className="h-6 w-6" />
+                  </div>
 
-                <h3 className="mt-8 text-headline-md text-on-background">For mentors</h3>
+                  <h3 className="mt-8 text-headline-md text-on-background">For mentors</h3>
 
-                <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                  Share what you have learned, guide emerging talent, and make your professional
-                  experience matter beyond your workplace.
-                </p>
+                  <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
+                    Share what you have learned, guide emerging talent, and make your professional
+                    experience matter beyond your workplace.
+                  </p>
 
-                <Link
-                  href="/mentorship"
-                  className="mt-8 inline-flex items-center gap-2 text-label-md text-primary"
-                >
-                  Become a mentor
-                  <ChevronRight className="h-4 w-4" />
-                </Link>
+                  <Link
+                    href="/mentorship"
+                    className="mt-8 inline-flex items-center gap-2 text-label-md text-primary"
+                  >
+                    Become a mentor
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
 
-              <div className="rounded-xl border border-outline-variant/50 bg-surface-container-lowest p-lg">
-                <Building2 className="h-8 w-8 text-primary" />
+              {/* Glass card with highlight */}
+              <div className="relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
+                
+                <div className="relative">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
+                    <Building2 className="h-6 w-6" />
+                  </div>
 
-                <h3 className="mt-8 text-headline-md text-on-background">For companies</h3>
+                  <h3 className="mt-8 text-headline-md text-on-background">For companies</h3>
 
-                <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                  Build a stronger talent pipeline by connecting with motivated young people ready
-                  to gain real workplace experience.
-                </p>
+                  <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
+                    Build a stronger talent pipeline by connecting with motivated young people ready
+                    to gain real workplace experience.
+                  </p>
 
-                <Link
-                  href="/company"
-                  className="mt-8 inline-flex items-center gap-2 text-label-md text-primary"
-                >
-                  Partner with Lexep
-                  <ChevronRight className="h-4 w-4" />
-                </Link>
+                  <Link
+                    href="/company"
+                    className="mt-8 inline-flex items-center gap-2 text-label-md text-primary"
+                  >
+                    Partner with Lexep
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -453,6 +503,7 @@ export default function LandingPage() {
         {/* Final CTA */}
         <section className="px-gutter pb-2xl">
           <div className="relative mx-auto max-w-container-max overflow-hidden rounded-2xl bg-[#1a1a1a]">
+            {/* Background image with gradient */}
             <div className="absolute inset-0">
               <Image
                 src="/images/lexep-community.png"
@@ -464,9 +515,12 @@ export default function LandingPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a] via-[#1a1a1a]/95 to-[#1a1a1a]/75" />
             </div>
 
+            {/* Glass effect overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-container/5 via-transparent to-transparent" />
+
             <div className="relative z-10 grid min-h-[430px] items-center px-gutter py-xl md:px-xl">
               <div className="max-w-xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-primary-fixed-dim/20 bg-primary-fixed-dim/10 px-4 py-2 text-label-md text-primary-fixed-dim">
+                <div className="inline-flex items-center gap-2 rounded-full border border-primary-fixed-dim/20 bg-primary-fixed-dim/10 px-4 py-2 text-label-md text-primary-fixed-dim backdrop-blur-sm">
                   <Award className="h-4 w-4" />
                   Your next step starts here
                 </div>

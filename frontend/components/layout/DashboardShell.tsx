@@ -49,7 +49,11 @@ const BRAND_BY_ROLE: Record<
   },
 };
 
-export function DashboardShell({ children }: { children: React.ReactNode }) {
+export function DashboardShell({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
 
   const { user, isInitialized, hydrate, logout } = useAuthStore();
@@ -95,7 +99,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const config = BRAND_BY_ROLE[role];
 
   return (
-    <div className="flex h-dvh overflow-hidden bg-surface">
+    <div className="fixed inset-0 flex overflow-hidden bg-surface">
+      {/* 
+        Fixed sidebar.
+        This does NOT participate in the main content scroll.
+      */}
       <Sidebar
         brand={config.brand}
         tagline={config.tagline}
@@ -113,12 +121,22 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         }}
       />
 
-      {/* Main content is the page's scroll container */}
-      <main className="min-w-0 flex-1 overflow-y-auto overflow-x-hidden">
+      {/* 
+        Desktop spacer.
+        The sidebar is fixed, so this reserves its space in the layout.
+      */}
+      <div className="hidden h-full w-sidebar shrink-0 md:block" />
+
+      {/* 
+        This is the ONLY dashboard area that scrolls.
+      */}
+      <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain">
         <OfflineBanner />
 
         <div className="min-h-full px-md py-lg md:px-xl md:py-xl">
-          <div className="mx-auto w-full max-w-container-max">{children}</div>
+          <div className="mx-auto w-full max-w-container-max">
+            {children}
+          </div>
         </div>
       </main>
     </div>
