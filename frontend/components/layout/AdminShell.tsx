@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+
 import { useAuthStore } from "@/lib/auth-store";
 import { Sidebar } from "./Sidebar";
 import { OfflineBanner } from "./OfflineBanner";
@@ -12,7 +13,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const { user, isInitialized, hydrate, logout } = useAuthStore();
 
   useEffect(() => {
-    if (!isInitialized) hydrate();
+    if (!isInitialized) {
+      hydrate();
+    }
   }, [isInitialized, hydrate]);
 
   useEffect(() => {
@@ -20,7 +23,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
     if (!user) {
       router.replace("/sign-in");
-    } else if (user.role !== "admin") {
+      return;
+    }
+
+    if (user.role !== "admin") {
       router.replace("/dashboard");
     }
   }, [isInitialized, user, router]);
@@ -43,6 +49,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         userSummary={{
           name: user.full_name,
           roleLabel: "Admin",
+          avatarUrl: user.avatar_url,
         }}
         onLogout={() => {
           logout();
