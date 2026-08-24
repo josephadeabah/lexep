@@ -1,0 +1,112 @@
+import type { Config } from "tailwindcss";
+
+// Design tokens sourced directly from DESIGN.md — the Lexep design system.
+// Keeping the token names identical to the spec (e.g. `surface-container-low`)
+// means new screens can be built by reading the design doc and reaching for
+// the matching Tailwind class, with no translation step.
+const config: Config = {
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+  ],
+  theme: {
+    container: {
+      center: true,
+      padding: "24px",
+      screens: { "2xl": "1280px" },
+    },
+    extend: {
+      colors: {
+        surface: "#fbf9f8",
+        "surface-dim": "#dbdad9",
+        "surface-bright": "#fbf9f8",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f5f3f3",
+        "surface-container": "#efeded",
+        "surface-container-high": "#e9e8e7",
+        "surface-container-highest": "#e4e2e2",
+        "surface-variant": "#e4e2e2",
+        "on-surface": "#1b1c1c",
+        "on-surface-variant": "#4d4635",
+        "inverse-surface": "#303031",
+        "inverse-on-surface": "#f2f0f0",
+        outline: "#7f7663",
+        "outline-variant": "#d0c5af",
+        "surface-tint": "#735c00",
+        primary: "#735c00",
+        "on-primary": "#ffffff",
+        "primary-container": "#d4af37",
+        "on-primary-container": "#554300",
+        "inverse-primary": "#e9c349",
+        secondary: "#5f5e5e",
+        "on-secondary": "#ffffff",
+        "secondary-container": "#e2dfde",
+        "on-secondary-container": "#636262",
+        tertiary: "#5d5f5f",
+        "on-tertiary": "#ffffff",
+        "tertiary-container": "#b2b3b3",
+        "on-tertiary-container": "#434546",
+        error: "#ba1a1a",
+        "on-error": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-error-container": "#93000a",
+        "primary-fixed": "#ffe088",
+        "primary-fixed-dim": "#e9c349",
+        "on-primary-fixed": "#241a00",
+        "on-primary-fixed-variant": "#574500",
+        "secondary-fixed": "#e5e2e1",
+        "secondary-fixed-dim": "#c8c6c5",
+        "on-secondary-fixed": "#1c1b1b",
+        "on-secondary-fixed-variant": "#474746",
+        "tertiary-fixed": "#e2e2e2",
+        "tertiary-fixed-dim": "#c6c6c7",
+        "on-tertiary-fixed": "#1a1c1c",
+        "on-tertiary-fixed-variant": "#454747",
+        background: "#fbf9f8",
+        "on-background": "#1b1c1c",
+      },
+      fontFamily: {
+        display: ["var(--font-hanken)", "system-ui", "sans-serif"],
+        body: ["var(--font-inter)", "system-ui", "sans-serif"],
+      },
+      fontSize: {
+        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
+        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }],
+        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+      },
+      borderRadius: {
+        sm: "0.25rem",
+        DEFAULT: "0.5rem",
+        md: "0.75rem",
+        lg: "1rem",
+        xl: "1.5rem",
+        full: "9999px",
+      },
+      spacing: {
+        xs: "4px",
+        sm: "12px",
+        md: "24px",
+        lg: "48px",
+        xl: "80px",
+      },
+      maxWidth: {
+        "container-max": "1280px",
+      },
+      boxShadow: {
+        level1: "0px 4px 20px rgba(0,0,0,0.04)",
+        level2: "0px 8px 30px rgba(0,0,0,0.08)",
+      },
+      width: {
+        sidebar: "280px",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;

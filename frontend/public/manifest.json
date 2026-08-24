@@ -1,0 +1,12 @@
+{
+  "name": "Lexep",
+  "short_name": "Lexep",
+  "description": "Lexep connects African youth with mentors, internships, and community-funded grants.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf9f8",
+  "theme_color": "#735c00",
+  "icons": [
+    { "src": "/brand/lexep-mark-gold.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

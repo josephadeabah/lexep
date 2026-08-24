@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-body;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.primary");
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .card-level1 {
+    @apply bg-surface-container-lowest shadow-level1 rounded-lg;
+  }
+  .card-level2 {
+    @apply bg-surface-container-lowest shadow-level2 rounded-lg;
+  }
+}
