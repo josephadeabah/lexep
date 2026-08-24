@@ -71,7 +71,7 @@ export default function LearnerOnboardingPage() {
   }
 
   return (
-    <div className="px-gutter flex min-h-screen items-center justify-center bg-surface py-xl">
+    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
       <div className="card-level1 w-full max-w-2xl p-md">
         <div className="mb-6 text-center">
           <p className="text-label-sm text-on-surface-variant">STEP {step} OF 2</p>

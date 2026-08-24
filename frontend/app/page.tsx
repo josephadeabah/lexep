@@ -68,12 +68,8 @@ export default function LandingPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-outline-variant/30 bg-background/95 backdrop-blur">
         <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
-          <Link
-            href="/"
-            className="shrink-0"
-            aria-label="Lexep home"
-          >
-            <Logo variant="light" size={32} />
+          <Link href="/" className="shrink-0" aria-label="Lexep home">
+            <Logo variant="light" size={56} />
           </Link>
 
           <nav className="hidden items-center gap-lg lg:flex">
@@ -152,15 +148,12 @@ export default function LandingPage() {
               <h1 className="max-w-3xl text-display-lg text-on-background">
                 Stop waiting for a job.
                 <br />
-                <span className="text-primary-container">
-                  Start building a career.
-                </span>
+                <span className="text-primary-container">Start building a career.</span>
               </h1>
 
               <p className="mt-6 max-w-xl text-body-lg leading-relaxed text-on-surface-variant">
-                Lexep connects ambitious young Africans with practical skills,
-                experienced mentors, and real opportunities to gain the
-                experience employers are looking for.
+                Lexep connects ambitious young Africans with practical skills, experienced mentors,
+                and real opportunities to gain the experience employers are looking for.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -169,11 +162,7 @@ export default function LandingPage() {
                   <ArrowRight className="h-4 w-4" />
                 </Button>
 
-                <Button
-                  href="/onboarding/choose-role"
-                  size="lg"
-                  variant="secondary"
-                >
+                <Button href="/onboarding/choose-role" size="lg" variant="secondary">
                   Become a mentor
                 </Button>
               </div>
@@ -187,7 +176,7 @@ export default function LandingPage() {
                       className="relative h-11 w-11 overflow-hidden rounded-full border-2 border-background bg-surface-container-high"
                     >
                       <Image
-                        src={`/images/avatar-${person}.jpg`}
+                        src={`/images/avatar-${person}.png`}
                         alt=""
                         fill
                         sizes="44px"
@@ -198,9 +187,7 @@ export default function LandingPage() {
                 </div>
 
                 <div>
-                  <p className="text-headline-sm text-on-background">
-                    10,000+
-                  </p>
+                  <p className="text-headline-sm text-on-background">10,000+</p>
                   <p className="text-label-md text-on-surface-variant">
                     young Africans building their future
                   </p>
@@ -234,13 +221,9 @@ export default function LandingPage() {
                     </span>
                   </div>
 
-                  <p className="text-label-sm text-white/60">
-                    Software Engineering Intern
-                  </p>
+                  <p className="text-label-sm text-white/60">Software Engineering Intern</p>
 
-                  <p className="mt-1 text-title-md">
-                    Start gaining real experience.
-                  </p>
+                  <p className="mt-1 text-title-md">Start gaining real experience.</p>
 
                   <div className="mt-4 flex items-center gap-2 text-label-sm text-primary-fixed-dim">
                     Explore opportunities
@@ -265,18 +248,14 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <p className="text-display-md text-primary-container">
-                Skills + Experience
-              </p>
+              <p className="text-display-md text-primary-container">Skills + Experience</p>
               <p className="mt-2 text-body-md text-on-surface-variant">
                 are what turn education into career readiness.
               </p>
             </div>
 
             <div>
-              <p className="text-display-md text-primary-container">
-                One platform
-              </p>
+              <p className="text-display-md text-primary-container">One platform</p>
               <p className="mt-2 text-body-md text-on-surface-variant">
                 to connect learning, mentorship, and opportunities.
               </p>
@@ -288,7 +267,7 @@ export default function LandingPage() {
         <section id="explore" className="px-gutter py-2xl">
           <div className="mx-auto max-w-container-max">
             <div className="mx-auto max-w-2xl text-center">
-              <div className="inline-flex items-center gap-2 text-label-md font-medium tracking-[0.18em] text-primary uppercase">
+              <div className="inline-flex items-center gap-2 text-label-md font-medium uppercase tracking-[0.18em] text-primary">
                 <span className="h-px w-8 bg-primary-container" />
                 The Lexep ecosystem
                 <span className="h-px w-8 bg-primary-container" />
@@ -299,8 +278,8 @@ export default function LandingPage() {
               </h2>
 
               <p className="mt-4 text-body-lg text-on-surface-variant">
-                Your career journey does not end when you finish learning.
-                Lexep helps you keep moving forward.
+                Your career journey does not end when you finish learning. Lexep helps you keep
+                moving forward.
               </p>
             </div>
 
@@ -320,13 +299,11 @@ export default function LandingPage() {
                         <Icon className="h-7 w-7" />
                       </div>
 
-                      <p className="mt-7 text-label-md font-medium tracking-[0.15em] text-primary uppercase">
+                      <p className="mt-7 text-label-md font-medium uppercase tracking-[0.15em] text-primary">
                         {feature.eyebrow}
                       </p>
 
-                      <h3 className="mt-3 text-headline-md text-on-background">
-                        {feature.title}
-                      </h3>
+                      <h3 className="mt-3 text-headline-md text-on-background">{feature.title}</h3>
 
                       <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
                         {feature.body}
@@ -355,7 +332,7 @@ export default function LandingPage() {
           <div className="mx-auto max-w-container-max px-gutter py-2xl">
             <div className="grid gap-xl lg:grid-cols-[0.8fr_1.2fr]">
               <div>
-                <div className="inline-flex items-center gap-2 text-label-md font-medium tracking-[0.18em] text-primary uppercase">
+                <div className="inline-flex items-center gap-2 text-label-md font-medium uppercase tracking-[0.18em] text-primary">
                   <CheckCircle2 className="h-4 w-4" />
                   How it works
                 </div>
@@ -365,17 +342,11 @@ export default function LandingPage() {
                 </h2>
 
                 <p className="mt-5 max-w-lg text-body-lg leading-relaxed text-on-surface-variant">
-                  Whether you are still learning, looking for guidance, or ready
-                  for your first real opportunity, Lexep helps you take the next
-                  meaningful step.
+                  Whether you are still learning, looking for guidance, or ready for your first real
+                  opportunity, Lexep helps you take the next meaningful step.
                 </p>
 
-                <Button
-                  href="/sign-up"
-                  size="lg"
-                  variant="primary"
-                  className="mt-8"
-                >
+                <Button href="/sign-up" size="lg" variant="primary" className="mt-8">
                   Create your free account
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -392,9 +363,7 @@ export default function LandingPage() {
                     </span>
 
                     <div>
-                      <h3 className="text-title-lg text-on-background">
-                        {step.title}
-                      </h3>
+                      <h3 className="text-title-lg text-on-background">{step.title}</h3>
 
                       <p className="mt-2 text-body-md leading-relaxed text-on-surface-variant">
                         {step.body}
@@ -411,7 +380,7 @@ export default function LandingPage() {
         <section className="px-gutter py-2xl">
           <div className="mx-auto max-w-container-max">
             <div className="mb-xl max-w-2xl">
-              <p className="text-label-md font-medium tracking-[0.18em] text-primary uppercase">
+              <p className="text-label-md font-medium uppercase tracking-[0.18em] text-primary">
                 Built for everyone shaping the future
               </p>
 
@@ -427,8 +396,8 @@ export default function LandingPage() {
                 <h3 className="mt-8 text-headline-md">For learners</h3>
 
                 <p className="mt-3 text-body-md leading-relaxed text-[#c9c7c6]">
-                  Build practical skills, find mentors, discover internships,
-                  and start developing a career you are proud of.
+                  Build practical skills, find mentors, discover internships, and start developing a
+                  career you are proud of.
                 </p>
 
                 <Link
@@ -443,13 +412,11 @@ export default function LandingPage() {
               <div className="rounded-xl border border-outline-variant/50 bg-surface-container-lowest p-lg">
                 <HeartHandshake className="h-8 w-8 text-primary" />
 
-                <h3 className="mt-8 text-headline-md text-on-background">
-                  For mentors
-                </h3>
+                <h3 className="mt-8 text-headline-md text-on-background">For mentors</h3>
 
                 <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                  Share what you have learned, guide emerging talent, and make
-                  your professional experience matter beyond your workplace.
+                  Share what you have learned, guide emerging talent, and make your professional
+                  experience matter beyond your workplace.
                 </p>
 
                 <Link
@@ -464,13 +431,11 @@ export default function LandingPage() {
               <div className="rounded-xl border border-outline-variant/50 bg-surface-container-lowest p-lg">
                 <Building2 className="h-8 w-8 text-primary" />
 
-                <h3 className="mt-8 text-headline-md text-on-background">
-                  For companies
-                </h3>
+                <h3 className="mt-8 text-headline-md text-on-background">For companies</h3>
 
                 <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                  Build a stronger talent pipeline by connecting with motivated
-                  young people ready to gain real workplace experience.
+                  Build a stronger talent pipeline by connecting with motivated young people ready
+                  to gain real workplace experience.
                 </p>
 
                 <Link
@@ -511,9 +476,8 @@ export default function LandingPage() {
                 </h2>
 
                 <p className="mt-5 max-w-lg text-body-lg leading-relaxed text-[#c9c7c6]">
-                  Join a growing community of ambitious young Africans learning,
-                  connecting, gaining experience, and creating better
-                  possibilities for themselves.
+                  Join a growing community of ambitious young Africans learning, connecting, gaining
+                  experience, and creating better possibilities for themselves.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -537,18 +501,16 @@ export default function LandingPage() {
         <div className="mx-auto max-w-container-max px-gutter py-xl">
           <div className="grid gap-xl md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
             <div>
-              <Logo variant="dark" size={32} />
+              <Logo variant="dark" size={64} />
 
               <p className="mt-5 max-w-xs text-body-md leading-relaxed text-[#a8a6a5]">
-                Connecting African talent with the skills, people, and
-                opportunities needed to build meaningful careers.
+                Connecting African talent with the skills, people, and opportunities needed to build
+                meaningful careers.
               </p>
             </div>
 
             <div>
-              <p className="text-label-md font-semibold text-primary-fixed-dim">
-                Platform
-              </p>
+              <p className="text-label-md font-semibold text-primary-fixed-dim">Platform</p>
 
               <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
                 <Link href="#explore" className="hover:text-white">
@@ -567,9 +529,7 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <p className="text-label-md font-semibold text-primary-fixed-dim">
-                Company
-              </p>
+              <p className="text-label-md font-semibold text-primary-fixed-dim">Company</p>
 
               <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
                 <Link href="/about" className="hover:text-white">
@@ -588,9 +548,7 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <p className="text-label-md font-semibold text-primary-fixed-dim">
-                Support
-              </p>
+              <p className="text-label-md font-semibold text-primary-fixed-dim">Support</p>
 
               <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
                 <Link href="/help" className="hover:text-white">
@@ -610,9 +568,7 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-xl flex flex-col justify-between gap-4 border-t border-white/10 pt-md text-label-sm text-[#a8a6a5] md:flex-row">
-            <span>
-              © {new Date().getFullYear()} Lexep. All rights reserved.
-            </span>
+            <span>© {new Date().getFullYear()} Lexep. All rights reserved.</span>
 
             <div className="flex flex-wrap gap-5">
               <Link href="/privacy" className="hover:text-white">

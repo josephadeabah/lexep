@@ -33,7 +33,7 @@ export default function UpgradeContent() {
 
   if (!config.data?.premium_features_enabled) {
     return (
-      <div className="px-gutter flex min-h-screen items-center justify-center bg-surface">
+      <div className="flex min-h-screen items-center justify-center bg-surface px-gutter">
         <div className="card-level1 max-w-md p-md text-center">
           <div className="flex justify-center">
             <Logo variant="light" />
@@ -62,7 +62,7 @@ export default function UpgradeContent() {
   const price = cycle === "annual" ? plan.annual_price! : plan.monthly_price! * 12;
 
   return (
-    <div className="px-gutter flex min-h-screen items-center justify-center bg-surface py-xl">
+    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
       <div className="w-full max-w-lg">
         <div className="card-level1 p-md">
           <div className="text-center">

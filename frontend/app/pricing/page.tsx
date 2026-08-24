@@ -19,7 +19,7 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-outline-variant/40">
-        <div className="px-gutter mx-auto flex max-w-container-max items-center justify-between py-4">
+        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
           <Link href="/">
             <Logo variant="light" />
           </Link>
@@ -62,7 +62,7 @@ export default function PricingPage() {
         </div>
       </header>
 
-      <div className="px-gutter mx-auto max-w-container-max py-xl text-center">
+      <div className="mx-auto max-w-container-max px-gutter py-xl text-center">
         <h1 className="text-display-lg text-on-background" style={{ fontSize: 48 }}>
           Invest in your architectural future.
         </h1>

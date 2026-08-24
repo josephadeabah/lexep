@@ -11,7 +11,7 @@ const UNLOCKED = [
 
 export default function UpgradeSuccessPage() {
   return (
-    <div className="px-gutter flex min-h-screen items-center justify-center bg-surface py-xl">
+    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
       <div className="card-level1 grid w-full max-w-2xl gap-md p-md sm:grid-cols-[160px_1fr] sm:items-center">
         <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-surface-container-high">
           <Award className="h-14 w-14 text-primary-container" />

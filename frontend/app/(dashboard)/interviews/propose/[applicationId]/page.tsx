@@ -62,7 +62,7 @@ export default function ProposeInterviewPage() {
   }
 
   return (
-    <div className="p-gutter fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-gutter">
       <div className="w-full max-w-lg overflow-hidden rounded-lg bg-surface-container-lowest shadow-level2">
         <div className="flex items-center justify-between border-b border-outline-variant/40 p-md">
           <div>

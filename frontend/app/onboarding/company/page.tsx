@@ -64,7 +64,7 @@ export default function CompanyOnboardingPage() {
   }
 
   return (
-    <div className="px-gutter min-h-screen bg-surface py-xl">
+    <div className="min-h-screen bg-surface px-gutter py-xl">
       <div className="card-level1 mx-auto max-w-2xl overflow-hidden p-0">
         <div className="bg-surface-container-low px-md py-md">
           <p className="flex items-center gap-2 text-label-sm text-on-surface-variant">

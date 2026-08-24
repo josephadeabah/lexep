@@ -96,7 +96,7 @@ export default function MentorOnboardingPage() {
   }
 
   return (
-    <div className="px-gutter min-h-screen bg-surface py-xl">
+    <div className="min-h-screen bg-surface px-gutter py-xl">
       <div className="mx-auto max-w-3xl">
         <div className="mb-6 flex items-center justify-between text-label-sm text-on-surface-variant">
           <span>STEP 1 OF 1</span>

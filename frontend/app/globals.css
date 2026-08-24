@@ -6,24 +6,29 @@
   * {
     @apply border-outline-variant/30;
   }
-  
+
   body {
     @apply bg-surface font-body text-on-surface antialiased;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display;
   }
-  
+
   :focus-visible {
-    @apply outline-2 outline-primary outline-offset-2;
+    @apply outline-2 outline-offset-2 outline-primary;
   }
-  
+
   /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
   }
-  
+
   /* Selection color */
   ::selection {
     @apply bg-primary-container/30 text-on-surface;
@@ -34,15 +39,15 @@
   .card-level1 {
     @apply rounded-lg bg-surface-container-lowest shadow-level1;
   }
-  
+
   .card-level2 {
     @apply rounded-lg bg-surface-container-lowest shadow-level2;
   }
-  
+
   .container-max {
     @apply mx-auto max-w-container-max px-gutter;
   }
-  
+
   .section-padding {
     @apply py-xl md:py-2xl;
   }
@@ -53,21 +58,21 @@
   .text-balance {
     text-wrap: balance;
   }
-  
+
   /* Gradient text for hero */
   .text-gradient-gold {
     @apply bg-gradient-to-r from-primary-container to-primary bg-clip-text text-transparent;
   }
-  
+
   /* Animation utilities */
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out forwards;
   }
-  
+
   .animate-slide-up {
     animation: slideUp 0.6s ease-out forwards;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -76,7 +81,7 @@
       opacity: 1;
     }
   }
-  
+
   @keyframes slideUp {
     from {
       opacity: 0;

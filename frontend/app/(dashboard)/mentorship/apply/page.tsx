@@ -95,7 +95,7 @@ export default function MentorApplicationPage() {
   }
 
   return (
-    <div className="px-gutter min-h-screen bg-surface-container-low py-xl">
+    <div className="min-h-screen bg-surface-container-low px-gutter py-xl">
       <div className="mx-auto flex max-w-2xl items-center justify-between pb-md">
         <span className="text-headline-md text-primary">Lexep</span>
         <Link

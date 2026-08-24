@@ -14,7 +14,7 @@ export default function InsightsPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-outline-variant/40">
-        <div className="px-gutter mx-auto flex max-w-container-max items-center justify-between py-4">
+        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
           <Link href="/">
             <Logo variant="light" />
           </Link>
@@ -49,7 +49,7 @@ export default function InsightsPage() {
         </div>
       </header>
 
-      <section className="px-gutter mx-auto grid max-w-container-max items-center gap-md py-xl md:grid-cols-2">
+      <section className="mx-auto grid max-w-container-max items-center gap-md px-gutter py-xl md:grid-cols-2">
         <div>
           <h1 className="text-display-lg text-on-background" style={{ fontSize: 48 }}>
             Stories of <span className="text-primary-container">Impact</span>
@@ -71,7 +71,7 @@ export default function InsightsPage() {
       </section>
 
       <section className="bg-inverse-surface py-lg">
-        <div className="px-gutter mx-auto grid max-w-container-max grid-cols-2 gap-md text-center md:grid-cols-4">
+        <div className="mx-auto grid max-w-container-max grid-cols-2 gap-md px-gutter text-center md:grid-cols-4">
           {STATS.map((stat) => (
             <div key={stat.label}>
               <p className="text-display-lg text-primary-fixed-dim" style={{ fontSize: 40 }}>
@@ -85,7 +85,7 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <section id="spotlight" className="px-gutter mx-auto max-w-container-max py-xl">
+      <section id="spotlight" className="mx-auto max-w-container-max px-gutter py-xl">
         <h2 className="text-center text-headline-lg text-on-background">Spotlight Journey</h2>
         <div className="mt-md grid gap-md rounded-lg border border-outline-variant p-md md:grid-cols-2">
           <div className="flex aspect-video items-center justify-center rounded-lg bg-surface-container-high text-label-sm text-on-surface-variant md:aspect-auto">
@@ -117,7 +117,7 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <footer className="px-gutter border-t border-outline-variant/40 bg-inverse-surface py-md text-inverse-on-surface">
+      <footer className="border-t border-outline-variant/40 bg-inverse-surface px-gutter py-md text-inverse-on-surface">
         <div className="mx-auto flex max-w-container-max flex-col items-center justify-between gap-4 text-label-sm md:flex-row">
           <Logo variant="dark" size={22} />
           <span className="text-[#c9c7c6]">

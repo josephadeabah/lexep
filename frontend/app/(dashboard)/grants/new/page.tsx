@@ -34,7 +34,7 @@ export default function CreateGrantGroupPage() {
   }
 
   return (
-    <div className="px-gutter min-h-screen bg-surface-container-low py-xl">
+    <div className="min-h-screen bg-surface-container-low px-gutter py-xl">
       <div className="mx-auto flex max-w-2xl items-center justify-between pb-md">
         <h1 className="flex items-center gap-2 text-headline-md text-on-background">
           <span className="text-primary">Lexep Impact</span>

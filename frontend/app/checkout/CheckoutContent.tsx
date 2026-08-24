@@ -59,14 +59,14 @@ export default function CheckoutContent() {
 
   return (
     <div className="min-h-screen bg-surface">
-      <header className="px-gutter flex items-center justify-between border-b border-outline-variant/40 py-4">
+      <header className="flex items-center justify-between border-b border-outline-variant/40 px-gutter py-4">
         <Logo variant="light" />
         <span className="flex items-center gap-2 text-label-md text-on-surface-variant">
           <Lock className="h-4 w-4" /> Secure Checkout
         </span>
       </header>
 
-      <div className="px-gutter mx-auto grid max-w-4xl gap-md py-xl md:grid-cols-2">
+      <div className="mx-auto grid max-w-4xl gap-md px-gutter py-xl md:grid-cols-2">
         <div className="card-level1 h-fit p-md">
           <h1 className="text-headline-lg text-on-background">Upgrade Summary</h1>
           <div className="mt-md flex items-start gap-3">

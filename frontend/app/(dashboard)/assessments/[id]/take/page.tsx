@@ -45,7 +45,7 @@ export default function TakeAssessmentPage() {
 
   return (
     <div className="fixed inset-0 z-40 flex flex-col bg-surface">
-      <div className="px-gutter flex items-center justify-between border-b border-outline-variant/40 py-4">
+      <div className="flex items-center justify-between border-b border-outline-variant/40 px-gutter py-4">
         <span className="flex items-center gap-2 text-label-md text-on-background">
           <span className="text-headline-md text-primary">Lexep</span>
           <span className="text-on-surface-variant">| {p.assessment_title}</span>
@@ -98,7 +98,7 @@ export default function TakeAssessmentPage() {
           </ul>
         </aside>
 
-        <main className="px-gutter flex-1 overflow-y-auto py-lg">
+        <main className="flex-1 overflow-y-auto px-gutter py-lg">
           <div className="mx-auto max-w-2xl">
             <p className="text-label-sm uppercase tracking-wide text-primary">
               {p.assessment_title}
