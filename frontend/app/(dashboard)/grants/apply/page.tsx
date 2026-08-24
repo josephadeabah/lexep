@@ -43,7 +43,10 @@ export default function GrantApplicationPage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <Link href="/grants" className="mb-4 flex items-center gap-2 text-label-md text-on-surface-variant hover:text-primary">
+      <Link
+        href="/grants"
+        className="mb-4 flex items-center gap-2 text-label-md text-on-surface-variant hover:text-primary"
+      >
         <ArrowLeft className="h-4 w-4" /> Back to Grants
       </Link>
 
@@ -66,7 +69,9 @@ export default function GrantApplicationPage() {
                   <span
                     className={cn(
                       "flex h-9 w-9 items-center justify-center rounded-full text-label-md",
-                      done || active ? "bg-primary-container text-on-primary-container" : "bg-surface-container-high text-on-surface-variant"
+                      done || active
+                        ? "bg-primary-container text-on-primary-container"
+                        : "bg-surface-container-high text-on-surface-variant"
                     )}
                   >
                     {done ? <Check className="h-4 w-4" /> : index}
@@ -74,7 +79,12 @@ export default function GrantApplicationPage() {
                   <span className="text-label-sm text-on-surface-variant">{label}</span>
                 </div>
                 {index !== STEPS.length && (
-                  <div className={cn("mx-2 h-0.5 flex-1", done ? "bg-primary-container" : "bg-surface-container-high")} />
+                  <div
+                    className={cn(
+                      "mx-2 h-0.5 flex-1",
+                      done ? "bg-primary-container" : "bg-surface-container-high"
+                    )}
+                  />
                 )}
               </div>
             );
@@ -92,7 +102,11 @@ export default function GrantApplicationPage() {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
-              <Select label="Purpose of Grant" value={purpose} onChange={(e) => setPurpose(e.target.value)}>
+              <Select
+                label="Purpose of Grant"
+                value={purpose}
+                onChange={(e) => setPurpose(e.target.value)}
+              >
                 <option value="">Select primary purpose</option>
                 <option>Laptop / Equipment</option>
                 <option>Internet Access</option>
@@ -123,9 +137,14 @@ export default function GrantApplicationPage() {
             </p>
             <div className="flex flex-wrap gap-2">
               {documents.map((doc) => (
-                <span key={doc} className="flex items-center gap-1 rounded-full bg-surface-container-high px-3 py-1 text-label-sm">
+                <span
+                  key={doc}
+                  className="flex items-center gap-1 rounded-full bg-surface-container-high px-3 py-1 text-label-sm"
+                >
                   {doc}
-                  <button onClick={() => setDocuments((prev) => prev.filter((d) => d !== doc))}>×</button>
+                  <button onClick={() => setDocuments((prev) => prev.filter((d) => d !== doc))}>
+                    ×
+                  </button>
                 </span>
               ))}
               <input

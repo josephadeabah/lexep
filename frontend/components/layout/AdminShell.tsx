@@ -54,9 +54,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         <OfflineBanner />
 
         <div className="min-h-full px-md py-lg md:px-xl md:py-xl">
-          <div className="mx-auto w-full max-w-container-max">
-            {children}
-          </div>
+          <div className="mx-auto w-full max-w-container-max">{children}</div>
         </div>
       </main>
     </div>

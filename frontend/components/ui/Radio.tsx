@@ -10,9 +10,19 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
   ({ className, label, description, id, checked, ...props }, ref) => {
     const boxId = id || Math.random().toString(36).slice(2);
     return (
-      <label htmlFor={boxId} className={cn("flex items-start gap-3 cursor-pointer select-none", className)}>
-        <span className="relative flex-shrink-0 mt-0.5">
-          <input ref={ref} id={boxId} type="radio" checked={checked} className="peer sr-only" {...props} />
+      <label
+        htmlFor={boxId}
+        className={cn("flex cursor-pointer select-none items-start gap-3", className)}
+      >
+        <span className="relative mt-0.5 flex-shrink-0">
+          <input
+            ref={ref}
+            id={boxId}
+            type="radio"
+            checked={checked}
+            className="peer sr-only"
+            {...props}
+          />
           <span
             className={cn(
               "flex h-5 w-5 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest transition",
@@ -26,7 +36,9 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
         {(label || description) && (
           <span className="flex flex-col">
             {label && <span className="text-body-md text-on-surface">{label}</span>}
-            {description && <span className="text-label-sm text-on-surface-variant">{description}</span>}
+            {description && (
+              <span className="text-label-sm text-on-surface-variant">{description}</span>
+            )}
           </span>
         )}
       </label>

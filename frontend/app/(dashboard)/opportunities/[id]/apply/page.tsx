@@ -80,7 +80,10 @@ export default function ApplyForInternshipPage() {
           <ArrowLeft className="h-4 w-4" /> Back
         </button>
         <span className="text-headline-md text-primary">Lexep</span>
-        <Link href={`/opportunities/${opportunityId}`} className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary">
+        <Link
+          href={`/opportunities/${opportunityId}`}
+          className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary"
+        >
           <X className="h-4 w-4" /> Cancel
         </Link>
       </div>
@@ -88,7 +91,9 @@ export default function ApplyForInternshipPage() {
       <div className="mb-lg text-center">
         <h1 className="text-headline-lg text-on-background">Apply for Internship</h1>
         <p className="mt-1 text-body-md text-on-surface-variant">
-          {opportunity.data ? `Applying to ${opportunity.data.title} at ${opportunity.data.company_name}` : "Complete your profile to be considered for this opportunity."}
+          {opportunity.data
+            ? `Applying to ${opportunity.data.title} at ${opportunity.data.company_name}`
+            : "Complete your profile to be considered for this opportunity."}
         </p>
       </div>
 
@@ -103,16 +108,25 @@ export default function ApplyForInternshipPage() {
                 <span
                   className={cn(
                     "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-label-md",
-                    done || active ? "bg-primary-container text-on-primary-container" : "bg-surface-container-high text-on-surface-variant"
+                    done || active
+                      ? "bg-primary-container text-on-primary-container"
+                      : "bg-surface-container-high text-on-surface-variant"
                   )}
                 >
                   {done ? <Check className="h-4 w-4" /> : index}
                 </span>
                 {index !== STEPS.length && (
-                  <div className={cn("mx-2 h-0.5 flex-1", done ? "bg-primary-container" : "bg-surface-container-high")} />
+                  <div
+                    className={cn(
+                      "mx-2 h-0.5 flex-1",
+                      done ? "bg-primary-container" : "bg-surface-container-high"
+                    )}
+                  />
                 )}
               </div>
-              <span className="mt-2 text-center text-label-sm text-on-surface-variant">{label}</span>
+              <span className="mt-2 text-center text-label-sm text-on-surface-variant">
+                {label}
+              </span>
             </div>
           );
         })}
@@ -123,16 +137,26 @@ export default function ApplyForInternshipPage() {
           <div className="flex flex-col gap-md">
             <div>
               <h2 className="text-headline-md text-on-background">Step 1: Professional Details</h2>
-              <p className="text-body-md text-on-surface-variant">Provide your educational background and initial motivations.</p>
+              <p className="text-body-md text-on-surface-variant">
+                Provide your educational background and initial motivations.
+              </p>
             </div>
-            <Select label="Highest Qualification" value={qualification} onChange={(e) => setQualification(e.target.value)}>
+            <Select
+              label="Highest Qualification"
+              value={qualification}
+              onChange={(e) => setQualification(e.target.value)}
+            >
               <option value="">Select your qualification level</option>
               <option>High School</option>
               <option>Undergraduate</option>
               <option>Bachelor&apos;s Degree</option>
               <option>Master&apos;s Degree</option>
             </Select>
-            <Select label="Years of Relevant Experience" value={yearsExperience} onChange={(e) => setYearsExperience(e.target.value)}>
+            <Select
+              label="Years of Relevant Experience"
+              value={yearsExperience}
+              onChange={(e) => setYearsExperience(e.target.value)}
+            >
               <option value="">Select years of experience</option>
               <option>0-1 years</option>
               <option>1-3 years</option>
@@ -166,15 +190,21 @@ export default function ApplyForInternshipPage() {
               <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-outline-variant bg-surface-container-low py-xl text-center">
                 <UploadCloud className="h-8 w-8 text-outline" />
                 <span className="text-label-md text-primary">Upload a file</span>
-                <span className="text-label-sm text-on-surface-variant">or drag and drop — PDF, DOC, DOCX up to 10MB</span>
+                <span className="text-label-sm text-on-surface-variant">
+                  or drag and drop — PDF, DOC, DOCX up to 10MB
+                </span>
                 <input
                   type="file"
                   className="hidden"
                   onChange={(e) => handleResumeUpload(e.target.files?.[0])}
                 />
               </label>
-              {isUploadingResume && <p className="mt-2 text-label-sm text-on-surface-variant">Uploading…</p>}
-              {resumeFilename && !isUploadingResume && <p className="mt-2 text-label-sm text-primary">{resumeFilename} selected</p>}
+              {isUploadingResume && (
+                <p className="mt-2 text-label-sm text-on-surface-variant">Uploading…</p>
+              )}
+              {resumeFilename && !isUploadingResume && (
+                <p className="mt-2 text-label-sm text-primary">{resumeFilename} selected</p>
+              )}
             </div>
             <Textarea
               label="Additional Information (Optional)"
@@ -188,11 +218,13 @@ export default function ApplyForInternshipPage() {
         {step === 3 && (
           <div className="flex flex-col gap-md">
             <h2 className="text-headline-md text-on-background">Review &amp; Submit</h2>
-            <p className="text-body-md text-on-surface-variant">Ensure your details are correct before applying.</p>
+            <p className="text-body-md text-on-surface-variant">
+              Ensure your details are correct before applying.
+            </p>
 
             <div className="rounded-md bg-surface-container-low p-md">
               <h3 className="text-headline-md text-on-background">Application Summary</h3>
-              <div className="mt-3 grid gap-4 sm:grid-cols-2 text-body-md">
+              <div className="mt-3 grid gap-4 text-body-md sm:grid-cols-2">
                 <div>
                   <p className="text-label-sm text-on-surface-variant">Full Name</p>
                   <p className="text-on-background">{user?.full_name}</p>
@@ -248,7 +280,8 @@ export default function ApplyForInternshipPage() {
             </Button>
           ) : (
             <Button onClick={handleSubmit} disabled={!confirmed || isSubmitting}>
-              {isSubmitting ? "Submitting…" : "Submit Application"} <ArrowRight className="h-4 w-4" />
+              {isSubmitting ? "Submitting…" : "Submit Application"}{" "}
+              <ArrowRight className="h-4 w-4" />
             </Button>
           )}
         </div>

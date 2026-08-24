@@ -2,7 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Terminal, TrendingUp, ClipboardEdit, MessagesSquare, MessageCircle, Video, ImageIcon } from "lucide-react";
+import {
+  Terminal,
+  TrendingUp,
+  ClipboardEdit,
+  MessagesSquare,
+  MessageCircle,
+  Video,
+  ImageIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -10,15 +18,42 @@ import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 
 const STYLES = [
-  { id: "technical_guidance", title: "Technical Guidance", description: "Focus on code reviews, architecture, and technical skill building.", icon: Terminal },
-  { id: "career_coaching", title: "Career Coaching", description: "Navigation, leadership, and long-term professional growth.", icon: TrendingUp },
-  { id: "project_review", title: "Project Review", description: "Feedback on portfolios, specific deliverables, and presentations.", icon: ClipboardEdit },
+  {
+    id: "technical_guidance",
+    title: "Technical Guidance",
+    description: "Focus on code reviews, architecture, and technical skill building.",
+    icon: Terminal,
+  },
+  {
+    id: "career_coaching",
+    title: "Career Coaching",
+    description: "Navigation, leadership, and long-term professional growth.",
+    icon: TrendingUp,
+  },
+  {
+    id: "project_review",
+    title: "Project Review",
+    description: "Feedback on portfolios, specific deliverables, and presentations.",
+    icon: ClipboardEdit,
+  },
 ];
 
 const LEVELS = [
-  { id: "beginner", title: "Beginner", description: "Early in their journey, needs foundational guidance." },
-  { id: "intermediate", title: "Intermediate", description: "Has basic experience, looking to specialize or level up." },
-  { id: "advanced", title: "Advanced", description: "Experienced professionals seeking specific high-level advice." },
+  {
+    id: "beginner",
+    title: "Beginner",
+    description: "Early in their journey, needs foundational guidance.",
+  },
+  {
+    id: "intermediate",
+    title: "Intermediate",
+    description: "Has basic experience, looking to specialize or level up.",
+  },
+  {
+    id: "advanced",
+    title: "Advanced",
+    description: "Experienced professionals seeking specific high-level advice.",
+  },
 ];
 
 const TOOLS = [
@@ -61,11 +96,11 @@ export default function MentorOnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface px-gutter py-xl">
+    <div className="px-gutter min-h-screen bg-surface py-xl">
       <div className="mx-auto max-w-3xl">
         <div className="mb-6 flex items-center justify-between text-label-sm text-on-surface-variant">
           <span>STEP 1 OF 1</span>
-          <span className="text-primary font-label-md">Finalizing Profile</span>
+          <span className="font-label-md text-primary">Finalizing Profile</span>
         </div>
         <div className="mb-lg h-1 w-full rounded-full bg-primary-container" />
 
@@ -79,7 +114,9 @@ export default function MentorOnboardingPage() {
 
           <div className="mt-lg">
             <h2 className="text-headline-md text-on-background">Mentoring Style</h2>
-            <p className="text-label-sm text-on-surface-variant">What is your primary approach to guiding mentees?</p>
+            <p className="text-label-sm text-on-surface-variant">
+              What is your primary approach to guiding mentees?
+            </p>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               {STYLES.map((s) => (
                 <button
@@ -87,7 +124,9 @@ export default function MentorOnboardingPage() {
                   onClick={() => setStyle(s.id)}
                   className={cn(
                     "flex flex-col items-start gap-2 rounded-md border p-4 text-left transition",
-                    style === s.id ? "border-primary-container bg-surface-container-low" : "border-outline-variant hover:bg-surface-container-low"
+                    style === s.id
+                      ? "border-primary-container bg-surface-container-low"
+                      : "border-outline-variant hover:bg-surface-container-low"
                   )}
                 >
                   <s.icon className="h-5 w-5 text-on-surface" />
@@ -100,17 +139,24 @@ export default function MentorOnboardingPage() {
 
           <div className="mt-lg border-t border-outline-variant/40 pt-md">
             <h2 className="text-headline-md text-on-background">Preferred Mentee Level</h2>
-            <p className="text-label-sm text-on-surface-variant">Select all that apply based on your current capacity.</p>
+            <p className="text-label-sm text-on-surface-variant">
+              Select all that apply based on your current capacity.
+            </p>
             <div className="mt-3 flex flex-col gap-2">
               {LEVELS.map((level) => (
                 <label
                   key={level.id}
                   className="flex cursor-pointer items-center gap-3 rounded-md border border-outline-variant px-4 py-3 hover:bg-surface-container-low"
                 >
-                  <Checkbox checked={levels.includes(level.id)} onChange={() => toggleLevel(level.id)} />
+                  <Checkbox
+                    checked={levels.includes(level.id)}
+                    onChange={() => toggleLevel(level.id)}
+                  />
                   <span>
                     <span className="block text-body-md text-on-surface">{level.title}</span>
-                    <span className="block text-label-sm text-on-surface-variant">{level.description}</span>
+                    <span className="block text-label-sm text-on-surface-variant">
+                      {level.description}
+                    </span>
                   </span>
                 </label>
               ))}
@@ -119,7 +165,9 @@ export default function MentorOnboardingPage() {
 
           <div className="mt-lg border-t border-outline-variant/40 pt-md">
             <h2 className="text-headline-md text-on-background">Communication Tools</h2>
-            <p className="text-label-sm text-on-surface-variant">How do you prefer to conduct sessions?</p>
+            <p className="text-label-sm text-on-surface-variant">
+              How do you prefer to conduct sessions?
+            </p>
             <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {TOOLS.map((tool) => (
                 <button
@@ -127,7 +175,9 @@ export default function MentorOnboardingPage() {
                   onClick={() => toggleTool(tool.id)}
                   className={cn(
                     "flex flex-col items-center gap-2 rounded-md border p-4 transition",
-                    tools.includes(tool.id) ? "border-primary-container bg-surface-container-low" : "border-outline-variant hover:bg-surface-container-low"
+                    tools.includes(tool.id)
+                      ? "border-primary-container bg-surface-container-low"
+                      : "border-outline-variant hover:bg-surface-container-low"
                   )}
                 >
                   <tool.icon className="h-5 w-5 text-on-surface" />

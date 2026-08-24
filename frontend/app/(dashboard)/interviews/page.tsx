@@ -32,13 +32,17 @@ function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
         </p>
         <div className="flex gap-1">
           <button
-            onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))}
+            onClick={() =>
+              setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))
+            }
             className="rounded-md px-2 py-1 hover:bg-surface-container-low"
           >
             ‹
           </button>
           <button
-            onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))}
+            onClick={() =>
+              setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))
+            }
             className="rounded-md px-2 py-1 hover:bg-surface-container-low"
           >
             ›
@@ -85,7 +89,9 @@ export default function InterviewsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg text-on-background">Interview Schedule</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">Manage your upcoming and pending candidate interviews.</p>
+          <p className="mt-1 text-body-md text-on-surface-variant">
+            Manage your upcoming and pending candidate interviews.
+          </p>
         </div>
       </div>
 
@@ -111,7 +117,9 @@ export default function InterviewsPage() {
                         <Avatar name={i.candidate_name ?? "Candidate"} size={32} />
                         <div>
                           <p className="text-label-md text-on-background">{i.candidate_name}</p>
-                          <p className="text-label-sm text-on-surface-variant">{i.opportunity_title}</p>
+                          <p className="text-label-sm text-on-surface-variant">
+                            {i.opportunity_title}
+                          </p>
                         </div>
                       </div>
                       <Mail className="h-4 w-4 text-outline" />
@@ -142,11 +150,16 @@ export default function InterviewsPage() {
                       <div className="flex items-center gap-3">
                         <Avatar name={interview.candidate_name ?? "Candidate"} size={44} />
                         <div>
-                          <p className="text-label-md text-on-background">{interview.candidate_name}</p>
-                          <p className="text-body-md text-on-surface-variant">{interview.opportunity_title}</p>
+                          <p className="text-label-md text-on-background">
+                            {interview.candidate_name}
+                          </p>
+                          <p className="text-body-md text-on-surface-variant">
+                            {interview.opportunity_title}
+                          </p>
                           {interview.scheduled_at && (
                             <p className="mt-1 flex items-center gap-2 text-label-sm text-on-surface-variant">
-                              {formatDate(interview.scheduled_at)} · {formatTime(interview.scheduled_at)}
+                              {formatDate(interview.scheduled_at)} ·{" "}
+                              {formatTime(interview.scheduled_at)}
                               {interview.meeting_service && ` · ${interview.meeting_service}`}
                             </p>
                           )}
@@ -162,7 +175,9 @@ export default function InterviewsPage() {
                 ))}
             </ul>
           ) : (
-            <p className="mt-3 text-body-md text-on-surface-variant">No interviews scheduled yet.</p>
+            <p className="mt-3 text-body-md text-on-surface-variant">
+              No interviews scheduled yet.
+            </p>
           )}
         </Card>
       </div>

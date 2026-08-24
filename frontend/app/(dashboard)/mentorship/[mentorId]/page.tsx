@@ -71,7 +71,10 @@ export default function MentorProfilePage() {
               <h2 className="text-headline-md text-on-background">Mentorship Packages</h2>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 {packages.data.map((pkg) => (
-                  <div key={pkg.id} className="relative rounded-md border border-outline-variant p-4">
+                  <div
+                    key={pkg.id}
+                    className="relative rounded-md border border-outline-variant p-4"
+                  >
                     {pkg.is_popular && (
                       <span className="absolute -top-3 right-3 rounded-full bg-primary-container px-2 py-0.5 text-label-sm text-on-primary-container">
                         Popular
@@ -107,11 +110,14 @@ export default function MentorProfilePage() {
             <h2 className="text-headline-md text-on-background">Availability</h2>
             <div className="mt-3 flex flex-col gap-2 text-body-md text-on-surface">
               <span className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-on-surface-variant" /> {m.hours_per_week ?? "Flexible"}
+                <Clock className="h-4 w-4 text-on-surface-variant" />{" "}
+                {m.hours_per_week ?? "Flexible"}
               </span>
               <span
                 className={
-                  m.accepting_mentees ? "text-label-sm text-primary" : "text-label-sm text-on-surface-variant"
+                  m.accepting_mentees
+                    ? "text-label-sm text-primary"
+                    : "text-label-sm text-on-surface-variant"
                 }
               >
                 {m.accepting_mentees ? "Accepting Mentees" : "Not currently accepting mentees"}

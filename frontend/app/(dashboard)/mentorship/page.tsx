@@ -17,7 +17,9 @@ export default function MentorshipPage() {
   const mentors = useAsync(() => api.findMentors(), []);
 
   const filtered = (mentors.data ?? []).filter((m) =>
-    `${m.user.full_name} ${m.title ?? ""} ${m.company ?? ""}`.toLowerCase().includes(query.toLowerCase())
+    `${m.user.full_name} ${m.title ?? ""} ${m.company ?? ""}`
+      .toLowerCase()
+      .includes(query.toLowerCase())
   );
 
   return (
@@ -25,7 +27,9 @@ export default function MentorshipPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg text-on-background">Find Your Mentor</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">Connect with industry experts to guide your career path.</p>
+          <p className="mt-1 text-body-md text-on-surface-variant">
+            Connect with industry experts to guide your career path.
+          </p>
         </div>
         {role === "mentor" && <Button href="/mentorship/apply">Become a Mentor</Button>}
       </div>
@@ -53,14 +57,17 @@ export default function MentorshipPage() {
                       {mentor.user.full_name}
                       {mentor.rating > 0 && (
                         <span className="flex items-center gap-1 rounded-full bg-surface-container-high px-2 py-0.5 text-label-sm">
-                          <Star className="h-3 w-3 fill-primary-container text-primary-container" /> {mentor.rating.toFixed(1)}
+                          <Star className="h-3 w-3 fill-primary-container text-primary-container" />{" "}
+                          {mentor.rating.toFixed(1)}
                         </span>
                       )}
                     </p>
                     <p className="text-label-sm text-primary">{mentor.title}</p>
                   </div>
                 </div>
-                <p className="mt-3 text-body-md text-on-surface-variant line-clamp-3">{mentor.bio}</p>
+                <p className="mt-3 line-clamp-3 text-body-md text-on-surface-variant">
+                  {mentor.bio}
+                </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {mentor.skills.slice(0, 3).map((skill) => (
                     <Badge key={skill}>{skill}</Badge>

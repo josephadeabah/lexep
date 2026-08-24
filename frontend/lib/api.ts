@@ -142,10 +142,18 @@ async function request<T>(
 export const api = {
   // --- Auth ------------------------------------------------------
   register: (data: { email: string; full_name: string; password: string }) =>
-    request<AuthResponse>("/api/auth/register", { method: "POST", body: JSON.stringify(data), auth: false }),
+    request<AuthResponse>("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+      auth: false,
+    }),
 
   login: (data: { email: string; password: string }) =>
-    request<AuthResponse>("/api/auth/login", { method: "POST", body: JSON.stringify(data), auth: false }),
+    request<AuthResponse>("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+      auth: false,
+    }),
 
   me: () => request<User>("/api/auth/me"),
 
@@ -154,19 +162,28 @@ export const api = {
     request<User>("/api/users/me/role", { method: "POST", body: JSON.stringify({ role }) }),
 
   onboardLearner: (data: Record<string, unknown>) =>
-    request<User>("/api/users/me/onboarding/learner", { method: "PUT", body: JSON.stringify(data) }),
+    request<User>("/api/users/me/onboarding/learner", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
 
   onboardMentor: (data: Record<string, unknown>) =>
     request<User>("/api/users/me/onboarding/mentor", { method: "PUT", body: JSON.stringify(data) }),
 
   onboardCompany: (data: Record<string, unknown>) =>
-    request<User>("/api/users/me/onboarding/company", { method: "PUT", body: JSON.stringify(data) }),
+    request<User>("/api/users/me/onboarding/company", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
 
   updateAccount: (data: Record<string, unknown>) =>
     request<User>("/api/users/me/account", { method: "PUT", body: JSON.stringify(data) }),
 
   updateNotifications: (preferences: Record<string, unknown>) =>
-    request<User>("/api/users/me/notifications", { method: "PUT", body: JSON.stringify({ preferences }) }),
+    request<User>("/api/users/me/notifications", {
+      method: "PUT",
+      body: JSON.stringify({ preferences }),
+    }),
 
   updatePrivacy: (settings: Record<string, unknown>) =>
     request<User>("/api/users/me/privacy", { method: "PUT", body: JSON.stringify({ settings }) }),
@@ -233,13 +250,22 @@ export const api = {
     request("/api/mentors/requests", { method: "POST", body: JSON.stringify(data) }),
 
   mentorApplicationStep1: (data: Record<string, unknown>) =>
-    request<MentorProfile>("/api/mentors/application/step1", { method: "PUT", body: JSON.stringify(data) }),
+    request<MentorProfile>("/api/mentors/application/step1", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
 
   mentorApplicationStep2: (data: Record<string, unknown>) =>
-    request<MentorProfile>("/api/mentors/application/step2", { method: "PUT", body: JSON.stringify(data) }),
+    request<MentorProfile>("/api/mentors/application/step2", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
 
   mentorApplicationStep3: (data: Record<string, unknown>) =>
-    request<MentorProfile>("/api/mentors/application/step3", { method: "PUT", body: JSON.stringify(data) }),
+    request<MentorProfile>("/api/mentors/application/step3", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
 
   // --- Mentor packages ------------------------------------------------
   myPackages: () => request<MentorPackage[]>("/api/mentors/me/packages"),
@@ -248,10 +274,16 @@ export const api = {
     request<MentorPackage[]>(`/api/mentors/${mentorUserId}/packages`, { auth: false }),
 
   createPackage: (data: Record<string, unknown>) =>
-    request<MentorPackage>("/api/mentors/me/packages", { method: "POST", body: JSON.stringify(data) }),
+    request<MentorPackage>("/api/mentors/me/packages", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 
   updatePackage: (id: number, data: Record<string, unknown>) =>
-    request<MentorPackage>(`/api/mentors/me/packages/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+    request<MentorPackage>(`/api/mentors/me/packages/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }),
 
   togglePackage: (id: number) =>
     request<MentorPackage>(`/api/mentors/me/packages/${id}/toggle`, { method: "PATCH" }),
@@ -399,7 +431,9 @@ export const api = {
   },
 
   adminInviteLearner: (email: string) =>
-    request(`/api/admin/users/learners/invite?email=${encodeURIComponent(email)}`, { method: "POST" }),
+    request(`/api/admin/users/learners/invite?email=${encodeURIComponent(email)}`, {
+      method: "POST",
+    }),
 
   adminSubscriptions: () => request<AdminSubscriptionsResponse>("/api/admin/subscriptions"),
 

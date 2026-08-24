@@ -19,34 +19,56 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-outline-variant/40">
-        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
-          <Link href="/"><Logo variant="light" /></Link>
+        <div className="px-gutter mx-auto flex max-w-container-max items-center justify-between py-4">
+          <Link href="/">
+            <Logo variant="light" />
+          </Link>
           <nav className="hidden items-center gap-lg md:flex">
-            <Link href="/" className="text-body-md text-on-surface-variant hover:text-primary">Explore</Link>
-            <Link href="/mentorship" className="text-body-md text-on-surface-variant hover:text-primary">Mentors</Link>
-            <Link href="/pricing" className="text-body-md text-primary underline">Pricing</Link>
-            <Link href="/insights" className="text-body-md text-on-surface-variant hover:text-primary">About</Link>
+            <Link href="/" className="text-body-md text-on-surface-variant hover:text-primary">
+              Explore
+            </Link>
+            <Link
+              href="/mentorship"
+              className="text-body-md text-on-surface-variant hover:text-primary"
+            >
+              Mentors
+            </Link>
+            <Link href="/pricing" className="text-body-md text-primary underline">
+              Pricing
+            </Link>
+            <Link
+              href="/insights"
+              className="text-body-md text-on-surface-variant hover:text-primary"
+            >
+              About
+            </Link>
           </nav>
           <div className="flex items-center gap-3">
             {user ? (
-              <Button href="/dashboard" variant="primary">Dashboard</Button>
+              <Button href="/dashboard" variant="primary">
+                Dashboard
+              </Button>
             ) : (
               <>
-                <Button href="/sign-in" variant="ghost">Log In</Button>
-                <Button href="/sign-up" variant="primary">Get Started</Button>
+                <Button href="/sign-in" variant="ghost">
+                  Log In
+                </Button>
+                <Button href="/sign-up" variant="primary">
+                  Get Started
+                </Button>
               </>
             )}
           </div>
         </div>
       </header>
 
-      <div className="mx-auto max-w-container-max px-gutter py-xl text-center">
+      <div className="px-gutter mx-auto max-w-container-max py-xl text-center">
         <h1 className="text-display-lg text-on-background" style={{ fontSize: 48 }}>
           Invest in your architectural future.
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-body-lg text-on-surface-variant">
-          Choose the plan that accelerates your career, whether you&apos;re a student building a portfolio, an
-          expert sharing knowledge, or an enterprise sourcing top talent.
+          Choose the plan that accelerates your career, whether you&apos;re a student building a
+          portfolio, an expert sharing knowledge, or an enterprise sourcing top talent.
         </p>
 
         {!premiumEnabled && (
@@ -74,9 +96,14 @@ export default function PricingPage() {
                 )}
                 <h2 className="text-headline-md text-on-background">{plan.name}</h2>
                 <p className="mt-2 text-body-md text-on-surface-variant">{plan.audience}</p>
-                <p className="mt-4 text-display-lg text-on-background" style={{ fontSize: plan.is_custom ? 40 : 48 }}>
+                <p
+                  className="mt-4 text-display-lg text-on-background"
+                  style={{ fontSize: plan.is_custom ? 40 : 48 }}
+                >
                   {plan.is_custom ? "Custom" : `$${plan.monthly_price}`}
-                  {!plan.is_custom && <span className="text-body-lg text-on-surface-variant">/month</span>}
+                  {!plan.is_custom && (
+                    <span className="text-body-lg text-on-surface-variant">/month</span>
+                  )}
                 </p>
                 <ul className="mt-6 flex flex-col gap-3">
                   {plan.features.map((f) => (
@@ -86,11 +113,21 @@ export default function PricingPage() {
                   ))}
                 </ul>
                 <Button
-                  href={plan.is_custom ? "/help" : premiumEnabled ? `/upgrade?plan=${plan.id}` : "/sign-up"}
+                  href={
+                    plan.is_custom
+                      ? "/help"
+                      : premiumEnabled
+                        ? `/upgrade?plan=${plan.id}`
+                        : "/sign-up"
+                  }
                   variant={plan.is_popular ? "primary" : plan.is_custom ? "ghost" : "secondary"}
                   className="mt-md w-full"
                 >
-                  {plan.is_custom ? "Contact Sales" : premiumEnabled ? `Start ${plan.name}` : "Get Started Free"}
+                  {plan.is_custom
+                    ? "Contact Sales"
+                    : premiumEnabled
+                      ? `Start ${plan.name}`
+                      : "Get Started Free"}
                 </Button>
               </div>
             ))

@@ -17,7 +17,8 @@ const variantClasses: Record<Variant, string> = {
   // Secondary: Charcoal background, White text
   secondary: "bg-inverse-surface text-inverse-on-surface hover:opacity-90",
   // Ghost: transparent, subtle border
-  ghost: "bg-transparent text-on-surface border border-outline-variant hover:bg-surface-container-low",
+  ghost:
+    "bg-transparent text-on-surface border border-outline-variant hover:bg-surface-container-low",
   danger: "bg-error text-on-error hover:brightness-95",
 };
 

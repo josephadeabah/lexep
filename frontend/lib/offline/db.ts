@@ -70,7 +70,8 @@ export async function getOutbox(): Promise<OutboxItem[]> {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(OUTBOX_STORE, "readonly");
     const req = tx.objectStore(OUTBOX_STORE).getAll();
-    req.onsuccess = () => resolve((req.result as OutboxItem[]).sort((a, b) => a.createdAt - b.createdAt));
+    req.onsuccess = () =>
+      resolve((req.result as OutboxItem[]).sort((a, b) => a.createdAt - b.createdAt));
     req.onerror = () => reject(req.error);
   });
 }

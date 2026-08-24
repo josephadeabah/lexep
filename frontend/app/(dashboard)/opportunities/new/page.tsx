@@ -26,7 +26,9 @@ function StepHeader({ step }: { step: number }) {
               <span
                 className={cn(
                   "flex h-8 w-8 items-center justify-center rounded-full text-label-md",
-                  done || active ? "bg-primary-container text-on-primary-container" : "bg-surface-container-high text-on-surface-variant"
+                  done || active
+                    ? "bg-primary-container text-on-primary-container"
+                    : "bg-surface-container-high text-on-surface-variant"
                 )}
               >
                 {done ? <Check className="h-4 w-4" /> : index}
@@ -34,7 +36,12 @@ function StepHeader({ step }: { step: number }) {
               <span className="text-label-sm text-on-surface-variant">{label}</span>
             </div>
             {index !== STEP_LABELS.length && (
-              <div className={cn("mx-2 h-0.5 flex-1", done ? "bg-primary-container" : "bg-surface-container-high")} />
+              <div
+                className={cn(
+                  "mx-2 h-0.5 flex-1",
+                  done ? "bg-primary-container" : "bg-surface-container-high"
+                )}
+              />
             )}
           </div>
         );
@@ -96,7 +103,8 @@ export default function NewOpportunityPage() {
       <div className="mb-lg text-center">
         <h1 className="text-headline-lg text-on-background">Post an Internship</h1>
         <p className="mt-1 text-body-md text-on-surface-variant">
-          Step {step} of 3: {step === 1 ? "Role Basics" : step === 2 ? "Role Details" : "Requirements & Review"}
+          Step {step} of 3:{" "}
+          {step === 1 ? "Role Basics" : step === 2 ? "Role Details" : "Requirements & Review"}
         </p>
       </div>
 
@@ -105,7 +113,12 @@ export default function NewOpportunityPage() {
       <div className="card-level1 p-md">
         {step === 1 && (
           <div className="flex flex-col gap-md">
-            <Input label="Internship Title" placeholder="e.g. Software Engineering Intern" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <Input
+              label="Internship Title"
+              placeholder="e.g. Software Engineering Intern"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
             <Select label="Category" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">Select an area of focus</option>
               <option>Software Engineering</option>
@@ -122,7 +135,9 @@ export default function NewOpportunityPage() {
                     onClick={() => setWorkMode(mode)}
                     className={cn(
                       "h-11 rounded-md border text-label-md capitalize transition",
-                      workMode === mode ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant" : "border-outline-variant text-on-surface"
+                      workMode === mode
+                        ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
+                        : "border-outline-variant text-on-surface"
                     )}
                   >
                     {mode}
@@ -130,7 +145,12 @@ export default function NewOpportunityPage() {
                 ))}
               </div>
             </div>
-            <Input label="Location" placeholder="City, Country" value={location} onChange={(e) => setLocation(e.target.value)} />
+            <Input
+              label="Location"
+              placeholder="City, Country"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
           </div>
         )}
 
@@ -148,13 +168,17 @@ export default function NewOpportunityPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-label-md text-on-background">Stipend Provided</p>
-                  <p className="text-label-sm text-on-surface-variant">Is this a paid internship?</p>
+                  <p className="text-label-sm text-on-surface-variant">
+                    Is this a paid internship?
+                  </p>
                 </div>
                 <button
                   onClick={() => setStipendProvided((v) => !v)}
                   className={cn(
                     "flex h-6 w-11 items-center rounded-full px-0.5 transition",
-                    stipendProvided ? "bg-primary-container justify-end" : "bg-outline-variant justify-start"
+                    stipendProvided
+                      ? "justify-end bg-primary-container"
+                      : "justify-start bg-outline-variant"
                   )}
                 >
                   <span className="h-5 w-5 rounded-full bg-white shadow" />
@@ -191,9 +215,14 @@ export default function NewOpportunityPage() {
                 <p className="text-label-sm text-on-surface-variant">Press enter to add skills.</p>
                 <div className="mt-2 flex flex-wrap items-center gap-2 rounded-md border border-outline-variant p-3">
                   {skills.map((skill) => (
-                    <span key={skill} className="flex items-center gap-1 rounded-full bg-surface-container-high px-3 py-1 text-label-sm">
+                    <span
+                      key={skill}
+                      className="flex items-center gap-1 rounded-full bg-surface-container-high px-3 py-1 text-label-sm"
+                    >
                       {skill}
-                      <button onClick={() => setSkills((prev) => prev.filter((s) => s !== skill))}>×</button>
+                      <button onClick={() => setSkills((prev) => prev.filter((s) => s !== skill))}>
+                        ×
+                      </button>
                     </span>
                   ))}
                   <input
@@ -223,18 +252,23 @@ export default function NewOpportunityPage() {
             <div className="rounded-md bg-surface-container-low p-md">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-headline-md text-on-background">Review Details</h3>
-                <button onClick={() => setStep(1)} className="text-label-sm text-primary hover:underline">
+                <button
+                  onClick={() => setStep(1)}
+                  className="text-label-sm text-primary hover:underline"
+                >
                   Edit
                 </button>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2 text-body-md text-on-surface">
+              <div className="grid gap-4 text-body-md text-on-surface sm:grid-cols-2">
                 <div>
                   <p className="text-label-sm text-on-surface-variant">Role Title</p>
                   <p>{title || "—"}</p>
                 </div>
                 <div>
                   <p className="text-label-sm text-on-surface-variant">Location</p>
-                  <p>{location || "—"} ({workMode})</p>
+                  <p>
+                    {location || "—"} ({workMode})
+                  </p>
                 </div>
                 <div>
                   <p className="text-label-sm text-on-surface-variant">Duration</p>

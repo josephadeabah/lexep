@@ -50,7 +50,9 @@ export default function MentorPackagesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg text-on-background">Mentorship Packages</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">Manage your offerings and set your professional boundaries.</p>
+          <p className="mt-1 text-body-md text-on-surface-variant">
+            Manage your offerings and set your professional boundaries.
+          </p>
         </div>
         <Button onClick={() => setShowForm((v) => !v)}>
           <Plus className="h-4 w-4" /> Create New Package
@@ -60,12 +62,29 @@ export default function MentorPackagesPage() {
       {showForm && (
         <Card className="flex flex-col gap-md">
           <h2 className="text-headline-md text-on-background">New Package</h2>
-          <Input label="Title" placeholder="e.g. Portfolio Review" value={title} onChange={(e) => setTitle(e.target.value)} />
-          <Textarea label="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+          <Input
+            label="Title"
+            placeholder="e.g. Portfolio Review"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Textarea
+            label="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
           <div className="grid gap-md sm:grid-cols-3">
             <Input label="Price (USD)" value={price} onChange={(e) => setPrice(e.target.value)} />
-            <Input label="Duration (mins)" value={duration} onChange={(e) => setDuration(e.target.value)} />
-            <Input label="Sessions" value={sessions} onChange={(e) => setSessions(e.target.value)} />
+            <Input
+              label="Duration (mins)"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            />
+            <Input
+              label="Sessions"
+              value={sessions}
+              onChange={(e) => setSessions(e.target.value)}
+            />
           </div>
           <div className="flex justify-end gap-2">
             <Button variant="ghost" onClick={() => setShowForm(false)}>
@@ -90,7 +109,9 @@ export default function MentorPackagesPage() {
                   onClick={() => handleToggle(pkg.id)}
                   className={cn(
                     "flex h-6 w-11 items-center rounded-full px-0.5 transition",
-                    pkg.is_active ? "justify-end bg-primary-container" : "justify-start bg-outline-variant"
+                    pkg.is_active
+                      ? "justify-end bg-primary-container"
+                      : "justify-start bg-outline-variant"
                   )}
                 >
                   <span className="h-5 w-5 rounded-full bg-white shadow" />
@@ -119,7 +140,10 @@ export default function MentorPackagesPage() {
               {pkg.tags.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
                   {pkg.tags.map((tag) => (
-                    <span key={tag} className="rounded-full bg-surface-container-high px-3 py-1 text-label-sm">
+                    <span
+                      key={tag}
+                      className="rounded-full bg-surface-container-high px-3 py-1 text-label-sm"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -128,7 +152,9 @@ export default function MentorPackagesPage() {
             </Card>
           ))
         ) : (
-          <p className="text-body-md text-on-surface-variant">No packages yet — create your first offering above.</p>
+          <p className="text-body-md text-on-surface-variant">
+            No packages yet — create your first offering above.
+          </p>
         )}
       </div>
     </div>

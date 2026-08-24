@@ -5,7 +5,11 @@ import { getToken } from "../api";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-export type SyncListener = (state: { syncing: boolean; pending: number; lastError: string | null }) => void;
+export type SyncListener = (state: {
+  syncing: boolean;
+  pending: number;
+  lastError: string | null;
+}) => void;
 
 let listeners: SyncListener[] = [];
 let isSyncing = false;

@@ -10,9 +10,19 @@ import { useAuthStore } from "@/lib/auth-store";
 import type { UserRole } from "@/lib/types";
 
 const ROLES: { id: UserRole; title: string; description: string; icon: typeof GraduationCap }[] = [
-  { id: "learner", title: "Learner", description: "I want to learn and grow.", icon: GraduationCap },
+  {
+    id: "learner",
+    title: "Learner",
+    description: "I want to learn and grow.",
+    icon: GraduationCap,
+  },
   { id: "mentor", title: "Mentor", description: "I want to guide and inspire.", icon: Compass },
-  { id: "company", title: "Company", description: "I want to find and hire talent.", icon: Building2 },
+  {
+    id: "company",
+    title: "Company",
+    description: "I want to find and hire talent.",
+    icon: Building2,
+  },
 ];
 
 export default function ChooseRolePage() {
@@ -39,10 +49,11 @@ export default function ChooseRolePage() {
         <span className="text-headline-md text-primary">Lexep</span>
       </header>
 
-      <div className="mx-auto max-w-3xl px-gutter py-xl text-center">
+      <div className="px-gutter mx-auto max-w-3xl py-xl text-center">
         <h1 className="text-headline-lg text-on-background">Choose your journey</h1>
         <p className="mx-auto mt-3 max-w-xl text-body-md text-on-surface-variant">
-          Select the path that best describes your goals on Lexep. This helps us tailor your experience.
+          Select the path that best describes your goals on Lexep. This helps us tailor your
+          experience.
         </p>
 
         <div className="mt-lg grid gap-md sm:grid-cols-3">

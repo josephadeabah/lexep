@@ -24,9 +24,12 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
   const opportunity = useAsync(() => api.getOpportunity(id), [id]);
   const applications = useAsync(() => api.myApplications(), []);
 
-  const alreadyApplied = (applications.data ?? []).some((a) => a.opportunity_title === opportunity.data?.title);
+  const alreadyApplied = (applications.data ?? []).some(
+    (a) => a.opportunity_title === opportunity.data?.title
+  );
 
-  if (opportunity.isLoading) return <p className="text-body-md text-on-surface-variant">Loading…</p>;
+  if (opportunity.isLoading)
+    return <p className="text-body-md text-on-surface-variant">Loading…</p>;
   const o = opportunity.data;
   if (!o) return <p className="text-body-md text-error">Opportunity not found.</p>;
 
@@ -84,7 +87,9 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
             {o.application_deadline && (
               <div className="flex justify-between">
                 <dt className="text-on-surface-variant">Deadline</dt>
-                <dd className="text-on-background">{new Date(o.application_deadline).toLocaleDateString()}</dd>
+                <dd className="text-on-background">
+                  {new Date(o.application_deadline).toLocaleDateString()}
+                </dd>
               </div>
             )}
             {o.duration && (
@@ -96,7 +101,9 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
             <div className="flex justify-between">
               <dt className="text-on-surface-variant">Stipend</dt>
               <dd className="text-on-background">
-                {o.stipend_provided ? `${o.stipend_currency} ${o.stipend_amount ?? "—"}/mo` : "Unpaid"}
+                {o.stipend_provided
+                  ? `${o.stipend_currency} ${o.stipend_amount ?? "—"}/mo`
+                  : "Unpaid"}
               </dd>
             </div>
           </dl>
@@ -119,7 +126,9 @@ function CompanyApplicantReview({ id }: { id: number }) {
     <div>
       <div className="mb-lg flex items-center justify-between">
         <div>
-          <p className="text-label-sm text-on-surface-variant">Opportunities &gt; {opportunity.data?.title}</p>
+          <p className="text-label-sm text-on-surface-variant">
+            Opportunities &gt; {opportunity.data?.title}
+          </p>
           <h1 className="text-headline-lg text-on-background">Applicant Review</h1>
         </div>
       </div>
@@ -132,7 +141,11 @@ function CompanyApplicantReview({ id }: { id: number }) {
             <Card key={applicant.id}>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <Avatar name={applicant.applicant_name} src={applicant.applicant_avatar} size={44} />
+                  <Avatar
+                    name={applicant.applicant_name}
+                    src={applicant.applicant_avatar}
+                    size={44}
+                  />
                   <div>
                     <p className="text-label-md text-on-background">{applicant.applicant_name}</p>
                     <p className="text-label-sm text-on-surface-variant">{applicant.institution}</p>

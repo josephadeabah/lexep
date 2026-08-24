@@ -11,8 +11,16 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Avatar } from "@/components/ui/Avatar";
 
 const SESSION_TYPES = [
-  { id: "30-min Intro", title: "30-min Intro", description: "Quick chat to align on goals and see if it's a good fit." },
-  { id: "60-min Deep Dive", title: "60-min Deep Dive", description: "Detailed portfolio review or specific project feedback." },
+  {
+    id: "30-min Intro",
+    title: "30-min Intro",
+    description: "Quick chat to align on goals and see if it's a good fit.",
+  },
+  {
+    id: "60-min Deep Dive",
+    title: "60-min Deep Dive",
+    description: "Detailed portfolio review or specific project feedback.",
+  },
 ];
 
 const SLOTS = ["09:00 AM", "11:30 AM", "02:00 PM", "04:30 PM"];
@@ -45,9 +53,7 @@ export default function RequestSessionPage() {
   const days = useMemo(() => buildCalendarDays(new Date()), []);
 
   function toggleSlot(slot: string) {
-    const iso = new Date(
-      `${selectedDate.toDateString()} ${slot}`
-    ).toISOString();
+    const iso = new Date(`${selectedDate.toDateString()} ${slot}`).toISOString();
     setSelectedSlots((prev) =>
       prev.includes(iso) ? prev.filter((s) => s !== iso) : prev.length < 3 ? [...prev, iso] : prev
     );
@@ -97,7 +103,9 @@ export default function RequestSessionPage() {
 
           <Card>
             <p className="flex items-center gap-2 text-label-md text-on-background">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">1</span>
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">
+                1
+              </span>
               Session Type
             </p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -107,7 +115,9 @@ export default function RequestSessionPage() {
                   onClick={() => setSessionType(type.id)}
                   className={cn(
                     "rounded-md border p-4 text-left transition",
-                    sessionType === type.id ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
+                    sessionType === type.id
+                      ? "border-primary-container bg-surface-container-low"
+                      : "border-outline-variant"
                   )}
                 >
                   <p className="text-label-md text-on-background">{type.title}</p>
@@ -119,7 +129,9 @@ export default function RequestSessionPage() {
 
           <Card>
             <p className="flex items-center gap-2 text-label-md text-on-background">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">2</span>
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">
+                2
+              </span>
               Message for Mentor
             </p>
             <div className="mt-3">
@@ -134,10 +146,14 @@ export default function RequestSessionPage() {
 
           <Card>
             <p className="flex items-center gap-2 text-label-md text-on-background">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">3</span>
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">
+                3
+              </span>
               Propose Times
             </p>
-            <p className="text-label-sm text-on-surface-variant">Select up to 3 time slots that work for you.</p>
+            <p className="text-label-sm text-on-surface-variant">
+              Select up to 3 time slots that work for you.
+            </p>
 
             <div className="mt-3 flex gap-1 overflow-x-auto pb-2">
               {days.map((day) => {
@@ -148,7 +164,9 @@ export default function RequestSessionPage() {
                     onClick={() => setSelectedDate(day)}
                     className={cn(
                       "flex min-w-[56px] flex-col items-center rounded-md px-3 py-2 text-label-sm",
-                      active ? "bg-primary-container text-on-primary-container" : "bg-surface-container-low text-on-surface-variant"
+                      active
+                        ? "bg-primary-container text-on-primary-container"
+                        : "bg-surface-container-low text-on-surface-variant"
                     )}
                   >
                     <span>{day.toLocaleDateString("en-US", { weekday: "short" })}</span>
@@ -160,7 +178,8 @@ export default function RequestSessionPage() {
 
             <div className="mt-3 rounded-md bg-surface-container-low p-3">
               <p className="mb-2 text-label-sm text-on-surface-variant">
-                Available slots for {selectedDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                Available slots for{" "}
+                {selectedDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
               </p>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {SLOTS.map((slot) => {
@@ -172,7 +191,9 @@ export default function RequestSessionPage() {
                       onClick={() => toggleSlot(slot)}
                       className={cn(
                         "rounded-md border px-3 py-2 text-label-sm",
-                        active ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant" : "border-outline-variant bg-surface-container-lowest"
+                        active
+                          ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
+                          : "border-outline-variant bg-surface-container-lowest"
                       )}
                     >
                       {slot}
@@ -199,20 +220,31 @@ export default function RequestSessionPage() {
               <div>
                 <span className="text-on-surface-variant">Proposed Times</span>
                 <ul className="mt-1 list-disc pl-5 text-label-sm text-on-background">
-                  {selectedSlots.length === 0 && <li className="list-none text-on-surface-variant">None selected yet</li>}
+                  {selectedSlots.length === 0 && (
+                    <li className="list-none text-on-surface-variant">None selected yet</li>
+                  )}
                   {selectedSlots.map((s) => (
                     <li key={s}>
                       {new Date(s).toLocaleDateString("en-US", { month: "short", day: "numeric" })},{" "}
-                      {new Date(s).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
+                      {new Date(s).toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-            <Button className="mt-md w-full" onClick={handleSend} disabled={selectedSlots.length === 0 || isSubmitting}>
+            <Button
+              className="mt-md w-full"
+              onClick={handleSend}
+              disabled={selectedSlots.length === 0 || isSubmitting}
+            >
               {isSubmitting ? "Sending…" : "Send Request ▷"}
             </Button>
-            <p className="mt-2 text-label-sm text-on-surface-variant">The mentor will have 48 hours to confirm.</p>
+            <p className="mt-2 text-label-sm text-on-surface-variant">
+              The mentor will have 48 hours to confirm.
+            </p>
           </Card>
         </div>
       </div>

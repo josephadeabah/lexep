@@ -46,7 +46,9 @@ export default function SelectInterviewTimePage() {
           <Building2 className="h-5 w-5 text-on-surface" />
         </span>
         <h1 className="mt-4 text-headline-md text-on-background">Schedule Your Interview</h1>
-        <p className="mt-2 text-body-md text-on-surface-variant">Select a time slot from the options below that works best for you.</p>
+        <p className="mt-2 text-body-md text-on-surface-variant">
+          Select a time slot from the options below that works best for you.
+        </p>
         <div className="mt-md flex flex-col gap-2 border-t border-outline-variant/40 pt-md text-body-md text-on-surface">
           <span className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-on-surface-variant" /> {i.duration_minutes} Minutes
@@ -68,7 +70,12 @@ export default function SelectInterviewTimePage() {
         {Array.from(byDay.entries()).map(([day, times]) => (
           <div key={day} className="mb-md last:mb-0">
             <p className="mb-2 text-label-md text-on-background">
-              Available slots for {new Date(day).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" })}
+              Available slots for{" "}
+              {new Date(day).toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "short",
+                day: "numeric",
+              })}
             </p>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {times.map((t) => (
@@ -94,7 +101,13 @@ export default function SelectInterviewTimePage() {
             <p className="text-label-sm text-on-surface-variant">Selected time:</p>
             <p className="text-body-md text-on-background">
               {selected
-                ? new Date(selected).toLocaleString("en-US", { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
+                ? new Date(selected).toLocaleString("en-US", {
+                    weekday: "long",
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })
                 : "None yet"}
             </p>
           </div>

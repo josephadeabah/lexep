@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, FileText, ExternalLink, Building2, GraduationCap, BadgeCheck } from "lucide-react";
+import {
+  ArrowLeft,
+  FileText,
+  ExternalLink,
+  Building2,
+  GraduationCap,
+  BadgeCheck,
+} from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/Card";
@@ -12,10 +19,26 @@ import { Avatar } from "@/components/ui/Avatar";
 import { Textarea } from "@/components/ui/Textarea";
 import { Checkbox } from "@/components/ui/Checkbox";
 
-const CHECKLIST_ITEMS: { key: "identity_verified" | "academic_verified" | "professional_verified"; label: string; description: string }[] = [
-  { key: "identity_verified", label: "Identity Verification", description: "Valid ID or Passport copy matches profile details." },
-  { key: "academic_verified", label: "Academic Credentials", description: "Degree certificate verified against university records." },
-  { key: "professional_verified", label: "Professional Registration", description: "Professional registration is active and in good standing." },
+const CHECKLIST_ITEMS: {
+  key: "identity_verified" | "academic_verified" | "professional_verified";
+  label: string;
+  description: string;
+}[] = [
+  {
+    key: "identity_verified",
+    label: "Identity Verification",
+    description: "Valid ID or Passport copy matches profile details.",
+  },
+  {
+    key: "academic_verified",
+    label: "Academic Credentials",
+    description: "Degree certificate verified against university records.",
+  },
+  {
+    key: "professional_verified",
+    label: "Professional Registration",
+    description: "Professional registration is active and in good standing.",
+  },
 ];
 
 export default function AdminApplicationReviewPage() {
@@ -57,7 +80,8 @@ export default function AdminApplicationReviewPage() {
     }
   }
 
-  if (application.isLoading) return <p className="text-body-md text-on-surface-variant">Loading…</p>;
+  if (application.isLoading)
+    return <p className="text-body-md text-on-surface-variant">Loading…</p>;
   const a = application.data;
   if (!a) return <p className="text-body-md text-error">Application not found.</p>;
 
@@ -83,7 +107,12 @@ export default function AdminApplicationReviewPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="ghost" className="border-error text-error" onClick={() => decide("decline")} disabled={deciding}>
+          <Button
+            variant="ghost"
+            className="border-error text-error"
+            onClick={() => decide("decline")}
+            disabled={deciding}
+          >
             Decline
           </Button>
           <Button variant="secondary" onClick={() => decide("request-info")} disabled={deciding}>
@@ -168,7 +197,9 @@ export default function AdminApplicationReviewPage() {
                     </p>
                   </div>
                   <p className="mt-2 text-label-sm text-on-surface-variant">{pkg.description}</p>
-                  <p className="mt-2 text-label-sm text-on-surface-variant">{pkg.duration_minutes} Minutes</p>
+                  <p className="mt-2 text-label-sm text-on-surface-variant">
+                    {pkg.duration_minutes} Minutes
+                  </p>
                 </div>
               ))}
             </div>
@@ -210,7 +241,12 @@ export default function AdminApplicationReviewPage() {
                 onChange={(e) => setNote(e.target.value)}
               />
             </div>
-            <Button className="mt-3" variant="secondary" onClick={saveNote} disabled={savingNote || !note}>
+            <Button
+              className="mt-3"
+              variant="secondary"
+              onClick={saveNote}
+              disabled={savingNote || !note}
+            >
               {savingNote ? "Saving…" : "Save Note"}
             </Button>
           </Card>

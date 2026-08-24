@@ -12,9 +12,21 @@ import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 
 const GOALS = [
-  { id: "Finding Interns", title: "Finding Interns", description: "Source top entry-level talent." },
-  { id: "Sponsoring Youth Projects", title: "Sponsoring Youth Projects", description: "Support guided learning." },
-  { id: "Brand Awareness in Tech", title: "Brand Awareness in Tech", description: "Build presence among students." },
+  {
+    id: "Finding Interns",
+    title: "Finding Interns",
+    description: "Source top entry-level talent.",
+  },
+  {
+    id: "Sponsoring Youth Projects",
+    title: "Sponsoring Youth Projects",
+    description: "Support guided learning.",
+  },
+  {
+    id: "Brand Awareness in Tech",
+    title: "Brand Awareness in Tech",
+    description: "Build presence among students.",
+  },
 ];
 
 export default function CompanyOnboardingPage() {
@@ -52,8 +64,8 @@ export default function CompanyOnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface px-gutter py-xl">
-      <div className="mx-auto max-w-2xl card-level1 overflow-hidden p-0">
+    <div className="px-gutter min-h-screen bg-surface py-xl">
+      <div className="card-level1 mx-auto max-w-2xl overflow-hidden p-0">
         <div className="bg-surface-container-low px-md py-md">
           <p className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <Building2 className="h-4 w-4" /> Step 1 of 1
@@ -74,7 +86,11 @@ export default function CompanyOnboardingPage() {
                 value={industry}
                 onChange={(e) => setIndustry(e.target.value)}
               />
-              <Select label="Company Size" value={companySize} onChange={(e) => setCompanySize(e.target.value)}>
+              <Select
+                label="Company Size"
+                value={companySize}
+                onChange={(e) => setCompanySize(e.target.value)}
+              >
                 <option value="">Select size</option>
                 <option value="1-10">1-10</option>
                 <option value="11-50">11-50</option>
@@ -103,11 +119,19 @@ export default function CompanyOnboardingPage() {
                   key={goal.id}
                   className={cn(
                     "flex cursor-pointer flex-col gap-2 rounded-md border p-4",
-                    goals.includes(goal.id) ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
+                    goals.includes(goal.id)
+                      ? "border-primary-container bg-surface-container-low"
+                      : "border-outline-variant"
                   )}
                 >
-                  <Checkbox checked={goals.includes(goal.id)} onChange={() => toggleGoal(goal.id)} label={goal.title} />
-                  <span className="pl-8 text-label-sm text-on-surface-variant">{goal.description}</span>
+                  <Checkbox
+                    checked={goals.includes(goal.id)}
+                    onChange={() => toggleGoal(goal.id)}
+                    label={goal.title}
+                  />
+                  <span className="pl-8 text-label-sm text-on-surface-variant">
+                    {goal.description}
+                  </span>
                 </label>
               ))}
             </div>

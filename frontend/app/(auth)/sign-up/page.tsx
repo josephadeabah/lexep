@@ -33,9 +33,11 @@ export default function SignUpPage() {
 
   return (
     <div className="flex flex-col items-center gap-lg">
-      <div className="card-level1 w-full p-md flex flex-col gap-md">
+      <div className="card-level1 flex w-full flex-col gap-md p-md">
         <div className="text-center">
-          <div className="flex justify-center"><Logo variant="light" size={32} /></div>
+          <div className="flex justify-center">
+            <Logo variant="light" size={32} />
+          </div>
           <p className="mt-1 text-body-md text-on-surface-variant">Create an account</p>
         </div>
 
@@ -77,10 +79,18 @@ export default function SignUpPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Button type="button" variant="ghost" onClick={() => setError("Google sign-up isn't configured yet.")}>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setError("Google sign-up isn't configured yet.")}
+            >
               Google
             </Button>
-            <Button type="button" variant="ghost" onClick={() => setError("LinkedIn sign-up isn't configured yet.")}>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setError("LinkedIn sign-up isn't configured yet.")}
+            >
               LinkedIn
             </Button>
           </div>

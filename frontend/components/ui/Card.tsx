@@ -6,10 +6,7 @@ import { cn } from "@/lib/utils";
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn(
-        "bg-surface-container-lowest rounded-lg shadow-level1 p-md",
-        className
-      )}
+      className={cn("rounded-lg bg-surface-container-lowest p-md shadow-level1", className)}
       {...props}
     />
   );

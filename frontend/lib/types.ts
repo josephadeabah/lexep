@@ -40,11 +40,7 @@ export interface Opportunity {
 }
 
 export type ApplicationStatus =
-  | "applied"
-  | "under_review"
-  | "interview_scheduled"
-  | "accepted"
-  | "declined";
+  "applied" | "under_review" | "interview_scheduled" | "accepted" | "declined";
 
 export interface Applicant {
   id: number;

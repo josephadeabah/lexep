@@ -11,7 +11,7 @@ export default function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
+    <div className="px-gutter flex min-h-screen items-center justify-center bg-surface py-xl">
       <div className="w-full max-w-md">
         <div className="card-level1 p-md text-center">
           <h1 className="text-headline-lg text-on-background">Reset your password</h1>
@@ -41,7 +41,10 @@ export default function ForgotPasswordPage() {
               </Button>
             </form>
           )}
-          <Link href="/sign-in" className="mt-md inline-block text-label-md text-primary hover:underline">
+          <Link
+            href="/sign-in"
+            className="mt-md inline-block text-label-md text-primary hover:underline"
+          >
             Back to sign in
           </Link>
         </div>

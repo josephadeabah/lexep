@@ -71,7 +71,7 @@ export default function LearnerOnboardingPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
+    <div className="px-gutter flex min-h-screen items-center justify-center bg-surface py-xl">
       <div className="card-level1 w-full max-w-2xl p-md">
         <div className="mb-6 text-center">
           <p className="text-label-sm text-on-surface-variant">STEP {step} OF 2</p>
@@ -185,7 +185,9 @@ export default function LearnerOnboardingPage() {
 
             <div>
               <h2 className="text-headline-md text-on-background">Weekly Time Commitment</h2>
-              <p className="text-label-sm text-on-surface-variant">How much time can you dedicate to Lexep?</p>
+              <p className="text-label-sm text-on-surface-variant">
+                How much time can you dedicate to Lexep?
+              </p>
               <div className="mt-3 flex flex-col gap-3">
                 {TIME_COMMITMENTS.map((option) => (
                   <label

@@ -11,8 +11,8 @@ export default function RequestSentPage() {
         </span>
         <h1 className="mt-6 text-headline-lg text-on-background">Request Sent</h1>
         <p className="mt-3 text-body-md text-on-surface-variant">
-          Your mentorship request has been successfully submitted. The mentor will review your profile and
-          get back to you within 48 hours.
+          Your mentorship request has been successfully submitted. The mentor will review your
+          profile and get back to you within 48 hours.
         </p>
 
         <div className="mt-lg flex flex-col gap-3">
@@ -25,7 +25,10 @@ export default function RequestSentPage() {
         </div>
 
         <p className="mt-md border-t border-outline-variant/40 pt-md text-label-sm text-on-surface-variant">
-          Need help? <Link href="/help" className="text-primary hover:underline">Contact Support</Link>
+          Need help?{" "}
+          <Link href="/help" className="text-primary hover:underline">
+            Contact Support
+          </Link>
         </p>
       </div>
     </div>

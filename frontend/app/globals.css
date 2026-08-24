@@ -4,9 +4,12 @@
 
 @layer base {
   body {
-    @apply bg-surface text-on-surface font-body;
+    @apply bg-surface font-body text-on-surface;
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     @apply font-display;
   }
   :focus-visible {
@@ -17,9 +20,9 @@
 
 @layer utilities {
   .card-level1 {
-    @apply bg-surface-container-lowest shadow-level1 rounded-lg;
+    @apply rounded-lg bg-surface-container-lowest shadow-level1;
   }
   .card-level2 {
-    @apply bg-surface-container-lowest shadow-level2 rounded-lg;
+    @apply rounded-lg bg-surface-container-lowest shadow-level2;
   }
 }

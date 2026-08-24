@@ -30,7 +30,7 @@ export function Sidebar({
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex h-screen w-sidebar flex-shrink-0 flex-col justify-between bg-[#1a1a1a] px-md py-lg text-inverse-on-surface">
+    <aside className="hidden h-screen w-sidebar flex-shrink-0 flex-col justify-between bg-[#1a1a1a] px-md py-lg text-inverse-on-surface md:flex">
       <div className="flex flex-col gap-lg">
         <div>
           <Link href="/dashboard" className="flex items-center gap-2">
@@ -75,7 +75,7 @@ export function Sidebar({
                 )}
               >
                 {active && (
-                  <span className="absolute left-0 top-1 bottom-1 w-[3px] rounded-full bg-primary-container" />
+                  <span className="absolute bottom-1 left-0 top-1 w-[3px] rounded-full bg-primary-container" />
                 )}
                 <Icon className="h-4 w-4" />
                 {item.label}

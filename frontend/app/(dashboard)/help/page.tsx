@@ -8,7 +8,9 @@ export default function HelpCenterPage() {
         Have a question? Reach out to the Lexep team at support@lexep.org.
       </p>
       <Card className="mt-lg">
-        <p className="text-body-md text-on-surface-variant">FAQs and support articles will live here.</p>
+        <p className="text-body-md text-on-surface-variant">
+          FAQs and support articles will live here.
+        </p>
       </Card>
     </div>
   );

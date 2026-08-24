@@ -29,7 +29,9 @@ export default function MentorApplicationQueuePage() {
     <div className="flex flex-col gap-lg">
       <div>
         <h1 className="text-headline-lg text-on-background">Mentor Application Queue</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">Review and manage incoming mentor requests.</p>
+        <p className="mt-1 text-body-md text-on-surface-variant">
+          Review and manage incoming mentor requests.
+        </p>
       </div>
 
       <div className="grid gap-md sm:grid-cols-3">
@@ -37,7 +39,10 @@ export default function MentorApplicationQueuePage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <ClipboardList className="h-4 w-4 text-primary" /> TOTAL PENDING
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {stats.data?.total_pending ?? "—"}
           </p>
         </Card>
@@ -45,7 +50,10 @@ export default function MentorApplicationQueuePage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <Clock className="h-4 w-4 text-primary" /> AVG. REVIEW TIME
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {stats.data?.avg_review_days ?? "—"} <span className="text-headline-md">days</span>
           </p>
         </Card>
@@ -53,7 +61,10 @@ export default function MentorApplicationQueuePage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <CheckCircle2 className="h-4 w-4 text-primary" /> NEW TODAY
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {stats.data?.new_today ?? "—"}
           </p>
         </Card>
@@ -88,7 +99,7 @@ export default function MentorApplicationQueuePage() {
                 <th className="px-md py-3 font-normal">Application Date</th>
                 <th className="px-md py-3 font-normal">Credential Status</th>
                 <th className="px-md py-3 font-normal">Status</th>
-                <th className="px-md py-3 font-normal text-right">Action</th>
+                <th className="px-md py-3 text-right font-normal">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant/40">
@@ -103,7 +114,9 @@ export default function MentorApplicationQueuePage() {
                       </div>
                     </div>
                   </td>
-                  <td className="px-md py-4 text-body-md text-on-surface">{row.professional_title}</td>
+                  <td className="px-md py-4 text-body-md text-on-surface">
+                    {row.professional_title}
+                  </td>
                   <td className="px-md py-4 text-body-md text-on-surface">
                     {row.application_date ? formatDate(row.application_date) : "—"}
                   </td>
@@ -118,7 +131,11 @@ export default function MentorApplicationQueuePage() {
                     </Badge>
                   </td>
                   <td className="px-md py-4 text-right">
-                    <Button size="sm" variant={row.status === "in_review" ? "secondary" : "primary"} href={`/admin/applications/${row.user_id}`}>
+                    <Button
+                      size="sm"
+                      variant={row.status === "in_review" ? "secondary" : "primary"}
+                      href={`/admin/applications/${row.user_id}`}
+                    >
                       {row.status === "in_review" ? "Continue Review" : "Review"}
                     </Button>
                   </td>

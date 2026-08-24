@@ -28,7 +28,9 @@ function LearnerOpportunities() {
   const applications = useAsync(() => api.myApplications(), []);
 
   const filtered = (opportunities.data ?? []).filter((o) =>
-    `${o.title} ${o.company_name ?? ""} ${o.category ?? ""}`.toLowerCase().includes(query.toLowerCase())
+    `${o.title} ${o.company_name ?? ""} ${o.category ?? ""}`
+      .toLowerCase()
+      .includes(query.toLowerCase())
   );
 
   return (
@@ -49,7 +51,9 @@ function LearnerOpportunities() {
             onClick={() => setTab(t)}
             className={cn(
               "border-b-2 px-1 pb-3 text-label-md capitalize transition",
-              tab === t ? "border-primary-container text-on-background" : "border-transparent text-on-surface-variant"
+              tab === t
+                ? "border-primary-container text-on-background"
+                : "border-transparent text-on-surface-variant"
             )}
           >
             {t}
@@ -97,7 +101,9 @@ function LearnerOpportunities() {
                       )}
                       <span className="flex items-center gap-2">
                         <Wallet className="h-3.5 w-3.5" />
-                        {o.stipend_provided ? `Paid${o.stipend_amount ? ` (${o.stipend_currency} ${o.stipend_amount}/mo)` : ""}` : "Unpaid"}
+                        {o.stipend_provided
+                          ? `Paid${o.stipend_amount ? ` (${o.stipend_currency} ${o.stipend_amount}/mo)` : ""}`
+                          : "Unpaid"}
                       </span>
                     </div>
                   </div>
@@ -107,7 +113,9 @@ function LearnerOpportunities() {
                 </Card>
               ))
             ) : (
-              <p className="text-body-md text-on-surface-variant">No opportunities match your search yet.</p>
+              <p className="text-body-md text-on-surface-variant">
+                No opportunities match your search yet.
+              </p>
             )}
           </div>
         </>
@@ -124,7 +132,9 @@ function LearnerOpportunities() {
                     <p className="text-label-sm text-on-surface-variant">
                       {app.company_name} {app.location && `· ${app.location}`}
                     </p>
-                    <p className="mt-1 text-label-sm text-on-surface-variant">Applied: {new Date(app.applied_at).toLocaleDateString()}</p>
+                    <p className="mt-1 text-label-sm text-on-surface-variant">
+                      Applied: {new Date(app.applied_at).toLocaleDateString()}
+                    </p>
                   </div>
                   <Badge tone={STATUS_TONE[app.status] ?? "neutral"} dot>
                     {app.status.replace("_", " ")}
@@ -133,7 +143,9 @@ function LearnerOpportunities() {
               ))}
             </ul>
           ) : (
-            <p className="p-md text-body-md text-on-surface-variant">You haven&apos;t applied to anything yet.</p>
+            <p className="p-md text-body-md text-on-surface-variant">
+              You haven&apos;t applied to anything yet.
+            </p>
           )}
         </Card>
       )}
@@ -149,7 +161,9 @@ function CompanyOpportunities() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg text-on-background">Opportunities</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">Manage your open roles and review applicants.</p>
+          <p className="mt-1 text-body-md text-on-surface-variant">
+            Manage your open roles and review applicants.
+          </p>
         </div>
         <Button href="/opportunities/new">+ New Application</Button>
       </div>
@@ -164,11 +178,16 @@ function CompanyOpportunities() {
                 <Badge tone={o.status === "published" ? "success" : "neutral"} dot>
                   {o.status}
                 </Badge>
-                <span className="text-label-sm text-on-surface-variant capitalize">{o.work_mode}</span>
+                <span className="text-label-sm capitalize text-on-surface-variant">
+                  {o.work_mode}
+                </span>
               </div>
               <p className="text-headline-md text-on-background">{o.title}</p>
               <p className="text-body-md text-on-surface-variant">{o.location}</p>
-              <Link href={`/opportunities/${o.id}`} className="mt-4 inline-block text-label-md text-primary hover:underline">
+              <Link
+                href={`/opportunities/${o.id}`}
+                className="mt-4 inline-block text-label-md text-primary hover:underline"
+              >
                 Review Applicants →
               </Link>
             </Card>

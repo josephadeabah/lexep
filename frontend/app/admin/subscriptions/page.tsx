@@ -31,7 +31,10 @@ export default function AdminSubscriptionsPage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <CreditCard className="h-4 w-4 text-primary" /> MONTHLY RECURRING REV
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {formatCurrency(subs.data?.monthly_recurring_revenue ?? 0)}
           </p>
         </Card>
@@ -39,7 +42,10 @@ export default function AdminSubscriptionsPage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <Users className="h-4 w-4 text-primary" /> ACTIVE PREMIUM USERS
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {subs.data?.active_premium_users ?? "—"}
           </p>
         </Card>
@@ -47,7 +53,10 @@ export default function AdminSubscriptionsPage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <UserMinus className="h-4 w-4 text-primary" /> AVG CHURN RATE
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {subs.data?.avg_churn_rate ?? "—"}%
           </p>
         </Card>
@@ -81,7 +90,9 @@ export default function AdminSubscriptionsPage() {
                     <p className="text-label-sm text-on-surface-variant">{s.user_email}</p>
                   </td>
                   <td className="px-md py-4">
-                    <Badge tone={s.plan === "enterprise" ? "primary" : "neutral"}>{PLAN_LABEL[s.plan] ?? s.plan}</Badge>
+                    <Badge tone={s.plan === "enterprise" ? "primary" : "neutral"}>
+                      {PLAN_LABEL[s.plan] ?? s.plan}
+                    </Badge>
                   </td>
                   <td className="px-md py-4 text-body-md text-on-surface">
                     {formatCurrency(s.amount)}/{s.billing_cycle === "annual" ? "yr" : "mo"}
@@ -90,8 +101,20 @@ export default function AdminSubscriptionsPage() {
                     {s.renews_at ? formatDate(s.renews_at) : "—"}
                   </td>
                   <td className="px-md py-4">
-                    <Badge tone={s.status === "active" ? "success" : s.status === "past_due" ? "error" : "neutral"}>
-                      {s.status === "past_due" ? "Past Due" : s.status === "active" ? "Active" : s.status}
+                    <Badge
+                      tone={
+                        s.status === "active"
+                          ? "success"
+                          : s.status === "past_due"
+                            ? "error"
+                            : "neutral"
+                      }
+                    >
+                      {s.status === "past_due"
+                        ? "Past Due"
+                        : s.status === "active"
+                          ? "Active"
+                          : s.status}
                     </Badge>
                   </td>
                 </tr>

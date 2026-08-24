@@ -34,12 +34,15 @@ export default function CreateGrantGroupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-container-low px-gutter py-xl">
+    <div className="px-gutter min-h-screen bg-surface-container-low py-xl">
       <div className="mx-auto flex max-w-2xl items-center justify-between pb-md">
         <h1 className="flex items-center gap-2 text-headline-md text-on-background">
           <span className="text-primary">Lexep Impact</span>
         </h1>
-        <Link href="/grants" className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary">
+        <Link
+          href="/grants"
+          className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary"
+        >
           <X className="h-4 w-4" /> Cancel
         </Link>
       </div>
@@ -49,9 +52,18 @@ export default function CreateGrantGroupPage() {
 
       <div className="card-level1 mx-auto max-w-2xl p-md">
         <div className="flex flex-col gap-md">
-          <Input label="Group Name" placeholder="e.g. Clean Water Initiative 2025" value={name} onChange={(e) => setName(e.target.value)} />
+          <Input
+            label="Group Name"
+            placeholder="e.g. Clean Water Initiative 2025"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-          <Select label="Purpose / Grant Category" value={category} onChange={(e) => setCategory(e.target.value)}>
+          <Select
+            label="Purpose / Grant Category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="">Select a primary focus area</option>
             <option>Software Engineering</option>
             <option>Design</option>
@@ -77,18 +89,24 @@ export default function CreateGrantGroupPage() {
                 onClick={() => setVisibility("public")}
                 className={cn(
                   "flex flex-col items-start gap-2 rounded-md border p-4 text-left transition",
-                  visibility === "public" ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
+                  visibility === "public"
+                    ? "border-primary-container bg-surface-container-low"
+                    : "border-outline-variant"
                 )}
               >
                 <Globe2 className="h-5 w-5 text-on-surface" />
                 <p className="text-label-md text-on-background">Public</p>
-                <p className="text-label-sm text-on-surface-variant">Anyone can discover and join.</p>
+                <p className="text-label-sm text-on-surface-variant">
+                  Anyone can discover and join.
+                </p>
               </button>
               <button
                 onClick={() => setVisibility("private")}
                 className={cn(
                   "flex flex-col items-start gap-2 rounded-md border p-4 text-left transition",
-                  visibility === "private" ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
+                  visibility === "private"
+                    ? "border-primary-container bg-surface-container-low"
+                    : "border-outline-variant"
                 )}
               >
                 <Lock className="h-5 w-5 text-on-surface" />
@@ -99,7 +117,10 @@ export default function CreateGrantGroupPage() {
           </div>
 
           <div className="flex items-center justify-between border-t border-outline-variant/40 pt-md">
-            <Link href="/grants" className="text-label-md text-on-surface-variant hover:text-primary">
+            <Link
+              href="/grants"
+              className="text-label-md text-on-surface-variant hover:text-primary"
+            >
               Cancel
             </Link>
             <Button onClick={handleCreate} disabled={!name || isSubmitting}>

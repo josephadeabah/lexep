@@ -59,14 +59,14 @@ export default function CheckoutContent() {
 
   return (
     <div className="min-h-screen bg-surface">
-      <header className="flex items-center justify-between border-b border-outline-variant/40 px-gutter py-4">
+      <header className="px-gutter flex items-center justify-between border-b border-outline-variant/40 py-4">
         <Logo variant="light" />
         <span className="flex items-center gap-2 text-label-md text-on-surface-variant">
           <Lock className="h-4 w-4" /> Secure Checkout
         </span>
       </header>
 
-      <div className="mx-auto grid max-w-4xl gap-md px-gutter py-xl md:grid-cols-2">
+      <div className="px-gutter mx-auto grid max-w-4xl gap-md py-xl md:grid-cols-2">
         <div className="card-level1 h-fit p-md">
           <h1 className="text-headline-lg text-on-background">Upgrade Summary</h1>
           <div className="mt-md flex items-start gap-3">
@@ -76,8 +76,8 @@ export default function CheckoutContent() {
             <div>
               <p className="text-headline-md text-on-background">Lexep {plan?.name ?? "Plan"}</p>
               <p className="text-body-md text-on-surface-variant">
-                {cycle === "annual" ? "Annual" : "Monthly"} subscription. Includes advanced mentorship matching,
-                premium resources, and dedicated support.
+                {cycle === "annual" ? "Annual" : "Monthly"} subscription. Includes advanced
+                mentorship matching, premium resources, and dedicated support.
               </p>
             </div>
           </div>
@@ -113,18 +113,22 @@ export default function CheckoutContent() {
           <h2 className="text-headline-lg text-on-background">Payment Details</h2>
 
           <div className="mt-md grid grid-cols-3 gap-3">
-            {([
-              { id: "card", label: "Card", icon: CreditCard },
-              { id: "paypal", label: "PayPal", icon: Wallet },
-              { id: "paystack", label: "Paystack", icon: Landmark },
-            ] as const).map((m) => (
+            {(
+              [
+                { id: "card", label: "Card", icon: CreditCard },
+                { id: "paypal", label: "PayPal", icon: Wallet },
+                { id: "paystack", label: "Paystack", icon: Landmark },
+              ] as const
+            ).map((m) => (
               <button
                 type="button"
                 key={m.id}
                 onClick={() => setMethod(m.id)}
                 className={cn(
                   "flex flex-col items-center gap-2 rounded-md border p-4 transition",
-                  method === m.id ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
+                  method === m.id
+                    ? "border-primary-container bg-surface-container-low"
+                    : "border-outline-variant"
                 )}
               >
                 <m.icon className="h-5 w-5 text-on-surface" />
@@ -135,11 +139,30 @@ export default function CheckoutContent() {
 
           <p className="mt-md text-label-md text-on-surface">Billing Information</p>
           <div className="mt-2 grid grid-cols-2 gap-3">
-            <Input label="First Name" placeholder="Jane" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-            <Input label="Last Name" placeholder="Doe" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+            <Input
+              label="First Name"
+              placeholder="Jane"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+            <Input
+              label="Last Name"
+              placeholder="Doe"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
           </div>
           <div className="mt-3">
-            <Input label="Email Address" type="email" placeholder="jane.doe@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <Input
+              label="Email Address"
+              type="email"
+              placeholder="jane.doe@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
 
           {method === "card" && (
@@ -155,8 +178,18 @@ export default function CheckoutContent() {
                 />
               </div>
               <div className="mt-3 grid grid-cols-2 gap-3">
-                <Input label="Expiry Date" placeholder="MM/YY" value={expiry} onChange={(e) => setExpiry(e.target.value)} />
-                <Input label="CVC" placeholder="123" value={cvc} onChange={(e) => setCvc(e.target.value)} />
+                <Input
+                  label="Expiry Date"
+                  placeholder="MM/YY"
+                  value={expiry}
+                  onChange={(e) => setExpiry(e.target.value)}
+                />
+                <Input
+                  label="CVC"
+                  placeholder="123"
+                  value={cvc}
+                  onChange={(e) => setCvc(e.target.value)}
+                />
               </div>
             </>
           )}
@@ -167,7 +200,8 @@ export default function CheckoutContent() {
             <Lock className="h-4 w-4" /> {isSubmitting ? "Processing…" : `Pay $${total}.00`}
           </Button>
           <p className="mt-3 text-center text-label-sm text-on-surface-variant">
-            By confirming your subscription, you allow Lexep to charge you for future payments in accordance with their terms.
+            By confirming your subscription, you allow Lexep to charge you for future payments in
+            accordance with their terms.
           </p>
         </form>
       </div>

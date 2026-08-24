@@ -13,7 +13,14 @@ import { Textarea } from "@/components/ui/Textarea";
 import { api } from "@/lib/api";
 
 const INDUSTRIES = ["Technology", "Design", "Finance", "Healthcare", "Education", "Marketing"];
-const SKILLS = ["UX Design", "Fullstack Dev", "Product Mgmt", "Data Science", "Digital Marketing", "Leadership"];
+const SKILLS = [
+  "UX Design",
+  "Fullstack Dev",
+  "Product Mgmt",
+  "Data Science",
+  "Digital Marketing",
+  "Leadership",
+];
 const HOURS = ["1 - 2 hours", "3 - 5 hours", "5+ hours"];
 const TIMEFRAMES = ["Weekdays (Mornings)", "Weekdays (Evenings)", "Weekends"];
 
@@ -50,7 +57,12 @@ export default function MentorApplicationPage() {
   async function handleStep1Continue() {
     setIsSubmitting(true);
     try {
-      await api.mentorApplicationStep1({ title: role, company, years_experience: years, linkedin_url: linkedin });
+      await api.mentorApplicationStep1({
+        title: role,
+        company,
+        years_experience: years,
+        linkedin_url: linkedin,
+      });
       setStep(2);
     } finally {
       setIsSubmitting(false);
@@ -83,10 +95,13 @@ export default function MentorApplicationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-container-low px-gutter py-xl">
+    <div className="px-gutter min-h-screen bg-surface-container-low py-xl">
       <div className="mx-auto flex max-w-2xl items-center justify-between pb-md">
         <span className="text-headline-md text-primary">Lexep</span>
-        <Link href="/dashboard" className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary">
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary"
+        >
           <X className="h-4 w-4" /> Cancel
         </Link>
       </div>
@@ -106,16 +121,35 @@ export default function MentorApplicationPage() {
           {step === 1 && (
             <div>
               <p className="text-label-sm text-on-surface-variant">STEP 1 OF 3</p>
-              <h1 className="mt-1 text-headline-lg text-on-background">Personal &amp; Professional Info</h1>
+              <h1 className="mt-1 text-headline-lg text-on-background">
+                Personal &amp; Professional Info
+              </h1>
               <p className="mt-2 max-w-md text-body-md text-on-surface-variant">
-                Tell us about your background and expertise to help us match you with the right learners.
+                Tell us about your background and expertise to help us match you with the right
+                learners.
               </p>
 
               <div className="mt-lg flex flex-col gap-md">
-                <Input label="Current Role" placeholder="Senior Architect" icon={<Briefcase className="h-4 w-4" />} value={role} onChange={(e) => setRole(e.target.value)} />
-                <Input label="Company / Organization" placeholder="Studio Design Group" icon={<Building2 className="h-4 w-4" />} value={company} onChange={(e) => setCompany(e.target.value)} />
+                <Input
+                  label="Current Role"
+                  placeholder="Senior Architect"
+                  icon={<Briefcase className="h-4 w-4" />}
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+                <Input
+                  label="Company / Organization"
+                  placeholder="Studio Design Group"
+                  icon={<Building2 className="h-4 w-4" />}
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                />
                 <div className="grid gap-md sm:grid-cols-2">
-                  <Select label="Years of Exp." value={years} onChange={(e) => setYears(e.target.value)}>
+                  <Select
+                    label="Years of Exp."
+                    value={years}
+                    onChange={(e) => setYears(e.target.value)}
+                  >
                     <option value="">Select</option>
                     <option>0-2</option>
                     <option>3-5</option>
@@ -133,7 +167,10 @@ export default function MentorApplicationPage() {
               </div>
 
               <div className="mt-lg flex items-center justify-between border-t border-outline-variant/40 pt-md">
-                <Link href="/dashboard" className="text-label-md text-on-surface-variant hover:text-primary">
+                <Link
+                  href="/dashboard"
+                  className="text-label-md text-on-surface-variant hover:text-primary"
+                >
                   Cancel
                 </Link>
                 <Button onClick={handleStep1Continue} disabled={isSubmitting}>
@@ -146,13 +183,21 @@ export default function MentorApplicationPage() {
           {step === 2 && (
             <div>
               <p className="text-label-sm text-on-surface-variant">STEP 2 OF 3</p>
-              <h1 className="mt-1 text-headline-lg text-on-background">Expertise &amp; Availability</h1>
+              <h1 className="mt-1 text-headline-lg text-on-background">
+                Expertise &amp; Availability
+              </h1>
 
               <div className="mt-lg">
                 <h2 className="text-headline-md text-on-background">Area of Expertise</h2>
-                <p className="text-label-sm text-on-surface-variant">Select your primary industry and specific skills you can mentor on.</p>
+                <p className="text-label-sm text-on-surface-variant">
+                  Select your primary industry and specific skills you can mentor on.
+                </p>
                 <div className="mt-3">
-                  <Select label="Primary Industry" value={industry} onChange={(e) => setIndustry(e.target.value)}>
+                  <Select
+                    label="Primary Industry"
+                    value={industry}
+                    onChange={(e) => setIndustry(e.target.value)}
+                  >
                     <option value="">Select Industry</option>
                     {INDUSTRIES.map((i) => (
                       <option key={i}>{i}</option>
@@ -160,7 +205,9 @@ export default function MentorApplicationPage() {
                   </Select>
                 </div>
                 <div className="mt-3">
-                  <p className="mb-2 text-label-md text-on-surface">Specific Skills (Select up to 5)</p>
+                  <p className="mb-2 text-label-md text-on-surface">
+                    Specific Skills (Select up to 5)
+                  </p>
                   <div className="grid grid-cols-2 gap-2 rounded-md bg-surface-container-low p-3 sm:grid-cols-3">
                     {SKILLS.map((skill) => (
                       <Checkbox
@@ -176,13 +223,29 @@ export default function MentorApplicationPage() {
 
               <div className="mt-lg border-t border-outline-variant/40 pt-md">
                 <h2 className="text-headline-md text-on-background">Weekly Availability</h2>
-                <p className="text-label-sm text-on-surface-variant">Estimate the hours you can dedicate to mentoring students each week.</p>
+                <p className="text-label-sm text-on-surface-variant">
+                  Estimate the hours you can dedicate to mentoring students each week.
+                </p>
                 <div className="mt-3 grid gap-md sm:grid-cols-2">
                   <div className="flex flex-col gap-2">
                     <p className="text-label-md text-on-surface">Hours per Week</p>
                     {HOURS.map((h) => (
-                      <label key={h} className={cn("flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3", hours === h ? "border-primary-container bg-surface-container-low" : "border-outline-variant")}>
-                        <input type="radio" name="hours" checked={hours === h} onChange={() => setHours(h)} className="h-4 w-4 accent-current text-primary" />
+                      <label
+                        key={h}
+                        className={cn(
+                          "flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3",
+                          hours === h
+                            ? "border-primary-container bg-surface-container-low"
+                            : "border-outline-variant"
+                        )}
+                      >
+                        <input
+                          type="radio"
+                          name="hours"
+                          checked={hours === h}
+                          onChange={() => setHours(h)}
+                          className="h-4 w-4 text-primary accent-current"
+                        />
                         {h}
                       </label>
                     ))}
@@ -216,9 +279,12 @@ export default function MentorApplicationPage() {
           {step === 3 && (
             <div>
               <p className="text-label-sm text-on-surface-variant">STEP 3 OF 3</p>
-              <h1 className="mt-1 text-headline-lg text-on-background">Motivation &amp; Submission</h1>
+              <h1 className="mt-1 text-headline-lg text-on-background">
+                Motivation &amp; Submission
+              </h1>
               <p className="mt-2 max-w-md text-body-md text-on-surface-variant">
-                We&apos;d love to know what drives you to share your expertise with the next generation.
+                We&apos;d love to know what drives you to share your expertise with the next
+                generation.
               </p>
 
               <div className="mt-lg">
@@ -237,9 +303,9 @@ export default function MentorApplicationPage() {
                   onChange={(e) => setAgreed(e.target.checked)}
                   label={
                     <>
-                      I agree to the <span className="text-primary">Terms &amp; Conditions</span> and{" "}
-                      <span className="text-primary">Mentor Code of Conduct</span>. I confirm that all information
-                      provided is accurate.
+                      I agree to the <span className="text-primary">Terms &amp; Conditions</span>{" "}
+                      and <span className="text-primary">Mentor Code of Conduct</span>. I confirm
+                      that all information provided is accurate.
                     </>
                   }
                 />

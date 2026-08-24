@@ -20,7 +20,9 @@ export default function GrantsPage() {
   return (
     <div className="flex flex-col gap-lg">
       <div>
-        <h1 className="text-headline-lg text-on-background">Welcome back, {user?.full_name.split(" ")[0]}</h1>
+        <h1 className="text-headline-lg text-on-background">
+          Welcome back, {user?.full_name.split(" ")[0]}
+        </h1>
         <p className="mt-1 text-body-md text-on-surface-variant">
           Here is the latest impact from your community funding initiatives.
         </p>
@@ -32,7 +34,10 @@ export default function GrantsPage() {
             <span className="text-label-md text-on-surface-variant">Total Youth Sponsored</span>
             <GraduationCap className="h-4 w-4 text-primary" />
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {totalYouth.toLocaleString()}
           </p>
         </Card>
@@ -41,17 +46,25 @@ export default function GrantsPage() {
             <span className="text-label-md text-on-surface-variant">Total Grants Issued</span>
             <Landmark className="h-4 w-4 text-primary" />
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {formatCurrency(totalRaised)}
           </p>
-          <p className="mt-1 text-label-sm text-on-surface-variant">Across {groups.data?.length ?? 0} active groups</p>
+          <p className="mt-1 text-label-sm text-on-surface-variant">
+            Across {groups.data?.length ?? 0} active groups
+          </p>
         </Card>
         <Card className="bg-inverse-surface text-inverse-on-surface">
           <p className="text-label-md">Start a new initiative</p>
           <p className="mt-2 text-label-sm text-[#c9c7c6]">
             Empower more youth by starting a dedicated funding group.
           </p>
-          <Link href="/grants/new" className="mt-4 inline-flex items-center gap-1 text-label-md text-primary-fixed-dim hover:underline">
+          <Link
+            href="/grants/new"
+            className="mt-4 inline-flex items-center gap-1 text-label-md text-primary-fixed-dim hover:underline"
+          >
             Get Started <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </Card>
@@ -88,7 +101,10 @@ export default function GrantsPage() {
             ))
           ) : (
             <p className="text-body-md text-on-surface-variant">
-              No funding groups yet. <Link href="/grants/new" className="text-primary hover:underline">Create one →</Link>
+              No funding groups yet.{" "}
+              <Link href="/grants/new" className="text-primary hover:underline">
+                Create one →
+              </Link>
             </p>
           )}
         </div>

@@ -80,7 +80,11 @@ export default function AssessmentHubPage() {
                   <Button
                     variant="secondary"
                     className="mt-4 w-full"
-                    onClick={() => router.push(`/assessments/${attempt.assessment_id}/take?attempt=${attempt.id}`)}
+                    onClick={() =>
+                      router.push(
+                        `/assessments/${attempt.assessment_id}/take?attempt=${attempt.id}`
+                      )
+                    }
                   >
                     Continue
                   </Button>

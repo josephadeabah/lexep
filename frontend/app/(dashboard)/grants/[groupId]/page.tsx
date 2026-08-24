@@ -58,10 +58,14 @@ export default function GrantGroupDetailPage() {
 
           <div className="mt-md rounded-md bg-surface-container-low p-md">
             <div className="flex items-baseline justify-between">
-              <p className="text-headline-md text-on-background">{formatCurrency(g.raised_amount)}</p>
+              <p className="text-headline-md text-on-background">
+                {formatCurrency(g.raised_amount)}
+              </p>
               <p className="text-label-md text-primary">{g.percent_funded}%</p>
             </div>
-            <p className="text-label-sm text-on-surface-variant">raised of {formatCurrency(g.goal_amount)} goal</p>
+            <p className="text-label-sm text-on-surface-variant">
+              raised of {formatCurrency(g.goal_amount)} goal
+            </p>
             <ProgressBar value={g.percent_funded} className="mt-3" />
           </div>
 
@@ -97,14 +101,18 @@ export default function GrantGroupDetailPage() {
                     </span>
                     <div>
                       <p className="text-label-md text-on-background">{c.contributor_name}</p>
-                      <p className="text-label-sm text-on-surface-variant">{formatDate(c.created_at)}</p>
+                      <p className="text-label-sm text-on-surface-variant">
+                        {formatDate(c.created_at)}
+                      </p>
                     </div>
                   </div>
                   <p className="text-label-md text-on-background">{formatCurrency(c.amount)}</p>
                 </li>
               ))
             ) : (
-              <p className="text-body-md text-on-surface-variant">No contributions yet — be the first!</p>
+              <p className="text-body-md text-on-surface-variant">
+                No contributions yet — be the first!
+              </p>
             )}
           </ul>
         </Card>

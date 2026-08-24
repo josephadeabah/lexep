@@ -3,11 +3,15 @@
 import { CheckCircle2, Award } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
-const UNLOCKED = ["Advanced Analytics Dashboard", "Priority 24/7 Support Access", "Unlimited Project Workspaces"];
+const UNLOCKED = [
+  "Advanced Analytics Dashboard",
+  "Priority 24/7 Support Access",
+  "Unlimited Project Workspaces",
+];
 
 export default function UpgradeSuccessPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
+    <div className="px-gutter flex min-h-screen items-center justify-center bg-surface py-xl">
       <div className="card-level1 grid w-full max-w-2xl gap-md p-md sm:grid-cols-[160px_1fr] sm:items-center">
         <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-surface-container-high">
           <Award className="h-14 w-14 text-primary-container" />
@@ -31,7 +35,9 @@ export default function UpgradeSuccessPage() {
 
           <div className="mt-md flex flex-col gap-2 sm:flex-row">
             <Button href="/dashboard">Go to Dashboard</Button>
-            <Button href="/dashboard" variant="secondary">Explore Pro Features</Button>
+            <Button href="/dashboard" variant="secondary">
+              Explore Pro Features
+            </Button>
           </div>
         </div>
       </div>

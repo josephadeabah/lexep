@@ -25,19 +25,31 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-outline-variant/40">
-        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
+        <div className="px-gutter mx-auto flex max-w-container-max items-center justify-between py-4">
           <Logo variant="light" size={26} />
           <nav className="hidden items-center gap-lg md:flex">
-            <Link href="#explore" className="text-body-md text-on-surface-variant hover:text-primary">
+            <Link
+              href="#explore"
+              className="text-body-md text-on-surface-variant hover:text-primary"
+            >
               Explore
             </Link>
-            <Link href="/mentorship" className="text-body-md text-on-surface-variant hover:text-primary">
+            <Link
+              href="/mentorship"
+              className="text-body-md text-on-surface-variant hover:text-primary"
+            >
               Mentors
             </Link>
-            <Link href="/pricing" className="text-body-md text-on-surface-variant hover:text-primary">
+            <Link
+              href="/pricing"
+              className="text-body-md text-on-surface-variant hover:text-primary"
+            >
               Pricing
             </Link>
-            <Link href="/insights" className="text-body-md text-on-surface-variant hover:text-primary">
+            <Link
+              href="/insights"
+              className="text-body-md text-on-surface-variant hover:text-primary"
+            >
               Insights
             </Link>
           </nav>
@@ -52,18 +64,18 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <section className="relative flex min-h-[70vh] items-center overflow-hidden px-gutter py-xl">
+      <section className="px-gutter relative flex min-h-[70vh] items-center overflow-hidden py-xl">
         <div
           className="pointer-events-none absolute inset-0 z-0 opacity-10"
           style={{
-            background:
-              "radial-gradient(ellipse at top right, #d4af37, transparent 60%)",
+            background: "radial-gradient(ellipse at top right, #d4af37, transparent 60%)",
           }}
         />
         <div className="relative z-10 mx-auto max-w-container-max">
           <div className="max-w-2xl">
             <h1 className="text-display-lg text-on-background">
-              Architecting the Future of <span className="text-primary-container">African Talent.</span>
+              Architecting the Future of{" "}
+              <span className="text-primary-container">African Talent.</span>
             </h1>
             <p className="mt-6 max-w-xl text-body-lg text-on-surface-variant">
               Lexep helps African youth learn practical skills, connect with mentors, and find
@@ -86,7 +98,8 @@ export default function LandingPage() {
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-headline-lg text-on-background">A Complete Ecosystem for Growth</h2>
             <p className="mt-4 text-body-md text-on-surface-variant">
-              Everything you need to transition from learning to earning, all in one seamless platform.
+              Everything you need to transition from learning to earning, all in one seamless
+              platform.
             </p>
           </div>
 
@@ -116,13 +129,19 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-outline-variant/40 px-gutter py-md">
+      <footer className="px-gutter border-t border-outline-variant/40 py-md">
         <div className="mx-auto flex max-w-container-max flex-col items-center justify-between gap-4 text-label-sm text-on-surface-variant md:flex-row">
           <span>© {new Date().getFullYear()} Lexep. All rights reserved.</span>
           <div className="flex gap-md">
-            <Link href="#" className="hover:text-primary">Privacy Policy</Link>
-            <Link href="#" className="hover:text-primary">Terms of Service</Link>
-            <Link href="#" className="hover:text-primary">Contact Support</Link>
+            <Link href="#" className="hover:text-primary">
+              Privacy Policy
+            </Link>
+            <Link href="#" className="hover:text-primary">
+              Terms of Service
+            </Link>
+            <Link href="#" className="hover:text-primary">
+              Contact Support
+            </Link>
           </div>
         </div>
       </footer>

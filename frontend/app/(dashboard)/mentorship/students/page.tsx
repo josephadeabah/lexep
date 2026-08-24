@@ -27,7 +27,10 @@ export default function MentorStudentsPage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <Users className="h-4 w-4 text-primary" /> ACTIVE STUDENTS
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {students.data?.length ?? "—"}
           </p>
         </Card>
@@ -35,7 +38,10 @@ export default function MentorStudentsPage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <CalendarClock className="h-4 w-4 text-primary" /> SESSIONS THIS MONTH
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             {students.data?.filter((s) => s.confirmed_time).length ?? "—"}
           </p>
         </Card>
@@ -43,7 +49,10 @@ export default function MentorStudentsPage() {
           <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
             <AlertCircle className="h-4 w-4 text-primary" /> PENDING FEEDBACK
           </div>
-          <p className="mt-3 text-display-lg text-on-background" style={{ fontSize: 40, lineHeight: "48px" }}>
+          <p
+            className="mt-3 text-display-lg text-on-background"
+            style={{ fontSize: 40, lineHeight: "48px" }}
+          >
             0
           </p>
         </Card>
@@ -62,7 +71,7 @@ export default function MentorStudentsPage() {
                 <th className="px-md py-3 font-normal">Student</th>
                 <th className="px-md py-3 font-normal">Session Type</th>
                 <th className="px-md py-3 font-normal">Next Session</th>
-                <th className="px-md py-3 font-normal text-right">Actions</th>
+                <th className="px-md py-3 text-right font-normal">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant/40">
@@ -74,9 +83,13 @@ export default function MentorStudentsPage() {
                       <p className="text-label-md text-on-background">{s.learner_name}</p>
                     </div>
                   </td>
-                  <td className="px-md py-4 text-body-md text-on-surface">{s.session_type ?? "—"}</td>
                   <td className="px-md py-4 text-body-md text-on-surface">
-                    {s.confirmed_time ? `${formatDate(s.confirmed_time)}, ${formatTime(s.confirmed_time)}` : "Not scheduled"}
+                    {s.session_type ?? "—"}
+                  </td>
+                  <td className="px-md py-4 text-body-md text-on-surface">
+                    {s.confirmed_time
+                      ? `${formatDate(s.confirmed_time)}, ${formatTime(s.confirmed_time)}`
+                      : "Not scheduled"}
                   </td>
                   <td className="px-md py-4 text-right">
                     <div className="flex justify-end gap-2">

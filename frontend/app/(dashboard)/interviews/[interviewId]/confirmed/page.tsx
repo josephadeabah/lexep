@@ -26,7 +26,8 @@ export default function InterviewConfirmedPage() {
       </span>
       <h1 className="mt-6 text-headline-lg text-on-background">Interview Confirmed!</h1>
       <p className="mt-2 text-body-md text-on-surface-variant">
-        Your interview {i.candidate_name ? `with ${i.candidate_name} ` : ""}has been successfully scheduled.
+        Your interview {i.candidate_name ? `with ${i.candidate_name} ` : ""}has been successfully
+        scheduled.
       </p>
 
       <Card className="mt-lg text-left">
@@ -62,7 +63,9 @@ export default function InterviewConfirmedPage() {
             <Video className="h-4 w-4" /> Join {i.meeting_service ?? "Meeting"}
           </Button>
         )}
-        <p className="mt-2 text-label-sm text-on-surface-variant">The link will activate 5 minutes before the scheduled time.</p>
+        <p className="mt-2 text-label-sm text-on-surface-variant">
+          The link will activate 5 minutes before the scheduled time.
+        </p>
       </Card>
 
       <Button variant="ghost" className="mt-lg" onClick={() => router.push("/dashboard")}>

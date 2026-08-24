@@ -24,18 +24,24 @@ export default function UpgradeContent() {
   const plan = plans.data?.find((p) => p.id === requestedPlan) ?? plans.data?.[0];
 
   if (config.isLoading || plans.isLoading) {
-    return <div className="flex min-h-screen items-center justify-center text-body-md text-on-surface-variant">Loading…</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center text-body-md text-on-surface-variant">
+        Loading…
+      </div>
+    );
   }
 
   if (!config.data?.premium_features_enabled) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-surface px-gutter">
+      <div className="px-gutter flex min-h-screen items-center justify-center bg-surface">
         <div className="card-level1 max-w-md p-md text-center">
-          <div className="flex justify-center"><Logo variant="light" /></div>
+          <div className="flex justify-center">
+            <Logo variant="light" />
+          </div>
           <h1 className="mt-4 text-headline-lg text-on-background">Premium isn&apos;t live yet</h1>
           <p className="mt-2 text-body-md text-on-surface-variant">
-            We&apos;re currently in free beta — every feature is unlocked for everyone, no upgrade needed.
-            We&apos;ll let you know when premium plans go live.
+            We&apos;re currently in free beta — every feature is unlocked for everyone, no upgrade
+            needed. We&apos;ll let you know when premium plans go live.
           </p>
           <Button className="mt-md" href={user ? "/dashboard" : "/"}>
             {user ? "Back to Dashboard" : "Back Home"}
@@ -46,13 +52,17 @@ export default function UpgradeContent() {
   }
 
   if (!plan || plan.is_custom) {
-    return <div className="flex min-h-screen items-center justify-center text-body-md text-on-surface-variant">Contact sales for Enterprise pricing.</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center text-body-md text-on-surface-variant">
+        Contact sales for Enterprise pricing.
+      </div>
+    );
   }
 
   const price = cycle === "annual" ? plan.annual_price! : plan.monthly_price! * 12;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
+    <div className="px-gutter flex min-h-screen items-center justify-center bg-surface py-xl">
       <div className="w-full max-w-lg">
         <div className="card-level1 p-md">
           <div className="text-center">
@@ -67,7 +77,9 @@ export default function UpgradeContent() {
               onClick={() => setCycle("monthly")}
               className={cn(
                 "rounded-full px-4 py-2 text-label-md transition",
-                cycle === "monthly" ? "bg-inverse-surface text-inverse-on-surface" : "text-on-surface-variant"
+                cycle === "monthly"
+                  ? "bg-inverse-surface text-inverse-on-surface"
+                  : "text-on-surface-variant"
               )}
             >
               Monthly
@@ -76,7 +88,9 @@ export default function UpgradeContent() {
               onClick={() => setCycle("annual")}
               className={cn(
                 "flex items-center gap-2 rounded-full px-4 py-2 text-label-md transition",
-                cycle === "annual" ? "bg-inverse-surface text-inverse-on-surface" : "text-on-surface-variant"
+                cycle === "annual"
+                  ? "bg-inverse-surface text-inverse-on-surface"
+                  : "text-on-surface-variant"
               )}
             >
               Annually
@@ -93,7 +107,10 @@ export default function UpgradeContent() {
                 <p className="text-label-sm text-on-surface-variant">Billed {cycle}</p>
               </div>
               <p className="text-headline-lg text-on-background">
-                ${price} <span className="text-label-md text-on-surface-variant">/ {cycle === "annual" ? "year" : "month"}</span>
+                ${price}{" "}
+                <span className="text-label-md text-on-surface-variant">
+                  / {cycle === "annual" ? "year" : "month"}
+                </span>
               </p>
             </div>
             <ul className="mt-md flex flex-col gap-3 border-t border-outline-variant/40 pt-md">
@@ -112,12 +129,18 @@ export default function UpgradeContent() {
           >
             Complete Upgrade <ArrowRight className="h-4 w-4" />
           </Button>
-          <Link href="/dashboard" className="mt-3 block text-center text-label-md text-on-surface-variant hover:text-primary">
+          <Link
+            href="/dashboard"
+            className="mt-3 block text-center text-label-md text-on-surface-variant hover:text-primary"
+          >
             Cancel
           </Link>
           <p className="mt-3 text-center text-label-sm text-on-surface-variant">
             By upgrading, you agree to our{" "}
-            <Link href="/help" className="underline">Terms of Service</Link>.
+            <Link href="/help" className="underline">
+              Terms of Service
+            </Link>
+            .
           </p>
         </div>
       </div>

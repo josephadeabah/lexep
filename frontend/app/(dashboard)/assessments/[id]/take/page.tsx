@@ -38,13 +38,14 @@ export default function TakeAssessmentPage() {
 
   if (progress.isLoading) return <p className="text-body-md text-on-surface-variant">Loading…</p>;
   const p = progress.data;
-  if (!p || !p.question) return <p className="text-body-md text-on-surface-variant">No questions available.</p>;
+  if (!p || !p.question)
+    return <p className="text-body-md text-on-surface-variant">No questions available.</p>;
 
   const percent = (p.current_index / p.total_questions) * 100;
 
   return (
     <div className="fixed inset-0 z-40 flex flex-col bg-surface">
-      <div className="flex items-center justify-between border-b border-outline-variant/40 px-gutter py-4">
+      <div className="px-gutter flex items-center justify-between border-b border-outline-variant/40 py-4">
         <span className="flex items-center gap-2 text-label-md text-on-background">
           <span className="text-headline-md text-primary">Lexep</span>
           <span className="text-on-surface-variant">| {p.assessment_title}</span>
@@ -97,9 +98,11 @@ export default function TakeAssessmentPage() {
           </ul>
         </aside>
 
-        <main className="flex-1 overflow-y-auto px-gutter py-lg">
+        <main className="px-gutter flex-1 overflow-y-auto py-lg">
           <div className="mx-auto max-w-2xl">
-            <p className="text-label-sm uppercase tracking-wide text-primary">{p.assessment_title}</p>
+            <p className="text-label-sm uppercase tracking-wide text-primary">
+              {p.assessment_title}
+            </p>
             <h1 className="mt-2 text-headline-lg text-on-background">{p.question.prompt}</h1>
 
             {p.question.image_url && (
@@ -115,7 +118,9 @@ export default function TakeAssessmentPage() {
                   key={option.id}
                   className={cn(
                     "flex cursor-pointer items-center gap-3 rounded-md border p-4 transition",
-                    selectedOption === option.id ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
+                    selectedOption === option.id
+                      ? "border-primary-container bg-surface-container-low"
+                      : "border-outline-variant"
                   )}
                 >
                   <Radio

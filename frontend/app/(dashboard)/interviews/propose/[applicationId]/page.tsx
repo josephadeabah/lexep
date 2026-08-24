@@ -20,7 +20,9 @@ function nextBusinessSlots(): { label: string; iso: string }[] {
     d.setDate(base.getDate() + i);
     d.setHours(hour, 0, 0, 0);
     slots.push({
-      label: d.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + ` ${hour % 12 || 12}:00 ${hour < 12 ? "AM" : "PM"}`,
+      label:
+        d.toLocaleDateString("en-US", { month: "short", day: "numeric" }) +
+        ` ${hour % 12 || 12}:00 ${hour < 12 ? "AM" : "PM"}`,
       iso: d.toISOString(),
     });
   });
@@ -60,14 +62,19 @@ export default function ProposeInterviewPage() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-gutter">
+    <div className="p-gutter fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="w-full max-w-lg overflow-hidden rounded-lg bg-surface-container-lowest shadow-level2">
         <div className="flex items-center justify-between border-b border-outline-variant/40 p-md">
           <div>
             <h1 className="text-headline-md text-on-background">Schedule Interview</h1>
-            <p className="text-body-md text-on-surface-variant">Send an invitation to the candidate</p>
+            <p className="text-body-md text-on-surface-variant">
+              Send an invitation to the candidate
+            </p>
           </div>
-          <button onClick={() => router.back()} className="text-on-surface-variant hover:text-on-background">
+          <button
+            onClick={() => router.back()}
+            className="text-on-surface-variant hover:text-on-background"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -75,13 +82,21 @@ export default function ProposeInterviewPage() {
         <div className="max-h-[70vh] overflow-y-auto p-md">
           <div className="flex flex-col gap-md">
             <div className="grid gap-md sm:grid-cols-2">
-              <Select label="Interview Type" value={interviewType} onChange={(e) => setInterviewType(e.target.value)}>
+              <Select
+                label="Interview Type"
+                value={interviewType}
+                onChange={(e) => setInterviewType(e.target.value)}
+              >
                 <option>Technical Assessment</option>
                 <option>Portfolio Review</option>
                 <option>Culture Fit</option>
                 <option>Final Round</option>
               </Select>
-              <Select label="Meeting Service" value={meetingService} onChange={(e) => setMeetingService(e.target.value)}>
+              <Select
+                label="Meeting Service"
+                value={meetingService}
+                onChange={(e) => setMeetingService(e.target.value)}
+              >
                 <option>Google Meet</option>
                 <option>Zoom</option>
                 <option>Microsoft Teams</option>
@@ -90,7 +105,9 @@ export default function ProposeInterviewPage() {
 
             <div>
               <div className="flex items-center justify-between">
-                <p className="text-label-md text-on-surface">Offer Availability (Select multiple)</p>
+                <p className="text-label-md text-on-surface">
+                  Offer Availability (Select multiple)
+                </p>
                 <span className="text-label-sm text-on-surface-variant">Timezone: GMT</span>
               </div>
               <div className="mt-2 grid grid-cols-2 gap-2">
@@ -120,7 +137,9 @@ export default function ProposeInterviewPage() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <p className="text-label-sm text-on-surface-variant">Standard template will be appended.</p>
+            <p className="text-label-sm text-on-surface-variant">
+              Standard template will be appended.
+            </p>
           </div>
         </div>
 

@@ -19,7 +19,8 @@ const COURSES = [
     level: "Beginner",
     tier: "Free",
     duration: "12 Weeks",
-    description: "Master the fundamentals of modern software development, from version control to deployment.",
+    description:
+      "Master the fundamentals of modern software development, from version control to deployment.",
   },
   {
     title: "Product Strategy & Growth",
@@ -43,7 +44,8 @@ const COURSES = [
     level: "Intermediate",
     tier: "Pro",
     duration: "14 Weeks",
-    description: "Hands-on statistics, Python, and machine learning fundamentals for real datasets.",
+    description:
+      "Hands-on statistics, Python, and machine learning fundamentals for real datasets.",
   },
   {
     title: "Digital Marketing Essentials",
@@ -117,7 +119,9 @@ export default function CoursesPage() {
                 <Badge>{course.level}</Badge>
                 <Badge tone={course.tier === "Pro" ? "primary" : "neutral"}>{course.tier}</Badge>
               </div>
-              <p className="text-label-sm uppercase tracking-wide text-on-surface-variant">{course.category}</p>
+              <p className="text-label-sm uppercase tracking-wide text-on-surface-variant">
+                {course.category}
+              </p>
               <p className="mt-1 text-headline-md text-on-background">{course.title}</p>
               <p className="mt-2 text-body-md text-on-surface-variant">{course.description}</p>
             </div>

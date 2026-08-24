@@ -8,7 +8,10 @@ import { useAuthStore } from "@/lib/auth-store";
 import { NAV_BY_ROLE } from "@/lib/nav-config";
 import type { UserRole } from "@/lib/types";
 
-const BRAND_BY_ROLE: Record<UserRole, { brand: string; tagline: string; ctaLabel?: string; ctaHref?: string; roleLabel: string }> = {
+const BRAND_BY_ROLE: Record<
+  UserRole,
+  { brand: string; tagline: string; ctaLabel?: string; ctaHref?: string; roleLabel: string }
+> = {
   learner: {
     brand: "Lexep",
     tagline: "Student Portal",
@@ -58,7 +61,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   if (!isInitialized || !user || !user.role || user.role === "admin") {
     return (
-      <div className="flex h-screen items-center justify-center bg-surface text-on-surface-variant text-body-md">
+      <div className="flex h-screen items-center justify-center bg-surface text-body-md text-on-surface-variant">
         Loading your workspace…
       </div>
     );
@@ -75,7 +78,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         navItems={NAV_BY_ROLE[role]}
         ctaLabel={config.ctaLabel}
         ctaHref={config.ctaHref}
-        userSummary={{ name: user.full_name, roleLabel: config.roleLabel, avatarUrl: user.avatar_url }}
+        userSummary={{
+          name: user.full_name,
+          roleLabel: config.roleLabel,
+          avatarUrl: user.avatar_url,
+        }}
         onLogout={() => {
           logout();
           router.replace("/sign-in");

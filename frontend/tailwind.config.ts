@@ -5,10 +5,7 @@ import type { Config } from "tailwindcss";
 // means new screens can be built by reading the design doc and reaching for
 // the matching Tailwind class, with no translation step.
 const config: Config = {
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     container: {
       center: true,
@@ -71,7 +68,10 @@ const config: Config = {
       },
       fontSize: {
         "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
-        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+        "headline-lg": [
+          "32px",
+          { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" },
+        ],
         "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
         "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
         "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
