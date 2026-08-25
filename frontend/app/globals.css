@@ -74,7 +74,7 @@
   }
 
   .glass-hover {
-    @apply transition duration-300 hover:bg-white/[0.08] hover:border-white/25;
+    @apply transition duration-300 hover:border-white/25 hover:bg-white/[0.08];
   }
 
   /* Animation utilities */

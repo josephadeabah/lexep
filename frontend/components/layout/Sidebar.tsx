@@ -42,43 +42,24 @@ export function Sidebar({
         <div className="flex flex-col gap-lg">
           {/* Brand */}
           <div>
-            <Link
-              href="/dashboard"
-              className="flex items-center gap-2"
-            >
-              <Logo
-                variant="dark"
-                size={64}
-                showWordmark={false}
-              />
+            <Link href="/dashboard" className="flex items-center gap-2">
+              <Logo variant="dark" size={64} showWordmark={false} />
 
-              <span className="text-headline-md text-primary-fixed-dim">
-                {brand}
-              </span>
+              <span className="text-headline-md text-primary-fixed-dim">{brand}</span>
             </Link>
 
-            <p className="mt-1 text-label-sm text-[#a8a6a5]">
-              {tagline}
-            </p>
+            <p className="mt-1 text-label-sm text-[#a8a6a5]">{tagline}</p>
           </div>
 
           {/* User summary */}
           {userSummary && (
             <div className="flex items-center gap-3 rounded-md bg-white/5 p-3">
-              <Avatar
-                name={userSummary.name}
-                src={userSummary.avatarUrl}
-                size={36}
-              />
+              <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
 
               <div className="min-w-0">
-                <p className="truncate text-label-md text-inverse-on-surface">
-                  {userSummary.name}
-                </p>
+                <p className="truncate text-label-md text-inverse-on-surface">{userSummary.name}</p>
 
-                <p className="truncate text-label-sm text-[#a8a6a5]">
-                  {userSummary.roleLabel}
-                </p>
+                <p className="truncate text-label-sm text-[#a8a6a5]">{userSummary.roleLabel}</p>
               </div>
             </div>
           )}
@@ -99,9 +80,7 @@ export function Sidebar({
       <nav className="min-h-0 overflow-y-auto px-md py-sm">
         <div className="flex flex-col gap-1">
           {navItems.map((item) => {
-            const active =
-              pathname === item.href ||
-              pathname?.startsWith(`${item.href}/`);
+            const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
 
             const Icon = item.icon;
 
@@ -122,9 +101,7 @@ export function Sidebar({
 
                 <Icon className="h-4 w-4 shrink-0" />
 
-                <span className="truncate">
-                  {item.label}
-                </span>
+                <span className="truncate">{item.label}</span>
               </Link>
             );
           })}

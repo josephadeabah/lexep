@@ -389,7 +389,7 @@ def run():
             ),
             category="Software Engineering",
             goal_amount=50000,
-            raised_amount=45000,
+            raised_amount=5000,
             youth_sponsored=124,
         )
         db.add(group)
@@ -397,10 +397,10 @@ def run():
         db.add_all(
             [
                 Contribution(
-                    group_id=group.id, contributor_name="Anonymous Donor", amount=5000
+                    group_id=group.id, contributor_name="Anonymous Donor", amount=2500
                 ),
                 Contribution(
-                    group_id=group.id, contributor_name="David K.", amount=2500
+                    group_id=group.id, contributor_name="David K.", amount=1500
                 ),
                 Contribution(
                     group_id=group.id, contributor_name="Amara Ventures", amount=1000

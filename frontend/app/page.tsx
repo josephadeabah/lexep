@@ -1,4 +1,3 @@
-// app/page.tsx (or wherever your landing page lives)
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,6 +10,7 @@ import {
   GraduationCap,
   HeartHandshake,
   Menu,
+  Rocket,
   Sparkles,
   Users,
 } from "lucide-react";
@@ -23,44 +23,79 @@ const FEATURES = [
   {
     icon: GraduationCap,
     eyebrow: "LEARN",
-    title: "Build skills that employers value",
-    body: "Discover practical learning paths designed to help you move beyond theory and develop skills you can actually use.",
+    number: "01",
+    title: "Build skills you can use in the real world",
+    body: "Move beyond theory with practical learning that helps you build confidence, develop useful skills, and prepare for the opportunities ahead.",
     href: "/explore",
     linkLabel: "Explore learning",
   },
   {
     icon: Users,
     eyebrow: "CONNECT",
-    title: "Learn from people ahead of you",
-    body: "Connect with experienced professionals for career guidance, portfolio reviews, technical advice, and real-world perspective.",
+    number: "02",
+    title: "Learn from people who have walked the path",
+    body: "Connect with experienced mentors for career guidance, honest advice, portfolio feedback, and perspective from people who understand the journey.",
     href: "/mentorship",
     linkLabel: "Find a mentor",
   },
   {
     icon: BriefcaseBusiness,
     eyebrow: "EXPERIENCE",
-    title: "Turn potential into real experience",
-    body: "Discover internship opportunities where you can apply your skills, gain workplace experience, and start building your career.",
+    number: "03",
+    title: "Turn what you know into what you can do",
+    body: "Discover internships and real-world opportunities where you can apply your skills, gain experience, build your portfolio, and grow your confidence.",
     href: "/opportunities",
     linkLabel: "Browse opportunities",
+  },
+  {
+    icon: Award,
+    eyebrow: "GROW",
+    number: "04",
+    title: "Let opportunity meet your ambition",
+    body: "Access grants and community-backed support designed to help promising young people, ideas, and projects take their next meaningful step.",
+    href: "/grants",
+    linkLabel: "Explore grants",
   },
 ];
 
 const STEPS = [
   {
     number: "01",
-    title: "Create your profile",
-    body: "Tell us about your skills, interests, goals, and the direction you want your career to take.",
+    title: "Start with your ambition",
+    body: "Tell Lexep what you are learning, where you want to go, and what you want to build.",
   },
   {
     number: "02",
-    title: "Discover your next opportunity",
-    body: "Explore relevant mentorship, internships, learning opportunities, and career support.",
+    title: "Build your path",
+    body: "Discover practical learning, mentors, internships, grants, and opportunities that move you closer to your goals.",
   },
   {
     number: "03",
-    title: "Build real momentum",
-    body: "Gain experience, grow your network, and develop a stronger path toward meaningful work.",
+    title: "Turn progress into momentum",
+    body: "Gain experience, grow your network, access support, and keep taking meaningful steps toward the future you imagine.",
+  },
+];
+
+const JOURNEY = [
+  {
+    label: "Learn",
+    icon: GraduationCap,
+  },
+  {
+    label: "Connect",
+    icon: Users,
+  },
+  {
+    label: "Experience",
+    icon: BriefcaseBusiness,
+  },
+  {
+    label: "Grow",
+    icon: Award,
+  },
+  {
+    label: "Build your future",
+    icon: Rocket,
   },
 ];
 
@@ -76,10 +111,10 @@ export default function LandingPage() {
 
           <nav className="hidden items-center gap-lg lg:flex">
             <Link
-              href="#how-it-works"
+              href="#journey"
               className="text-body-md text-on-surface-variant transition hover:text-primary"
             >
-              How it works
+              Your journey
             </Link>
 
             <Link
@@ -104,10 +139,10 @@ export default function LandingPage() {
             </Link>
 
             <Link
-              href="/pricing"
+              href="/grants"
               className="text-body-md text-on-surface-variant transition hover:text-primary"
             >
-              Pricing
+              Grants
             </Link>
           </nav>
 
@@ -134,15 +169,15 @@ export default function LandingPage() {
       <main>
         {/* Hero */}
         <section className="relative overflow-hidden">
-          {/* Ambient lighting layers */}
+          {/* Ambient lighting */}
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -right-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-primary-container/15 blur-3xl" />
             <div className="absolute left-1/3 top-1/2 h-72 w-72 rounded-full bg-primary-container/10 blur-3xl" />
             <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-surface-tint/5 blur-3xl" />
           </div>
 
-          {/* Noise overlay */}
-          <div 
+          {/* Noise texture */}
+          <div
             className="pointer-events-none absolute inset-0 opacity-[0.02]"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
@@ -152,36 +187,36 @@ export default function LandingPage() {
           <div className="relative mx-auto grid max-w-container-max items-center gap-xl px-gutter py-xl lg:grid-cols-[0.95fr_1.05fr] lg:py-2xl">
             {/* Hero copy */}
             <div className="relative z-10">
-              {/* Premium badge with glow */}
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-container/20 bg-primary-container/10 px-4 py-2 text-label-md text-primary backdrop-blur-sm">
                 <Sparkles className="h-4 w-4" />
-                <span>Built for Africa&apos;s next generation</span>
+                <span>Built around your ambition</span>
               </div>
 
               <h1 className="max-w-3xl text-display-lg text-on-background">
-                Stop waiting for a job.
+                Your ambition deserves
                 <br />
-                <span className="text-gradient-gold">Start building a career.</span>
+                <span className="text-gradient-gold">a path forward.</span>
               </h1>
 
               <p className="mt-6 max-w-xl text-body-lg leading-relaxed text-on-surface-variant">
-                Lexep connects ambitious young Africans with practical skills, experienced mentors,
-                and real opportunities to gain the experience employers are looking for.
+                Lexep connects African youth with practical learning, experienced mentors,
+                real-world internships, and community-backed support — helping you turn ambition
+                into experience, opportunity, and a meaningful future.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button href="/sign-up" size="lg" variant="primary">
-                  Start building your career
+                  Start your journey
                   <ArrowRight className="h-4 w-4" />
                 </Button>
 
-                <Button href="/onboarding/choose-role" size="lg" variant="secondary">
+                <Button href="/sign-up" size="lg" variant="secondary">
                   Become a mentor
                 </Button>
               </div>
 
-              {/* Trust / social proof */}
-              <div className="mt-10 flex flex-wrap items-center gap-6">
+              {/* Social proof - avatars placed here, below CTAs */}
+              <div className="mt-10 flex flex-wrap items-center gap-4">
                 <div className="flex -space-x-3">
                   {["1", "2", "3", "4"].map((person) => (
                     <div
@@ -197,18 +232,37 @@ export default function LandingPage() {
                       />
                     </div>
                   ))}
+                  <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border-2 border-surface bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
+                    <span className="text-label-sm font-semibold">+1K</span>
+                  </div>
                 </div>
-
                 <div>
-                  <p className="text-headline-sm text-on-background">10,000+</p>
-                  <p className="text-label-md text-on-surface-variant">
-                    young Africans building their future
-                  </p>
+                  <div className="flex items-center gap-1 text-label-md text-on-surface">
+                    <Sparkles className="h-4 w-4 text-primary" />
+                    <span>Trusted Talents</span>
+                  </div>
+                  <p className="text-label-sm text-on-surface-variant">Across Ghana</p>
                 </div>
+              </div>
+
+              {/* Journey preview */}
+              <div className="mt-10 flex flex-wrap items-center gap-2">
+                {["Learn", "Connect", "Experience", "Grow"].map((item, index) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 text-label-md text-on-surface-variant"
+                  >
+                    <span className="rounded-full border border-outline-variant/30 bg-surface-container-low px-3 py-1.5">
+                      {item}
+                    </span>
+
+                    {index < 3 && <ArrowRight className="h-4 w-4 text-primary/60" />}
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Hero visual composition */}
+            {/* Hero visual */}
             <div className="relative">
               <div className="relative min-h-[420px] overflow-hidden rounded-2xl bg-surface-container-high shadow-level2 sm:min-h-[520px]">
                 <Image
@@ -220,23 +274,23 @@ export default function LandingPage() {
                   className="object-cover"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-                {/* Floating internship card with glass effect */}
-                <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-white/20 bg-black/60 p-4 text-white backdrop-blur-xl shadow-level2 sm:left-8 sm:right-auto sm:w-[280px] sm:p-5">
+                {/* Opportunity card */}
+                <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-white/20 bg-black/60 p-4 text-white shadow-level2 backdrop-blur-xl sm:left-8 sm:right-auto sm:w-[290px] sm:p-5">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
                       <BriefcaseBusiness className="h-5 w-5" />
                     </div>
 
                     <span className="rounded-full bg-white/10 px-3 py-1 text-label-sm">
-                      New opportunity
+                      Your next step
                     </span>
                   </div>
 
-                  <p className="text-label-sm text-white/60">Software Engineering Intern</p>
+                  <p className="text-label-sm text-white/60">Software Engineering Internship</p>
 
-                  <p className="mt-1 text-title-md">Start gaining real experience.</p>
+                  <p className="mt-1 text-title-md">Turn your skills into real experience.</p>
 
                   <div className="mt-4 flex items-center gap-2 text-label-sm text-primary-fixed-dim">
                     Explore opportunities
@@ -244,74 +298,127 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Floating glass card */}
-                <div className="absolute top-6 right-6 hidden rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-xl shadow-level2 sm:block">
+                {/* Mentorship card */}
+                <div className="absolute right-6 top-6 hidden rounded-xl border border-white/20 bg-white/10 p-4 shadow-level2 backdrop-blur-xl sm:block">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-container/20">
-                      <CheckCircle2 className="h-5 w-5 text-primary-container" />
+                      <HeartHandshake className="h-5 w-5 text-primary-container" />
                     </div>
+
                     <div>
-                      <p className="text-label-sm text-white/70">Mentorship Match</p>
-                      <p className="text-title-md text-white">92% success rate</p>
+                      <p className="text-label-sm text-white/70">Guidance when it matters</p>
+                      <p className="text-title-md text-white">Connect with a mentor</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Glow accents */}
               <div className="absolute -bottom-8 -left-8 hidden h-32 w-32 rounded-full border border-primary-container/20 bg-primary-container/10 blur-2xl lg:block" />
-              <div className="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-primary-container/10 blur-2xl" />
+              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary-container/10 blur-2xl" />
             </div>
           </div>
         </section>
 
-        {/* Problem / positioning */}
+        {/* Positioning */}
         <section className="border-y border-outline-variant/30 bg-surface-container-low">
           <div className="mx-auto grid max-w-container-max gap-lg px-gutter py-xl md:grid-cols-3">
             <div>
-              <p className="text-display-md text-gradient-gold">300K+</p>
+              <p className="text-gradient-gold text-display-md">More than learning</p>
               <p className="mt-2 text-body-md text-on-surface-variant">
-                graduates enter Ghana&apos;s job market every year.
+                Build practical skills and understand how to use them beyond the classroom.
               </p>
             </div>
 
             <div>
-              <p className="text-display-md text-gradient-gold">Skills + Experience</p>
+              <p className="text-gradient-gold text-display-md">More than a network</p>
               <p className="mt-2 text-body-md text-on-surface-variant">
-                are what turn education into career readiness.
+                Find mentors, peers, and people willing to guide your next step.
               </p>
             </div>
 
             <div>
-              <p className="text-display-md text-gradient-gold">One platform</p>
+              <p className="text-gradient-gold text-display-md">A path forward</p>
               <p className="mt-2 text-body-md text-on-surface-variant">
-                to connect learning, mentorship, and opportunities.
+                Connect learning, experience, opportunities, and community support in one ecosystem.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Journey */}
+        <section id="journey" className="px-gutter py-2xl">
+          <div className="mx-auto max-w-container-max">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="inline-flex items-center gap-2 text-label-md font-medium uppercase tracking-[0.18em] text-primary">
+                <span className="h-px w-8 bg-primary-container" />
+                Your journey
+                <span className="h-px w-8 bg-primary-container" />
+              </div>
+
+              <h2 className="mt-5 text-headline-lg text-on-background">
+                One ambition. An entire ecosystem behind you.
+              </h2>
+
+              <p className="mt-4 text-body-lg leading-relaxed text-on-surface-variant">
+                Nobody should have to figure out their future alone. Lexep brings together the
+                knowledge, guidance, opportunities, and support that help young people keep moving
+                forward.
+              </p>
+            </div>
+
+            <div className="relative mt-xl">
+              {/* Connection line */}
+              <div className="absolute left-0 right-0 top-10 hidden h-px bg-gradient-to-r from-transparent via-primary-container/40 to-transparent lg:block" />
+
+              <div className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+                {JOURNEY.map((item, index) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <div
+                      key={item.label}
+                      className="relative rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 text-center shadow-level1"
+                    >
+                      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
+                        <Icon className="h-6 w-6" />
+                      </div>
+
+                      <p className="mt-5 text-label-sm text-primary">
+                        {String(index + 1).padStart(2, "0")}
+                      </p>
+
+                      <h3 className="mt-2 text-title-lg text-on-background">{item.label}</h3>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
 
         {/* Ecosystem */}
-        <section id="explore" className="px-gutter py-2xl">
+        <section
+          id="explore"
+          className="border-y border-outline-variant/30 bg-surface-container-low px-gutter py-2xl"
+        >
           <div className="mx-auto max-w-container-max">
             <div className="mx-auto max-w-2xl text-center">
               <div className="inline-flex items-center gap-2 text-label-md font-medium uppercase tracking-[0.18em] text-primary">
-                <span className="h-px w-8 bg-primary-container" />
+                <Sparkles className="h-4 w-4" />
                 The Lexep ecosystem
-                <span className="h-px w-8 bg-primary-container" />
               </div>
 
               <h2 className="mt-5 text-headline-lg text-on-background">
-                Everything you need to move from ambition to opportunity.
+                Everything you need to keep moving forward.
               </h2>
 
               <p className="mt-4 text-body-lg text-on-surface-variant">
-                Your career journey does not end when you finish learning. Lexep helps you keep
-                moving forward.
+                Your journey does not end when you finish learning. Every part of Lexep is designed
+                to help you take the next meaningful step.
               </p>
             </div>
 
-            <div className="mt-xl grid gap-md lg:grid-cols-3">
+            <div className="mt-xl grid gap-md md:grid-cols-2">
               {FEATURES.map((feature) => {
                 const Icon = feature.icon;
 
@@ -320,13 +427,16 @@ export default function LandingPage() {
                     key={feature.title}
                     className="group relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1 transition duration-300 hover:-translate-y-1 hover:shadow-level2"
                   >
-                    {/* Glass highlight effect */}
-                    <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-primary-container/5 blur-2xl transition group-hover:bg-primary-container/10" />
+                    <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-primary-container/5 blur-3xl transition group-hover:bg-primary-container/10" />
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
 
                     <div className="relative">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                        <Icon className="h-7 w-7" />
+                      <div className="flex items-start justify-between">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
+                          <Icon className="h-7 w-7" />
+                        </div>
+
+                        <span className="text-label-lg text-primary/60">{feature.number}</span>
                       </div>
 
                       <p className="mt-7 text-label-md font-medium uppercase tracking-[0.15em] text-primary">
@@ -335,7 +445,7 @@ export default function LandingPage() {
 
                       <h3 className="mt-3 text-headline-md text-on-background">{feature.title}</h3>
 
-                      <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
+                      <p className="mt-3 max-w-xl text-body-md leading-relaxed text-on-surface-variant">
                         {feature.body}
                       </p>
 
@@ -355,11 +465,8 @@ export default function LandingPage() {
         </section>
 
         {/* How it works */}
-        <section
-          id="how-it-works"
-          className="border-y border-outline-variant/30 bg-surface-container-low"
-        >
-          <div className="mx-auto max-w-container-max px-gutter py-2xl">
+        <section id="how-it-works" className="px-gutter py-2xl">
+          <div className="mx-auto max-w-container-max">
             <div className="grid gap-xl lg:grid-cols-[0.8fr_1.2fr]">
               <div>
                 <div className="inline-flex items-center gap-2 text-label-md font-medium uppercase tracking-[0.18em] text-primary">
@@ -368,16 +475,17 @@ export default function LandingPage() {
                 </div>
 
                 <h2 className="mt-5 max-w-md text-headline-lg text-on-background">
-                  A clearer path from where you are to where you want to be.
+                  From ambition to opportunity, one step at a time.
                 </h2>
 
                 <p className="mt-5 max-w-lg text-body-lg leading-relaxed text-on-surface-variant">
-                  Whether you are still learning, looking for guidance, or ready for your first real
-                  opportunity, Lexep helps you take the next meaningful step.
+                  Whether you are still figuring things out, building your skills, or ready to take
+                  your first big opportunity, Lexep helps you find the next step that makes sense
+                  for you.
                 </p>
 
                 <Button href="/sign-up" size="lg" variant="primary" className="mt-8">
-                  Create your free account
+                  Start your journey
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -406,35 +514,40 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* For ecosystem */}
-        <section className="px-gutter py-2xl">
+        {/* Who Lexep is for */}
+        <section className="border-y border-outline-variant/30 bg-surface-container-low px-gutter py-2xl">
           <div className="mx-auto max-w-container-max">
             <div className="mb-xl max-w-2xl">
               <p className="text-label-md font-medium uppercase tracking-[0.18em] text-primary">
-                Built for everyone shaping the future
+                Built around a community that moves together
               </p>
 
               <h2 className="mt-4 text-headline-lg text-on-background">
-                More than a platform for learners.
+                Your future is personal. Building it does not have to be lonely.
               </h2>
+
+              <p className="mt-4 text-body-lg leading-relaxed text-on-surface-variant">
+                Lexep brings together the people and organisations that can help turn individual
+                ambition into shared progress.
+              </p>
             </div>
 
-            <div className="grid gap-md md:grid-cols-3">
-              {/* Dark glass card */}
+            <div className="grid gap-md md:grid-cols-2 lg:grid-cols-4">
+              {/* Learners */}
               <div className="relative overflow-hidden rounded-xl bg-[#1a1a1a] p-lg text-inverse-on-surface">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
                 <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-primary-container/10 blur-2xl" />
-                
+
                 <div className="relative">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
                     <GraduationCap className="h-6 w-6" />
                   </div>
 
-                  <h3 className="mt-8 text-headline-md">For learners</h3>
+                  <h3 className="mt-8 text-headline-md">For youth</h3>
 
                   <p className="mt-3 text-body-md leading-relaxed text-[#c9c7c6]">
-                    Build practical skills, find mentors, discover internships, and start developing a
-                    career you are proud of.
+                    Learn practical skills, find guidance, gain experience, access opportunities,
+                    and build toward the future you want.
                   </p>
 
                   <Link
@@ -447,10 +560,8 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {/* Glass card with highlight */}
+              {/* Mentors */}
               <div className="relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
-                
                 <div className="relative">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
                     <HeartHandshake className="h-6 w-6" />
@@ -459,8 +570,8 @@ export default function LandingPage() {
                   <h3 className="mt-8 text-headline-md text-on-background">For mentors</h3>
 
                   <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                    Share what you have learned, guide emerging talent, and make your professional
-                    experience matter beyond your workplace.
+                    Share your experience, guide emerging talent, and become part of someone
+                    else&apos;s path forward.
                   </p>
 
                   <Link
@@ -473,10 +584,8 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {/* Glass card with highlight */}
+              {/* Companies */}
               <div className="relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
-                
                 <div className="relative">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
                     <Building2 className="h-6 w-6" />
@@ -485,8 +594,8 @@ export default function LandingPage() {
                   <h3 className="mt-8 text-headline-md text-on-background">For companies</h3>
 
                   <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                    Build a stronger talent pipeline by connecting with motivated young people ready
-                    to gain real workplace experience.
+                    Connect with ambitious young talent, create meaningful internships, and help
+                    build stronger career pathways.
                   </p>
 
                   <Link
@@ -498,14 +607,37 @@ export default function LandingPage() {
                   </Link>
                 </div>
               </div>
+
+              {/* Community */}
+              <div className="relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1">
+                <div className="relative">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
+                    <Award className="h-6 w-6" />
+                  </div>
+
+                  <h3 className="mt-8 text-headline-md text-on-background">For supporters</h3>
+
+                  <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
+                    Back promising young people, ideas, and projects by helping create access to
+                    grants and meaningful opportunities.
+                  </p>
+
+                  <Link
+                    href="/grants"
+                    className="mt-8 inline-flex items-center gap-2 text-label-md text-primary"
+                  >
+                    Support ambition
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="px-gutter pb-2xl">
+        <section className="px-gutter pb-2xl pt-2xl">
           <div className="relative mx-auto max-w-container-max overflow-hidden rounded-2xl bg-[#1a1a1a]">
-            {/* Background image with gradient */}
             <div className="absolute inset-0">
               <Image
                 src="/images/lexep-community.png"
@@ -514,36 +646,39 @@ export default function LandingPage() {
                 sizes="100vw"
                 className="object-cover object-left opacity-35"
               />
+
               <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a] via-[#1a1a1a]/95 to-[#1a1a1a]/75" />
             </div>
 
-            {/* Glass effect overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary-container/5 via-transparent to-transparent" />
 
-            <div className="relative z-10 grid min-h-[430px] items-center px-gutter py-xl md:px-xl">
-              <div className="max-w-xl">
+            <div className="relative z-10 grid min-h-[460px] items-center px-gutter py-xl md:px-xl">
+              <div className="max-w-2xl">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary-fixed-dim/20 bg-primary-fixed-dim/10 px-4 py-2 text-label-md text-primary-fixed-dim backdrop-blur-sm">
-                  <Award className="h-4 w-4" />
+                  <Rocket className="h-4 w-4" />
                   Your next step starts here
                 </div>
 
                 <h2 className="mt-6 text-headline-lg text-inverse-on-surface">
-                  The future you want will not build itself.
+                  Your ambition deserves more than a dream.
+                  <br />
+                  <span className="text-primary-fixed-dim">It deserves a path.</span>
                 </h2>
 
                 <p className="mt-5 max-w-lg text-body-lg leading-relaxed text-[#c9c7c6]">
-                  Join a growing community of ambitious young Africans learning, connecting, gaining
-                  experience, and creating better possibilities for themselves.
+                  Learn practical skills. Connect with mentors. Gain real-world experience. Access
+                  opportunities and community-backed support. Lexep helps you take the next step —
+                  and the one after that.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <Button href="/sign-up" size="lg" variant="primary">
-                    Create your free account
+                    Start your journey
                     <ArrowRight className="h-4 w-4" />
                   </Button>
 
-                  <Button href="/opportunities" size="lg" variant="secondary">
-                    Explore opportunities
+                  <Button href="/explore" size="lg" variant="secondary">
+                    Explore Lexep
                   </Button>
                 </div>
               </div>
@@ -552,7 +687,6 @@ export default function LandingPage() {
         </section>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
