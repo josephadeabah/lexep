@@ -40,7 +40,7 @@ export default function SignInPage() {
     <div className="flex flex-col items-center gap-lg">
       <div className="text-center">
         <div className="flex justify-center">
-          <Logo variant="light" size={32} />
+          <Logo variant="light" size={64} />
         </div>
         <p className="mt-2 text-body-md text-on-surface-variant">
           Welcome back. Please enter your details.

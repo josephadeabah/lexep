@@ -36,7 +36,7 @@ export default function SignUpPage() {
       <div className="card-level1 flex w-full flex-col gap-md p-md">
         <div className="text-center">
           <div className="flex justify-center">
-            <Logo variant="light" size={32} />
+            <Logo variant="light" size={64} />
           </div>
           <p className="mt-1 text-body-md text-on-surface-variant">Create an account</p>
         </div>
