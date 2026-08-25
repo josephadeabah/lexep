@@ -1,7 +1,10 @@
 import secrets
+import hmac
+import hashlib
+import json
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, Header
 from sqlalchemy.orm import Session
 
 from app.api_deps import get_current_user
@@ -30,12 +33,15 @@ from app.schemas.billing import (
 
 router = APIRouter(prefix="/api", tags=["payments"])
 
+# Use GHS as default currency
+DEFAULT_CURRENCY = "GHS"
+
 PLAN_PRICING: dict[SubscriptionPlan, dict] = {
     SubscriptionPlan.LEARNER_PLUS: dict(
         name="Learner Plus",
         audience="Accelerate your learning and secure internships.",
-        monthly_price=15,
-        annual_price=144,
+        monthly_price=150,  # GHS 150
+        annual_price=1440,  # GHS 1,440
         features=[
             "Access to all advanced learning paths",
             "Priority internship placement",
@@ -46,8 +52,8 @@ PLAN_PRICING: dict[SubscriptionPlan, dict] = {
     SubscriptionPlan.MENTOR_PRO: dict(
         name="Mentor Pro",
         audience="Expand your influence and track student progress.",
-        monthly_price=49,
-        annual_price=470,
+        monthly_price=490,  # GHS 490
+        annual_price=4700,  # GHS 4,700
         is_popular=True,
         features=[
             "Enhanced visibility in mentor directory",
@@ -122,7 +128,7 @@ def checkout_subscription(
         billing_cycle=payload.billing_cycle,
         status=SubscriptionStatus.PENDING,
         amount=amount,
-        currency="USD",
+        currency=DEFAULT_CURRENCY,
         provider=settings.PAYMENTS_PROVIDER if settings.PAYMENTS_ENABLED else "mock",
         provider_reference=reference,
     )
@@ -134,7 +140,7 @@ def checkout_subscription(
         purpose=TransactionType.SUBSCRIPTION,
         reference_id=subscription.id,
         amount=amount,
-        currency="USD",
+        currency=DEFAULT_CURRENCY,
         provider=subscription.provider,
         provider_reference=reference,
         status=TransactionStatus.PENDING,
@@ -145,7 +151,7 @@ def checkout_subscription(
     provider = get_payment_provider()
     initialized = provider.initialize_transaction(
         amount=amount,
-        currency="USD",
+        currency=DEFAULT_CURRENCY,
         email=user.email,
         reference=reference,
         metadata={"purpose": "subscription", "subscription_id": subscription.id},
@@ -155,7 +161,7 @@ def checkout_subscription(
         authorization_url=initialized.authorization_url,
         provider=initialized.provider,
         amount=amount,
-        currency="USD",
+        currency=DEFAULT_CURRENCY,
     )
 
 
@@ -176,7 +182,7 @@ def checkout_contribution(
         purpose=TransactionType.GRANT_CONTRIBUTION,
         reference_id=group.id,
         amount=payload.amount,
-        currency="USD",
+        currency=DEFAULT_CURRENCY,
         provider=settings.PAYMENTS_PROVIDER if settings.PAYMENTS_ENABLED else "mock",
         provider_reference=reference,
         status=TransactionStatus.PENDING,
@@ -188,7 +194,7 @@ def checkout_contribution(
     provider = get_payment_provider()
     initialized = provider.initialize_transaction(
         amount=payload.amount,
-        currency="USD",
+        currency=DEFAULT_CURRENCY,
         email=user.email,
         reference=reference,
         metadata={"purpose": "grant_contribution", "group_id": group.id},
@@ -198,7 +204,7 @@ def checkout_contribution(
         authorization_url=initialized.authorization_url,
         provider=initialized.provider,
         amount=payload.amount,
-        currency="USD",
+        currency=DEFAULT_CURRENCY,
     )
 
 
@@ -281,3 +287,107 @@ def my_subscription(
         .first()
     )
     return sub
+
+
+@router.post("/webhooks/paystack")
+async def paystack_webhook(
+    request: Request,
+    db: Session = Depends(get_db),
+    x_paystack_signature: str = Header(None),
+):
+    """
+    Handle Paystack webhook notifications.
+    This endpoint receives payment events from Paystack.
+    """
+    # Get raw request body for signature verification
+    payload = await request.body()
+
+    # Verify the webhook signature
+    if not verify_paystack_signature(payload, x_paystack_signature):
+        raise HTTPException(status_code=400, detail="Invalid signature")
+
+    # Parse the webhook data
+    try:
+        data = json.loads(payload)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload")
+
+    # Handle the event
+    event_type = data.get("event")
+    event_data = data.get("data", {})
+
+    if event_type == "charge.success":
+        reference = event_data.get("reference")
+
+        # Find the transaction
+        transaction = (
+            db.query(Transaction)
+            .filter(Transaction.provider_reference == reference)
+            .first()
+        )
+
+        if transaction:
+            # Verify with Paystack API
+            provider = get_payment_provider()
+            verified = provider.verify_transaction(reference)
+
+            if verified.status == "success":
+                # Update transaction status
+                transaction.status = TransactionStatus.SUCCESS
+                db.add(transaction)
+
+                # Update related records
+                if transaction.purpose == TransactionType.SUBSCRIPTION:
+                    subscription = db.get(Subscription, transaction.reference_id)
+                    if subscription:
+                        subscription.status = SubscriptionStatus.ACTIVE
+                        db.add(subscription)
+
+                elif transaction.purpose == TransactionType.GRANT_CONTRIBUTION:
+                    group = db.get(GrantGroup, transaction.reference_id)
+                    if group:
+                        group.raised_amount += transaction.amount
+                        db.add(
+                            Contribution(
+                                group_id=group.id,
+                                contributor_id=transaction.user_id,
+                                contributor_name=transaction.meta.get(
+                                    "contributor_name"
+                                )
+                                or "Anonymous",
+                                amount=transaction.amount,
+                            )
+                        )
+                        db.add(group)
+
+                db.commit()
+                print(f"Payment successful for reference: {reference}")
+
+    elif event_type == "charge.failed":
+        reference = event_data.get("reference")
+        transaction = (
+            db.query(Transaction)
+            .filter(Transaction.provider_reference == reference)
+            .first()
+        )
+        if transaction:
+            transaction.status = TransactionStatus.FAILED
+            db.add(transaction)
+            db.commit()
+            print(f"Payment failed for reference: {reference}")
+
+    # Always return 200 to acknowledge receipt
+    return {"status": "success"}
+
+
+def verify_paystack_signature(payload: bytes, signature: str) -> bool:
+    """Verify that the webhook request is genuinely from Paystack."""
+    if not signature or not settings.PAYSTACK_SECRET_KEY:
+        return False
+
+    # Paystack signs the payload using HMAC-SHA512 with the secret key
+    computed_signature = hmac.new(
+        settings.PAYSTACK_SECRET_KEY.encode("utf-8"), payload, hashlib.sha512
+    ).hexdigest()
+
+    return hmac.compare_digest(computed_signature, signature)

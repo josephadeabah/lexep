@@ -60,6 +60,9 @@ class Settings(BaseSettings):
     PAYSTACK_PUBLIC_KEY: str = ""
     PAYSTACK_WEBHOOK_SECRET: str = ""
 
+    # Default currency for payments (GHS = Ghanaian Cedi)
+    DEFAULT_CURRENCY: str = "GHS"
+
     # --- Email (Brevo today; provider is swappable) -----------------------
     EMAIL_ENABLED: bool = False
     EMAIL_PROVIDER: str = "brevo"  # only "brevo" is implemented today
