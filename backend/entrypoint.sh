@@ -7,7 +7,7 @@ echo "Starting Lexep backend..."
 echo "Initializing database..."
 python -m app.init_db
 
-# Seed database if empty
+# Check if database needs seeding
 echo "Checking if database needs seeding..."
 if [ "$SEED_DATABASE" = "true" ] || [ "$SEED_DATABASE" = "1" ]; then
     echo "Seeding database..."
