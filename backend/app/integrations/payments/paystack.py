@@ -57,7 +57,7 @@ class PaystackProvider(PaymentProvider):
             "currency": currency,
             "reference": reference,
             "metadata": metadata,
-            "callback_url": f"{settings.APP_BASE_URL}/checkout",
+            "callback_url": f"{settings.APP_BASE_URL}/checkout/callback",
         }
 
         logger.info(f"Initializing Paystack transaction: {payload}")
