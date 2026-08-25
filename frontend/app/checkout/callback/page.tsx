@@ -1,12 +1,12 @@
 // frontend/app/checkout/callback/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CheckCircle, XCircle, Loader2 } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
 
-export default function CheckoutCallback() {
+function CheckoutCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<"loading" | "success" | "failed">("loading");
@@ -110,5 +110,22 @@ export default function CheckoutCallback() {
         </button>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutCallback() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-surface">
+        <div className="text-center">
+          <Loader2 className="mx-auto h-12 w-12 animate-spin text-primary" />
+          <h1 className="mt-4 text-headline-md text-on-background">
+            Loading...
+          </h1>
+        </div>
+      </div>
+    }>
+      <CheckoutCallbackContent />
+    </Suspense>
   );
 }
