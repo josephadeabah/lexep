@@ -1,29 +1,6 @@
 "use client";
-import { createFileRoute } from "@tanstack/react-router";
 
 import { Flipbook } from "@/components/layout/Flipbook";
-
-export const Route = createFileRoute()({
-  head: () => ({
-    meta: [
-      { title: "Lexep — Bridge the Gap. Build the Future." },
-      {
-        name: "description",
-        content:
-          "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants — connected on one platform.",
-      },
-      { property: "og:title", content: "Lexep — Bridge the Gap. Build the Future." },
-      {
-        property: "og:description",
-        content:
-          "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: Index,
-});
 
 const plates = [
   {
@@ -459,7 +436,7 @@ function Colophon() {
   );
 }
 
-function Index() {
+export default function Index() {
   const pages = [
     <Cover key="cover" />,
     <Contents key="contents" />,
