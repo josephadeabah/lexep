@@ -1,5 +1,6 @@
 
 import { Flipbook } from "@/components/layout/Flipbook";
+import { Logo } from "@/components/ui/Logo";
 
 const plates = [
   {
@@ -146,7 +147,7 @@ function Cover() {
       <div className="relative flex flex-col justify-between p-8 md:p-16">
         <div className="flex items-center justify-between">
           <span className="font-display text-lg font-bold tracking-[0.3em] text-on-surface">
-            LEXEP
+            <Logo size={64}/>
           </span>
           <span className="folio">Edition I · Ghana</span>
         </div>
