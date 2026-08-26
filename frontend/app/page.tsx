@@ -27,7 +27,7 @@ export default function Page() {
   return (
     <main className="lexep-site">
       <header className="site-header">
-        <a href="#top" className="wordmark" aria-label="Lexep home"><Logo showWordmark /></a>
+        <a href="#top" className="wordmark" aria-label="Lexep home"><Logo size={64} showWordmark={false} /></a>
         <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Main navigation">
           <a href="#why" onClick={() => setMenuOpen(false)}>Why Lexep</a>
           <a href="#pathways" onClick={() => setMenuOpen(false)}>Pathways</a>
