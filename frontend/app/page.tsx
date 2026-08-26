@@ -1,4 +1,3 @@
-"use client";
 
 import { Flipbook } from "@/components/layout/Flipbook";
 
@@ -165,8 +164,8 @@ function Cover() {
             to paid internships, professional mentors, and community-funded grants — in one place.
           </p>
           <a
-            href="/sign-up"
-            className="bg-gold text-charcoal shadow-page hover:shadow-lift mt-8 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold transition-shadow"
+            href="https://lexep.org/sign-up"
+            className="mt-8 inline-flex items-center justify-center rounded-md bg-gold px-6 py-3 text-sm font-semibold text-charcoal shadow-page transition-shadow hover:shadow-lift"
           >
             Get started
           </a>
@@ -284,7 +283,7 @@ function BridgePage({ item, i }: { item: (typeof bridges)[number]; i: number }) 
           <ul className="mt-6 space-y-3">
             {item.bullets.map((b) => (
               <li key={b} className="flex gap-3 text-base text-on-surface-variant">
-                <span className="bg-gold mt-2 h-1.5 w-1.5 shrink-0 rounded-full" />
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
                 {b}
               </li>
             ))}
@@ -331,14 +330,14 @@ function ChapterThree() {
               "Impact updates and photos are published; contributors are credited by name.",
             ].map((step, i) => (
               <li key={step} className="relative">
-                <span className="bg-gold text-charcoal absolute -left-[41px] flex h-5 w-5 items-center justify-center rounded-full font-display text-[10px] font-bold">
+                <span className="absolute -left-[41px] flex h-5 w-5 items-center justify-center rounded-full bg-gold font-display text-[10px] font-bold text-charcoal">
                   {i + 1}
                 </span>
                 <p className="text-base leading-7 text-on-surface-variant">{step}</p>
               </li>
             ))}
           </ol>
-          <p className="bg-surface-low mt-10 rounded-lg p-8 font-display text-xl font-semibold leading-8 text-on-surface">
+          <p className="mt-10 rounded-lg bg-surface-low p-8 font-display text-xl font-semibold leading-8 text-on-surface">
             “Lexep never touched a single cedi.”
             <span className="mt-3 block text-sm font-medium tracking-wide text-outline">
               A discovery and transparency platform — not a financial institution.
@@ -351,7 +350,7 @@ function ChapterThree() {
         <Overline>Access</Overline>
         <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-outline-variant bg-outline-variant md:grid-cols-4">
           {tiers.map((t) => (
-            <div key={t.name} className="bg-surface-lowest flex flex-col p-8">
+            <div key={t.name} className="flex flex-col bg-surface-lowest p-8">
               <p className="font-display text-lg font-semibold text-on-surface">{t.name}</p>
               <p className="mt-2 font-display text-2xl font-bold text-primary">{t.price}</p>
               <p className="mt-4 text-sm leading-6 text-on-surface-variant">{t.body}</p>
@@ -376,7 +375,7 @@ function Plates() {
         {plates.map((p) => (
           <figure
             key={p.title}
-            className="bg-surface-lowest shadow-page flex flex-col overflow-hidden rounded-lg border border-outline-variant"
+            className="flex flex-col overflow-hidden rounded-lg border border-outline-variant bg-surface-lowest shadow-page"
           >
             <img
               src={p.src}
@@ -399,7 +398,7 @@ function Plates() {
 
 function Colophon() {
   return (
-    <div className="bg-charcoal flex min-h-[inherit] flex-col px-6 py-16 md:px-16 md:py-20">
+    <div className="flex min-h-[inherit] flex-col bg-charcoal px-6 py-16 md:px-16 md:py-20">
       <div className="grid flex-1 gap-12 md:grid-cols-3">
         {[
           ["For young Ghanaians", "Stop waiting for a job. Start building a career."],
@@ -423,7 +422,7 @@ function Colophon() {
         </p>
         <a
           href="https://lexep.org"
-          className="bg-gold text-charcoal shadow-lift rounded-md px-6 py-3 text-sm font-semibold"
+          className="rounded-md bg-gold px-6 py-3 text-sm font-semibold text-charcoal shadow-lift"
         >
           Sign up at lexep.org
         </a>
@@ -436,7 +435,7 @@ function Colophon() {
   );
 }
 
-export default function Index() {
+function Index() {
   const pages = [
     <Cover key="cover" />,
     <Contents key="contents" />,
