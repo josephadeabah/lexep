@@ -33,7 +33,7 @@ export function Flipbook({ pages, labels }: { pages: ReactNode[]; labels: string
         scrollRef.current?.scrollTo({ top: 0 });
       }, DURATION);
     },
-    [index, pages]
+    [index, pages],
   );
 
   const jump = useCallback(
@@ -45,7 +45,7 @@ export function Flipbook({ pages, labels }: { pages: ReactNode[]; labels: string
         window.setTimeout(() => setIndex(target), DURATION);
       }
     },
-    [go, index]
+    [go, index],
   );
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export function Flipbook({ pages, labels }: { pages: ReactNode[]; labels: string
           type="button"
           onClick={() => go(-1)}
           disabled={index === 0}
-          className="bg-surface-lowest hover:shadow-page order-2 w-full rounded-md border border-outline-variant px-4 py-2.5 text-center text-sm font-semibold text-on-surface transition-shadow disabled:opacity-35 md:order-none md:w-auto md:px-5"
+          className="order-2 w-full rounded-md border border-outline-variant bg-surface-lowest px-4 py-2.5 text-center text-sm font-semibold text-on-surface transition-shadow hover:shadow-page disabled:opacity-35 md:order-none md:w-auto md:px-5"
         >
           ← Previous
         </button>
@@ -120,7 +120,7 @@ export function Flipbook({ pages, labels }: { pages: ReactNode[]; labels: string
             type="button"
             onClick={() => go(1)}
             disabled={index === pages.length - 1}
-            className="bg-gold text-charcoal shadow-page hover:shadow-lift w-full rounded-md px-4 py-2.5 text-center text-sm font-semibold transition-shadow disabled:opacity-35 md:w-auto md:px-5"
+            className="w-full rounded-md bg-gold px-4 py-2.5 text-center text-sm font-semibold text-charcoal shadow-page transition-shadow hover:shadow-lift disabled:opacity-35 md:w-auto md:px-5"
           >
             Next →
           </button>
