@@ -26,7 +26,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   if (!isInitialized || !user || user.role !== "admin") {
     return (
-      <div className="flex h-screen items-center justify-center bg-surface text-on-surface-variant text-body-md">
+      <div className="flex h-screen items-center justify-center bg-surface text-body-md text-on-surface-variant">
         Loading…
       </div>
     );

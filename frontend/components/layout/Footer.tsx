@@ -12,17 +12,14 @@ export default function Footer() {
             <Logo variant="dark" size={64} />
 
             <p className="mt-5 max-w-xs text-body-md leading-relaxed text-[#a8a6a5]">
-              Helping African youth learn, connect, gain real-world experience,
-              access opportunities and community support, and build toward the
-              future they imagine.
+              Helping African youth learn, connect, gain real-world experience, access opportunities
+              and community support, and build toward the future they imagine.
             </p>
           </div>
 
           {/* Platform */}
           <div>
-            <p className="text-label-md font-semibold text-primary-fixed-dim">
-              Platform
-            </p>
+            <p className="text-label-md font-semibold text-primary-fixed-dim">Platform</p>
 
             <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
               <Link href="/explore" className="transition hover:text-white">
@@ -33,10 +30,7 @@ export default function Footer() {
                 Mentorship
               </Link>
 
-              <Link
-                href="/opportunities"
-                className="transition hover:text-white"
-              >
+              <Link href="/opportunities" className="transition hover:text-white">
                 Internships & Opportunities
               </Link>
 
@@ -48,9 +42,7 @@ export default function Footer() {
 
           {/* Organisation */}
           <div>
-            <p className="text-label-md font-semibold text-primary-fixed-dim">
-              Lexep
-            </p>
+            <p className="text-label-md font-semibold text-primary-fixed-dim">Lexep</p>
 
             <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
               <Link href="/about" className="transition hover:text-white">
@@ -73,9 +65,7 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <p className="text-label-md font-semibold text-primary-fixed-dim">
-              Support
-            </p>
+            <p className="text-label-md font-semibold text-primary-fixed-dim">Support</p>
 
             <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
               <Link href="/help" className="transition hover:text-white">

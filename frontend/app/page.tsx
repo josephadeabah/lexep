@@ -1,693 +1,489 @@
-import Image from "next/image";
-import Link from "next/link";
-import {
-  ArrowRight,
-  Award,
-  BriefcaseBusiness,
-  Building2,
-  CheckCircle2,
-  ChevronRight,
-  GraduationCap,
-  HeartHandshake,
-  Menu,
-  Rocket,
-  Sparkles,
-  Users,
-} from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/Button";
-import { Logo } from "@/components/ui/Logo";
-import Footer from "@/components/layout/Footer";
+import { Flipbook } from "@/components/layout/Flipbook";
 
-const FEATURES = [
+export const Route = createFileRoute()({
+  head: () => ({
+    meta: [
+      { title: "Lexep — Bridge the Gap. Build the Future." },
+      {
+        name: "description",
+        content:
+          "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants — connected on one platform.",
+      },
+      { property: "og:title", content: "Lexep — Bridge the Gap. Build the Future." },
+      {
+        property: "og:description",
+        content:
+          "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Index,
+});
+
+const plates = [
   {
-    icon: GraduationCap,
-    eyebrow: "LEARN",
-    number: "01",
-    title: "Build skills you can use in the real world",
-    body: "Move beyond theory with practical learning that helps you build confidence, develop useful skills, and prepare for the opportunities ahead.",
-    href: "/explore",
-    linkLabel: "Explore learning",
+    src: "/images/hero-portrait.jpg",
+    title: "Plate I — The Graduate",
+    caption: "Accra, 2026. One in three young people in Greater Accra is out of work.",
+    w: 1200,
+    h: 1600,
   },
   {
-    icon: Users,
-    eyebrow: "CONNECT",
-    number: "02",
-    title: "Learn from people who have walked the path",
-    body: "Connect with experienced mentors for career guidance, honest advice, portfolio feedback, and perspective from people who understand the journey.",
-    href: "/mentorship",
-    linkLabel: "Find a mentor",
+    src: "/images/internship.jpg",
+    title: "Plate II — The Internship",
+    caption: "A paid placement is the shortest proven path from classroom to payroll.",
+    w: 1600,
+    h: 1008,
   },
   {
-    icon: BriefcaseBusiness,
-    eyebrow: "EXPERIENCE",
-    number: "03",
-    title: "Turn what you know into what you can do",
-    body: "Discover internships and real-world opportunities where you can apply your skills, gain experience, build your portfolio, and grow your confidence.",
-    href: "/opportunities",
-    linkLabel: "Browse opportunities",
+    src: "/images/mentorship.jpg",
+    title: "Plate III — The Mentor",
+    caption: "Guidance from someone who has already walked the path.",
+    w: 1600,
+    h: 1008,
   },
   {
-    icon: Award,
-    eyebrow: "GROW",
-    number: "04",
-    title: "Let opportunity meet your ambition",
-    body: "Access grants and community-backed support designed to help promising young people, ideas, and projects take their next meaningful step.",
-    href: "/grants",
-    linkLabel: "Explore grants",
+    src: "/images/grants.jpg",
+    title: "Plate IV — The Grant Group",
+    caption: "Organisers raise, organisers disburse. The platform keeps the record.",
+    w: 1600,
+    h: 1008,
+  },
+  {
+    src: "/images/cover-texture.jpg",
+    title: "Plate V — The Binding",
+    caption: "Deep gold on cloth: the wealth of knowledge.",
+    w: 1600,
+    h: 1008,
   },
 ];
 
-const STEPS = [
+const figures = [
+  { value: "2M", label: "Youth aged 15–35 not in education, employment or training" },
+  { value: "21.9%", label: "National youth unemployment rate" },
+  { value: "31.9%", label: "Youth unemployment in Greater Accra" },
+  { value: "60%+", label: "Graduates without work in their first year" },
+];
+
+const tiers = [
+  { name: "Learner", price: "GHS 0", body: "Internships, mentor discovery, grant applications." },
   {
-    number: "01",
-    title: "Start with your ambition",
-    body: "Tell Lexep what you are learning, where you want to go, and what you want to build.",
+    name: "Learner Plus",
+    price: "GHS 99/mo",
+    body: "Premium mentorship packages, advanced matching, career assessments.",
   },
   {
-    number: "02",
-    title: "Build your path",
-    body: "Discover practical learning, mentors, internships, grants, and opportunities that move you closer to your goals.",
+    name: "Company",
+    price: "GHS 499/mo",
+    body: "Unlimited internship posts, applicant review, matching analytics.",
   },
   {
-    number: "03",
-    title: "Turn progress into momentum",
-    body: "Gain experience, grow your network, access support, and keep taking meaningful steps toward the future you imagine.",
+    name: "Enterprise",
+    price: "Custom",
+    body: "Multi-department access, employer branding, dedicated support.",
   },
 ];
 
-const JOURNEY = [
+const advantages = [
+  ["Offline-first", "Unreliable internet won't stop you — apply, contribute and learn offline."],
+  ["Mobile-optimised", "Built for the device most Ghanaians actually use."],
+  ["Idempotent operations", "No duplicate applications or double charges on flaky networks."],
+  ["Local currency", "Transactions in GHS, not just USD."],
+  ["Real matching", "The right opportunities, not merely any opportunity."],
+];
+
+const bridges = [
   {
-    label: "Learn",
-    icon: GraduationCap,
+    n: "01",
+    img: "/images/internship.jpg",
+    alt: "Young Ghanaian intern working at a desk in a modern office",
+    title: "Paid internships that work",
+    body: "Companies post opportunities, learners apply, and matching suggests the strongest candidates on skills and fit. Structured placements build the hiring pipeline employers say they lack.",
+    bullets: [
+      "Pre-vetted, motivated candidates",
+      "Applicant review and matching analytics",
+      "A pipeline of future hires, not one-off CVs",
+    ],
   },
   {
-    label: "Connect",
-    icon: Users,
+    n: "02",
+    img: "/images/mentorship.jpg",
+    alt: "A mentor guiding a young professional through work on a laptop",
+    title: "Mentorship that transforms",
+    body: "Approved mentors across software, data, architecture, finance and more offer structured packages — portfolio reviews, career coaching, technical guidance.",
+    bullets: [
+      "Structured, priced mentorship packages",
+      "Match percentages on skills and goals",
+      "Direct access to working practitioners",
+    ],
   },
   {
-    label: "Experience",
-    icon: BriefcaseBusiness,
-  },
-  {
-    label: "Grow",
-    icon: Award,
-  },
-  {
-    label: "Build your future",
-    icon: Rocket,
+    n: "03",
+    img: "/images/grants.jpg",
+    alt: "A community group of young Ghanaians collaborating around a table",
+    title: "Community-funded grants",
+    body: "Groups pool resources for laptops, connectivity and certifications. Organisers run the money; Lexep runs the record.",
+    bullets: [
+      "Goal, timeline and public contribution log",
+      "Impact updates from beneficiaries",
+      "Verified-organiser badges and ratings",
+    ],
   },
 ];
 
-export default function LandingPage() {
+function Overline({ children }: { children: React.ReactNode }) {
+  return <p className="eyebrow">{children}</p>;
+}
+
+function Page({
+  running,
+  folio,
+  children,
+}: {
+  running: string;
+  folio: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-surface text-on-surface">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-outline-variant/20 bg-surface/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
-          <Link href="/" className="shrink-0" aria-label="Lexep home">
-            <Logo variant="light" size={56} />
-          </Link>
-
-          <nav className="hidden items-center gap-lg lg:flex">
-            <Link
-              href="#journey"
-              className="text-body-md text-on-surface-variant transition hover:text-primary"
-            >
-              Your journey
-            </Link>
-
-            <Link
-              href="#explore"
-              className="text-body-md text-on-surface-variant transition hover:text-primary"
-            >
-              Explore
-            </Link>
-
-            <Link
-              href="/mentorship"
-              className="text-body-md text-on-surface-variant transition hover:text-primary"
-            >
-              Mentors
-            </Link>
-
-            <Link
-              href="/opportunities"
-              className="text-body-md text-on-surface-variant transition hover:text-primary"
-            >
-              Opportunities
-            </Link>
-
-            <Link
-              href="/grants"
-              className="text-body-md text-on-surface-variant transition hover:text-primary"
-            >
-              Grants
-            </Link>
-          </nav>
-
-          <div className="hidden items-center gap-3 sm:flex">
-            <Button href="/sign-in" variant="ghost">
-              Log In
-            </Button>
-
-            <Button href="/sign-up" variant="primary">
-              Get Started
-            </Button>
-          </div>
-
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-outline-variant/50 text-on-surface lg:hidden"
-            aria-label="Open navigation menu"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-        </div>
+    <div className="flex min-h-[inherit] flex-col px-6 py-10 md:px-16 md:py-14">
+      <header className="mb-10 flex items-baseline justify-between border-b border-outline-variant/60 pb-4">
+        <span className="folio">{running}</span>
+        <span className="folio">Lexep · Edition I</span>
       </header>
-
-      <main>
-        {/* Hero */}
-        <section className="relative overflow-hidden">
-          {/* Ambient lighting */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -right-32 -top-32 h-[30rem] w-[30rem] rounded-full bg-primary-container/15 blur-3xl" />
-            <div className="absolute left-1/3 top-1/2 h-72 w-72 rounded-full bg-primary-container/10 blur-3xl" />
-            <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-surface-tint/5 blur-3xl" />
-          </div>
-
-          {/* Noise texture */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.02]"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            }}
-          />
-
-          <div className="relative mx-auto grid max-w-container-max items-center gap-xl px-gutter py-xl lg:grid-cols-[0.95fr_1.05fr] lg:py-2xl">
-            {/* Hero copy */}
-            <div className="relative z-10">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-container/20 bg-primary-container/10 px-4 py-2 text-label-md text-primary backdrop-blur-sm">
-                <Sparkles className="h-4 w-4" />
-                <span>Built around your ambition</span>
-              </div>
-
-              <h1 className="max-w-3xl text-display-lg text-on-background">
-                Your ambition deserves
-                <br />
-                <span className="text-gradient-gold">a path forward.</span>
-              </h1>
-
-              <p className="mt-6 max-w-xl text-body-lg leading-relaxed text-on-surface-variant">
-                Lexep connects African youth with practical learning, experienced mentors,
-                real-world internships, and community-backed support — helping you turn ambition
-                into experience, opportunity, and a meaningful future.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button href="/sign-up" size="lg" variant="primary">
-                  Start your journey
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-
-                <Button href="/sign-up" size="lg" variant="secondary">
-                  Become a mentor
-                </Button>
-              </div>
-
-              {/* Social proof - avatars placed here, below CTAs */}
-              <div className="mt-10 flex flex-wrap items-center gap-4">
-                <div className="flex -space-x-3">
-                  {["1", "2", "3", "4"].map((person) => (
-                    <div
-                      key={person}
-                      className="relative h-11 w-11 overflow-hidden rounded-full border-2 border-surface bg-surface-container-high shadow-level1"
-                    >
-                      <Image
-                        src={`/images/avatar-${person}.png`}
-                        alt=""
-                        fill
-                        sizes="44px"
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
-                  <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border-2 border-surface bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                    <span className="text-label-sm font-semibold">+1K</span>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-center gap-1 text-label-md text-on-surface">
-                    <Sparkles className="h-4 w-4 text-primary" />
-                    <span>Trusted Talents</span>
-                  </div>
-                  <p className="text-label-sm text-on-surface-variant">Across Ghana</p>
-                </div>
-              </div>
-
-              {/* Journey preview */}
-              <div className="mt-10 flex flex-wrap items-center gap-2">
-                {["Learn", "Connect", "Experience", "Grow"].map((item, index) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-2 text-label-md text-on-surface-variant"
-                  >
-                    <span className="rounded-full border border-outline-variant/30 bg-surface-container-low px-3 py-1.5">
-                      {item}
-                    </span>
-
-                    {index < 3 && <ArrowRight className="h-4 w-4 text-primary/60" />}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Hero visual */}
-            <div className="relative">
-              <div className="relative min-h-[420px] overflow-hidden rounded-2xl bg-surface-container-high shadow-level2 sm:min-h-[520px]">
-                <Image
-                  src="/images/lexep-hero.png"
-                  alt="Young African professionals collaborating and learning together"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-
-                {/* Opportunity card */}
-                <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-white/20 bg-black/60 p-4 text-white shadow-level2 backdrop-blur-xl sm:left-8 sm:right-auto sm:w-[290px] sm:p-5">
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                      <BriefcaseBusiness className="h-5 w-5" />
-                    </div>
-
-                    <span className="rounded-full bg-white/10 px-3 py-1 text-label-sm">
-                      Your next step
-                    </span>
-                  </div>
-
-                  <p className="text-label-sm text-white/60">Software Engineering Internship</p>
-
-                  <p className="mt-1 text-title-md">Turn your skills into real experience.</p>
-
-                  <div className="mt-4 flex items-center gap-2 text-label-sm text-primary-fixed-dim">
-                    Explore opportunities
-                    <ArrowRight className="h-4 w-4" />
-                  </div>
-                </div>
-
-                {/* Mentorship card */}
-                <div className="absolute right-6 top-6 hidden rounded-xl border border-white/20 bg-white/10 p-4 shadow-level2 backdrop-blur-xl sm:block">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-container/20">
-                      <HeartHandshake className="h-5 w-5 text-primary-container" />
-                    </div>
-
-                    <div>
-                      <p className="text-label-sm text-white/70">Guidance when it matters</p>
-                      <p className="text-title-md text-white">Connect with a mentor</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="absolute -bottom-8 -left-8 hidden h-32 w-32 rounded-full border border-primary-container/20 bg-primary-container/10 blur-2xl lg:block" />
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary-container/10 blur-2xl" />
-            </div>
-          </div>
-        </section>
-
-        {/* Positioning */}
-        <section className="border-y border-outline-variant/30 bg-surface-container-low">
-          <div className="mx-auto grid max-w-container-max gap-lg px-gutter py-xl md:grid-cols-3">
-            <div>
-              <p className="text-gradient-gold text-display-md">More than learning</p>
-              <p className="mt-2 text-body-md text-on-surface-variant">
-                Build practical skills and understand how to use them beyond the classroom.
-              </p>
-            </div>
-
-            <div>
-              <p className="text-gradient-gold text-display-md">More than a network</p>
-              <p className="mt-2 text-body-md text-on-surface-variant">
-                Find mentors, peers, and people willing to guide your next step.
-              </p>
-            </div>
-
-            <div>
-              <p className="text-gradient-gold text-display-md">A path forward</p>
-              <p className="mt-2 text-body-md text-on-surface-variant">
-                Connect learning, experience, opportunities, and community support in one ecosystem.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Journey */}
-        <section id="journey" className="px-gutter py-2xl">
-          <div className="mx-auto max-w-container-max">
-            <div className="mx-auto max-w-2xl text-center">
-              <div className="inline-flex items-center gap-2 text-label-md font-medium uppercase tracking-[0.18em] text-primary">
-                <span className="h-px w-8 bg-primary-container" />
-                Your journey
-                <span className="h-px w-8 bg-primary-container" />
-              </div>
-
-              <h2 className="mt-5 text-headline-lg text-on-background">
-                One ambition. An entire ecosystem behind you.
-              </h2>
-
-              <p className="mt-4 text-body-lg leading-relaxed text-on-surface-variant">
-                Nobody should have to figure out their future alone. Lexep brings together the
-                knowledge, guidance, opportunities, and support that help young people keep moving
-                forward.
-              </p>
-            </div>
-
-            <div className="relative mt-xl">
-              {/* Connection line */}
-              <div className="absolute left-0 right-0 top-10 hidden h-px bg-gradient-to-r from-transparent via-primary-container/40 to-transparent lg:block" />
-
-              <div className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-5">
-                {JOURNEY.map((item, index) => {
-                  const Icon = item.icon;
-
-                  return (
-                    <div
-                      key={item.label}
-                      className="relative rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 text-center shadow-level1"
-                    >
-                      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                        <Icon className="h-6 w-6" />
-                      </div>
-
-                      <p className="mt-5 text-label-sm text-primary">
-                        {String(index + 1).padStart(2, "0")}
-                      </p>
-
-                      <h3 className="mt-2 text-title-lg text-on-background">{item.label}</h3>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Ecosystem */}
-        <section
-          id="explore"
-          className="border-y border-outline-variant/30 bg-surface-container-low px-gutter py-2xl"
-        >
-          <div className="mx-auto max-w-container-max">
-            <div className="mx-auto max-w-2xl text-center">
-              <div className="inline-flex items-center gap-2 text-label-md font-medium uppercase tracking-[0.18em] text-primary">
-                <Sparkles className="h-4 w-4" />
-                The Lexep ecosystem
-              </div>
-
-              <h2 className="mt-5 text-headline-lg text-on-background">
-                Everything you need to keep moving forward.
-              </h2>
-
-              <p className="mt-4 text-body-lg text-on-surface-variant">
-                Your journey does not end when you finish learning. Every part of Lexep is designed
-                to help you take the next meaningful step.
-              </p>
-            </div>
-
-            <div className="mt-xl grid gap-md md:grid-cols-2">
-              {FEATURES.map((feature) => {
-                const Icon = feature.icon;
-
-                return (
-                  <div
-                    key={feature.title}
-                    className="group relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1 transition duration-300 hover:-translate-y-1 hover:shadow-level2"
-                  >
-                    <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-primary-container/5 blur-3xl transition group-hover:bg-primary-container/10" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
-
-                    <div className="relative">
-                      <div className="flex items-start justify-between">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                          <Icon className="h-7 w-7" />
-                        </div>
-
-                        <span className="text-label-lg text-primary/60">{feature.number}</span>
-                      </div>
-
-                      <p className="mt-7 text-label-md font-medium uppercase tracking-[0.15em] text-primary">
-                        {feature.eyebrow}
-                      </p>
-
-                      <h3 className="mt-3 text-headline-md text-on-background">{feature.title}</h3>
-
-                      <p className="mt-3 max-w-xl text-body-md leading-relaxed text-on-surface-variant">
-                        {feature.body}
-                      </p>
-
-                      <Link
-                        href={feature.href}
-                        className="mt-7 inline-flex items-center gap-2 text-label-md text-primary transition hover:gap-3"
-                      >
-                        {feature.linkLabel}
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* How it works */}
-        <section id="how-it-works" className="px-gutter py-2xl">
-          <div className="mx-auto max-w-container-max">
-            <div className="grid gap-xl lg:grid-cols-[0.8fr_1.2fr]">
-              <div>
-                <div className="inline-flex items-center gap-2 text-label-md font-medium uppercase tracking-[0.18em] text-primary">
-                  <CheckCircle2 className="h-4 w-4" />
-                  How it works
-                </div>
-
-                <h2 className="mt-5 max-w-md text-headline-lg text-on-background">
-                  From ambition to opportunity, one step at a time.
-                </h2>
-
-                <p className="mt-5 max-w-lg text-body-lg leading-relaxed text-on-surface-variant">
-                  Whether you are still figuring things out, building your skills, or ready to take
-                  your first big opportunity, Lexep helps you find the next step that makes sense
-                  for you.
-                </p>
-
-                <Button href="/sign-up" size="lg" variant="primary" className="mt-8">
-                  Start your journey
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </div>
-
-              <div className="grid gap-4">
-                {STEPS.map((step) => (
-                  <div
-                    key={step.number}
-                    className="flex gap-5 rounded-xl border border-outline-variant/20 bg-surface-container-lowest p-lg shadow-level1 transition hover:shadow-level2"
-                  >
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary-container to-primary text-label-lg font-semibold text-on-primary-container shadow-level1">
-                      {step.number}
-                    </span>
-
-                    <div>
-                      <h3 className="text-title-lg text-on-background">{step.title}</h3>
-
-                      <p className="mt-2 text-body-md leading-relaxed text-on-surface-variant">
-                        {step.body}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Who Lexep is for */}
-        <section className="border-y border-outline-variant/30 bg-surface-container-low px-gutter py-2xl">
-          <div className="mx-auto max-w-container-max">
-            <div className="mb-xl max-w-2xl">
-              <p className="text-label-md font-medium uppercase tracking-[0.18em] text-primary">
-                Built around a community that moves together
-              </p>
-
-              <h2 className="mt-4 text-headline-lg text-on-background">
-                Your future is personal. Building it does not have to be lonely.
-              </h2>
-
-              <p className="mt-4 text-body-lg leading-relaxed text-on-surface-variant">
-                Lexep brings together the people and organisations that can help turn individual
-                ambition into shared progress.
-              </p>
-            </div>
-
-            <div className="grid gap-md md:grid-cols-2 lg:grid-cols-4">
-              {/* Learners */}
-              <div className="relative overflow-hidden rounded-xl bg-[#1a1a1a] p-lg text-inverse-on-surface">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent" />
-                <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-primary-container/10 blur-2xl" />
-
-                <div className="relative">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                    <GraduationCap className="h-6 w-6" />
-                  </div>
-
-                  <h3 className="mt-8 text-headline-md">For youth</h3>
-
-                  <p className="mt-3 text-body-md leading-relaxed text-[#c9c7c6]">
-                    Learn practical skills, find guidance, gain experience, access opportunities,
-                    and build toward the future you want.
-                  </p>
-
-                  <Link
-                    href="/sign-up"
-                    className="mt-8 inline-flex items-center gap-2 text-label-md text-primary-fixed-dim"
-                  >
-                    Start your journey
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-
-              {/* Mentors */}
-              <div className="relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1">
-                <div className="relative">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                    <HeartHandshake className="h-6 w-6" />
-                  </div>
-
-                  <h3 className="mt-8 text-headline-md text-on-background">For mentors</h3>
-
-                  <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                    Share your experience, guide emerging talent, and become part of someone
-                    else&apos;s path forward.
-                  </p>
-
-                  <Link
-                    href="/mentorship"
-                    className="mt-8 inline-flex items-center gap-2 text-label-md text-primary"
-                  >
-                    Become a mentor
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-
-              {/* Companies */}
-              <div className="relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1">
-                <div className="relative">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                    <Building2 className="h-6 w-6" />
-                  </div>
-
-                  <h3 className="mt-8 text-headline-md text-on-background">For companies</h3>
-
-                  <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                    Connect with ambitious young talent, create meaningful internships, and help
-                    build stronger career pathways.
-                  </p>
-
-                  <Link
-                    href="/company"
-                    className="mt-8 inline-flex items-center gap-2 text-label-md text-primary"
-                  >
-                    Partner with Lexep
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-
-              {/* Community */}
-              <div className="relative overflow-hidden rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-lg shadow-level1">
-                <div className="relative">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary-container shadow-level1">
-                    <Award className="h-6 w-6" />
-                  </div>
-
-                  <h3 className="mt-8 text-headline-md text-on-background">For supporters</h3>
-
-                  <p className="mt-3 text-body-md leading-relaxed text-on-surface-variant">
-                    Back promising young people, ideas, and projects by helping create access to
-                    grants and meaningful opportunities.
-                  </p>
-
-                  <Link
-                    href="/grants"
-                    className="mt-8 inline-flex items-center gap-2 text-label-md text-primary"
-                  >
-                    Support ambition
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA */}
-        <section className="px-gutter pb-2xl pt-2xl">
-          <div className="relative mx-auto max-w-container-max overflow-hidden rounded-2xl bg-[#1a1a1a]">
-            <div className="absolute inset-0">
-              <Image
-                src="/images/lexep-community.png"
-                alt=""
-                fill
-                sizes="100vw"
-                className="object-cover object-left opacity-35"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a] via-[#1a1a1a]/95 to-[#1a1a1a]/75" />
-            </div>
-
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-container/5 via-transparent to-transparent" />
-
-            <div className="relative z-10 grid min-h-[460px] items-center px-gutter py-xl md:px-xl">
-              <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-primary-fixed-dim/20 bg-primary-fixed-dim/10 px-4 py-2 text-label-md text-primary-fixed-dim backdrop-blur-sm">
-                  <Rocket className="h-4 w-4" />
-                  Your next step starts here
-                </div>
-
-                <h2 className="mt-6 text-headline-lg text-inverse-on-surface">
-                  Your ambition deserves more than a dream.
-                  <br />
-                  <span className="text-primary-fixed-dim">It deserves a path.</span>
-                </h2>
-
-                <p className="mt-5 max-w-lg text-body-lg leading-relaxed text-[#c9c7c6]">
-                  Learn practical skills. Connect with mentors. Gain real-world experience. Access
-                  opportunities and community-backed support. Lexep helps you take the next step —
-                  and the one after that.
-                </p>
-
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <Button href="/sign-up" size="lg" variant="primary">
-                    Start your journey
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-
-                  <Button href="/explore" size="lg" variant="secondary">
-                    Explore Lexep
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <Footer />
+      <div className="flex-1">{children}</div>
+      <footer className="mt-12 flex items-center justify-between border-t border-outline-variant/60 pt-4">
+        <span className="folio">Bridge the Gap</span>
+        <span className="folio">{folio}</span>
+      </footer>
     </div>
+  );
+}
+
+function Cover() {
+  return (
+    <div className="grid md:grid-cols-2">
+      <div className="relative flex flex-col justify-between p-8 md:p-16">
+        <div className="flex items-center justify-between">
+          <span className="font-display text-lg font-bold tracking-[0.3em] text-on-surface">
+            LEXEP
+          </span>
+          <span className="folio">Edition I · Ghana</span>
+        </div>
+
+        <div className="py-14 md:py-20">
+          <Overline>A field book on the future of work</Overline>
+          <h1 className="mt-6 font-display text-[2.75rem] font-bold leading-[1.05] tracking-[-0.02em] text-on-surface md:text-6xl">
+            Bridge the Gap.
+            <br />
+            <span className="text-primary">Build the Future.</span>
+          </h1>
+          <div className="rule-gold mt-8" />
+          <p className="mt-8 max-w-md text-lg leading-8 text-on-surface-variant">
+            Ghana has ambition in abundance and access in shortage. Lexep connects young Ghanaians
+            to paid internships, professional mentors, and community-funded grants — in one place.
+          </p>
+          <a
+            href="/sign-up"
+            className="bg-gold text-charcoal shadow-page hover:shadow-lift mt-8 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold transition-shadow"
+          >
+            Get started
+          </a>
+          <p className="mt-6 text-sm text-outline">
+            Turn the page below, or use your ← → arrow keys.
+          </p>
+        </div>
+
+        <p className="folio">Sources: Ghana Statistical Service · Parliament of Ghana</p>
+      </div>
+
+      <div className="relative min-h-[420px] bg-surface-container">
+        <img
+          src="/images/hero-portrait.jpg"
+          alt="Young Ghanaian professional standing in a modern Accra office atrium"
+          width={1200}
+          height={1600}
+          className="h-full w-full object-cover"
+        />
+      </div>
+    </div>
+  );
+}
+
+function Contents() {
+  return (
+    <Page running="Contents" folio="Page 5">
+      <Overline>Contents</Overline>
+      <ol className="mt-8 grid gap-px overflow-hidden rounded-lg border border-outline-variant bg-outline-variant md:grid-cols-2">
+        {[
+          ["I", "The Problem in Ghanaian Context"],
+          ["II", "Three Bridges: Internships, Mentors, Grants"],
+          ["III", "Grant Groups Without Custody"],
+          ["IV", "The Plates"],
+        ].map(([num, title]) => (
+          <li key={num} className="bg-surface-lowest">
+            <div className="flex items-baseline gap-6 px-6 py-6 md:px-10">
+              <span className="font-display text-sm font-semibold tracking-[0.2em] text-primary">
+                {num}
+              </span>
+              <span className="font-display text-xl font-semibold text-on-surface">{title}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p className="mt-10 max-w-xl text-lg leading-8 text-on-surface-variant">
+        This edition reads like a book: each page turns. Nothing here is a brochure — it is the case
+        for a single platform that connects work, guidance and money for Ghana&apos;s young people.
+      </p>
+    </Page>
+  );
+}
+
+function ChapterOne() {
+  return (
+    <Page running="Chapter One · The Problem" folio="Page 12">
+      <div className="grid gap-12 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <Overline>Chapter one</Overline>
+          <h2 className="mt-4 font-display text-3xl font-semibold leading-10 text-on-surface md:text-4xl">
+            A generation ready for work, waiting at the door
+          </h2>
+          <div className="rule-gold mt-6" />
+        </div>
+        <div className="md:col-span-7">
+          <p className="drop-cap text-lg leading-8 text-on-surface-variant">
+            Ghana adds more than 300,000 graduates to the labour market every year, and only about
+            four in ten find employment within twelve months. Seven in ten unemployed Ghanaians are
+            under 35. At the same time, employers report the opposite shortage: candidates with
+            theory but no workplace exposure.
+          </p>
+          <p className="mt-6 text-lg leading-8 text-on-surface-variant">
+            The binding constraint is not ambition. It is access — to a first placement, to a
+            practitioner who will answer questions, and to the small amounts of money that turn
+            potential into a portfolio.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-outline-variant bg-outline-variant sm:grid-cols-2 lg:grid-cols-4">
+        {figures.map((f) => (
+          <div key={f.value} className="bg-surface-low p-8">
+            <p className="font-display text-4xl font-bold text-primary">{f.value}</p>
+            <p className="mt-3 text-sm leading-6 text-on-surface-variant">{f.label}</p>
+          </div>
+        ))}
+      </div>
+    </Page>
+  );
+}
+
+function BridgePage({ item, i }: { item: (typeof bridges)[number]; i: number }) {
+  return (
+    <Page running={`Chapter Two · Bridge ${item.n}`} folio={`Page ${28 + i * 2}`}>
+      <Overline>Chapter two · Three bridges</Overline>
+      <h2 className="mt-4 max-w-3xl font-display text-3xl font-semibold leading-10 text-on-surface md:text-4xl">
+        {item.title}
+      </h2>
+      <div className="rule-gold mt-6" />
+
+      <div className="mt-10 grid items-center gap-10 md:grid-cols-2">
+        <figure className="overflow-hidden rounded-lg border border-outline-variant">
+          <img
+            src={item.img}
+            alt={item.alt}
+            loading="lazy"
+            width={1600}
+            height={1008}
+            className="aspect-video w-full object-cover"
+          />
+        </figure>
+        <div>
+          <span className="folio">{item.n}</span>
+          <p className="mt-4 text-base leading-7 text-on-surface-variant">{item.body}</p>
+          <ul className="mt-6 space-y-3">
+            {item.bullets.map((b) => (
+              <li key={b} className="flex gap-3 text-base text-on-surface-variant">
+                <span className="bg-gold mt-2 h-1.5 w-1.5 shrink-0 rounded-full" />
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {i === 2 && (
+        <div className="mt-12 grid gap-px overflow-hidden rounded-lg border border-outline-variant bg-outline-variant md:grid-cols-5">
+          {advantages.map(([title, body]) => (
+            <div key={title} className="bg-surface-lowest p-6">
+              <p className="font-display text-sm font-semibold text-on-surface">{title}</p>
+              <p className="mt-2 text-sm leading-6 text-on-surface-variant">{body}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </Page>
+  );
+}
+
+function ChapterThree() {
+  return (
+    <Page running="Chapter Three · Grant Groups" folio="Page 44">
+      <div className="grid gap-12 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <Overline>Chapter three</Overline>
+          <h2 className="mt-4 font-display text-3xl font-semibold leading-10 text-on-surface md:text-4xl">
+            Lexep is the trust layer, never the custodian
+          </h2>
+          <div className="rule-gold mt-6" />
+          <p className="mt-6 text-lg leading-8 text-on-surface-variant">
+            Organisers receive contributions directly — mobile money, bank transfer, cash — and
+            disburse them themselves. Lexep records the promise and publishes the proof.
+          </p>
+        </div>
+        <div className="md:col-span-7">
+          <ol className="relative space-y-8 border-l border-outline-variant pl-8">
+            {[
+              "An organiser creates a grant group with a goal, category and timeline.",
+              "Contributors send funds directly to the organiser.",
+              "The organiser logs each contribution; the public ledger updates.",
+              "The organiser distributes laptops, fees or stipends to beneficiaries.",
+              "Impact updates and photos are published; contributors are credited by name.",
+            ].map((step, i) => (
+              <li key={step} className="relative">
+                <span className="bg-gold text-charcoal absolute -left-[41px] flex h-5 w-5 items-center justify-center rounded-full font-display text-[10px] font-bold">
+                  {i + 1}
+                </span>
+                <p className="text-base leading-7 text-on-surface-variant">{step}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="bg-surface-low mt-10 rounded-lg p-8 font-display text-xl font-semibold leading-8 text-on-surface">
+            “Lexep never touched a single cedi.”
+            <span className="mt-3 block text-sm font-medium tracking-wide text-outline">
+              A discovery and transparency platform — not a financial institution.
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-14">
+        <Overline>Access</Overline>
+        <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-outline-variant bg-outline-variant md:grid-cols-4">
+          {tiers.map((t) => (
+            <div key={t.name} className="bg-surface-lowest flex flex-col p-8">
+              <p className="font-display text-lg font-semibold text-on-surface">{t.name}</p>
+              <p className="mt-2 font-display text-2xl font-bold text-primary">{t.price}</p>
+              <p className="mt-4 text-sm leading-6 text-on-surface-variant">{t.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Page>
+  );
+}
+
+function Plates() {
+  return (
+    <Page running="Chapter Four · Plates" folio="Page 58">
+      <Overline>Chapter four · Plates</Overline>
+      <h2 className="mt-4 max-w-2xl font-display text-3xl font-semibold leading-10 text-on-surface md:text-4xl">
+        The image plates of this edition
+      </h2>
+      <div className="rule-gold mt-6" />
+
+      <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {plates.map((p) => (
+          <figure
+            key={p.title}
+            className="bg-surface-lowest shadow-page flex flex-col overflow-hidden rounded-lg border border-outline-variant"
+          >
+            <img
+              src={p.src}
+              alt={p.caption}
+              loading="lazy"
+              width={p.w}
+              height={p.h}
+              className="aspect-video w-full object-cover"
+            />
+            <figcaption className="flex flex-1 flex-col p-8">
+              <p className="folio">{p.title}</p>
+              <p className="mt-3 flex-1 text-sm leading-6 text-on-surface-variant">{p.caption}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </Page>
+  );
+}
+
+function Colophon() {
+  return (
+    <div className="bg-charcoal flex min-h-[inherit] flex-col px-6 py-16 md:px-16 md:py-20">
+      <div className="grid flex-1 gap-12 md:grid-cols-3">
+        {[
+          ["For young Ghanaians", "Stop waiting for a job. Start building a career."],
+          ["For employers", "Your next great hire is waiting. We'll help you find them."],
+          ["For institutions", "Invest in Ghana's most valuable resource: its youth."],
+        ].map(([label, line]) => (
+          <div key={label}>
+            <p className="text-[12px] font-medium uppercase tracking-[0.18em] text-inverse-primary">
+              {label}
+            </p>
+            <p className="mt-4 font-display text-2xl font-semibold leading-9 text-inverse-on-surface">
+              {line}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-inverse-on-surface/10 pt-10">
+        <p className="font-display text-xl font-semibold text-inverse-on-surface">
+          Lexep — Bridge the Gap. Build the Future.
+        </p>
+        <a
+          href="https://lexep.org"
+          className="bg-gold text-charcoal shadow-lift rounded-md px-6 py-3 text-sm font-semibold"
+        >
+          Sign up at lexep.org
+        </a>
+      </div>
+      <p className="mt-8 text-xs leading-6 text-inverse-on-surface/60">
+        Colophon: set in Hanken Grotesk and Inter. Sources: Ghana Statistical Service (2025/2026);
+        Parliament of Ghana (2026); GBC Ghana Online; GhanaWeb; Westerwelle Foundation.
+      </p>
+    </div>
+  );
+}
+
+function Index() {
+  const pages = [
+    <Cover key="cover" />,
+    <Contents key="contents" />,
+    <ChapterOne key="one" />,
+    ...bridges.map((item, i) => <BridgePage key={item.n} item={item} i={i} />),
+    <ChapterThree key="three" />,
+    <Plates key="plates" />,
+    <Colophon key="colophon" />,
+  ];
+
+  const labels = [
+    "Cover",
+    "Contents",
+    "Chapter One",
+    "Bridge 01",
+    "Bridge 02",
+    "Bridge 03",
+    "Chapter Three",
+    "Plates",
+    "Colophon",
+  ];
+
+  return (
+    <main className="min-h-screen overflow-x-hidden bg-surface">
+      <Flipbook pages={pages} labels={labels} />
+    </main>
   );
 }
