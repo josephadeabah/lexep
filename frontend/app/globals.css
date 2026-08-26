@@ -276,275 +276,140 @@
 
 /* ── Flipbook ─────────────────────────────────────────────── */
 
+/* ── Flipbook ─────────────────────────────────────────────── */
+
 @utility book-stage {
   position: relative;
   width: 100%;
-  min-height: min(78vh, 900px);
-  perspective: 2200px;
-  perspective-origin: center center;
-  isolation: isolate;
+  perspective: 2600px;
+  perspective-origin: left center;
 }
 
 @utility book-page {
-  position: relative;
   min-height: min(78vh, 900px);
-  height: min(78vh, 900px);
-  overflow: hidden;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 @utility book-scroll {
-  height: 100%;
+  max-height: min(78vh, 900px);
   overflow-y: auto;
-  overflow-x: hidden;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-}
-
-.book-shadow {
-  position: absolute;
-  inset: 10px;
-  z-index: 0;
-  border-radius: 1rem;
-  box-shadow:
-    0 30px 80px color-mix(in oklch, var(--color-on-surface) 18%, transparent),
-    0 12px 30px color-mix(in oklch, var(--color-on-surface) 10%, transparent);
-  pointer-events: none;
 }
 
 @utility book-spine {
   position: absolute;
-  z-index: 30;
-  top: 1rem;
-  bottom: 1rem;
-  left: 0;
-  width: 18px;
-  transform: translateX(-50%);
+  z-index: 5;
+  inset-block: 1.5rem;
+  left: -6px;
+  width: 14px;
   border-radius: 999px;
-  pointer-events: none;
   background-image: linear-gradient(
     to right,
-    color-mix(in oklch, var(--color-on-surface) 16%, transparent),
-    color-mix(in oklch, var(--color-surface-lowest) 12%, transparent),
-    color-mix(in oklch, var(--color-on-surface) 10%, transparent)
+    color-mix(in oklch, var(--color-on-surface) 14%, transparent),
+    color-mix(in oklch, var(--color-on-surface) 4%, transparent)
   );
-  filter: blur(0.5px);
 }
 
-.book-under-page,
-.book-current-page {
+@utility book-leaf-wrap {
   position: absolute;
-  inset: 0;
-}
-
-.book-under-page {
-  z-index: 1;
-}
-
-.book-current-page {
-  z-index: 2;
-}
-
-/* ── The actual physical turning sheet ── */
-
-.book-turner {
-  position: absolute;
-  inset: 0;
   z-index: 10;
-
+  inset: 0;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-
-  will-change: transform;
 }
 
-.book-turn-face {
+@utility book-leaf {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+  box-shadow: var(--shadow-lift);
+  border-radius: 1rem;
+}
+
+/* Both sides of the physical page */
+.book-leaf-face {
   position: absolute;
   inset: 0;
   overflow: hidden;
 
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-.book-turn-front {
+.book-leaf-front {
   transform: rotateY(0deg);
 }
 
-.book-turn-back {
+.book-leaf-back {
   transform: rotateY(180deg);
 }
 
-/* The reverse side of a real paper sheet */
-
-.book-page-back-shadow {
+/* Shading visible when the back of the sheet turns */
+.book-leaf-back-shadow {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in oklch, var(--color-on-surface) 20%, transparent),
-      color-mix(in oklch, var(--color-on-surface) 4%, transparent) 30%,
-      color-mix(in oklch, var(--color-surface-lowest) 12%, transparent) 70%,
-      color-mix(in oklch, var(--color-on-surface) 14%, transparent)
-    );
-}
-
-/* Moving shadow makes the rotation feel more physical */
-
-.book-turn-shadow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
 
   background: linear-gradient(
-    90deg,
-    color-mix(in oklch, var(--color-on-surface) 3%, transparent),
-    color-mix(in oklch, var(--color-on-surface) 24%, transparent),
-    color-mix(in oklch, var(--color-surface-lowest) 8%, transparent)
+    to right,
+    color-mix(in oklch, var(--color-on-surface) 18%, transparent),
+    color-mix(in oklch, var(--color-on-surface) 4%, transparent) 35%,
+    color-mix(in oklch, var(--color-surface-lowest) 8%, transparent) 70%,
+    color-mix(in oklch, var(--color-on-surface) 12%, transparent)
   );
-
-  mix-blend-mode: multiply;
-
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
-/* ── Forward: current page turns away ── */
-
-.book-turn-forward {
-  transform-origin: left center;
-  animation: book-turn-forward 950ms
-    cubic-bezier(0.22, 0.72, 0.22, 1)
-    forwards;
-}
-
-.book-turn-forward .book-turn-shadow {
-  animation: page-shadow-forward 950ms ease-in-out forwards;
-}
-
-@keyframes book-turn-forward {
+/* Forward */
+@keyframes leafOut {
   0% {
     transform: rotateY(0deg);
-  }
-
-  25% {
-    transform: rotateY(-32deg);
-  }
-
-  55% {
-    transform: rotateY(-108deg);
-  }
-
-  80% {
-    transform: rotateY(-164deg);
-  }
-
-  100% {
-    transform: rotateY(-180deg);
-  }
-}
-
-@keyframes page-shadow-forward {
-  0% {
-    opacity: 0;
-    transform: translateX(-20%);
-  }
-
-  25% {
-    opacity: 0.8;
-  }
-
-  65% {
-    opacity: 0.45;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(35%);
-  }
-}
-
-/* ── Backward: previous page turns back into view ── */
-
-.book-turn-backward {
-  transform-origin: left center;
-  animation: book-turn-backward 950ms
-    cubic-bezier(0.22, 0.72, 0.22, 1)
-    forwards;
-}
-
-.book-turn-backward .book-turn-shadow {
-  animation: page-shadow-backward 950ms ease-in-out forwards;
-}
-
-@keyframes book-turn-backward {
-  0% {
-    transform: rotateY(-180deg);
-  }
-
-  22% {
-    transform: rotateY(-155deg);
-  }
-
-  55% {
-    transform: rotateY(-72deg);
-  }
-
-  80% {
-    transform: rotateY(-18deg);
-  }
-
-  100% {
-    transform: rotateY(0deg);
-  }
-}
-
-@keyframes page-shadow-backward {
-  0% {
-    opacity: 0;
-    transform: translateX(35%);
   }
 
   35% {
-    opacity: 0.75;
+    transform: rotateY(-55deg);
   }
 
   70% {
-    opacity: 0.35;
+    transform: rotateY(-140deg);
   }
 
   100% {
-    opacity: 0;
-    transform: translateX(-20%);
+    transform: rotateY(-180deg);
   }
 }
 
-@media (max-width: 768px) {
-  .book-stage {
-    min-height: 82vh;
-    perspective: 1400px;
+/* Backward */
+@keyframes leafIn {
+  0% {
+    transform: rotateY(-180deg);
   }
 
-  .book-page {
-    min-height: 82vh;
-    height: 82vh;
+  30% {
+    transform: rotateY(-130deg);
   }
 
-  .book-spine {
-    width: 10px;
+  65% {
+    transform: rotateY(-45deg);
   }
+
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+.leaf-out {
+  animation: leafOut 780ms cubic-bezier(0.42, 0, 0.2, 1) forwards;
+}
+
+.leaf-in {
+  animation: leafIn 780ms cubic-bezier(0.42, 0, 0.2, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .book-turn-forward,
-  .book-turn-backward,
-  .book-turn-forward .book-turn-shadow,
-  .book-turn-backward .book-turn-shadow {
-    animation-duration: 1ms !important;
+  .leaf-out,
+  .leaf-in {
+    animation-duration: 1ms;
   }
 }
