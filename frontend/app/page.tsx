@@ -1,3 +1,4 @@
+"use client";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Flipbook } from "@/components/layout/Flipbook";
