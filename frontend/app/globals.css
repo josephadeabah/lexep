@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "tailwindcss";
-@source "../frontend";
 @import "tw-animate-css";
+
+@source "../frontend";
 
 @custom-variant dark (&:is(.dark *));
 
