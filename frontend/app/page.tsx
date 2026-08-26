@@ -273,7 +273,7 @@ export default function Page() {
               <CircleCheck size={17} /> Impact updates for supporters
             </span>
           </div>
-          <a className="button button-dark" href="#join">
+          <a className="button button-dark" href="/grants">
             Start a grant group <ArrowRight size={17} />
           </a>
         </div>
