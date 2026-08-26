@@ -23,11 +23,11 @@ export default function MentorshipPage() {
   );
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg text-on-background">Find Your Mentor</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-1">
             Connect with industry experts to guide your career path.
           </p>
         </div>
@@ -43,7 +43,7 @@ export default function MentorshipPage() {
         />
       </Card>
 
-      <div className="grid gap-md sm:grid-cols-2 lg:grid-cols-3">
+      <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
         {mentors.isLoading ? (
           <p className="text-body-md text-on-surface-variant">Loading mentors…</p>
         ) : filtered.length > 0 ? (
@@ -53,11 +53,11 @@ export default function MentorshipPage() {
                 <div className="flex items-start gap-3">
                   <Avatar name={mentor.user.full_name} src={mentor.user.avatar_url} size={48} />
                   <div>
-                    <p className="flex items-center gap-2 text-label-md text-on-background">
+                    <p className="text-label-md text-on-background flex items-center gap-2">
                       {mentor.user.full_name}
                       {mentor.rating > 0 && (
-                        <span className="flex items-center gap-1 rounded-full bg-surface-container-high px-2 py-0.5 text-label-sm">
-                          <Star className="h-3 w-3 fill-primary-container text-primary-container" />{" "}
+                        <span className="bg-surface-container-high text-label-sm flex items-center gap-1 rounded-full px-2 py-0.5">
+                          <Star className="fill-primary-container text-primary-container h-3 w-3" />{" "}
                           {mentor.rating.toFixed(1)}
                         </span>
                       )}
@@ -65,7 +65,7 @@ export default function MentorshipPage() {
                     <p className="text-label-sm text-primary">{mentor.title}</p>
                   </div>
                 </div>
-                <p className="mt-3 line-clamp-3 text-body-md text-on-surface-variant">
+                <p className="text-body-md text-on-surface-variant mt-3 line-clamp-3">
                   {mentor.bio}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -74,7 +74,7 @@ export default function MentorshipPage() {
                   ))}
                 </div>
               </div>
-              <div className="mt-4 flex items-center justify-between border-t border-outline-variant/40 pt-3">
+              <div className="border-outline-variant/40 mt-4 flex items-center justify-between border-t pt-3">
                 <span className="text-label-sm text-on-surface-variant">Free Session</span>
                 <Button size="sm" href={`/mentorship/${mentor.user.id}`}>
                   Request Session

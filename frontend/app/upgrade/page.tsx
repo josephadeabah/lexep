@@ -5,7 +5,7 @@ export default function UpgradePage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center text-body-md text-on-surface-variant">
+        <div className="text-body-md text-on-surface-variant flex min-h-screen items-center justify-center">
           Loading…
         </div>
       }

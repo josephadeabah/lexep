@@ -12,13 +12,13 @@ const STATS = [
 
 export default function InsightsPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-outline-variant/40">
-        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
+    <div className="bg-background min-h-screen">
+      <header className="border-outline-variant/40 border-b">
+        <div className="max-w-container-max px-gutter mx-auto flex items-center justify-between py-4">
           <Link href="/">
             <Logo variant="light" />
           </Link>
-          <nav className="hidden items-center gap-lg md:flex">
+          <nav className="gap-lg hidden items-center md:flex">
             <Link href="/" className="text-body-md text-on-surface-variant hover:text-primary">
               Explore
             </Link>
@@ -49,12 +49,12 @@ export default function InsightsPage() {
         </div>
       </header>
 
-      <section className="mx-auto grid max-w-container-max items-center gap-md px-gutter py-xl md:grid-cols-2">
+      <section className="max-w-container-max gap-md px-gutter py-xl mx-auto grid items-center md:grid-cols-2">
         <div>
           <h1 className="text-display-lg text-on-background" style={{ fontSize: 48 }}>
             Stories of <span className="text-primary-container">Impact</span>
           </h1>
-          <p className="mt-4 max-w-md text-body-lg text-on-surface-variant">
+          <p className="text-body-lg text-on-surface-variant mt-4 max-w-md">
             Discover how Lexep is shaping the future of African architecture by connecting ambitious
             learners with world-class mentors. These are the journeys of visionaries redefining the
             built environment.
@@ -63,21 +63,21 @@ export default function InsightsPage() {
             Read Featured Story
           </Button>
         </div>
-        <div className="overflow-hidden rounded-xl bg-surface-container-high">
-          <div className="flex aspect-square items-center justify-center p-md text-center text-headline-md text-on-surface-variant">
+        <div className="bg-surface-container-high overflow-hidden rounded-xl">
+          <div className="p-md text-headline-md text-on-surface-variant flex aspect-square items-center justify-center text-center">
             Africa Builds Future: Careers in Architecture &amp; Design
           </div>
         </div>
       </section>
 
       <section className="bg-inverse-surface py-lg">
-        <div className="mx-auto grid max-w-container-max grid-cols-2 gap-md px-gutter text-center md:grid-cols-4">
+        <div className="max-w-container-max gap-md px-gutter mx-auto grid grid-cols-2 text-center md:grid-cols-4">
           {STATS.map((stat) => (
             <div key={stat.label}>
               <p className="text-display-lg text-primary-fixed-dim" style={{ fontSize: 40 }}>
                 {stat.value}
               </p>
-              <p className="mt-1 text-label-sm uppercase tracking-wide text-[#c9c7c6]">
+              <p className="text-label-sm mt-1 tracking-wide text-[#c9c7c6] uppercase">
                 {stat.label}
               </p>
             </div>
@@ -85,31 +85,31 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <section id="spotlight" className="mx-auto max-w-container-max px-gutter py-xl">
-        <h2 className="text-center text-headline-lg text-on-background">Spotlight Journey</h2>
-        <div className="mt-md grid gap-md rounded-lg border border-outline-variant p-md md:grid-cols-2">
-          <div className="flex aspect-video items-center justify-center rounded-lg bg-surface-container-high text-label-sm text-on-surface-variant md:aspect-auto">
+      <section id="spotlight" className="max-w-container-max px-gutter py-xl mx-auto">
+        <h2 className="text-headline-lg text-on-background text-center">Spotlight Journey</h2>
+        <div className="mt-md gap-md border-outline-variant p-md grid rounded-lg border md:grid-cols-2">
+          <div className="bg-surface-container-high text-label-sm text-on-surface-variant flex aspect-video items-center justify-center rounded-lg md:aspect-auto">
             Photo: Amara N. on site
           </div>
           <div className="flex flex-col justify-center">
-            <span className="flex w-fit items-center gap-1 rounded-full bg-primary-fixed px-3 py-1 text-label-sm text-on-primary-fixed-variant">
+            <span className="bg-primary-fixed text-label-sm text-on-primary-fixed-variant flex w-fit items-center gap-1 rounded-full px-3 py-1">
               <Star className="h-3 w-3" /> Featured Learner
             </span>
-            <h3 className="mt-3 text-headline-md text-on-background">
+            <h3 className="text-headline-md text-on-background mt-3">
               From Studio to Leading Sustainable Urban Projects
             </h3>
-            <blockquote className="mt-3 border-l-2 border-primary-container pl-4 text-body-md italic text-on-surface-variant">
+            <blockquote className="border-primary-container text-body-md text-on-surface-variant mt-3 border-l-2 pl-4 italic">
               &ldquo;Lexep didn&apos;t just give me knowledge; it gave me the network and confidence
               to pitch my sustainable housing concept to a major firm in Nairobi. The mentorship was
               a game-changer.&rdquo;
             </blockquote>
-            <p className="mt-4 text-label-md text-on-background">Amara N.</p>
+            <p className="text-label-md text-on-background mt-4">Amara N.</p>
             <p className="text-label-sm text-on-surface-variant">
               Junior Architect at EcoBuild Africa
             </p>
             <Link
               href="/mentorship"
-              className="mt-3 flex items-center gap-1 text-label-md text-primary hover:underline"
+              className="text-label-md text-primary mt-3 flex items-center gap-1 hover:underline"
             >
               Read Full Story <ArrowRight className="h-3.5 w-3.5" />
             </Link>
@@ -117,13 +117,13 @@ export default function InsightsPage() {
         </div>
       </section>
 
-      <footer className="border-t border-outline-variant/40 bg-inverse-surface px-gutter py-md text-inverse-on-surface">
-        <div className="mx-auto flex max-w-container-max flex-col items-center justify-between gap-4 text-label-sm md:flex-row">
+      <footer className="border-outline-variant/40 bg-inverse-surface px-gutter py-md text-inverse-on-surface border-t">
+        <div className="max-w-container-max text-label-sm mx-auto flex flex-col items-center justify-between gap-4 md:flex-row">
           <Logo variant="dark" size={22} />
           <span className="text-[#c9c7c6]">
             © {new Date().getFullYear()} Lexep. Shaping African Architecture.
           </span>
-          <div className="flex gap-md text-[#c9c7c6]">
+          <div className="gap-md flex text-[#c9c7c6]">
             <Link href="#" className="hover:text-primary-fixed-dim">
               Privacy Policy
             </Link>

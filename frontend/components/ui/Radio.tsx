@@ -12,7 +12,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     return (
       <label
         htmlFor={boxId}
-        className={cn("flex cursor-pointer select-none items-start gap-3", className)}
+        className={cn("flex cursor-pointer items-start gap-3 select-none", className)}
       >
         <span className="relative mt-0.5 flex-shrink-0">
           <input
@@ -25,12 +25,12 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           />
           <span
             className={cn(
-              "flex h-5 w-5 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest transition",
+              "border-outline-variant bg-surface-container-lowest flex h-5 w-5 items-center justify-center rounded-full border transition",
               "peer-checked:border-primary-container",
-              "peer-focus-visible:ring-2 peer-focus-visible:ring-primary-container"
+              "peer-focus-visible:ring-primary-container peer-focus-visible:ring-2"
             )}
           >
-            {checked && <span className="h-2.5 w-2.5 rounded-full bg-primary-container" />}
+            {checked && <span className="bg-primary-container h-2.5 w-2.5 rounded-full" />}
           </span>
         </span>
         {(label || description) && (

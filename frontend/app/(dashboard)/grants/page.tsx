@@ -18,24 +18,24 @@ export default function GrantsPage() {
   const totalRaised = (groups.data ?? []).reduce((sum, g) => sum + g.raised_amount, 0);
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div>
         <h1 className="text-headline-lg text-on-background">
           Welcome back, {user?.full_name.split(" ")[0]}
         </h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Here is the latest impact from your community funding initiatives.
         </p>
       </div>
 
-      <div className="grid gap-md sm:grid-cols-3">
+      <div className="gap-md grid sm:grid-cols-3">
         <Card>
           <div className="flex items-center justify-between">
             <span className="text-label-md text-on-surface-variant">Total Youth Sponsored</span>
-            <GraduationCap className="h-4 w-4 text-primary" />
+            <GraduationCap className="text-primary h-4 w-4" />
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {totalYouth.toLocaleString()}
@@ -44,26 +44,26 @@ export default function GrantsPage() {
         <Card>
           <div className="flex items-center justify-between">
             <span className="text-label-md text-on-surface-variant">Total Grants Issued</span>
-            <Landmark className="h-4 w-4 text-primary" />
+            <Landmark className="text-primary h-4 w-4" />
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {formatCurrency(totalRaised)}
           </p>
-          <p className="mt-1 text-label-sm text-on-surface-variant">
+          <p className="text-label-sm text-on-surface-variant mt-1">
             Across {groups.data?.length ?? 0} active groups
           </p>
         </Card>
         <Card className="bg-inverse-surface text-inverse-on-surface">
           <p className="text-label-md">Start a new initiative</p>
-          <p className="mt-2 text-label-sm text-[#c9c7c6]">
+          <p className="text-label-sm mt-2 text-[#c9c7c6]">
             Empower more youth by starting a dedicated funding group.
           </p>
           <Link
             href="/grants/new"
-            className="mt-4 inline-flex items-center gap-1 text-label-md text-primary-fixed-dim hover:underline"
+            className="text-label-md text-primary-fixed-dim mt-4 inline-flex items-center gap-1 hover:underline"
           >
             Get Started <ArrowRight className="h-3.5 w-3.5" />
           </Link>
@@ -77,16 +77,16 @@ export default function GrantsPage() {
             Apply for an individual grant
           </Button>
         </div>
-        <div className="grid gap-md sm:grid-cols-2 lg:grid-cols-3">
+        <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
           {groups.isLoading ? (
             <p className="text-body-md text-on-surface-variant">Loading…</p>
           ) : groups.data && groups.data.length > 0 ? (
             groups.data.map((group) => (
               <Card key={group.id}>
                 <p className="text-headline-md text-on-background">{group.name}</p>
-                <p className="mt-1 text-body-md text-on-surface-variant">{group.tagline}</p>
+                <p className="text-body-md text-on-surface-variant mt-1">{group.tagline}</p>
                 <div className="mt-4">
-                  <div className="flex items-center justify-between text-label-sm text-on-surface-variant">
+                  <div className="text-label-sm text-on-surface-variant flex items-center justify-between">
                     <span>Funding Goal</span>
                     <span>
                       {formatCurrency(group.raised_amount)} / {formatCurrency(group.goal_amount)}

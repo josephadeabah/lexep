@@ -96,18 +96,18 @@ export default function MentorOnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface px-gutter py-xl">
+    <div className="bg-surface px-gutter py-xl min-h-screen">
       <div className="mx-auto max-w-3xl">
-        <div className="mb-6 flex items-center justify-between text-label-sm text-on-surface-variant">
+        <div className="text-label-sm text-on-surface-variant mb-6 flex items-center justify-between">
           <span>STEP 1 OF 1</span>
           <span className="font-label-md text-primary">Finalizing Profile</span>
         </div>
-        <div className="mb-lg h-1 w-full rounded-full bg-primary-container" />
+        <div className="mb-lg bg-primary-container h-1 w-full rounded-full" />
 
         <div className="card-level1 p-md">
           <div className="text-center">
             <h1 className="text-headline-lg text-on-background">Refine Your Mentorship Profile</h1>
-            <p className="mx-auto mt-2 max-w-lg text-body-md text-on-surface-variant">
+            <p className="text-body-md text-on-surface-variant mx-auto mt-2 max-w-lg">
               Help us connect you with the right mentees by defining your approach and preferences.
             </p>
           </div>
@@ -129,7 +129,7 @@ export default function MentorOnboardingPage() {
                       : "border-outline-variant hover:bg-surface-container-low"
                   )}
                 >
-                  <s.icon className="h-5 w-5 text-on-surface" />
+                  <s.icon className="text-on-surface h-5 w-5" />
                   <p className="text-label-md text-on-background">{s.title}</p>
                   <p className="text-label-sm text-on-surface-variant">{s.description}</p>
                 </button>
@@ -137,7 +137,7 @@ export default function MentorOnboardingPage() {
             </div>
           </div>
 
-          <div className="mt-lg border-t border-outline-variant/40 pt-md">
+          <div className="mt-lg border-outline-variant/40 pt-md border-t">
             <h2 className="text-headline-md text-on-background">Preferred Mentee Level</h2>
             <p className="text-label-sm text-on-surface-variant">
               Select all that apply based on your current capacity.
@@ -146,15 +146,15 @@ export default function MentorOnboardingPage() {
               {LEVELS.map((level) => (
                 <label
                   key={level.id}
-                  className="flex cursor-pointer items-center gap-3 rounded-md border border-outline-variant px-4 py-3 hover:bg-surface-container-low"
+                  className="border-outline-variant hover:bg-surface-container-low flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3"
                 >
                   <Checkbox
                     checked={levels.includes(level.id)}
                     onChange={() => toggleLevel(level.id)}
                   />
                   <span>
-                    <span className="block text-body-md text-on-surface">{level.title}</span>
-                    <span className="block text-label-sm text-on-surface-variant">
+                    <span className="text-body-md text-on-surface block">{level.title}</span>
+                    <span className="text-label-sm text-on-surface-variant block">
                       {level.description}
                     </span>
                   </span>
@@ -163,7 +163,7 @@ export default function MentorOnboardingPage() {
             </div>
           </div>
 
-          <div className="mt-lg border-t border-outline-variant/40 pt-md">
+          <div className="mt-lg border-outline-variant/40 pt-md border-t">
             <h2 className="text-headline-md text-on-background">Communication Tools</h2>
             <p className="text-label-sm text-on-surface-variant">
               How do you prefer to conduct sessions?
@@ -180,14 +180,14 @@ export default function MentorOnboardingPage() {
                       : "border-outline-variant hover:bg-surface-container-low"
                   )}
                 >
-                  <tool.icon className="h-5 w-5 text-on-surface" />
+                  <tool.icon className="text-on-surface h-5 w-5" />
                   <span className="text-label-sm text-on-surface">{tool.id}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="mt-lg flex justify-end border-t border-outline-variant/40 pt-md">
+          <div className="mt-lg border-outline-variant/40 pt-md flex justify-end border-t">
             <Button variant="secondary" onClick={handleSave} disabled={isSubmitting}>
               {isSubmitting ? "Saving…" : "Save Profile →"}
             </Button>

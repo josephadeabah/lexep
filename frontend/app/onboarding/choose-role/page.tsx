@@ -44,19 +44,19 @@ export default function ChooseRolePage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface">
-      <header className="border-b border-outline-variant/40 py-4 text-center">
+    <div className="bg-surface min-h-screen">
+      <header className="border-outline-variant/40 border-b py-4 text-center">
         <span className="text-headline-md text-primary">Lexep</span>
       </header>
 
-      <div className="mx-auto max-w-3xl px-gutter py-xl text-center">
+      <div className="px-gutter py-xl mx-auto max-w-3xl text-center">
         <h1 className="text-headline-lg text-on-background">Choose your journey</h1>
-        <p className="mx-auto mt-3 max-w-xl text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mx-auto mt-3 max-w-xl">
           Select the path that best describes your goals on Lexep. This helps us tailor your
           experience.
         </p>
 
-        <div className="mt-lg grid gap-md sm:grid-cols-3">
+        <div className="mt-lg gap-md grid sm:grid-cols-3">
           {ROLES.map((role) => {
             const Icon = role.icon;
             const active = selected === role.id;
@@ -65,16 +65,16 @@ export default function ChooseRolePage() {
                 key={role.id}
                 onClick={() => setSelected(role.id)}
                 className={cn(
-                  "card-level1 flex flex-col items-start gap-4 p-md text-left transition",
-                  active ? "ring-2 ring-primary-container" : "hover:shadow-level2"
+                  "card-level1 p-md flex flex-col items-start gap-4 text-left transition",
+                  active ? "ring-primary-container ring-2" : "hover:shadow-level2"
                 )}
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-surface-container-high">
-                  <Icon className="h-5 w-5 text-on-surface" />
+                <span className="bg-surface-container-high flex h-12 w-12 items-center justify-center rounded-full">
+                  <Icon className="text-on-surface h-5 w-5" />
                 </span>
                 <div>
                   <p className="text-headline-md text-on-background">{role.title}</p>
-                  <p className="mt-1 text-body-md text-on-surface-variant">{role.description}</p>
+                  <p className="text-body-md text-on-surface-variant mt-1">{role.description}</p>
                 </div>
               </button>
             );

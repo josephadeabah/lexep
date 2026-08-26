@@ -17,13 +17,13 @@ export default function PricingPage() {
   const premiumEnabled = config.data?.premium_features_enabled ?? false;
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-outline-variant/40">
-        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
+    <div className="bg-background min-h-screen">
+      <header className="border-outline-variant/40 border-b">
+        <div className="max-w-container-max px-gutter mx-auto flex items-center justify-between py-4">
           <Link href="/">
             <Logo variant="light" />
           </Link>
-          <nav className="hidden items-center gap-lg md:flex">
+          <nav className="gap-lg hidden items-center md:flex">
             <Link href="/" className="text-body-md text-on-surface-variant hover:text-primary">
               Explore
             </Link>
@@ -62,22 +62,22 @@ export default function PricingPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-container-max px-gutter py-xl text-center">
+      <div className="max-w-container-max px-gutter py-xl mx-auto text-center">
         <h1 className="text-display-lg text-on-background" style={{ fontSize: 48 }}>
           Invest in your architectural future.
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-body-lg text-on-surface-variant">
+        <p className="text-body-lg text-on-surface-variant mx-auto mt-4 max-w-2xl">
           Choose the plan that accelerates your career, whether you&apos;re a student building a
           portfolio, an expert sharing knowledge, or an enterprise sourcing top talent.
         </p>
 
         {!premiumEnabled && (
-          <div className="mx-auto mt-6 inline-block rounded-full bg-primary-fixed px-4 py-2 text-label-md text-on-primary-fixed-variant">
+          <div className="bg-primary-fixed text-label-md text-on-primary-fixed-variant mx-auto mt-6 inline-block rounded-full px-4 py-2">
             🎉 All plans are free during our beta — no card required.
           </div>
         )}
 
-        <div className="mt-xl grid gap-md md:grid-cols-3">
+        <div className="mt-xl gap-md grid md:grid-cols-3">
           {plans.isLoading ? (
             <p className="text-body-md text-on-surface-variant">Loading plans…</p>
           ) : (
@@ -85,19 +85,19 @@ export default function PricingPage() {
               <div
                 key={plan.id}
                 className={cn(
-                  "relative rounded-lg border p-md text-left",
-                  plan.is_popular ? "border-2 border-primary-container" : "border-outline-variant"
+                  "p-md relative rounded-lg border text-left",
+                  plan.is_popular ? "border-primary-container border-2" : "border-outline-variant"
                 )}
               >
                 {plan.is_popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary-fixed px-3 py-1 text-label-sm text-on-primary-fixed-variant">
+                  <span className="bg-primary-fixed text-label-sm text-on-primary-fixed-variant absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1">
                     Most Popular
                   </span>
                 )}
                 <h2 className="text-headline-md text-on-background">{plan.name}</h2>
-                <p className="mt-2 text-body-md text-on-surface-variant">{plan.audience}</p>
+                <p className="text-body-md text-on-surface-variant mt-2">{plan.audience}</p>
                 <p
-                  className="mt-4 text-display-lg text-on-background"
+                  className="text-display-lg text-on-background mt-4"
                   style={{ fontSize: plan.is_custom ? 40 : 48 }}
                 >
                   {plan.is_custom ? "Custom" : `$${plan.monthly_price}`}
@@ -107,8 +107,8 @@ export default function PricingPage() {
                 </p>
                 <ul className="mt-6 flex flex-col gap-3">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-body-md text-on-surface">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" /> {f}
+                    <li key={f} className="text-body-md text-on-surface flex items-start gap-2">
+                      <CheckCircle2 className="text-primary mt-0.5 h-4 w-4 flex-shrink-0" /> {f}
                     </li>
                   ))}
                 </ul>

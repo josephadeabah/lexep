@@ -11,7 +11,7 @@ interface StepperProps {
 export function Stepper({ currentStep, totalSteps, label }: StepperProps) {
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="flex items-center justify-between text-label-sm text-on-surface-variant">
+      <div className="text-label-sm text-on-surface-variant flex items-center justify-between">
         <span>
           STEP {currentStep} OF {totalSteps}
         </span>

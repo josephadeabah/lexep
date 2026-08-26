@@ -52,7 +52,7 @@ function AccountTab() {
         )}
       </div>
 
-      <div className="mt-md flex items-center gap-md border-b border-outline-variant/40 pb-md">
+      <div className="mt-md gap-md border-outline-variant/40 pb-md flex items-center border-b">
         <Avatar name={user.full_name} src={user.avatar_url} size={72} />
         <div className="flex-1">
           <Input
@@ -64,7 +64,7 @@ function AccountTab() {
         </div>
       </div>
 
-      <div className="mt-md flex flex-col gap-md">
+      <div className="mt-md gap-md flex flex-col">
         <Input label="Email Address" value={user.email} disabled />
         <div className="flex items-end gap-3">
           <Input label="Password" type="password" value="•••••••••••" disabled className="flex-1" />
@@ -145,11 +145,11 @@ function NotificationsTab() {
         onClick={() => setPrefs((p) => ({ ...p, [optKey]: !p[optKey] }))}
         className={cn(
           "flex h-6 w-11 flex-shrink-0 items-center rounded-full px-0.5 transition",
-          on ? "justify-end bg-primary-container" : "justify-start bg-outline-variant"
+          on ? "bg-primary-container justify-end" : "bg-outline-variant justify-start"
         )}
       >
         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white shadow">
-          {on && <Check className="h-3 w-3 text-primary" />}
+          {on && <Check className="text-primary h-3 w-3" />}
         </span>
       </button>
     );
@@ -158,8 +158,8 @@ function NotificationsTab() {
   return (
     <Card>
       <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-fixed">
-          <Bell className="h-5 w-5 text-on-primary-fixed-variant" />
+        <span className="bg-primary-fixed flex h-10 w-10 items-center justify-center rounded-full">
+          <Bell className="text-on-primary-fixed-variant h-5 w-5" />
         </span>
         <div>
           <h2 className="text-headline-md text-on-background">Notification Preferences</h2>
@@ -169,37 +169,37 @@ function NotificationsTab() {
         </div>
       </div>
 
-      <p className="mt-md flex items-center gap-2 text-label-sm uppercase tracking-wide text-on-surface-variant">
+      <p className="mt-md text-label-sm text-on-surface-variant flex items-center gap-2 tracking-wide uppercase">
         <Mail className="h-3.5 w-3.5" /> Email Notifications
       </p>
-      <div className="mt-2 flex flex-col divide-y divide-outline-variant/40">
+      <div className="divide-outline-variant/40 mt-2 flex flex-col divide-y">
         {EMAIL_OPTIONS.map((o) => (
           <div key={o.key} className="flex items-center justify-between gap-4 py-4">
             <span>
-              <span className="block text-body-md text-on-surface">{o.label}</span>
-              <span className="block text-label-sm text-on-surface-variant">{o.description}</span>
+              <span className="text-body-md text-on-surface block">{o.label}</span>
+              <span className="text-label-sm text-on-surface-variant block">{o.description}</span>
             </span>
             <Toggle optKey={o.key} />
           </div>
         ))}
       </div>
 
-      <p className="mt-md flex items-center gap-2 text-label-sm uppercase tracking-wide text-on-surface-variant">
+      <p className="mt-md text-label-sm text-on-surface-variant flex items-center gap-2 tracking-wide uppercase">
         <Smartphone className="h-3.5 w-3.5" /> Push Notifications
       </p>
-      <div className="mt-2 flex flex-col divide-y divide-outline-variant/40">
+      <div className="divide-outline-variant/40 mt-2 flex flex-col divide-y">
         {PUSH_OPTIONS.map((o) => (
           <div key={o.key} className="flex items-center justify-between gap-4 py-4">
             <span>
-              <span className="block text-body-md text-on-surface">{o.label}</span>
-              <span className="block text-label-sm text-on-surface-variant">{o.description}</span>
+              <span className="text-body-md text-on-surface block">{o.label}</span>
+              <span className="text-label-sm text-on-surface-variant block">{o.description}</span>
             </span>
             <Toggle optKey={o.key} />
           </div>
         ))}
       </div>
 
-      <div className="mt-md flex justify-end gap-2 border-t border-outline-variant/40 pt-md">
+      <div className="mt-md border-outline-variant/40 pt-md flex justify-end gap-2 border-t">
         <Button variant="ghost">Cancel</Button>
         <Button onClick={handleSave} disabled={saving}>
           {saving ? "Saving…" : saved ? "Saved!" : "Save Changes"}
@@ -258,49 +258,49 @@ function PrivacyTab() {
           <label key={o.id} className="flex cursor-pointer items-start gap-3">
             <Radio checked={visibility === o.id} onChange={() => setVisibility(o.id)} />
             <span>
-              <span className="block text-body-md text-on-surface">{o.label}</span>
-              <span className="block text-label-sm text-on-surface-variant">{o.description}</span>
+              <span className="text-body-md text-on-surface block">{o.label}</span>
+              <span className="text-label-sm text-on-surface-variant block">{o.description}</span>
             </span>
           </label>
         ))}
       </div>
 
-      <h2 className="mt-lg border-t border-outline-variant/40 pt-md text-headline-md text-on-background">
+      <h2 className="mt-lg border-outline-variant/40 pt-md text-headline-md text-on-background border-t">
         Data Sharing
       </h2>
       <p className="text-label-sm text-on-surface-variant">
         Manage how your data is used to improve our services and programs.
       </p>
-      <label className="mt-3 flex cursor-pointer items-start gap-3 rounded-md bg-surface-container-low p-4">
+      <label className="bg-surface-container-low mt-3 flex cursor-pointer items-start gap-3 rounded-md p-4">
         <Checkbox
           checked={shareAnonymizedData}
           onChange={(e) => setShareAnonymizedData(e.target.checked)}
         />
         <span>
-          <span className="block text-body-md text-on-surface">
+          <span className="text-body-md text-on-surface block">
             Share anonymized data with educational partners
           </span>
-          <span className="block text-label-sm text-on-surface-variant">
+          <span className="text-label-sm text-on-surface-variant block">
             We use this data to secure more grants and opportunities for the community. Your
             personal identity remains hidden.
           </span>
         </span>
       </label>
 
-      <h2 className="mt-lg border-t border-outline-variant/40 pt-md text-headline-md text-on-background">
+      <h2 className="mt-lg border-outline-variant/40 pt-md text-headline-md text-on-background border-t">
         Account Security
       </h2>
       <p className="text-label-sm text-on-surface-variant">
         Enhance the protection of your professional account.
       </p>
-      <div className="mt-3 flex items-center justify-between rounded-md border border-outline-variant p-4">
+      <div className="border-outline-variant mt-3 flex items-center justify-between rounded-md border p-4">
         <span className="flex items-center gap-3">
-          <Shield className="h-5 w-5 text-on-surface-variant" />
+          <Shield className="text-on-surface-variant h-5 w-5" />
           <span>
-            <span className="block text-body-md text-on-surface">
+            <span className="text-body-md text-on-surface block">
               Two-Factor Authentication (2FA)
             </span>
-            <span className="block text-label-sm text-on-surface-variant">
+            <span className="text-label-sm text-on-surface-variant block">
               Add an extra layer of security by requiring a code from your mobile device upon login.
             </span>
           </span>
@@ -308,7 +308,7 @@ function PrivacyTab() {
         <Button variant="ghost">Enable 2FA</Button>
       </div>
 
-      <div className="mt-md flex justify-end border-t border-outline-variant/40 pt-md">
+      <div className="mt-md border-outline-variant/40 pt-md flex justify-end border-t">
         <Button onClick={handleSave} disabled={saving}>
           {saving ? "Saving…" : saved ? "Saved!" : "Save Privacy Settings"}
         </Button>
@@ -324,22 +324,22 @@ export default function SettingsPage() {
     <div>
       <div className="mb-lg">
         <h1 className="text-headline-lg text-on-background">Settings &amp; Profile</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Manage your account preferences, notifications, and security settings.
         </p>
       </div>
 
-      <div className="grid gap-md lg:grid-cols-[240px_1fr]">
+      <div className="gap-md grid lg:grid-cols-[240px_1fr]">
         <nav className="flex flex-col gap-1">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
               className={cn(
-                "flex items-center gap-3 rounded-md border-l-2 px-3 py-2.5 text-left text-label-md transition",
+                "text-label-md flex items-center gap-3 rounded-md border-l-2 px-3 py-2.5 text-left transition",
                 tab === t.id
                   ? "border-primary-container bg-surface-container-low text-primary"
-                  : "border-transparent text-on-surface-variant hover:bg-surface-container-low"
+                  : "text-on-surface-variant hover:bg-surface-container-low border-transparent"
               )}
             >
               <t.icon className="h-4 w-4" />

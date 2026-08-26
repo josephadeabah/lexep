@@ -62,9 +62,9 @@ export default function ProposeInterviewPage() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-gutter">
-      <div className="w-full max-w-lg overflow-hidden rounded-lg bg-surface-container-lowest shadow-level2">
-        <div className="flex items-center justify-between border-b border-outline-variant/40 p-md">
+    <div className="p-gutter fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div className="bg-surface-container-lowest shadow-level2 w-full max-w-lg overflow-hidden rounded-lg">
+        <div className="border-outline-variant/40 p-md flex items-center justify-between border-b">
           <div>
             <h1 className="text-headline-md text-on-background">Schedule Interview</h1>
             <p className="text-body-md text-on-surface-variant">
@@ -79,9 +79,9 @@ export default function ProposeInterviewPage() {
           </button>
         </div>
 
-        <div className="max-h-[70vh] overflow-y-auto p-md">
-          <div className="flex flex-col gap-md">
-            <div className="grid gap-md sm:grid-cols-2">
+        <div className="p-md max-h-[70vh] overflow-y-auto">
+          <div className="gap-md flex flex-col">
+            <div className="gap-md grid sm:grid-cols-2">
               <Select
                 label="Interview Type"
                 value={interviewType}
@@ -116,7 +116,7 @@ export default function ProposeInterviewPage() {
                     key={slot.iso}
                     onClick={() => toggleSlot(slot.iso)}
                     className={cn(
-                      "rounded-md border p-3 text-left text-label-sm transition",
+                      "text-label-sm rounded-md border p-3 text-left transition",
                       selected.includes(slot.iso)
                         ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
                         : "border-outline-variant text-on-surface"
@@ -125,7 +125,7 @@ export default function ProposeInterviewPage() {
                     {slot.label}
                   </button>
                 ))}
-                <button className="flex items-center justify-center gap-1 rounded-md border border-dashed border-outline-variant p-3 text-label-sm text-on-surface-variant">
+                <button className="border-outline-variant text-label-sm text-on-surface-variant flex items-center justify-center gap-1 rounded-md border border-dashed p-3">
                   <Plus className="h-3.5 w-3.5" /> Suggest Time
                 </button>
               </div>
@@ -143,7 +143,7 @@ export default function ProposeInterviewPage() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-2 border-t border-outline-variant/40 p-md">
+        <div className="border-outline-variant/40 p-md flex items-center justify-end gap-2 border-t">
           <Button variant="ghost" onClick={() => router.back()}>
             Cancel
           </Button>

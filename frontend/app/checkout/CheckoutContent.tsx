@@ -58,20 +58,20 @@ export default function CheckoutContent() {
   }
 
   return (
-    <div className="min-h-screen bg-surface">
-      <header className="flex items-center justify-between border-b border-outline-variant/40 px-gutter py-4">
+    <div className="bg-surface min-h-screen">
+      <header className="border-outline-variant/40 px-gutter flex items-center justify-between border-b py-4">
         <Logo variant="light" />
-        <span className="flex items-center gap-2 text-label-md text-on-surface-variant">
+        <span className="text-label-md text-on-surface-variant flex items-center gap-2">
           <Lock className="h-4 w-4" /> Secure Checkout
         </span>
       </header>
 
-      <div className="mx-auto grid max-w-4xl gap-md px-gutter py-xl md:grid-cols-2">
-        <div className="card-level1 h-fit p-md">
+      <div className="gap-md px-gutter py-xl mx-auto grid max-w-4xl md:grid-cols-2">
+        <div className="card-level1 p-md h-fit">
           <h1 className="text-headline-lg text-on-background">Upgrade Summary</h1>
           <div className="mt-md flex items-start gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-md bg-surface-container-high">
-              <ShieldCheck className="h-5 w-5 text-primary" />
+            <span className="bg-surface-container-high flex h-12 w-12 items-center justify-center rounded-md">
+              <ShieldCheck className="text-primary h-5 w-5" />
             </span>
             <div>
               <p className="text-headline-md text-on-background">Lexep {plan?.name ?? "Plan"}</p>
@@ -82,7 +82,7 @@ export default function CheckoutContent() {
             </div>
           </div>
 
-          <div className="mt-md flex flex-col gap-2 border-t border-outline-variant/40 pt-md text-body-md">
+          <div className="mt-md border-outline-variant/40 pt-md text-body-md flex flex-col gap-2 border-t">
             <div className="flex justify-between">
               <span className="text-on-surface-variant">Subtotal</span>
               <span className="text-on-background">${price}.00</span>
@@ -99,12 +99,12 @@ export default function CheckoutContent() {
             </div>
           </div>
 
-          <div className="mt-md flex items-center justify-between border-t border-outline-variant/40 pt-md">
+          <div className="mt-md border-outline-variant/40 pt-md flex items-center justify-between border-t">
             <span className="text-headline-md text-on-background">Total</span>
             <span className="text-headline-lg text-on-background">${total}.00</span>
           </div>
 
-          <p className="mt-md flex items-center justify-center gap-2 text-label-sm text-on-surface-variant">
+          <p className="mt-md text-label-sm text-on-surface-variant flex items-center justify-center gap-2">
             <Lock className="h-3.5 w-3.5" /> Encrypted &amp; Secure Payment
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function CheckoutContent() {
                     : "border-outline-variant"
                 )}
               >
-                <m.icon className="h-5 w-5 text-on-surface" />
+                <m.icon className="text-on-surface h-5 w-5" />
                 <span className="text-label-md text-on-surface">{m.label}</span>
               </button>
             ))}
@@ -194,12 +194,12 @@ export default function CheckoutContent() {
             </>
           )}
 
-          {error && <p className="mt-3 text-label-sm text-error">{error}</p>}
+          {error && <p className="text-label-sm text-error mt-3">{error}</p>}
 
           <Button type="submit" size="lg" className="mt-md w-full" disabled={isSubmitting}>
             <Lock className="h-4 w-4" /> {isSubmitting ? "Processing…" : `Pay $${total}.00`}
           </Button>
-          <p className="mt-3 text-center text-label-sm text-on-surface-variant">
+          <p className="text-label-sm text-on-surface-variant mt-3 text-center">
             By confirming your subscription, you allow Lexep to charge you for future payments in
             accordance with their terms.
           </p>

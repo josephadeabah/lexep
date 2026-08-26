@@ -11,11 +11,11 @@ export default function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
+    <div className="bg-surface px-gutter py-xl flex min-h-screen items-center justify-center">
       <div className="w-full max-w-md">
         <div className="card-level1 p-md text-center">
           <h1 className="text-headline-lg text-on-background">Reset your password</h1>
-          <p className="mt-2 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-2">
             Enter your email and we&apos;ll send you a link to reset your password.
           </p>
           {sent ? (
@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
                 e.preventDefault();
                 setSent(true);
               }}
-              className="mt-md flex flex-col gap-md text-left"
+              className="mt-md gap-md flex flex-col text-left"
             >
               <Input
                 label="Email"
@@ -43,7 +43,7 @@ export default function ForgotPasswordPage() {
           )}
           <Link
             href="/sign-in"
-            className="mt-md inline-block text-label-md text-primary hover:underline"
+            className="mt-md text-label-md text-primary inline-block hover:underline"
           >
             Back to sign in
           </Link>

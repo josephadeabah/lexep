@@ -71,14 +71,14 @@ export default function LearnerOnboardingPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
-      <div className="card-level1 w-full max-w-2xl p-md">
+    <div className="bg-surface px-gutter py-xl flex min-h-screen items-center justify-center">
+      <div className="card-level1 p-md w-full max-w-2xl">
         <div className="mb-6 text-center">
           <p className="text-label-sm text-on-surface-variant">STEP {step} OF 2</p>
-          <h1 className="mt-2 text-headline-lg text-on-background">
+          <h1 className="text-headline-lg text-on-background mt-2">
             {step === 1 ? "Tailor Your Learning Journey" : "Your Goals & Preferences"}
           </h1>
-          <p className="mx-auto mt-2 max-w-md text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mx-auto mt-2 max-w-md">
             {step === 1
               ? "Tell us a bit about your background so we can customize your Lexep experience."
               : "Help us tailor your experience to match your career aspirations."}
@@ -88,10 +88,10 @@ export default function LearnerOnboardingPage() {
         <Stepper currentStep={step} totalSteps={2} />
 
         {step === 1 ? (
-          <div className="mt-lg flex flex-col gap-md">
+          <div className="mt-lg gap-md flex flex-col">
             <div>
               <h2 className="text-headline-md text-on-background">Educational Background</h2>
-              <div className="mt-3 flex flex-col gap-md">
+              <div className="gap-md mt-3 flex flex-col">
                 <Select
                   label="Current Level of Education"
                   value={educationLevel}
@@ -103,7 +103,7 @@ export default function LearnerOnboardingPage() {
                   <option value="graduate">Graduate</option>
                   <option value="self-taught">Self-taught</option>
                 </Select>
-                <div className="grid gap-md sm:grid-cols-2">
+                <div className="gap-md grid sm:grid-cols-2">
                   <Input
                     label="Field of Study"
                     placeholder="e.g. Computer Science"
@@ -131,7 +131,7 @@ export default function LearnerOnboardingPage() {
                     key={interest}
                     onClick={() => toggleInterest(interest)}
                     className={cn(
-                      "rounded-full border px-4 py-2 text-body-md transition",
+                      "text-body-md rounded-full border px-4 py-2 transition",
                       interests.includes(interest)
                         ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
                         : "border-outline-variant text-on-surface hover:bg-surface-container-low"
@@ -143,7 +143,7 @@ export default function LearnerOnboardingPage() {
               </div>
             </div>
 
-            <div className="mt-2 flex items-center justify-between border-t border-outline-variant/40 pt-md">
+            <div className="border-outline-variant/40 pt-md mt-2 flex items-center justify-between border-t">
               <Button variant="ghost" onClick={() => setStep(2)}>
                 Skip for now
               </Button>
@@ -151,7 +151,7 @@ export default function LearnerOnboardingPage() {
             </div>
           </div>
         ) : (
-          <div className="mt-lg flex flex-col gap-lg">
+          <div className="mt-lg gap-lg flex flex-col">
             <div>
               <h2 className="text-headline-md text-on-background">What are you looking for?</h2>
               <p className="text-label-sm text-on-surface-variant">Select all that apply.</p>
@@ -210,7 +210,7 @@ export default function LearnerOnboardingPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between border-t border-outline-variant/40 pt-md">
+            <div className="border-outline-variant/40 pt-md flex items-center justify-between border-t">
               <Button variant="ghost" onClick={() => setStep(1)}>
                 Back
               </Button>

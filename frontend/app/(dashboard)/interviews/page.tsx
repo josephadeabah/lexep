@@ -35,7 +35,7 @@ function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
             onClick={() =>
               setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))
             }
-            className="rounded-md px-2 py-1 hover:bg-surface-container-low"
+            className="hover:bg-surface-container-low rounded-md px-2 py-1"
           >
             ‹
           </button>
@@ -43,13 +43,13 @@ function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
             onClick={() =>
               setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))
             }
-            className="rounded-md px-2 py-1 hover:bg-surface-container-low"
+            className="hover:bg-surface-container-low rounded-md px-2 py-1"
           >
             ›
           </button>
         </div>
       </div>
-      <div className="mt-3 grid grid-cols-7 gap-1 text-center text-label-sm text-on-surface-variant">
+      <div className="text-label-sm text-on-surface-variant mt-3 grid grid-cols-7 gap-1 text-center">
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
           <span key={i}>{d}</span>
         ))}
@@ -62,7 +62,7 @@ function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
             <span
               key={i}
               className={cn(
-                "flex h-8 items-center justify-center rounded-full text-body-md",
+                "text-body-md flex h-8 items-center justify-center rounded-full",
                 isToday && "bg-primary-container text-on-primary-container",
                 !isToday && hasEvent && "bg-surface-container-high"
               )}
@@ -85,33 +85,33 @@ export default function InterviewsPage() {
     .filter((d): d is Date => !!d);
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg text-on-background">Interview Schedule</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-1">
             Manage your upcoming and pending candidate interviews.
           </p>
         </div>
       </div>
 
-      <div className="grid gap-md lg:grid-cols-[320px_1fr]">
-        <div className="flex flex-col gap-md">
+      <div className="gap-md grid lg:grid-cols-[320px_1fr]">
+        <div className="gap-md flex flex-col">
           <MiniCalendar highlighted={highlighted} />
 
           <Card>
             <div className="flex items-center justify-between">
               <h2 className="text-headline-md text-on-background">Pending Requests</h2>
-              <span className="rounded-full bg-surface-container-high px-2 py-0.5 text-label-sm">
+              <span className="bg-surface-container-high text-label-sm rounded-full px-2 py-0.5">
                 {pending.data?.length ?? 0}
               </span>
             </div>
             {pending.isLoading ? (
-              <p className="mt-3 text-body-md text-on-surface-variant">Loading…</p>
+              <p className="text-body-md text-on-surface-variant mt-3">Loading…</p>
             ) : pending.data && pending.data.length > 0 ? (
               <ul className="mt-3 flex flex-col gap-3">
                 {pending.data.map((i) => (
-                  <li key={i.id} className="rounded-md border border-outline-variant p-3">
+                  <li key={i.id} className="border-outline-variant rounded-md border p-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Avatar name={i.candidate_name ?? "Candidate"} size={32} />
@@ -122,16 +122,16 @@ export default function InterviewsPage() {
                           </p>
                         </div>
                       </div>
-                      <Mail className="h-4 w-4 text-outline" />
+                      <Mail className="text-outline h-4 w-4" />
                     </div>
-                    <p className="mt-2 text-label-sm text-on-surface-variant">
+                    <p className="text-label-sm text-on-surface-variant mt-2">
                       Awaiting candidate&apos;s time selection
                     </p>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="mt-3 text-body-md text-on-surface-variant">No pending requests.</p>
+              <p className="text-body-md text-on-surface-variant mt-3">No pending requests.</p>
             )}
           </Card>
         </div>
@@ -139,13 +139,13 @@ export default function InterviewsPage() {
         <Card>
           <h2 className="text-headline-md text-on-background">Upcoming Interviews</h2>
           {interviews.isLoading ? (
-            <p className="mt-3 text-body-md text-on-surface-variant">Loading…</p>
+            <p className="text-body-md text-on-surface-variant mt-3">Loading…</p>
           ) : interviews.data && interviews.data.length > 0 ? (
             <ul className="mt-3 flex flex-col gap-3">
               {interviews.data
                 .filter((i) => i.status === "scheduled")
                 .map((interview) => (
-                  <li key={interview.id} className="rounded-md border border-outline-variant p-md">
+                  <li key={interview.id} className="border-outline-variant p-md rounded-md border">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <Avatar name={interview.candidate_name ?? "Candidate"} size={44} />
@@ -157,7 +157,7 @@ export default function InterviewsPage() {
                             {interview.opportunity_title}
                           </p>
                           {interview.scheduled_at && (
-                            <p className="mt-1 flex items-center gap-2 text-label-sm text-on-surface-variant">
+                            <p className="text-label-sm text-on-surface-variant mt-1 flex items-center gap-2">
                               {formatDate(interview.scheduled_at)} ·{" "}
                               {formatTime(interview.scheduled_at)}
                               {interview.meeting_service && ` · ${interview.meeting_service}`}
@@ -175,7 +175,7 @@ export default function InterviewsPage() {
                 ))}
             </ul>
           ) : (
-            <p className="mt-3 text-body-md text-on-surface-variant">
+            <p className="text-body-md text-on-surface-variant mt-3">
               No interviews scheduled yet.
             </p>
           )}

@@ -33,11 +33,11 @@ export default function AdminCompaniesPage() {
   }
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="text-headline-lg text-on-background">Partner Firms Management</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-1">
             Manage corporate accounts, monitor onboarding, and track engagement metrics.
           </p>
         </div>
@@ -62,36 +62,36 @@ export default function AdminCompaniesPage() {
         </Button>
       </Card>
 
-      <div className="grid gap-md sm:grid-cols-3">
+      <div className="gap-md grid sm:grid-cols-3">
         <Card>
-          <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
-            <Building2 className="h-4 w-4 text-primary" /> Total Active Firms
+          <div className="text-label-sm text-on-surface-variant flex items-center gap-2">
+            <Building2 className="text-primary h-4 w-4" /> Total Active Firms
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {companies.data?.total_active_firms ?? "—"}
           </p>
         </Card>
         <Card>
-          <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
-            <ClipboardCheck className="h-4 w-4 text-primary" /> Pending Onboarding
+          <div className="text-label-sm text-on-surface-variant flex items-center gap-2">
+            <ClipboardCheck className="text-primary h-4 w-4" /> Pending Onboarding
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {companies.data?.pending_onboarding ?? "—"}
           </p>
-          <p className="mt-1 text-label-sm text-on-surface-variant">Requires admin review</p>
+          <p className="text-label-sm text-on-surface-variant mt-1">Requires admin review</p>
         </Card>
         <Card>
-          <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
-            <Briefcase className="h-4 w-4 text-primary" /> Total Interns Placed
+          <div className="text-label-sm text-on-surface-variant flex items-center gap-2">
+            <Briefcase className="text-primary h-4 w-4" /> Total Interns Placed
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {companies.data?.total_interns_placed ?? "—"}
@@ -100,7 +100,7 @@ export default function AdminCompaniesPage() {
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-outline-variant/40 p-md">
+        <div className="border-outline-variant/40 p-md border-b">
           <h2 className="text-headline-md text-on-background">Company Roster</h2>
         </div>
         {companies.isLoading ? (
@@ -117,7 +117,7 @@ export default function AdminCompaniesPage() {
                 <th className="px-md py-3 text-right font-normal">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/40">
+            <tbody className="divide-outline-variant/40 divide-y">
               {companies.data.companies.map((c) => (
                 <tr key={c.user_id}>
                   <td className="px-md py-4">
@@ -136,10 +136,10 @@ export default function AdminCompaniesPage() {
                       {c.onboarding_status === "active" ? "Active" : "Pending Review"}
                     </Badge>
                   </td>
-                  <td className="px-md py-4 text-right text-body-md text-on-surface">
+                  <td className="px-md text-body-md text-on-surface py-4 text-right">
                     {c.active_internships}
                   </td>
-                  <td className="px-md py-4 text-right text-body-md text-on-surface">
+                  <td className="px-md text-body-md text-on-surface py-4 text-right">
                     {c.total_hires}
                   </td>
                   <td className="px-md py-4 text-right">

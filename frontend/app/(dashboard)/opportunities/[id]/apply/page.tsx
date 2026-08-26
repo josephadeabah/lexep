@@ -75,14 +75,14 @@ export default function ApplyForInternshipPage() {
       <div className="mb-lg flex items-center justify-between">
         <button
           onClick={() => router.back()}
-          className="flex items-center gap-2 text-label-md text-on-surface-variant hover:text-primary"
+          className="text-label-md text-on-surface-variant hover:text-primary flex items-center gap-2"
         >
           <ArrowLeft className="h-4 w-4" /> Back
         </button>
         <span className="text-headline-md text-primary">Lexep</span>
         <Link
           href={`/opportunities/${opportunityId}`}
-          className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary"
+          className="text-label-md text-on-surface-variant hover:text-primary flex items-center gap-1"
         >
           <X className="h-4 w-4" /> Cancel
         </Link>
@@ -90,7 +90,7 @@ export default function ApplyForInternshipPage() {
 
       <div className="mb-lg text-center">
         <h1 className="text-headline-lg text-on-background">Apply for Internship</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           {opportunity.data
             ? `Applying to ${opportunity.data.title} at ${opportunity.data.company_name}`
             : "Complete your profile to be considered for this opportunity."}
@@ -107,7 +107,7 @@ export default function ApplyForInternshipPage() {
               <div className="flex w-full items-center">
                 <span
                   className={cn(
-                    "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-label-md",
+                    "text-label-md flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full",
                     done || active
                       ? "bg-primary-container text-on-primary-container"
                       : "bg-surface-container-high text-on-surface-variant"
@@ -124,7 +124,7 @@ export default function ApplyForInternshipPage() {
                   />
                 )}
               </div>
-              <span className="mt-2 text-center text-label-sm text-on-surface-variant">
+              <span className="text-label-sm text-on-surface-variant mt-2 text-center">
                 {label}
               </span>
             </div>
@@ -134,7 +134,7 @@ export default function ApplyForInternshipPage() {
 
       <div className="card-level1 p-md">
         {step === 1 && (
-          <div className="flex flex-col gap-md">
+          <div className="gap-md flex flex-col">
             <div>
               <h2 className="text-headline-md text-on-background">Step 1: Professional Details</h2>
               <p className="text-body-md text-on-surface-variant">
@@ -175,7 +175,7 @@ export default function ApplyForInternshipPage() {
         )}
 
         {step === 2 && (
-          <div className="flex flex-col gap-md">
+          <div className="gap-md flex flex-col">
             <h2 className="text-headline-md text-on-background">Experience &amp; Portfolio</h2>
             <Input
               label="Portfolio Link (URL)"
@@ -186,9 +186,9 @@ export default function ApplyForInternshipPage() {
               onChange={(e) => setPortfolioLink(e.target.value)}
             />
             <div>
-              <p className="mb-1.5 text-label-md text-on-surface">Upload Resume</p>
-              <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-outline-variant bg-surface-container-low py-xl text-center">
-                <UploadCloud className="h-8 w-8 text-outline" />
+              <p className="text-label-md text-on-surface mb-1.5">Upload Resume</p>
+              <label className="border-outline-variant bg-surface-container-low py-xl flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed text-center">
+                <UploadCloud className="text-outline h-8 w-8" />
                 <span className="text-label-md text-primary">Upload a file</span>
                 <span className="text-label-sm text-on-surface-variant">
                   or drag and drop — PDF, DOC, DOCX up to 10MB
@@ -200,10 +200,10 @@ export default function ApplyForInternshipPage() {
                 />
               </label>
               {isUploadingResume && (
-                <p className="mt-2 text-label-sm text-on-surface-variant">Uploading…</p>
+                <p className="text-label-sm text-on-surface-variant mt-2">Uploading…</p>
               )}
               {resumeFilename && !isUploadingResume && (
-                <p className="mt-2 text-label-sm text-primary">{resumeFilename} selected</p>
+                <p className="text-label-sm text-primary mt-2">{resumeFilename} selected</p>
               )}
             </div>
             <Textarea
@@ -216,15 +216,15 @@ export default function ApplyForInternshipPage() {
         )}
 
         {step === 3 && (
-          <div className="flex flex-col gap-md">
+          <div className="gap-md flex flex-col">
             <h2 className="text-headline-md text-on-background">Review &amp; Submit</h2>
             <p className="text-body-md text-on-surface-variant">
               Ensure your details are correct before applying.
             </p>
 
-            <div className="rounded-md bg-surface-container-low p-md">
+            <div className="bg-surface-container-low p-md rounded-md">
               <h3 className="text-headline-md text-on-background">Application Summary</h3>
-              <div className="mt-3 grid gap-4 text-body-md sm:grid-cols-2">
+              <div className="text-body-md mt-3 grid gap-4 sm:grid-cols-2">
                 <div>
                   <p className="text-label-sm text-on-surface-variant">Full Name</p>
                   <p className="text-on-background">{user?.full_name}</p>
@@ -250,8 +250,8 @@ export default function ApplyForInternshipPage() {
                 {resumeFilename && (
                   <div className="sm:col-span-2">
                     <p className="text-label-sm text-on-surface-variant">Uploaded Documents</p>
-                    <p className="mt-1 flex items-center gap-2 rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2">
-                      {resumeFilename} <Check className="h-4 w-4 text-primary" />
+                    <p className="border-outline-variant bg-surface-container-lowest mt-1 flex items-center gap-2 rounded-md border px-3 py-2">
+                      {resumeFilename} <Check className="text-primary h-4 w-4" />
                     </p>
                   </div>
                 )}
@@ -266,7 +266,7 @@ export default function ApplyForInternshipPage() {
           </div>
         )}
 
-        <div className="mt-lg flex items-center justify-between border-t border-outline-variant/40 pt-md">
+        <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
           {step > 1 ? (
             <Button variant="ghost" onClick={() => setStep((s) => s - 1)}>
               <ArrowLeft className="h-4 w-4" /> Edit Details

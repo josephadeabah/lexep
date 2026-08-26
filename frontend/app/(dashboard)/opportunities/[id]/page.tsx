@@ -34,10 +34,10 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
   if (!o) return <p className="text-body-md text-error">Opportunity not found.</p>;
 
   return (
-    <div className="grid gap-md lg:grid-cols-[1fr_320px]">
+    <div className="gap-md grid lg:grid-cols-[1fr_320px]">
       <div>
         <Card className="mb-md flex items-start gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-md bg-surface-container-high text-headline-md text-on-surface">
+          <div className="bg-surface-container-high text-headline-md text-on-surface flex h-16 w-16 items-center justify-center rounded-md">
             {o.company_name?.[0] ?? "?"}
           </div>
           <div>
@@ -52,7 +52,7 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
 
         <Card className="mb-md">
           <h2 className="text-headline-md text-on-background">About the Role</h2>
-          <p className="mt-3 whitespace-pre-line text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-3 whitespace-pre-line">
             {o.description || "No description provided yet."}
           </p>
         </Card>
@@ -62,8 +62,8 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
             <h2 className="text-headline-md text-on-background">Requirements</h2>
             <ul className="mt-3 flex flex-col gap-2">
               {o.required_skills.map((skill) => (
-                <li key={skill} className="flex items-center gap-2 text-body-md text-on-surface">
-                  <CheckCircle2 className="h-4 w-4 text-primary" /> {skill}
+                <li key={skill} className="text-body-md text-on-surface flex items-center gap-2">
+                  <CheckCircle2 className="text-primary h-4 w-4" /> {skill}
                 </li>
               ))}
             </ul>
@@ -74,7 +74,7 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
       <div>
         <Card>
           {alreadyApplied ? (
-            <p className="flex items-center gap-2 text-label-md text-primary">
+            <p className="text-label-md text-primary flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5" /> Application submitted!
             </p>
           ) : (
@@ -83,7 +83,7 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
             </Button>
           )}
 
-          <dl className="mt-md flex flex-col gap-3 border-t border-outline-variant/40 pt-md text-body-md">
+          <dl className="mt-md border-outline-variant/40 pt-md text-body-md flex flex-col gap-3 border-t">
             {o.application_deadline && (
               <div className="flex justify-between">
                 <dt className="text-on-surface-variant">Deadline</dt>
@@ -133,7 +133,7 @@ function CompanyApplicantReview({ id }: { id: number }) {
         </div>
       </div>
 
-      <div className="grid gap-md sm:grid-cols-2 lg:grid-cols-3">
+      <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
         {applicants.isLoading ? (
           <p className="text-body-md text-on-surface-variant">Loading applicants…</p>
         ) : applicants.data && applicants.data.length > 0 ? (
@@ -156,7 +156,7 @@ function CompanyApplicantReview({ id }: { id: number }) {
                 )}
               </div>
 
-              <div className="mt-3 flex flex-col gap-1 text-label-sm text-on-surface-variant">
+              <div className="text-label-sm text-on-surface-variant mt-3 flex flex-col gap-1">
                 {applicant.education && <span>{applicant.education}</span>}
                 {applicant.skills.length > 0 && <span>{applicant.skills.join(", ")}</span>}
               </div>
@@ -167,7 +167,7 @@ function CompanyApplicantReview({ id }: { id: number }) {
                 </Badge>
               </div>
 
-              <div className="mt-4 flex gap-2 border-t border-outline-variant/40 pt-3">
+              <div className="border-outline-variant/40 mt-4 flex gap-2 border-t pt-3">
                 <Button size="sm" variant="secondary" href={`/interviews/propose/${applicant.id}`}>
                   Schedule
                 </Button>

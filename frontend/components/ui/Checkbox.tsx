@@ -13,7 +13,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     return (
       <label
         htmlFor={boxId}
-        className={cn("flex cursor-pointer select-none items-start gap-3", className)}
+        className={cn("flex cursor-pointer items-start gap-3 select-none", className)}
       >
         <span className="relative mt-0.5 flex-shrink-0">
           <input
@@ -26,12 +26,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           />
           <span
             className={cn(
-              "flex h-5 w-5 items-center justify-center rounded-sm border border-outline-variant bg-surface-container-lowest transition",
+              "border-outline-variant bg-surface-container-lowest flex h-5 w-5 items-center justify-center rounded-sm border transition",
               "peer-checked:border-primary-container peer-checked:bg-primary-container",
-              "peer-focus-visible:ring-2 peer-focus-visible:ring-primary-container"
+              "peer-focus-visible:ring-primary-container peer-focus-visible:ring-2"
             )}
           >
-            {checked && <Check className="h-3.5 w-3.5 text-on-primary-container" strokeWidth={3} />}
+            {checked && <Check className="text-on-primary-container h-3.5 w-3.5" strokeWidth={3} />}
           </span>
         </span>
         {(label || description) && (

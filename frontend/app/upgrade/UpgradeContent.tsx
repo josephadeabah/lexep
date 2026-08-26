@@ -25,7 +25,7 @@ export default function UpgradeContent() {
 
   if (config.isLoading || plans.isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-body-md text-on-surface-variant">
+      <div className="text-body-md text-on-surface-variant flex min-h-screen items-center justify-center">
         Loading…
       </div>
     );
@@ -33,13 +33,13 @@ export default function UpgradeContent() {
 
   if (!config.data?.premium_features_enabled) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-surface px-gutter">
-        <div className="card-level1 max-w-md p-md text-center">
+      <div className="bg-surface px-gutter flex min-h-screen items-center justify-center">
+        <div className="card-level1 p-md max-w-md text-center">
           <div className="flex justify-center">
             <Logo variant="light" />
           </div>
-          <h1 className="mt-4 text-headline-lg text-on-background">Premium isn&apos;t live yet</h1>
-          <p className="mt-2 text-body-md text-on-surface-variant">
+          <h1 className="text-headline-lg text-on-background mt-4">Premium isn&apos;t live yet</h1>
+          <p className="text-body-md text-on-surface-variant mt-2">
             We&apos;re currently in free beta — every feature is unlocked for everyone, no upgrade
             needed. We&apos;ll let you know when premium plans go live.
           </p>
@@ -53,7 +53,7 @@ export default function UpgradeContent() {
 
   if (!plan || plan.is_custom) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-body-md text-on-surface-variant">
+      <div className="text-body-md text-on-surface-variant flex min-h-screen items-center justify-center">
         Contact sales for Enterprise pricing.
       </div>
     );
@@ -62,21 +62,21 @@ export default function UpgradeContent() {
   const price = cycle === "annual" ? plan.annual_price! : plan.monthly_price! * 12;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-gutter py-xl">
+    <div className="bg-surface px-gutter py-xl flex min-h-screen items-center justify-center">
       <div className="w-full max-w-lg">
         <div className="card-level1 p-md">
           <div className="text-center">
             <h1 className="text-headline-lg text-on-background">Upgrade to Professional</h1>
-            <p className="mt-2 text-body-md text-on-surface-variant">
+            <p className="text-body-md text-on-surface-variant mt-2">
               Unlock advanced features and dedicated support to accelerate your learning journey.
             </p>
           </div>
 
-          <div className="mx-auto mt-md flex w-fit items-center gap-1 rounded-full bg-surface-container-low p-1">
+          <div className="mt-md bg-surface-container-low mx-auto flex w-fit items-center gap-1 rounded-full p-1">
             <button
               onClick={() => setCycle("monthly")}
               className={cn(
-                "rounded-full px-4 py-2 text-label-md transition",
+                "text-label-md rounded-full px-4 py-2 transition",
                 cycle === "monthly"
                   ? "bg-inverse-surface text-inverse-on-surface"
                   : "text-on-surface-variant"
@@ -87,20 +87,20 @@ export default function UpgradeContent() {
             <button
               onClick={() => setCycle("annual")}
               className={cn(
-                "flex items-center gap-2 rounded-full px-4 py-2 text-label-md transition",
+                "text-label-md flex items-center gap-2 rounded-full px-4 py-2 transition",
                 cycle === "annual"
                   ? "bg-inverse-surface text-inverse-on-surface"
                   : "text-on-surface-variant"
               )}
             >
               Annually
-              <span className="rounded-full bg-primary-fixed px-2 py-0.5 text-label-sm text-on-primary-fixed-variant">
+              <span className="bg-primary-fixed text-label-sm text-on-primary-fixed-variant rounded-full px-2 py-0.5">
                 Save 20%
               </span>
             </button>
           </div>
 
-          <div className="mt-md rounded-md border border-outline-variant p-md">
+          <div className="mt-md border-outline-variant p-md rounded-md border">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-label-md text-on-background">{plan.name}</p>
@@ -113,10 +113,10 @@ export default function UpgradeContent() {
                 </span>
               </p>
             </div>
-            <ul className="mt-md flex flex-col gap-3 border-t border-outline-variant/40 pt-md">
+            <ul className="mt-md border-outline-variant/40 pt-md flex flex-col gap-3 border-t">
               {plan.features.map((f) => (
-                <li key={f} className="flex items-center gap-2 text-body-md text-on-surface">
-                  <Check className="h-4 w-4 text-primary" /> {f}
+                <li key={f} className="text-body-md text-on-surface flex items-center gap-2">
+                  <Check className="text-primary h-4 w-4" /> {f}
                 </li>
               ))}
             </ul>
@@ -131,11 +131,11 @@ export default function UpgradeContent() {
           </Button>
           <Link
             href="/dashboard"
-            className="mt-3 block text-center text-label-md text-on-surface-variant hover:text-primary"
+            className="text-label-md text-on-surface-variant hover:text-primary mt-3 block text-center"
           >
             Cancel
           </Link>
-          <p className="mt-3 text-center text-label-sm text-on-surface-variant">
+          <p className="text-label-sm text-on-surface-variant mt-3 text-center">
             By upgrading, you agree to our{" "}
             <Link href="/help" className="underline">
               Terms of Service

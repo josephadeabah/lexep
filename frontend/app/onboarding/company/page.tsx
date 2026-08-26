@@ -64,22 +64,22 @@ export default function CompanyOnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface px-gutter py-xl">
+    <div className="bg-surface px-gutter py-xl min-h-screen">
       <div className="card-level1 mx-auto max-w-2xl overflow-hidden p-0">
         <div className="bg-surface-container-low px-md py-md">
-          <p className="flex items-center gap-2 text-label-sm text-on-surface-variant">
+          <p className="text-label-sm text-on-surface-variant flex items-center gap-2">
             <Building2 className="h-4 w-4" /> Step 1 of 1
           </p>
-          <h1 className="mt-2 text-headline-lg text-on-background">Set Up Your Company Profile</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">
+          <h1 className="text-headline-lg text-on-background mt-2">Set Up Your Company Profile</h1>
+          <p className="text-body-md text-on-surface-variant mt-1">
             Complete your profile to start connecting with top emerging talent.
           </p>
         </div>
 
-        <div className="flex flex-col gap-lg p-md">
+        <div className="gap-lg p-md flex flex-col">
           <div>
             <h2 className="text-headline-md text-on-background">Company Details</h2>
-            <div className="mt-3 grid gap-md sm:grid-cols-2">
+            <div className="gap-md mt-3 grid sm:grid-cols-2">
               <Input
                 label="Industry"
                 placeholder="e.g. Technology, Finance"
@@ -129,7 +129,7 @@ export default function CompanyOnboardingPage() {
                     onChange={() => toggleGoal(goal.id)}
                     label={goal.title}
                   />
-                  <span className="pl-8 text-label-sm text-on-surface-variant">
+                  <span className="text-label-sm text-on-surface-variant pl-8">
                     {goal.description}
                   </span>
                 </label>
@@ -153,7 +153,7 @@ export default function CompanyOnboardingPage() {
             </div>
           </div>
 
-          <div className="flex justify-end border-t border-outline-variant/40 pt-md">
+          <div className="border-outline-variant/40 pt-md flex justify-end border-t">
             <Button onClick={handleSubmit} disabled={isSubmitting}>
               {isSubmitting ? "Saving…" : "Finish Setup"}
             </Button>

@@ -76,10 +76,10 @@ export default function CoursesPage() {
   );
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div>
         <h1 className="text-headline-lg text-on-background">Explore Learning Paths</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Discover structured curriculums designed by industry architects to elevate your career.
         </p>
       </div>
@@ -99,7 +99,7 @@ export default function CoursesPage() {
               key={c}
               onClick={() => setCategory(c)}
               className={cn(
-                "rounded-full px-4 py-2 text-label-md transition",
+                "text-label-md rounded-full px-4 py-2 transition",
                 category === c
                   ? "bg-primary-container text-on-primary-container"
                   : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high"
@@ -111,7 +111,7 @@ export default function CoursesPage() {
         </div>
       </Card>
 
-      <div className="grid gap-md sm:grid-cols-2 lg:grid-cols-3">
+      <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((course) => (
           <Card key={course.title} className="flex flex-col justify-between">
             <div>
@@ -119,14 +119,14 @@ export default function CoursesPage() {
                 <Badge>{course.level}</Badge>
                 <Badge tone={course.tier === "Pro" ? "primary" : "neutral"}>{course.tier}</Badge>
               </div>
-              <p className="text-label-sm uppercase tracking-wide text-on-surface-variant">
+              <p className="text-label-sm text-on-surface-variant tracking-wide uppercase">
                 {course.category}
               </p>
-              <p className="mt-1 text-headline-md text-on-background">{course.title}</p>
-              <p className="mt-2 text-body-md text-on-surface-variant">{course.description}</p>
+              <p className="text-headline-md text-on-background mt-1">{course.title}</p>
+              <p className="text-body-md text-on-surface-variant mt-2">{course.description}</p>
             </div>
-            <div className="mt-4 flex items-center justify-between border-t border-outline-variant/40 pt-3">
-              <span className="flex items-center gap-2 text-label-sm text-on-surface-variant">
+            <div className="border-outline-variant/40 mt-4 flex items-center justify-between border-t pt-3">
+              <span className="text-label-sm text-on-surface-variant flex items-center gap-2">
                 <Clock className="h-3.5 w-3.5" /> {course.duration}
               </span>
               <span className="text-label-md text-primary">View Path →</span>

@@ -20,14 +20,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative">
           {icon && (
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-outline">{icon}</span>
+            <span className="text-outline absolute top-1/2 left-3 -translate-y-1/2">{icon}</span>
           )}
           <input
             ref={ref}
             id={inputId}
             className={cn(
-              "h-11 w-full rounded-md border border-outline-variant bg-surface-container-lowest px-3 text-body-md text-on-surface placeholder:text-outline",
-              "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary-container",
+              "border-outline-variant bg-surface-container-lowest text-body-md text-on-surface placeholder:text-outline h-11 w-full rounded-md border px-3",
+              "focus:border-primary focus:ring-primary-container focus:ring-2 focus:outline-none",
               icon && "pl-10",
               error && "border-error focus:ring-error-container",
               className

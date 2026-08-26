@@ -4,14 +4,14 @@ import { Logo } from "@/components/ui/Logo";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#101010] text-inverse-on-surface">
-      <div className="mx-auto max-w-container-max px-gutter py-xl">
-        <div className="grid gap-xl md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+    <footer className="text-inverse-on-surface border-t border-white/10 bg-[#101010]">
+      <div className="max-w-container-max px-gutter py-xl mx-auto">
+        <div className="gap-xl grid md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           {/* Brand */}
           <div>
             <Logo variant="dark" size={64} />
 
-            <p className="mt-5 max-w-xs text-body-md leading-relaxed text-[#a8a6a5]">
+            <p className="text-body-md mt-5 max-w-xs leading-relaxed text-[#a8a6a5]">
               Helping African youth learn, connect, gain real-world experience, access opportunities
               and community support, and build toward the future they imagine.
             </p>
@@ -19,9 +19,9 @@ export default function Footer() {
 
           {/* Platform */}
           <div>
-            <p className="text-label-md font-semibold text-primary-fixed-dim">Platform</p>
+            <p className="text-label-md text-primary-fixed-dim font-semibold">Platform</p>
 
-            <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
+            <div className="text-body-md mt-4 flex flex-col gap-3 text-[#c9c7c6]">
               <Link href="/explore" className="transition hover:text-white">
                 Learning
               </Link>
@@ -42,9 +42,9 @@ export default function Footer() {
 
           {/* Organisation */}
           <div>
-            <p className="text-label-md font-semibold text-primary-fixed-dim">Lexep</p>
+            <p className="text-label-md text-primary-fixed-dim font-semibold">Lexep</p>
 
-            <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
+            <div className="text-body-md mt-4 flex flex-col gap-3 text-[#c9c7c6]">
               <Link href="/about" className="transition hover:text-white">
                 About Us
               </Link>
@@ -65,9 +65,9 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <p className="text-label-md font-semibold text-primary-fixed-dim">Support</p>
+            <p className="text-label-md text-primary-fixed-dim font-semibold">Support</p>
 
-            <div className="mt-4 flex flex-col gap-3 text-body-md text-[#c9c7c6]">
+            <div className="text-body-md mt-4 flex flex-col gap-3 text-[#c9c7c6]">
               <Link href="/help" className="transition hover:text-white">
                 Help Center
               </Link>
@@ -88,7 +88,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-xl flex flex-col justify-between gap-4 border-t border-white/10 pt-md text-label-sm text-[#a8a6a5] md:flex-row">
+        <div className="mt-xl pt-md text-label-sm flex flex-col justify-between gap-4 border-t border-white/10 text-[#a8a6a5] md:flex-row">
           <span>© {new Date().getFullYear()} Lexep. All rights reserved.</span>
 
           <div className="flex flex-wrap gap-5">

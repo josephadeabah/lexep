@@ -34,24 +34,24 @@ export default function CreateGrantGroupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-container-low px-gutter py-xl">
-      <div className="mx-auto flex max-w-2xl items-center justify-between pb-md">
-        <h1 className="flex items-center gap-2 text-headline-md text-on-background">
+    <div className="bg-surface-container-low px-gutter py-xl min-h-screen">
+      <div className="pb-md mx-auto flex max-w-2xl items-center justify-between">
+        <h1 className="text-headline-md text-on-background flex items-center gap-2">
           <span className="text-primary">Lexep Impact</span>
         </h1>
         <Link
           href="/grants"
-          className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary"
+          className="text-label-md text-on-surface-variant hover:text-primary flex items-center gap-1"
         >
           <X className="h-4 w-4" /> Cancel
         </Link>
       </div>
-      <p className="mx-auto -mt-4 mb-lg max-w-2xl text-body-md text-on-surface-variant">
+      <p className="mb-lg text-body-md text-on-surface-variant mx-auto -mt-4 max-w-2xl">
         Establish a dedicated space for targeted community contributions.
       </p>
 
-      <div className="card-level1 mx-auto max-w-2xl p-md">
-        <div className="flex flex-col gap-md">
+      <div className="card-level1 p-md mx-auto max-w-2xl">
+        <div className="gap-md flex flex-col">
           <Input
             label="Group Name"
             placeholder="e.g. Clean Water Initiative 2025"
@@ -71,7 +71,7 @@ export default function CreateGrantGroupPage() {
             <option>STEM Education</option>
           </Select>
 
-          <div className="border-t border-outline-variant/40 pt-md">
+          <div className="border-outline-variant/40 pt-md border-t">
             <Input
               label="Funding Goal (Amount)"
               placeholder="100,000"
@@ -82,8 +82,8 @@ export default function CreateGrantGroupPage() {
             />
           </div>
 
-          <div className="border-t border-outline-variant/40 pt-md">
-            <p className="mb-2 text-label-md text-on-surface">Visibility</p>
+          <div className="border-outline-variant/40 pt-md border-t">
+            <p className="text-label-md text-on-surface mb-2">Visibility</p>
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => setVisibility("public")}
@@ -94,7 +94,7 @@ export default function CreateGrantGroupPage() {
                     : "border-outline-variant"
                 )}
               >
-                <Globe2 className="h-5 w-5 text-on-surface" />
+                <Globe2 className="text-on-surface h-5 w-5" />
                 <p className="text-label-md text-on-background">Public</p>
                 <p className="text-label-sm text-on-surface-variant">
                   Anyone can discover and join.
@@ -109,14 +109,14 @@ export default function CreateGrantGroupPage() {
                     : "border-outline-variant"
                 )}
               >
-                <Lock className="h-5 w-5 text-on-surface" />
+                <Lock className="text-on-surface h-5 w-5" />
                 <p className="text-label-md text-on-background">Private</p>
                 <p className="text-label-sm text-on-surface-variant">Invite only access.</p>
               </button>
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-t border-outline-variant/40 pt-md">
+          <div className="border-outline-variant/40 pt-md flex items-center justify-between border-t">
             <Link
               href="/grants"
               className="text-label-md text-on-surface-variant hover:text-primary"

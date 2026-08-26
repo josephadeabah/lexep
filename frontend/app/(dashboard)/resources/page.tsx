@@ -4,7 +4,7 @@ export default function ResourcesPage() {
   return (
     <div>
       <h1 className="text-headline-lg text-on-background">Resources</h1>
-      <p className="mt-1 text-body-md text-on-surface-variant">
+      <p className="text-body-md text-on-surface-variant mt-1">
         Guides, templates, and playbooks for mentors and companies. More resources are on the way.
       </p>
       <Card className="mt-lg">

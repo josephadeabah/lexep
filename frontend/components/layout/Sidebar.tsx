@@ -30,22 +30,22 @@ export function Sidebar({
   const pathname = usePathname();
 
   return (
-    <aside className="hidden h-screen w-sidebar flex-shrink-0 flex-col justify-between bg-[#1a1a1a] px-md py-lg text-inverse-on-surface md:flex">
-      <div className="flex flex-col gap-lg">
+    <aside className="w-sidebar px-md py-lg text-inverse-on-surface hidden h-screen flex-shrink-0 flex-col justify-between bg-[#1a1a1a] md:flex">
+      <div className="gap-lg flex flex-col">
         <div>
           <Link href="/dashboard" className="flex items-center gap-2">
             <Logo variant="dark" size={24} showWordmark={false} />
             <span className="text-headline-md text-primary-fixed-dim">{brand}</span>
           </Link>
-          <p className="mt-1 text-label-sm text-[#a8a6a5]">{tagline}</p>
+          <p className="text-label-sm mt-1 text-[#a8a6a5]">{tagline}</p>
         </div>
 
         {userSummary && (
           <div className="flex items-center gap-3 rounded-md bg-white/5 p-3">
             <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
             <div className="min-w-0">
-              <p className="truncate text-label-md text-inverse-on-surface">{userSummary.name}</p>
-              <p className="truncate text-label-sm text-[#a8a6a5]">{userSummary.roleLabel}</p>
+              <p className="text-label-md text-inverse-on-surface truncate">{userSummary.name}</p>
+              <p className="text-label-sm truncate text-[#a8a6a5]">{userSummary.roleLabel}</p>
             </div>
           </div>
         )}
@@ -53,7 +53,7 @@ export function Sidebar({
         {ctaLabel && (
           <Link
             href={ctaHref || "#"}
-            className="flex h-11 items-center justify-center rounded-md bg-primary-container px-4 text-label-md text-on-primary-container hover:brightness-95"
+            className="bg-primary-container text-label-md text-on-primary-container flex h-11 items-center justify-center rounded-md px-4 hover:brightness-95"
           >
             {ctaLabel}
           </Link>
@@ -68,14 +68,14 @@ export function Sidebar({
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative flex items-center gap-3 rounded-md px-3 py-2.5 text-label-md transition",
+                  "text-label-md relative flex items-center gap-3 rounded-md px-3 py-2.5 transition",
                   active
-                    ? "bg-white/10 text-primary-fixed-dim"
-                    : "text-[#c9c7c6] hover:bg-white/5 hover:text-inverse-on-surface"
+                    ? "text-primary-fixed-dim bg-white/10"
+                    : "hover:text-inverse-on-surface text-[#c9c7c6] hover:bg-white/5"
                 )}
               >
                 {active && (
-                  <span className="absolute bottom-1 left-0 top-1 w-[3px] rounded-full bg-primary-container" />
+                  <span className="bg-primary-container absolute top-1 bottom-1 left-0 w-[3px] rounded-full" />
                 )}
                 <Icon className="h-4 w-4" />
                 {item.label}
@@ -85,17 +85,17 @@ export function Sidebar({
         </nav>
       </div>
 
-      <div className="flex flex-col gap-1 border-t border-white/10 pt-md">
+      <div className="pt-md flex flex-col gap-1 border-t border-white/10">
         <Link
           href="/help"
-          className="flex items-center gap-3 rounded-md px-3 py-2.5 text-label-md text-[#c9c7c6] hover:bg-white/5"
+          className="text-label-md flex items-center gap-3 rounded-md px-3 py-2.5 text-[#c9c7c6] hover:bg-white/5"
         >
           <HelpCircle className="h-4 w-4" />
           Help Center
         </Link>
         <button
           onClick={onLogout}
-          className="flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-label-md text-[#c9c7c6] hover:bg-white/5"
+          className="text-label-md flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-[#c9c7c6] hover:bg-white/5"
         >
           <LogOut className="h-4 w-4" />
           Logout

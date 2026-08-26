@@ -48,7 +48,7 @@ export default function AdminUsersPage() {
   const totalPages = learners.data ? Math.ceil(learners.data.total / learners.data.page_size) : 1;
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div>
         <h1 className="text-headline-lg text-on-background">User Management</h1>
       </div>
@@ -106,7 +106,7 @@ export default function AdminUsersPage() {
                   <th className="px-md py-3 font-normal">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-outline-variant/40">
+              <tbody className="divide-outline-variant/40 divide-y">
                 {learners.data.results.map((row) => (
                   <tr key={row.user_id}>
                     <td className="px-md py-4">
@@ -118,10 +118,10 @@ export default function AdminUsersPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-md py-4 text-body-md text-on-surface">
+                    <td className="px-md text-body-md text-on-surface py-4">
                       {row.location ?? "—"}
                     </td>
-                    <td className="px-md py-4 text-body-md text-on-surface">
+                    <td className="px-md text-body-md text-on-surface py-4">
                       {row.primary_track ?? "—"}
                     </td>
                     <td className="px-md py-4">
@@ -143,7 +143,7 @@ export default function AdminUsersPage() {
                 ))}
               </tbody>
             </table>
-            <div className="flex items-center justify-between border-t border-outline-variant/40 p-md">
+            <div className="border-outline-variant/40 p-md flex items-center justify-between border-t">
               <p className="text-label-sm text-on-surface-variant">
                 Showing {(page - 1) * learners.data.page_size + 1} to{" "}
                 {Math.min(page * learners.data.page_size, learners.data.total)} of{" "}
@@ -153,7 +153,7 @@ export default function AdminUsersPage() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="rounded-md border border-outline-variant p-2 disabled:opacity-40"
+                  className="border-outline-variant rounded-md border p-2 disabled:opacity-40"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
@@ -163,7 +163,7 @@ export default function AdminUsersPage() {
                 <button
                   onClick={() => setPage((p) => (p < totalPages ? p + 1 : p))}
                   disabled={page >= totalPages}
-                  className="rounded-md border border-outline-variant p-2 disabled:opacity-40"
+                  className="border-outline-variant rounded-md border p-2 disabled:opacity-40"
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>

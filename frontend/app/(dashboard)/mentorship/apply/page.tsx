@@ -95,24 +95,24 @@ export default function MentorApplicationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-container-low px-gutter py-xl">
-      <div className="mx-auto flex max-w-2xl items-center justify-between pb-md">
+    <div className="bg-surface-container-low px-gutter py-xl min-h-screen">
+      <div className="pb-md mx-auto flex max-w-2xl items-center justify-between">
         <span className="text-headline-md text-primary">Lexep</span>
         <Link
           href="/dashboard"
-          className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary"
+          className="text-label-md text-on-surface-variant hover:text-primary flex items-center gap-1"
         >
           <X className="h-4 w-4" /> Cancel
         </Link>
       </div>
-      <p className="mx-auto -mt-3 mb-lg max-w-2xl text-center text-body-md text-on-surface-variant">
+      <p className="mb-lg text-body-md text-on-surface-variant mx-auto -mt-3 max-w-2xl text-center">
         Mentor Application Portal
       </p>
 
-      <div className="mx-auto max-w-2xl overflow-hidden rounded-lg bg-surface-container-lowest shadow-level1">
-        <div className="h-1 w-full bg-surface-container-high">
+      <div className="bg-surface-container-lowest shadow-level1 mx-auto max-w-2xl overflow-hidden rounded-lg">
+        <div className="bg-surface-container-high h-1 w-full">
           <div
-            className="h-1 bg-primary-container transition-all"
+            className="bg-primary-container h-1 transition-all"
             style={{ width: `${(step / 3) * 100}%` }}
           />
         </div>
@@ -121,15 +121,15 @@ export default function MentorApplicationPage() {
           {step === 1 && (
             <div>
               <p className="text-label-sm text-on-surface-variant">STEP 1 OF 3</p>
-              <h1 className="mt-1 text-headline-lg text-on-background">
+              <h1 className="text-headline-lg text-on-background mt-1">
                 Personal &amp; Professional Info
               </h1>
-              <p className="mt-2 max-w-md text-body-md text-on-surface-variant">
+              <p className="text-body-md text-on-surface-variant mt-2 max-w-md">
                 Tell us about your background and expertise to help us match you with the right
                 learners.
               </p>
 
-              <div className="mt-lg flex flex-col gap-md">
+              <div className="mt-lg gap-md flex flex-col">
                 <Input
                   label="Current Role"
                   placeholder="Senior Architect"
@@ -144,7 +144,7 @@ export default function MentorApplicationPage() {
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                 />
-                <div className="grid gap-md sm:grid-cols-2">
+                <div className="gap-md grid sm:grid-cols-2">
                   <Select
                     label="Years of Exp."
                     value={years}
@@ -166,7 +166,7 @@ export default function MentorApplicationPage() {
                 </div>
               </div>
 
-              <div className="mt-lg flex items-center justify-between border-t border-outline-variant/40 pt-md">
+              <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
                 <Link
                   href="/dashboard"
                   className="text-label-md text-on-surface-variant hover:text-primary"
@@ -183,7 +183,7 @@ export default function MentorApplicationPage() {
           {step === 2 && (
             <div>
               <p className="text-label-sm text-on-surface-variant">STEP 2 OF 3</p>
-              <h1 className="mt-1 text-headline-lg text-on-background">
+              <h1 className="text-headline-lg text-on-background mt-1">
                 Expertise &amp; Availability
               </h1>
 
@@ -205,10 +205,10 @@ export default function MentorApplicationPage() {
                   </Select>
                 </div>
                 <div className="mt-3">
-                  <p className="mb-2 text-label-md text-on-surface">
+                  <p className="text-label-md text-on-surface mb-2">
                     Specific Skills (Select up to 5)
                   </p>
-                  <div className="grid grid-cols-2 gap-2 rounded-md bg-surface-container-low p-3 sm:grid-cols-3">
+                  <div className="bg-surface-container-low grid grid-cols-2 gap-2 rounded-md p-3 sm:grid-cols-3">
                     {SKILLS.map((skill) => (
                       <Checkbox
                         key={skill}
@@ -221,12 +221,12 @@ export default function MentorApplicationPage() {
                 </div>
               </div>
 
-              <div className="mt-lg border-t border-outline-variant/40 pt-md">
+              <div className="mt-lg border-outline-variant/40 pt-md border-t">
                 <h2 className="text-headline-md text-on-background">Weekly Availability</h2>
                 <p className="text-label-sm text-on-surface-variant">
                   Estimate the hours you can dedicate to mentoring students each week.
                 </p>
-                <div className="mt-3 grid gap-md sm:grid-cols-2">
+                <div className="gap-md mt-3 grid sm:grid-cols-2">
                   <div className="flex flex-col gap-2">
                     <p className="text-label-md text-on-surface">Hours per Week</p>
                     {HOURS.map((h) => (
@@ -244,7 +244,7 @@ export default function MentorApplicationPage() {
                           name="hours"
                           checked={hours === h}
                           onChange={() => setHours(h)}
-                          className="h-4 w-4 text-primary accent-current"
+                          className="text-primary h-4 w-4 accent-current"
                         />
                         {h}
                       </label>
@@ -258,14 +258,14 @@ export default function MentorApplicationPage() {
                         label={t}
                         checked={timeframes.includes(t)}
                         onChange={() => toggle(timeframes, setTimeframes, t)}
-                        className="rounded-md border border-outline-variant px-4 py-3"
+                        className="border-outline-variant rounded-md border px-4 py-3"
                       />
                     ))}
                   </div>
                 </div>
               </div>
 
-              <div className="mt-lg flex items-center justify-between border-t border-outline-variant/40 pt-md">
+              <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
                 <Button variant="ghost" onClick={() => setStep(1)}>
                   ← Back
                 </Button>
@@ -279,10 +279,10 @@ export default function MentorApplicationPage() {
           {step === 3 && (
             <div>
               <p className="text-label-sm text-on-surface-variant">STEP 3 OF 3</p>
-              <h1 className="mt-1 text-headline-lg text-on-background">
+              <h1 className="text-headline-lg text-on-background mt-1">
                 Motivation &amp; Submission
               </h1>
-              <p className="mt-2 max-w-md text-body-md text-on-surface-variant">
+              <p className="text-body-md text-on-surface-variant mt-2 max-w-md">
                 We&apos;d love to know what drives you to share your expertise with the next
                 generation.
               </p>
@@ -311,7 +311,7 @@ export default function MentorApplicationPage() {
                 />
               </div>
 
-              <div className="mt-lg flex items-center justify-between border-t border-outline-variant/40 pt-md">
+              <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
                 <Button variant="ghost" onClick={() => setStep(2)}>
                   ← Back
                 </Button>

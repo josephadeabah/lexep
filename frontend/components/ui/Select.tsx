@@ -21,15 +21,15 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             id={selectId}
             className={cn(
-              "h-11 w-full appearance-none rounded-md border border-outline-variant bg-surface-container-lowest px-3 pr-9 text-body-md text-on-surface",
-              "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary-container",
+              "border-outline-variant bg-surface-container-lowest text-body-md text-on-surface h-11 w-full appearance-none rounded-md border px-3 pr-9",
+              "focus:border-primary focus:ring-primary-container focus:ring-2 focus:outline-none",
               className
             )}
             {...props}
           >
             {children}
           </select>
-          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-outline" />
+          <ChevronDown className="text-outline pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2" />
         </div>
       </div>
     );

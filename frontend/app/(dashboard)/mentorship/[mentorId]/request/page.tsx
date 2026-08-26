@@ -82,13 +82,13 @@ export default function RequestSessionPage() {
     <div>
       <div className="mb-lg">
         <h1 className="text-headline-lg text-on-background">Request Session</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Propose times for a mentorship session with your selected mentor.
         </p>
       </div>
 
-      <div className="grid gap-md lg:grid-cols-[1fr_320px]">
-        <div className="flex flex-col gap-md">
+      <div className="gap-md grid lg:grid-cols-[1fr_320px]">
+        <div className="gap-md flex flex-col">
           {m && (
             <Card className="flex items-center gap-4">
               <Avatar name={m.user.full_name} src={m.user.avatar_url} size={56} />
@@ -102,8 +102,8 @@ export default function RequestSessionPage() {
           )}
 
           <Card>
-            <p className="flex items-center gap-2 text-label-md text-on-background">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">
+            <p className="text-label-md text-on-background flex items-center gap-2">
+              <span className="bg-primary-fixed text-label-sm flex h-6 w-6 items-center justify-center rounded-full">
                 1
               </span>
               Session Type
@@ -121,15 +121,15 @@ export default function RequestSessionPage() {
                   )}
                 >
                   <p className="text-label-md text-on-background">{type.title}</p>
-                  <p className="mt-1 text-label-sm text-on-surface-variant">{type.description}</p>
+                  <p className="text-label-sm text-on-surface-variant mt-1">{type.description}</p>
                 </button>
               ))}
             </div>
           </Card>
 
           <Card>
-            <p className="flex items-center gap-2 text-label-md text-on-background">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">
+            <p className="text-label-md text-on-background flex items-center gap-2">
+              <span className="bg-primary-fixed text-label-sm flex h-6 w-6 items-center justify-center rounded-full">
                 2
               </span>
               Message for Mentor
@@ -145,8 +145,8 @@ export default function RequestSessionPage() {
           </Card>
 
           <Card>
-            <p className="flex items-center gap-2 text-label-md text-on-background">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-fixed text-label-sm">
+            <p className="text-label-md text-on-background flex items-center gap-2">
+              <span className="bg-primary-fixed text-label-sm flex h-6 w-6 items-center justify-center rounded-full">
                 3
               </span>
               Propose Times
@@ -163,7 +163,7 @@ export default function RequestSessionPage() {
                     key={day.toISOString()}
                     onClick={() => setSelectedDate(day)}
                     className={cn(
-                      "flex min-w-[56px] flex-col items-center rounded-md px-3 py-2 text-label-sm",
+                      "text-label-sm flex min-w-[56px] flex-col items-center rounded-md px-3 py-2",
                       active
                         ? "bg-primary-container text-on-primary-container"
                         : "bg-surface-container-low text-on-surface-variant"
@@ -176,8 +176,8 @@ export default function RequestSessionPage() {
               })}
             </div>
 
-            <div className="mt-3 rounded-md bg-surface-container-low p-3">
-              <p className="mb-2 text-label-sm text-on-surface-variant">
+            <div className="bg-surface-container-low mt-3 rounded-md p-3">
+              <p className="text-label-sm text-on-surface-variant mb-2">
                 Available slots for{" "}
                 {selectedDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
               </p>
@@ -190,7 +190,7 @@ export default function RequestSessionPage() {
                       key={slot}
                       onClick={() => toggleSlot(slot)}
                       className={cn(
-                        "rounded-md border px-3 py-2 text-label-sm",
+                        "text-label-sm rounded-md border px-3 py-2",
                         active
                           ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
                           : "border-outline-variant bg-surface-container-lowest"
@@ -208,7 +208,7 @@ export default function RequestSessionPage() {
         <div>
           <Card>
             <h2 className="text-headline-md text-on-background">Request Summary</h2>
-            <div className="mt-3 flex flex-col gap-3 border-t border-outline-variant/40 pt-3 text-body-md">
+            <div className="border-outline-variant/40 text-body-md mt-3 flex flex-col gap-3 border-t pt-3">
               <div className="flex justify-between">
                 <span className="text-on-surface-variant">Mentor</span>
                 <span className="text-on-background">{m?.user.full_name ?? "—"}</span>
@@ -219,9 +219,9 @@ export default function RequestSessionPage() {
               </div>
               <div>
                 <span className="text-on-surface-variant">Proposed Times</span>
-                <ul className="mt-1 list-disc pl-5 text-label-sm text-on-background">
+                <ul className="text-label-sm text-on-background mt-1 list-disc pl-5">
                   {selectedSlots.length === 0 && (
-                    <li className="list-none text-on-surface-variant">None selected yet</li>
+                    <li className="text-on-surface-variant list-none">None selected yet</li>
                   )}
                   {selectedSlots.map((s) => (
                     <li key={s}>
@@ -242,7 +242,7 @@ export default function RequestSessionPage() {
             >
               {isSubmitting ? "Sending…" : "Send Request ▷"}
             </Button>
-            <p className="mt-2 text-label-sm text-on-surface-variant">
+            <p className="text-label-sm text-on-surface-variant mt-2">
               The mentor will have 48 hours to confirm.
             </p>
           </Card>

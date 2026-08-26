@@ -21,10 +21,10 @@ export default function MentorRequestsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div>
         <h1 className="text-headline-lg text-on-background">Pending Requests</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Review and respond to new mentorship requests.
         </p>
       </div>
@@ -33,9 +33,9 @@ export default function MentorRequestsPage() {
         {requests.isLoading ? (
           <p className="p-md text-body-md text-on-surface-variant">Loading…</p>
         ) : requests.data && requests.data.length > 0 ? (
-          <ul className="divide-y divide-outline-variant/40">
+          <ul className="divide-outline-variant/40 divide-y">
             {requests.data.map((r) => (
-              <li key={r.id} className="flex items-center justify-between gap-4 p-md">
+              <li key={r.id} className="p-md flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <Avatar name={r.learner_name ?? "Learner"} size={44} />
                   <div>
@@ -45,7 +45,7 @@ export default function MentorRequestsPage() {
                       {formatDate(r.created_at)}
                     </p>
                     {r.message && (
-                      <p className="mt-1 text-body-md text-on-surface-variant">
+                      <p className="text-body-md text-on-surface-variant mt-1">
                         &ldquo;{r.message}&rdquo;
                       </p>
                     )}

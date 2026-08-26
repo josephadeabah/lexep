@@ -25,13 +25,13 @@ function LearnerDashboard() {
   const applications = useAsync(() => api.myApplications(), []);
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg text-on-background">
             Welcome back, {user.full_name.split(" ")[0]}.
           </h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-1">
             Here is an overview of your progress today.
           </p>
         </div>
@@ -44,7 +44,7 @@ function LearnerDashboard() {
             View All →
           </Link>
         </div>
-        <div className="grid gap-md sm:grid-cols-3">
+        <div className="gap-md grid sm:grid-cols-3">
           {[
             {
               title: "Software Engineering 101",
@@ -63,14 +63,14 @@ function LearnerDashboard() {
             },
           ].map((path) => (
             <Card key={path.title}>
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-container-high">
-                <path.icon className="h-4 w-4 text-on-surface" />
+              <span className="bg-surface-container-high flex h-10 w-10 items-center justify-center rounded-full">
+                <path.icon className="text-on-surface h-4 w-4" />
               </span>
-              <p className="mt-3 text-label-md text-on-background">{path.title}</p>
-              <p className="mt-1 text-label-sm text-on-surface-variant">{path.desc}</p>
+              <p className="text-label-md text-on-background mt-3">{path.title}</p>
+              <p className="text-label-sm text-on-surface-variant mt-1">{path.desc}</p>
               <Link
                 href="/courses"
-                className="mt-3 inline-block text-label-sm text-primary hover:underline"
+                className="text-label-sm text-primary mt-3 inline-block hover:underline"
               >
                 Start Path →
               </Link>
@@ -80,7 +80,7 @@ function LearnerDashboard() {
       </div>
 
       <div>
-        <h2 className="mb-3 text-headline-md text-on-background">Upcoming Mentorship</h2>
+        <h2 className="text-headline-md text-on-background mb-3">Upcoming Mentorship</h2>
         <Card>
           {mentors.isLoading ? (
             <p className="text-body-md text-on-surface-variant">Loading mentors…</p>
@@ -116,14 +116,14 @@ function LearnerDashboard() {
       </div>
 
       <div>
-        <h2 className="mb-3 text-headline-md text-on-background">Recent Applications</h2>
+        <h2 className="text-headline-md text-on-background mb-3">Recent Applications</h2>
         <Card className="overflow-hidden p-0">
           {applications.isLoading ? (
             <p className="p-md text-body-md text-on-surface-variant">Loading…</p>
           ) : applications.data && applications.data.length > 0 ? (
-            <ul className="divide-y divide-outline-variant/40">
+            <ul className="divide-outline-variant/40 divide-y">
               {applications.data.slice(0, 4).map((app) => (
-                <li key={app.id} className="flex items-center justify-between p-md">
+                <li key={app.id} className="p-md flex items-center justify-between">
                   <div>
                     <p className="text-label-md text-on-background">{app.opportunity_title}</p>
                     <p className="text-label-sm text-on-surface-variant">{app.company_name}</p>
@@ -156,24 +156,24 @@ function CompanyDashboard() {
   const totalApplications = 0; // Aggregated client-side once applicant endpoints are called per-opportunity.
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div>
         <h1 className="text-headline-lg text-on-background">Welcome, {user.full_name}</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Here is a summary of your current recruitment pipeline.
         </p>
       </div>
 
-      <div className="grid gap-md sm:grid-cols-3">
+      <div className="gap-md grid sm:grid-cols-3">
         <Card>
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-surface-container-high">
-              <Briefcase className="h-4 w-4 text-on-surface" />
+            <span className="bg-surface-container-high flex h-10 w-10 items-center justify-center rounded-md">
+              <Briefcase className="text-on-surface h-4 w-4" />
             </span>
             <span className="text-label-md text-on-surface-variant">Active Internships</span>
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {opportunities.data?.length ?? "—"}
@@ -181,13 +181,13 @@ function CompanyDashboard() {
         </Card>
         <Card>
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-surface-container-high">
-              <CalendarClock className="h-4 w-4 text-on-surface" />
+            <span className="bg-surface-container-high flex h-10 w-10 items-center justify-center rounded-md">
+              <CalendarClock className="text-on-surface h-4 w-4" />
             </span>
             <span className="text-label-md text-on-surface-variant">Interviews Scheduled</span>
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {interviews.data?.length ?? "—"}
@@ -195,7 +195,7 @@ function CompanyDashboard() {
         </Card>
         <Card className="bg-inverse-surface text-inverse-on-surface">
           <p className="text-label-md">Post a new role</p>
-          <p className="mt-2 text-label-sm text-[#c9c7c6]">
+          <p className="text-label-sm mt-2 text-[#c9c7c6]">
             Reach thousands of vetted African youth talent.
           </p>
           <Button href="/opportunities/new" variant="primary" className="mt-4">
@@ -224,14 +224,14 @@ function CompanyDashboard() {
                   <th className="px-md py-3 text-right font-normal">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-outline-variant/40">
+              <tbody className="divide-outline-variant/40 divide-y">
                 {opportunities.data.map((o) => (
                   <tr key={o.id}>
                     <td className="px-md py-4">
                       <p className="text-label-md text-on-background">{o.title}</p>
                       <p className="text-label-sm text-on-surface-variant">{o.location}</p>
                     </td>
-                    <td className="px-md py-4 text-body-md capitalize text-on-surface">
+                    <td className="px-md text-body-md text-on-surface py-4 capitalize">
                       {o.work_mode}
                     </td>
                     <td className="px-md py-4">
@@ -282,21 +282,21 @@ function MentorDashboard() {
   }
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div>
         <h1 className="text-headline-lg text-on-background">
           Welcome back, {user.full_name.split(" ")[0]}.
         </h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Here is a summary of your mentorship activities today.
         </p>
       </div>
 
-      <div className="grid gap-md sm:grid-cols-3">
+      <div className="gap-md grid sm:grid-cols-3">
         <Card>
           <p className="text-label-sm text-on-surface-variant">TOTAL EARNINGS</p>
           <p
-            className="mt-2 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-2"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {formatCurrency(stats.data?.total_earnings ?? 0)}
@@ -305,7 +305,7 @@ function MentorDashboard() {
         <Card>
           <p className="text-label-sm text-on-surface-variant">STUDENTS MENTORED</p>
           <p
-            className="mt-2 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-2"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {stats.data?.students_mentored ?? 0}
@@ -314,7 +314,7 @@ function MentorDashboard() {
         <Card>
           <p className="text-label-sm text-on-surface-variant">AVERAGE RATING</p>
           <p
-            className="mt-2 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-2"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {stats.data?.average_rating?.toFixed(1) ?? "—"}{" "}
@@ -323,9 +323,9 @@ function MentorDashboard() {
         </Card>
       </div>
 
-      <div className="grid gap-md lg:grid-cols-2">
+      <div className="gap-md grid lg:grid-cols-2">
         <Card className="overflow-hidden p-0">
-          <div className="flex items-center justify-between p-md">
+          <div className="p-md flex items-center justify-between">
             <h2 className="text-headline-md text-on-background">Pending Requests</h2>
             <Link
               href="/mentorship/requests"
@@ -337,9 +337,9 @@ function MentorDashboard() {
           {requests.isLoading ? (
             <p className="px-md pb-md text-body-md text-on-surface-variant">Loading…</p>
           ) : requests.data && requests.data.length > 0 ? (
-            <ul className="divide-y divide-outline-variant/40">
+            <ul className="divide-outline-variant/40 divide-y">
               {requests.data.slice(0, 3).map((r) => (
-                <li key={r.id} className="flex items-center justify-between gap-3 p-md">
+                <li key={r.id} className="p-md flex items-center justify-between gap-3">
                   <div>
                     <p className="text-label-md text-on-background">{r.learner_name}</p>
                     <p className="text-label-sm text-on-surface-variant">
@@ -363,11 +363,11 @@ function MentorDashboard() {
         </Card>
 
         <Card className="overflow-hidden p-0">
-          <div className="flex items-center justify-between p-md">
+          <div className="p-md flex items-center justify-between">
             <h2 className="text-headline-md text-on-background">Today&apos;s Schedule</h2>
           </div>
           {stats.data && stats.data.todays_schedule.length > 0 ? (
-            <ul className="divide-y divide-outline-variant/40">
+            <ul className="divide-outline-variant/40 divide-y">
               {stats.data.todays_schedule.map((s) => (
                 <li key={s.id} className="p-md">
                   <p className="text-label-sm text-on-surface-variant">{formatTime(s.time)}</p>
@@ -389,10 +389,10 @@ function MentorDashboard() {
         </Card>
       </div>
 
-      <div className="grid gap-md sm:grid-cols-2">
+      <div className="gap-md grid sm:grid-cols-2">
         <Card>
           <p className="text-label-md text-on-background">Your Mentor Profile</p>
-          <p className="mt-2 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-2">
             Keep your expertise and availability up to date so learners can find the right fit.
           </p>
           <Button href="/mentorship/apply" variant="secondary" className="mt-4">
@@ -401,7 +401,7 @@ function MentorDashboard() {
         </Card>
         <Card>
           <p className="text-label-md text-on-background">Community Grants</p>
-          <p className="mt-2 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-2">
             Start or contribute to a funding group for the youth you mentor.
           </p>
           <Button href="/grants" variant="secondary" className="mt-4">

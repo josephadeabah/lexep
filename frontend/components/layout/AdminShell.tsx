@@ -26,14 +26,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   if (!isInitialized || !user || user.role !== "admin") {
     return (
-      <div className="flex h-screen items-center justify-center bg-surface text-body-md text-on-surface-variant">
+      <div className="bg-surface text-body-md text-on-surface-variant flex h-screen items-center justify-center">
         Loading…
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-surface">
+    <div className="bg-surface flex min-h-screen">
       <Sidebar
         brand="Lexep Admin"
         tagline="Platform Management"
@@ -48,7 +48,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <main className="flex-1 overflow-y-auto">
         <OfflineBanner />
         <div className="px-md py-lg md:px-xl md:py-xl">
-          <div className="mx-auto w-full max-w-container-max">{children}</div>
+          <div className="max-w-container-max mx-auto w-full">{children}</div>
         </div>
       </main>
     </div>

@@ -32,16 +32,16 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-lg">
-      <div className="card-level1 flex w-full flex-col gap-md p-md">
+    <div className="gap-lg flex flex-col items-center">
+      <div className="card-level1 gap-md p-md flex w-full flex-col">
         <div className="text-center">
           <div className="flex justify-center">
             <Logo variant="light" size={64} />
           </div>
-          <p className="mt-1 text-body-md text-on-surface-variant">Create an account</p>
+          <p className="text-body-md text-on-surface-variant mt-1">Create an account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-md">
+        <form onSubmit={handleSubmit} className="gap-md flex flex-col">
           <Input
             label="Full Name"
             placeholder="Jane Doe"
@@ -73,9 +73,9 @@ export default function SignUpPage() {
             {isLoading ? "Creating account…" : "Sign Up"}
           </Button>
 
-          <div className="relative my-1 text-center text-label-sm text-on-surface-variant">
-            <span className="relative bg-surface-container-lowest px-3">Or continue with</span>
-            <div className="absolute left-0 right-0 top-1/2 -z-10 h-px bg-outline-variant" />
+          <div className="text-label-sm text-on-surface-variant relative my-1 text-center">
+            <span className="bg-surface-container-lowest relative px-3">Or continue with</span>
+            <div className="bg-outline-variant absolute top-1/2 right-0 left-0 -z-10 h-px" />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -95,7 +95,7 @@ export default function SignUpPage() {
             </Button>
           </div>
 
-          <p className="text-center text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant text-center">
             Already have an account?{" "}
             <Link href="/sign-in" className="font-label-md text-primary hover:underline">
               Log in instead
@@ -104,8 +104,8 @@ export default function SignUpPage() {
         </form>
       </div>
 
-      <p className="flex items-center gap-2 text-label-sm text-on-surface-variant">
-        <Users className="h-4 w-4 text-primary" />
+      <p className="text-label-sm text-on-surface-variant flex items-center gap-2">
+        <Users className="text-primary h-4 w-4" />
         Join 10,000+ African youth shaping the future
       </p>
     </div>

@@ -39,7 +39,7 @@ export function DonutProgress({ percent, size = 64, strokeWidth = 5, label }: Do
           className="text-primary-container transition-all"
         />
       </svg>
-      <span className="font-label-md absolute text-label-sm text-on-surface">
+      <span className="font-label-md text-label-sm text-on-surface absolute">
         {label ?? `${percent}%`}
       </span>
     </div>

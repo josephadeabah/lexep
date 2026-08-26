@@ -45,14 +45,14 @@ export default function GrantApplicationPage() {
     <div className="mx-auto max-w-2xl">
       <Link
         href="/grants"
-        className="mb-4 flex items-center gap-2 text-label-md text-on-surface-variant hover:text-primary"
+        className="text-label-md text-on-surface-variant hover:text-primary mb-4 flex items-center gap-2"
       >
         <ArrowLeft className="h-4 w-4" /> Back to Grants
       </Link>
 
       <div className="mb-lg text-center">
         <h1 className="text-headline-lg text-on-background">Grant Application</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Complete this form to apply for funding. Please ensure all information is accurate.
         </p>
       </div>
@@ -68,7 +68,7 @@ export default function GrantApplicationPage() {
                 <div className="flex flex-col items-center gap-2">
                   <span
                     className={cn(
-                      "flex h-9 w-9 items-center justify-center rounded-full text-label-md",
+                      "text-label-md flex h-9 w-9 items-center justify-center rounded-full",
                       done || active
                         ? "bg-primary-container text-on-primary-container"
                         : "bg-surface-container-high text-on-surface-variant"
@@ -92,9 +92,9 @@ export default function GrantApplicationPage() {
         </div>
 
         {step === 1 && (
-          <div className="flex flex-col gap-md">
+          <div className="gap-md flex flex-col">
             <h2 className="text-headline-md text-on-background">Funding Request</h2>
-            <div className="grid gap-md sm:grid-cols-2">
+            <div className="gap-md grid sm:grid-cols-2">
               <Input
                 label="Amount Requested (USD)"
                 placeholder="e.g. 1500"
@@ -118,7 +118,7 @@ export default function GrantApplicationPage() {
         )}
 
         {step === 2 && (
-          <div className="flex flex-col gap-md">
+          <div className="gap-md flex flex-col">
             <h2 className="text-headline-md text-on-background">Tell us more</h2>
             <Textarea
               label="Why do you need this funding?"
@@ -130,7 +130,7 @@ export default function GrantApplicationPage() {
         )}
 
         {step === 3 && (
-          <div className="flex flex-col gap-md">
+          <div className="gap-md flex flex-col">
             <h2 className="text-headline-md text-on-background">Supporting Documents</h2>
             <p className="text-label-sm text-on-surface-variant">
               List any documents you can provide (transcripts, quotes, proof of enrollment).
@@ -139,7 +139,7 @@ export default function GrantApplicationPage() {
               {documents.map((doc) => (
                 <span
                   key={doc}
-                  className="flex items-center gap-1 rounded-full bg-surface-container-high px-3 py-1 text-label-sm"
+                  className="bg-surface-container-high text-label-sm flex items-center gap-1 rounded-full px-3 py-1"
                 >
                   {doc}
                   <button onClick={() => setDocuments((prev) => prev.filter((d) => d !== doc))}>
@@ -149,7 +149,7 @@ export default function GrantApplicationPage() {
               ))}
               <input
                 placeholder="Add a document name and press enter…"
-                className="min-w-[220px] flex-1 rounded-md border border-outline-variant px-3 py-2 text-body-md outline-none focus:ring-2 focus:ring-primary-container"
+                className="border-outline-variant text-body-md focus:ring-primary-container min-w-[220px] flex-1 rounded-md border px-3 py-2 outline-none focus:ring-2"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && e.currentTarget.value.trim()) {
                     e.preventDefault();
@@ -167,7 +167,7 @@ export default function GrantApplicationPage() {
           </div>
         )}
 
-        <div className="mt-lg flex items-center justify-between border-t border-outline-variant/40 pt-md">
+        <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
           {step > 1 ? (
             <Button variant="ghost" onClick={() => setStep((s) => s - 1)}>
               Back

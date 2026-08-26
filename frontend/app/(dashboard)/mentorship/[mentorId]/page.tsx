@@ -26,7 +26,7 @@ export default function MentorProfilePage() {
     <div>
       <button
         onClick={() => router.push("/mentorship")}
-        className="mb-4 flex items-center gap-2 text-label-md text-on-surface-variant hover:text-primary"
+        className="text-label-md text-on-surface-variant hover:text-primary mb-4 flex items-center gap-2"
       >
         <ArrowLeft className="h-4 w-4" /> Back to Mentors
       </button>
@@ -38,7 +38,7 @@ export default function MentorProfilePage() {
             <h1 className="text-headline-lg text-on-background">{m.user.full_name}</h1>
             <p className="text-body-md text-on-surface-variant">{m.title}</p>
             {m.company && (
-              <p className="flex items-center gap-2 text-label-sm text-on-surface-variant">
+              <p className="text-label-sm text-on-surface-variant flex items-center gap-2">
                 <Globe2 className="h-3.5 w-3.5" /> {m.company}
               </p>
             )}
@@ -59,11 +59,11 @@ export default function MentorProfilePage() {
         </div>
       </Card>
 
-      <div className="grid gap-md lg:grid-cols-[1fr_320px]">
-        <div className="flex flex-col gap-md">
+      <div className="gap-md grid lg:grid-cols-[1fr_320px]">
+        <div className="gap-md flex flex-col">
           <Card>
             <h2 className="text-headline-md text-on-background">About Me</h2>
-            <p className="mt-3 whitespace-pre-line text-body-md text-on-surface-variant">{m.bio}</p>
+            <p className="text-body-md text-on-surface-variant mt-3 whitespace-pre-line">{m.bio}</p>
           </Card>
 
           {packages.data && packages.data.length > 0 && (
@@ -73,10 +73,10 @@ export default function MentorProfilePage() {
                 {packages.data.map((pkg) => (
                   <div
                     key={pkg.id}
-                    className="relative rounded-md border border-outline-variant p-4"
+                    className="border-outline-variant relative rounded-md border p-4"
                   >
                     {pkg.is_popular && (
-                      <span className="absolute -top-3 right-3 rounded-full bg-primary-container px-2 py-0.5 text-label-sm text-on-primary-container">
+                      <span className="bg-primary-container text-label-sm text-on-primary-container absolute -top-3 right-3 rounded-full px-2 py-0.5">
                         Popular
                       </span>
                     )}
@@ -86,8 +86,8 @@ export default function MentorProfilePage() {
                         {pkg.currency} {pkg.price}
                       </p>
                     </div>
-                    <p className="mt-2 text-body-md text-on-surface-variant">{pkg.description}</p>
-                    <p className="mt-2 text-label-sm text-on-surface-variant">
+                    <p className="text-body-md text-on-surface-variant mt-2">{pkg.description}</p>
+                    <p className="text-label-sm text-on-surface-variant mt-2">
                       {pkg.session_count > 1 ? `${pkg.session_count} × ` : ""}
                       {pkg.duration_minutes}-minute call{pkg.session_count > 1 ? "s" : ""}
                     </p>
@@ -105,12 +105,12 @@ export default function MentorProfilePage() {
           )}
         </div>
 
-        <div className="flex flex-col gap-md">
+        <div className="gap-md flex flex-col">
           <Card>
             <h2 className="text-headline-md text-on-background">Availability</h2>
-            <div className="mt-3 flex flex-col gap-2 text-body-md text-on-surface">
+            <div className="text-body-md text-on-surface mt-3 flex flex-col gap-2">
               <span className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-on-surface-variant" />{" "}
+                <Clock className="text-on-surface-variant h-4 w-4" />{" "}
                 {m.hours_per_week ?? "Flexible"}
               </span>
               <span

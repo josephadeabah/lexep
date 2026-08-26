@@ -46,11 +46,11 @@ export default function MentorPackagesPage() {
   }
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg text-on-background">Mentorship Packages</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-1">
             Manage your offerings and set your professional boundaries.
           </p>
         </div>
@@ -60,7 +60,7 @@ export default function MentorPackagesPage() {
       </div>
 
       {showForm && (
-        <Card className="flex flex-col gap-md">
+        <Card className="gap-md flex flex-col">
           <h2 className="text-headline-md text-on-background">New Package</h2>
           <Input
             label="Title"
@@ -73,7 +73,7 @@ export default function MentorPackagesPage() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <div className="grid gap-md sm:grid-cols-3">
+          <div className="gap-md grid sm:grid-cols-3">
             <Input label="Price (USD)" value={price} onChange={(e) => setPrice(e.target.value)} />
             <Input
               label="Duration (mins)"
@@ -97,7 +97,7 @@ export default function MentorPackagesPage() {
         </Card>
       )}
 
-      <div className="grid gap-md sm:grid-cols-2">
+      <div className="gap-md grid sm:grid-cols-2">
         {packages.isLoading ? (
           <p className="text-body-md text-on-surface-variant">Loading…</p>
         ) : packages.data && packages.data.length > 0 ? (
@@ -110,22 +110,22 @@ export default function MentorPackagesPage() {
                   className={cn(
                     "flex h-6 w-11 items-center rounded-full px-0.5 transition",
                     pkg.is_active
-                      ? "justify-end bg-primary-container"
-                      : "justify-start bg-outline-variant"
+                      ? "bg-primary-container justify-end"
+                      : "bg-outline-variant justify-start"
                   )}
                 >
                   <span className="h-5 w-5 rounded-full bg-white shadow" />
                 </button>
               </div>
-              <div className="mt-3 flex gap-md">
+              <div className="gap-md mt-3 flex">
                 <div>
-                  <p className="text-label-sm uppercase text-on-surface-variant">Price</p>
+                  <p className="text-label-sm text-on-surface-variant uppercase">Price</p>
                   <p className="text-headline-md text-on-background">
                     {pkg.currency} {pkg.price}
                   </p>
                 </div>
                 <div>
-                  <p className="text-label-sm uppercase text-on-surface-variant">Duration</p>
+                  <p className="text-label-sm text-on-surface-variant uppercase">Duration</p>
                   <p className="text-body-md text-on-surface">
                     {pkg.duration_minutes} mins{pkg.session_count > 1 ? `/ea` : ""}
                   </p>
@@ -134,7 +134,7 @@ export default function MentorPackagesPage() {
                   </p>
                 </div>
               </div>
-              <p className="mt-4 border-t border-outline-variant/40 pt-3 text-body-md text-on-surface-variant">
+              <p className="border-outline-variant/40 text-body-md text-on-surface-variant mt-4 border-t pt-3">
                 {pkg.description}
               </p>
               {pkg.tags.length > 0 && (
@@ -142,7 +142,7 @@ export default function MentorPackagesPage() {
                   {pkg.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-surface-container-high px-3 py-1 text-label-sm"
+                      className="bg-surface-container-high text-label-sm rounded-full px-3 py-1"
                     >
                       {tag}
                     </span>

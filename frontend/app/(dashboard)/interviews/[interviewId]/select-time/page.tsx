@@ -40,27 +40,27 @@ export default function SelectInterviewTimePage() {
   });
 
   return (
-    <div className="grid gap-md lg:grid-cols-[320px_1fr]">
+    <div className="gap-md grid lg:grid-cols-[320px_1fr]">
       <Card className="h-fit">
-        <span className="flex h-12 w-12 items-center justify-center rounded-md bg-surface-container-high">
-          <Building2 className="h-5 w-5 text-on-surface" />
+        <span className="bg-surface-container-high flex h-12 w-12 items-center justify-center rounded-md">
+          <Building2 className="text-on-surface h-5 w-5" />
         </span>
-        <h1 className="mt-4 text-headline-md text-on-background">Schedule Your Interview</h1>
-        <p className="mt-2 text-body-md text-on-surface-variant">
+        <h1 className="text-headline-md text-on-background mt-4">Schedule Your Interview</h1>
+        <p className="text-body-md text-on-surface-variant mt-2">
           Select a time slot from the options below that works best for you.
         </p>
-        <div className="mt-md flex flex-col gap-2 border-t border-outline-variant/40 pt-md text-body-md text-on-surface">
+        <div className="mt-md border-outline-variant/40 pt-md text-body-md text-on-surface flex flex-col gap-2 border-t">
           <span className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-on-surface-variant" /> {i.duration_minutes} Minutes
+            <Clock className="text-on-surface-variant h-4 w-4" /> {i.duration_minutes} Minutes
           </span>
           {i.meeting_service && (
             <span className="flex items-center gap-2">
-              <Video className="h-4 w-4 text-on-surface-variant" /> {i.meeting_service}
+              <Video className="text-on-surface-variant h-4 w-4" /> {i.meeting_service}
             </span>
           )}
           {i.opportunity_title && (
             <span className="flex items-center gap-2">
-              <UserIcon className="h-4 w-4 text-on-surface-variant" /> {i.opportunity_title}
+              <UserIcon className="text-on-surface-variant h-4 w-4" /> {i.opportunity_title}
             </span>
           )}
         </div>
@@ -69,7 +69,7 @@ export default function SelectInterviewTimePage() {
       <Card>
         {Array.from(byDay.entries()).map(([day, times]) => (
           <div key={day} className="mb-md last:mb-0">
-            <p className="mb-2 text-label-md text-on-background">
+            <p className="text-label-md text-on-background mb-2">
               Available slots for{" "}
               {new Date(day).toLocaleDateString("en-US", {
                 weekday: "long",
@@ -83,7 +83,7 @@ export default function SelectInterviewTimePage() {
                   key={t}
                   onClick={() => setSelected(t)}
                   className={cn(
-                    "rounded-md border p-4 text-label-md transition",
+                    "text-label-md rounded-md border p-4 transition",
                     selected === t
                       ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
                       : "border-outline-variant text-on-surface hover:bg-surface-container-low"
@@ -96,7 +96,7 @@ export default function SelectInterviewTimePage() {
           </div>
         ))}
 
-        <div className="mt-md flex items-center justify-between border-t border-outline-variant/40 pt-md">
+        <div className="mt-md border-outline-variant/40 pt-md flex items-center justify-between border-t">
           <div>
             <p className="text-label-sm text-on-surface-variant">Selected time:</p>
             <p className="text-body-md text-on-background">

@@ -91,7 +91,7 @@ export default function AdminApplicationReviewPage() {
     <div>
       <button
         onClick={() => router.push("/admin/applications")}
-        className="mb-4 flex items-center gap-2 text-label-md text-on-surface-variant hover:text-primary"
+        className="text-label-md text-on-surface-variant hover:text-primary mb-4 flex items-center gap-2"
       >
         <ArrowLeft className="h-4 w-4" /> Back to Applications
       </button>
@@ -102,7 +102,7 @@ export default function AdminApplicationReviewPage() {
             <h1 className="text-headline-lg text-on-background">{a.user.full_name}</h1>
             <Badge tone="warning">Pending Review</Badge>
           </div>
-          <p className="mt-1 text-body-md text-on-surface-variant">
+          <p className="text-body-md text-on-surface-variant mt-1">
             {a.title} at <span className="text-on-background">{a.company}</span>
           </p>
         </div>
@@ -124,13 +124,13 @@ export default function AdminApplicationReviewPage() {
         </div>
       </div>
 
-      <div className="grid gap-md lg:grid-cols-[320px_1fr]">
-        <div className="flex flex-col gap-md">
+      <div className="gap-md grid lg:grid-cols-[320px_1fr]">
+        <div className="gap-md flex flex-col">
           <Card className="text-center">
             <Avatar name={a.user.full_name} src={a.user.avatar_url} size={96} className="mx-auto" />
-            <p className="mt-3 text-headline-md text-on-background">{a.user.full_name}</p>
+            <p className="text-headline-md text-on-background mt-3">{a.user.full_name}</p>
             <p className="text-body-md text-on-surface-variant">{a.location}</p>
-            <div className="mt-4 grid grid-cols-2 gap-3 border-t border-outline-variant/40 pt-3 text-left">
+            <div className="border-outline-variant/40 mt-4 grid grid-cols-2 gap-3 border-t pt-3 text-left">
               <div>
                 <p className="text-label-sm text-on-surface-variant">Experience</p>
                 <p className="text-label-md text-on-background">{a.years_experience}</p>
@@ -151,7 +151,7 @@ export default function AdminApplicationReviewPage() {
 
           {a.education.length > 0 && (
             <Card>
-              <h2 className="flex items-center gap-2 text-headline-md text-on-background">
+              <h2 className="text-headline-md text-on-background flex items-center gap-2">
                 <GraduationCap className="h-4 w-4" /> Education &amp; Affiliations
               </h2>
               <ul className="mt-3 flex flex-col gap-3">
@@ -165,7 +165,7 @@ export default function AdminApplicationReviewPage() {
                 ))}
                 {a.credentials.map((c, i) => (
                   <li key={`c-${i}`} className="flex items-start gap-2">
-                    <BadgeCheck className="mt-0.5 h-4 w-4 text-primary" />
+                    <BadgeCheck className="text-primary mt-0.5 h-4 w-4" />
                     <p className="text-label-sm text-on-surface-variant">{c.label}</p>
                   </li>
                 ))}
@@ -174,10 +174,10 @@ export default function AdminApplicationReviewPage() {
           )}
         </div>
 
-        <div className="flex flex-col gap-md">
+        <div className="gap-md flex flex-col">
           <Card>
             <h2 className="text-headline-md text-on-background">Professional Statement</h2>
-            <p className="mt-3 whitespace-pre-line text-body-md text-on-surface-variant">{a.bio}</p>
+            <p className="text-body-md text-on-surface-variant mt-3 whitespace-pre-line">{a.bio}</p>
           </Card>
 
           <Card>
@@ -189,15 +189,15 @@ export default function AdminApplicationReviewPage() {
             </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {(packages.data ?? []).map((pkg) => (
-                <div key={pkg.id} className="rounded-md border border-outline-variant p-4">
+                <div key={pkg.id} className="border-outline-variant rounded-md border p-4">
                   <div className="flex items-start justify-between">
                     <p className="text-label-md text-on-background">{pkg.title}</p>
                     <p className="text-label-md text-primary">
                       {pkg.currency} {pkg.price}
                     </p>
                   </div>
-                  <p className="mt-2 text-label-sm text-on-surface-variant">{pkg.description}</p>
-                  <p className="mt-2 text-label-sm text-on-surface-variant">
+                  <p className="text-label-sm text-on-surface-variant mt-2">{pkg.description}</p>
+                  <p className="text-label-sm text-on-surface-variant mt-2">
                     {pkg.duration_minutes} Minutes
                   </p>
                 </div>
@@ -205,21 +205,21 @@ export default function AdminApplicationReviewPage() {
             </div>
           </Card>
 
-          <Card className="border-l-2 border-primary-container">
+          <Card className="border-primary-container border-l-2">
             <h2 className="text-headline-md text-on-background">Credential Verification</h2>
             <p className="text-label-sm text-on-surface-variant">
               Admin checklist to verify the applicant&apos;s submitted documents before approval.
             </p>
             <div className="mt-3 flex flex-col gap-3">
               {CHECKLIST_ITEMS.map((item) => (
-                <div key={item.key} className="rounded-md bg-surface-container-low p-4">
+                <div key={item.key} className="bg-surface-container-low rounded-md p-4">
                   <Checkbox
                     checked={!!checklist[item.key]}
                     onChange={(e) => toggleChecklistItem(item.key, e.target.checked)}
                     label={item.label}
                     description={item.description}
                   />
-                  <button className="mt-2 flex items-center gap-1 pl-8 text-label-sm text-primary hover:underline">
+                  <button className="text-label-sm text-primary mt-2 flex items-center gap-1 pl-8 hover:underline">
                     <FileText className="h-3.5 w-3.5" /> View Document
                   </button>
                 </div>
@@ -230,7 +230,7 @@ export default function AdminApplicationReviewPage() {
           <Card>
             <h2 className="text-headline-md text-on-background">Internal Admin Notes</h2>
             {a.admin_notes && (
-              <p className="mt-2 whitespace-pre-line rounded-md bg-surface-container-low p-3 text-body-md text-on-surface-variant">
+              <p className="bg-surface-container-low text-body-md text-on-surface-variant mt-2 rounded-md p-3 whitespace-pre-line">
                 {a.admin_notes}
               </p>
             )}

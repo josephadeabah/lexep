@@ -1,32 +1,25 @@
-import type { Metadata } from "next";
-import { Hanken_Grotesk, Inter } from "next/font/google";
 // @ts-ignore — Next.js processes this global stylesheet at build time.
 import "./globals.css";
 import { OfflineProvider } from "@/components/OfflineProvider";
-
-const hanken = Hanken_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-hanken",
-  weight: ["500", "600", "700"],
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["400", "500", "600"],
-});
+import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
-  title: "Lexep — Empowering African Youth",
+  title: "Lexep — Bridge the gap. Build the future.",
   description:
-    "Lexep connects African youth with mentors, internships, and community-funded grants.",
-  manifest: "/manifest.json",
+    "Lexep connects Ghanaian youth with paid internships, practical mentorship, and community-funded grants.",
+  generator: "Next.js",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#fbf9f8",
+  userScalable: true,
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${hanken.variable} ${inter.variable}`}>
-      <body>
+    <html lang="en" className="bg-[#fbf9f8]">
+      <body className="antialiased">
         <OfflineProvider />
         {children}
       </body>

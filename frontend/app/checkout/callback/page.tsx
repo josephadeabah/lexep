@@ -51,11 +51,11 @@ function CheckoutCallbackContent() {
 
   if (status === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-surface">
+      <div className="bg-surface flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <Loader2 className="mx-auto h-12 w-12 animate-spin text-primary" />
-          <h1 className="mt-4 text-headline-md text-on-background">Verifying payment...</h1>
-          <p className="mt-2 text-body-md text-on-surface-variant">
+          <Loader2 className="text-primary mx-auto h-12 w-12 animate-spin" />
+          <h1 className="text-headline-md text-on-background mt-4">Verifying payment...</h1>
+          <p className="text-body-md text-on-surface-variant mt-2">
             Please wait while we confirm your payment.
           </p>
         </div>
@@ -65,12 +65,12 @@ function CheckoutCallbackContent() {
 
   if (status === "success") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-surface">
+      <div className="bg-surface flex min-h-screen items-center justify-center">
         <div className="text-center">
           <CheckCircle className="mx-auto h-16 w-16 text-green-500" />
-          <h1 className="mt-4 text-headline-lg text-on-background">Payment Successful!</h1>
-          <p className="mt-2 text-body-md text-on-surface-variant">{message}</p>
-          <p className="mt-4 text-label-sm text-on-surface-variant">
+          <h1 className="text-headline-lg text-on-background mt-4">Payment Successful!</h1>
+          <p className="text-body-md text-on-surface-variant mt-2">{message}</p>
+          <p className="text-label-sm text-on-surface-variant mt-4">
             Redirecting to success page...
           </p>
         </div>
@@ -79,14 +79,14 @@ function CheckoutCallbackContent() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface">
+    <div className="bg-surface flex min-h-screen items-center justify-center">
       <div className="text-center">
         <XCircle className="mx-auto h-16 w-16 text-red-500" />
-        <h1 className="mt-4 text-headline-lg text-on-background">Payment Failed</h1>
-        <p className="mt-2 text-body-md text-on-surface-variant">{message}</p>
+        <h1 className="text-headline-lg text-on-background mt-4">Payment Failed</h1>
+        <p className="text-body-md text-on-surface-variant mt-2">{message}</p>
         <button
           onClick={() => router.push("/upgrade")}
-          className="mt-6 rounded-md bg-primary px-6 py-3 text-label-md text-on-primary hover:bg-primary-container"
+          className="bg-primary text-label-md text-on-primary hover:bg-primary-container mt-6 rounded-md px-6 py-3"
         >
           Try Again
         </button>
@@ -99,7 +99,7 @@ export default function CheckoutCallback() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center text-body-md text-on-surface-variant">
+        <div className="text-body-md text-on-surface-variant flex min-h-screen items-center justify-center">
           Loading…
         </div>
       }

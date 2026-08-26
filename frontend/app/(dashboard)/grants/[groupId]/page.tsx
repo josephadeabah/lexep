@@ -46,17 +46,17 @@ export default function GrantGroupDetailPage() {
   if (!g) return <p className="text-body-md text-error">Group not found.</p>;
 
   return (
-    <div className="grid gap-md lg:grid-cols-[1fr_320px]">
-      <div className="flex flex-col gap-md">
+    <div className="gap-md grid lg:grid-cols-[1fr_320px]">
+      <div className="gap-md flex flex-col">
         <Card>
-          <span className="flex h-12 w-12 items-center justify-center rounded-md bg-primary-fixed">
-            <GraduationCap className="h-6 w-6 text-on-primary-fixed-variant" />
+          <span className="bg-primary-fixed flex h-12 w-12 items-center justify-center rounded-md">
+            <GraduationCap className="text-on-primary-fixed-variant h-6 w-6" />
           </span>
-          <h1 className="mt-4 text-headline-lg text-on-background">{g.name}</h1>
-          <p className="mt-1 text-body-md text-on-surface-variant">{g.tagline}</p>
-          <p className="mt-4 text-body-md text-on-surface-variant">{g.description}</p>
+          <h1 className="text-headline-lg text-on-background mt-4">{g.name}</h1>
+          <p className="text-body-md text-on-surface-variant mt-1">{g.tagline}</p>
+          <p className="text-body-md text-on-surface-variant mt-4">{g.description}</p>
 
-          <div className="mt-md rounded-md bg-surface-container-low p-md">
+          <div className="mt-md bg-surface-container-low p-md rounded-md">
             <div className="flex items-baseline justify-between">
               <p className="text-headline-md text-on-background">
                 {formatCurrency(g.raised_amount)}
@@ -96,7 +96,7 @@ export default function GrantGroupDetailPage() {
               contributors.data.map((c, i) => (
                 <li key={c.id} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container-high text-label-sm">
+                    <span className="bg-surface-container-high text-label-sm flex h-8 w-8 items-center justify-center rounded-full">
                       {i + 1}
                     </span>
                     <div>

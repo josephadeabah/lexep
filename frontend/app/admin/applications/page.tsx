@@ -26,43 +26,43 @@ export default function MentorApplicationQueuePage() {
   );
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="gap-lg flex flex-col">
       <div>
         <h1 className="text-headline-lg text-on-background">Mentor Application Queue</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Review and manage incoming mentor requests.
         </p>
       </div>
 
-      <div className="grid gap-md sm:grid-cols-3">
+      <div className="gap-md grid sm:grid-cols-3">
         <Card>
-          <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
-            <ClipboardList className="h-4 w-4 text-primary" /> TOTAL PENDING
+          <div className="text-label-sm text-on-surface-variant flex items-center gap-2">
+            <ClipboardList className="text-primary h-4 w-4" /> TOTAL PENDING
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {stats.data?.total_pending ?? "—"}
           </p>
         </Card>
         <Card>
-          <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
-            <Clock className="h-4 w-4 text-primary" /> AVG. REVIEW TIME
+          <div className="text-label-sm text-on-surface-variant flex items-center gap-2">
+            <Clock className="text-primary h-4 w-4" /> AVG. REVIEW TIME
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {stats.data?.avg_review_days ?? "—"} <span className="text-headline-md">days</span>
           </p>
         </Card>
         <Card>
-          <div className="flex items-center gap-2 text-label-sm text-on-surface-variant">
-            <CheckCircle2 className="h-4 w-4 text-primary" /> NEW TODAY
+          <div className="text-label-sm text-on-surface-variant flex items-center gap-2">
+            <CheckCircle2 className="text-primary h-4 w-4" /> NEW TODAY
           </div>
           <p
-            className="mt-3 text-display-lg text-on-background"
+            className="text-display-lg text-on-background mt-3"
             style={{ fontSize: 40, lineHeight: "48px" }}
           >
             {stats.data?.new_today ?? "—"}
@@ -71,16 +71,16 @@ export default function MentorApplicationQueuePage() {
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="flex items-center gap-2 border-b border-outline-variant/40 p-md">
+        <div className="border-outline-variant/40 p-md flex items-center gap-2 border-b">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
               className={cn(
-                "rounded-md px-4 py-2 text-label-md transition",
+                "text-label-md rounded-md px-4 py-2 transition",
                 tab === t.id
                   ? "bg-inverse-surface text-inverse-on-surface"
-                  : "border border-outline-variant text-on-surface-variant hover:bg-surface-container-low"
+                  : "border-outline-variant text-on-surface-variant hover:bg-surface-container-low border"
               )}
             >
               {t.label}
@@ -102,7 +102,7 @@ export default function MentorApplicationQueuePage() {
                 <th className="px-md py-3 text-right font-normal">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/40">
+            <tbody className="divide-outline-variant/40 divide-y">
               {applications.data.map((row) => (
                 <tr key={row.user_id}>
                   <td className="px-md py-4">
@@ -114,10 +114,10 @@ export default function MentorApplicationQueuePage() {
                       </div>
                     </div>
                   </td>
-                  <td className="px-md py-4 text-body-md text-on-surface">
+                  <td className="px-md text-body-md text-on-surface py-4">
                     {row.professional_title}
                   </td>
-                  <td className="px-md py-4 text-body-md text-on-surface">
+                  <td className="px-md text-body-md text-on-surface py-4">
                     {row.application_date ? formatDate(row.application_date) : "—"}
                   </td>
                   <td className="px-md py-4">

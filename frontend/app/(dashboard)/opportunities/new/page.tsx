@@ -25,7 +25,7 @@ function StepHeader({ step }: { step: number }) {
             <div className="flex flex-col items-center gap-2">
               <span
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full text-label-md",
+                  "text-label-md flex h-8 w-8 items-center justify-center rounded-full",
                   done || active
                     ? "bg-primary-container text-on-primary-container"
                     : "bg-surface-container-high text-on-surface-variant"
@@ -102,7 +102,7 @@ export default function NewOpportunityPage() {
     <div className="mx-auto max-w-2xl">
       <div className="mb-lg text-center">
         <h1 className="text-headline-lg text-on-background">Post an Internship</h1>
-        <p className="mt-1 text-body-md text-on-surface-variant">
+        <p className="text-body-md text-on-surface-variant mt-1">
           Step {step} of 3:{" "}
           {step === 1 ? "Role Basics" : step === 2 ? "Role Details" : "Requirements & Review"}
         </p>
@@ -112,7 +112,7 @@ export default function NewOpportunityPage() {
 
       <div className="card-level1 p-md">
         {step === 1 && (
-          <div className="flex flex-col gap-md">
+          <div className="gap-md flex flex-col">
             <Input
               label="Internship Title"
               placeholder="e.g. Software Engineering Intern"
@@ -127,14 +127,14 @@ export default function NewOpportunityPage() {
               <option>Marketing</option>
             </Select>
             <div>
-              <p className="mb-1.5 text-label-md text-on-surface">Work Mode</p>
+              <p className="text-label-md text-on-surface mb-1.5">Work Mode</p>
               <div className="grid grid-cols-3 gap-3">
                 {(["remote", "hybrid", "onsite"] as const).map((mode) => (
                   <button
                     key={mode}
                     onClick={() => setWorkMode(mode)}
                     className={cn(
-                      "h-11 rounded-md border text-label-md capitalize transition",
+                      "text-label-md h-11 rounded-md border capitalize transition",
                       workMode === mode
                         ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
                         : "border-outline-variant text-on-surface"
@@ -155,7 +155,7 @@ export default function NewOpportunityPage() {
         )}
 
         {step === 2 && (
-          <div className="flex flex-col gap-md">
+          <div className="gap-md flex flex-col">
             <Select label="Duration" value={duration} onChange={(e) => setDuration(e.target.value)}>
               <option value="">Select duration</option>
               <option>3 Months</option>
@@ -164,7 +164,7 @@ export default function NewOpportunityPage() {
               <option>12 Months</option>
             </Select>
 
-            <div className="rounded-md bg-surface-container-low p-md">
+            <div className="bg-surface-container-low p-md rounded-md">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-label-md text-on-background">Stipend Provided</p>
@@ -177,8 +177,8 @@ export default function NewOpportunityPage() {
                   className={cn(
                     "flex h-6 w-11 items-center rounded-full px-0.5 transition",
                     stipendProvided
-                      ? "justify-end bg-primary-container"
-                      : "justify-start bg-outline-variant"
+                      ? "bg-primary-container justify-end"
+                      : "bg-outline-variant justify-start"
                   )}
                 >
                   <span className="h-5 w-5 rounded-full bg-white shadow" />
@@ -207,17 +207,17 @@ export default function NewOpportunityPage() {
         )}
 
         {step === 3 && (
-          <div className="flex flex-col gap-lg">
+          <div className="gap-lg flex flex-col">
             <div>
               <h2 className="text-headline-md text-on-background">Final Requirements</h2>
               <div className="mt-3">
                 <p className="text-label-md text-on-surface">Required Skills (Tags)</p>
                 <p className="text-label-sm text-on-surface-variant">Press enter to add skills.</p>
-                <div className="mt-2 flex flex-wrap items-center gap-2 rounded-md border border-outline-variant p-3">
+                <div className="border-outline-variant mt-2 flex flex-wrap items-center gap-2 rounded-md border p-3">
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className="flex items-center gap-1 rounded-full bg-surface-container-high px-3 py-1 text-label-sm"
+                      className="bg-surface-container-high text-label-sm flex items-center gap-1 rounded-full px-3 py-1"
                     >
                       {skill}
                       <button onClick={() => setSkills((prev) => prev.filter((s) => s !== skill))}>
@@ -235,7 +235,7 @@ export default function NewOpportunityPage() {
                       }
                     }}
                     placeholder="Add a skill…"
-                    className="min-w-[120px] flex-1 bg-transparent text-body-md outline-none"
+                    className="text-body-md min-w-[120px] flex-1 bg-transparent outline-none"
                   />
                 </div>
               </div>
@@ -249,7 +249,7 @@ export default function NewOpportunityPage() {
               </div>
             </div>
 
-            <div className="rounded-md bg-surface-container-low p-md">
+            <div className="bg-surface-container-low p-md rounded-md">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-headline-md text-on-background">Review Details</h3>
                 <button
@@ -259,7 +259,7 @@ export default function NewOpportunityPage() {
                   Edit
                 </button>
               </div>
-              <div className="grid gap-4 text-body-md text-on-surface sm:grid-cols-2">
+              <div className="text-body-md text-on-surface grid gap-4 sm:grid-cols-2">
                 <div>
                   <p className="text-label-sm text-on-surface-variant">Role Title</p>
                   <p>{title || "—"}</p>
@@ -293,7 +293,7 @@ export default function NewOpportunityPage() {
           </div>
         )}
 
-        <div className="mt-lg flex items-center justify-between border-t border-outline-variant/40 pt-md">
+        <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
           {step > 1 ? (
             <Button variant="ghost" onClick={() => setStep((s) => s - 1)}>
               Back
