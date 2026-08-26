@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
 type Leaf = { node: ReactNode; dir: 1 | -1 } | null;

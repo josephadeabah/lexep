@@ -1,6 +1,47 @@
-"use client";
+
+// REMOVE this line: 
+// import { createFileRoute } from "@tanstack/react-router";
 
 import { Flipbook } from "@/components/layout/Flipbook";
+
+// REMOVE this entire block:
+// export const Route = createFileRoute()({
+//   head: () => ({
+//     meta: [
+//       { title: "Lexep — Bridge the Gap. Build the Future." },
+//       {
+//         name: "description",
+//         content:
+//           "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants — connected on one platform.",
+//       },
+//       { property: "og:title", content: "Lexep — Bridge the Gap. Build the Future." },
+//       {
+//         property: "og:description",
+//         content:
+//           "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants.",
+//       },
+//       { property: "og:type", content: "website" },
+//       { name: "twitter:card", content: "summary_large_image" },
+//     ],
+//   }),
+//   component: Index,
+// });
+
+// ADD this for SEO metadata (Next.js format):
+export const metadata = {
+  title: "Lexep — Bridge the Gap. Build the Future.",
+  description: "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants — connected on one platform.",
+  openGraph: {
+    title: "Lexep — Bridge the Gap. Build the Future.",
+    description: "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lexep — Bridge the Gap. Build the Future.",
+    description: "A field book on Ghana's youth opportunity: paid internships, professional mentorship, and community-funded grants.",
+  },
+};
 
 const plates = [
   {
@@ -436,6 +477,7 @@ function Colophon() {
   );
 }
 
+// CHANGE this line - add "export default" before "function Index()"
 export default function Index() {
   const pages = [
     <Cover key="cover" />,
