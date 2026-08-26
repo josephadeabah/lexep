@@ -30,11 +30,11 @@ export function Sidebar({
   const pathname = usePathname();
 
   return (
-    <aside className="w-sidebar px-md py-lg text-inverse-on-surface hidden h-screen flex-shrink-0 flex-col justify-between bg-[#1a1a1a] md:flex">
+    <aside className="w-sidebar px-md py-lg text-inverse-on-surface hidden h-screen shrink-0 flex-col justify-between bg-[#1a1a1a] md:flex">
       <div className="gap-lg flex flex-col">
         <div>
           <Link href="/dashboard" className="flex items-center gap-2">
-            <Logo variant="dark" size={24} showWordmark={false} />
+            <Logo variant="dark" size={64} showWordmark={false} />
             <span className="text-headline-md text-primary-fixed-dim">{brand}</span>
           </Link>
           <p className="text-label-sm mt-1 text-[#a8a6a5]">{tagline}</p>
