@@ -1,7 +1,9 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 import { ArrowRight, BookOpen, ChevronLeft, ChevronRight, CircleCheck, HandCoins, Menu, Sparkles, Users, X } from 'lucide-react'
+import { EmailSignup } from '@/components/email-signup'
 import { Logo } from '@/components/ui/Logo'
 
 const pages = [
@@ -12,27 +14,20 @@ const pages = [
 ]
 
 const pathways = [
-  { icon: Sparkles, label: 'Internships', title: 'Build proof, not just promises.', copy: 'Find paid opportunities with companies that are ready to invest in local talent.' },
-  { icon: Users, label: 'Mentorship', title: 'Borrow a little perspective.', copy: 'Get practical guidance from experienced professionals who have walked the path.' },
-  { icon: HandCoins, label: 'Grant groups', title: 'Let your community move you forward.', copy: 'Discover organizer-led funding for the tools and skills your next chapter needs.' },
+  { icon: Sparkles, image: '/images/internship.jpg', label: 'Internships', title: 'Build proof, not just promises.', copy: 'Find paid opportunities with companies that are ready to invest in local talent.' },
+  { icon: Users, image: '/images/mentorship.jpg', label: 'Mentorship', title: 'Borrow a little perspective.', copy: 'Get practical guidance from experienced professionals who have walked the path.' },
+  { icon: HandCoins, image: '/images/grants.jpg', label: 'Grant groups', title: 'Let your community move you forward.', copy: 'Discover organizer-led funding for the tools and skills your next chapter needs.' },
 ]
 
 export default function Page() {
   const [page, setPage] = useState(0)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
   const current = pages[page]
-
-  function subscribe(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (email.trim()) setSubmitted(true)
-  }
 
   return (
     <main className="lexep-site">
       <header className="site-header">
-        <a href="#top" className="wordmark" aria-label="Lexep home"><Logo size={64} /></a>
+        <a href="#top" className="wordmark" aria-label="Lexep home"><Logo showWordmark /></a>
         <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Main navigation">
           <a href="#why" onClick={() => setMenuOpen(false)}>Why Lexep</a>
           <a href="#pathways" onClick={() => setMenuOpen(false)}>Pathways</a>
@@ -64,12 +59,12 @@ export default function Page() {
 
       <section className="statement-section" id="why"><div className="section-kicker">The case for a new chapter</div><div className="statement-grid"><h2>Talent is everywhere.<br /><span>Access is not.</span></h2><div><p className="large-copy">Every year, more than 300,000 graduates enter Ghana’s job market. Too many leave it without the experience, guidance, or resources to get started.</p><p>Lexep is the bridge between what young people can become and the opportunities that help them get there.</p></div></div></section>
 
-      <section className="pathways-section" id="pathways"><div className="section-heading"><div><div className="section-kicker">Three ways forward</div><h2>Your next chapter<br />starts here.</h2></div><p>Choose the path that fits your ambition. Or choose all three.</p></div><div className="pathway-grid">{pathways.map(({ icon: Icon, label, title, copy }) => <article className="pathway" key={label}><div className="pathway-icon"><Icon size={21} /></div><p className="pathway-label">{label}</p><h3>{title}</h3><p>{copy}</p><a href="#join" aria-label={`Explore ${label}`}>Explore <ArrowRight size={15} /></a></article>)}</div></section>
+      <section className="pathways-section" id="pathways"><div className="section-heading"><div><div className="section-kicker">Three ways forward</div><h2>Your next chapter<br />starts here.</h2></div><p>Choose the path that fits your ambition. Or choose all three.</p></div><div className="pathway-grid">{pathways.map(({ icon: Icon, image, label, title, copy }) => <article className="pathway" key={label}><Image className="pathway-image" src={image} alt={`${label} pathway`} width={1600} height={1000} /><div className="pathway-body"><div className="pathway-icon"><Icon size={21} /></div><p className="pathway-label">{label}</p><h3>{title}</h3><p>{copy}</p><a href="#join" aria-label={`Explore ${label}`}>Explore <ArrowRight size={15} /></a></div></article>)}</div></section>
 
-      <section className="grant-section" id="grants"><div className="grant-card"><div className="grant-tag">A note on grants</div><h2>Lexep is the trust layer,<br /><em>not the money layer.</em></h2><p>Organizers create grant groups, receive contributions directly through MoMo or bank transfer, and distribute funds to beneficiaries. Lexep keeps the story visible: progress, updates, impact.</p><div className="grant-points"><span><CircleCheck size={17} /> Direct organizer distribution</span><span><CircleCheck size={17} /> Public contribution logs</span><span><CircleCheck size={17} /> Impact updates for supporters</span></div><a className="button button-dark" href="#join">Start a grant group <ArrowRight size={17} /></a></div><div className="grant-aside"><span className="aside-mark">“</span><p>When communities organize around potential, a little support can travel a long way.</p><span className="aside-caption">— The Lexep principle</span></div></section>
+      <section className="grant-section" id="grants"><div className="grant-card"><div className="grant-tag">A note on grants</div><h2>Lexep is the trust layer,<br /><em>not the money layer.</em></h2><p>Organizers create grant groups, receive contributions directly through MoMo or bank transfer, and distribute funds to beneficiaries. Lexep keeps the story visible: progress, updates, impact.</p><div className="grant-points"><span><CircleCheck size={17} /> Direct organizer distribution</span><span><CircleCheck size={17} /> Public contribution logs</span><span><CircleCheck size={17} /> Impact updates for supporters</span></div><a className="button button-dark" href="#join">Start a grant group <ArrowRight size={17} /></a></div><div className="grant-aside"><Image className="grant-image" src="/images/professional.jpg" alt="A Ghanaian professional ready for the next chapter" width={1200} height={1600} /><span className="aside-mark">“</span><p>When communities organize around potential, a little support can travel a long way.</p><span className="aside-caption">— The Lexep principle</span></div></section>
 
-      <section className="join-section" id="join"><div className="join-copy"><div className="section-kicker">The next page is yours</div><h2>Ready to write<br /><em>what’s next?</em></h2><p>Join the early community of learners, mentors, employers, and organizers building Ghana’s future of work.</p></div><form className="signup-form" onSubmit={subscribe}><label htmlFor="email">Get the first edition</label><div className="input-row"><input id="email" type="email" placeholder="Your email address" value={email} onChange={(event) => setEmail(event.target.value)} required /><button className="button button-primary" type="submit">{submitted ? 'You’re on the list' : 'Join Lexep'} <ArrowRight size={16} /></button></div><small>{submitted ? 'We’ll be in touch when the doors open.' : 'No noise. Just meaningful updates.'}</small></form></section>
-      <footer className="site-footer"><a href="#top" className="wordmark"><Logo size={64} /></a><span>Bridge the gap. Build the future.</span><span>© 2026 Lexep, Ghana</span></footer>
+      <section className="join-section" id="join"><div className="join-copy"><div className="section-kicker">The next page is yours</div><h2>Ready to write<br /><em>what’s next?</em></h2><p>Join the early community of learners, mentors, employers, and organizers building Ghana’s future of work.</p></div><EmailSignup /></section>
+      <footer className="site-footer"><a href="#top" className="wordmark"><Logo showWordmark /></a><span>Bridge the gap. Build the future.</span><nav className="footer-links" aria-label="Footer navigation"><a href="#terms">Terms</a><a href="#privacy">Privacy</a><a href="#careers">Careers</a></nav><span>© 2026 Lexep, Ghana</span></footer>
     </main>
   )
 }
