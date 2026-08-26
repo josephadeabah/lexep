@@ -108,12 +108,12 @@
 
 @layer base {
   * {
-    /* @apply border-outline-variant/30; */
+    @apply border-outline-variant/30;
     border-color: var(--color-border);
   }
 
   body {
-    /* @apply bg-surface font-body text-on-surface antialiased; */
+    @apply bg-surface font-body text-on-surface antialiased;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -126,7 +126,7 @@
   h4,
   h5,
   h6 {
-    /* @apply font-display; */
+    @apply font-display;
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }

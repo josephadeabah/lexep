@@ -1,4 +1,3 @@
-
 import { Flipbook } from "@/components/layout/Flipbook";
 import { Logo } from "@/components/ui/Logo";
 
@@ -436,7 +435,8 @@ function Colophon() {
   );
 }
 
-function Index() {
+// ✅ The fix: Change from "function Index()" to "export default function Index()"
+export default function Index() {
   const pages = [
     <Cover key="cover" />,
     <Contents key="contents" />,
