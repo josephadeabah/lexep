@@ -9,6 +9,6 @@
 .fill {
   height: 4px;
   border-radius: 9999px;
-  background: #d4af37;;
+  background: #d4af37; /* Direct gold hex - no CSS variable */
   transition: width 300ms ease;
 }
