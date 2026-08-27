@@ -1,54 +1,109 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+
 import Link from "next/link";
-import { Mail } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+
+import { ArrowLeft, ArrowRight, Check, Mail } from "lucide-react";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
 
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    // Replace this with the real password reset API call later
+    setSent(true);
+  }
+
   return (
-    <div className="bg-surface px-gutter py-xl flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-md">
-        <div className="card-level1 p-md text-center">
-          <h1 className="text-headline-lg text-on-background">Reset your password</h1>
-          <p className="text-body-md text-on-surface-variant mt-2">
-            Enter your email and we&apos;ll send you a link to reset your password.
-          </p>
-          {sent ? (
-            <p className="mt-md text-body-md text-primary">Check your inbox for a reset link.</p>
-          ) : (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSent(true);
-              }}
-              className="mt-md gap-md flex flex-col text-left"
-            >
-              <Input
-                label="Email"
-                type="email"
-                icon={<Mail className="h-4 w-4" />}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <Button type="submit" className="w-full">
-                Send reset link
-              </Button>
-            </form>
-          )}
+    <main className="auth-shell auth-shell-simple">
+      <section className="auth-panel auth-panel-full">
+        <div className="auth-card auth-card-reset">
           <Link
             href="/sign-in"
-            className="mt-md text-label-md text-primary inline-block hover:underline"
+            className="auth-back"
+            aria-label="Back to sign in"
           >
+            <ArrowLeft size={16} />
             Back to sign in
           </Link>
+
+          <div className="auth-reset-header">
+            <div className="auth-reset-icon">
+              <Mail size={22} />
+            </div>
+
+            <p className="auth-kicker">Password recovery</p>
+
+            <h1>Reset your password</h1>
+
+            <p className="auth-intro">
+              Enter your email address and we&apos;ll send you a link to reset
+              your password.
+            </p>
+          </div>
+
+          {sent ? (
+            <div className="auth-success">
+              <span>
+                <Check size={20} />
+              </span>
+
+              <strong>Check your inbox.</strong>
+
+              <p>
+                We&apos;ve sent password reset instructions to{" "}
+                <strong>{email}</strong>.
+              </p>
+
+              <Link
+                href="/sign-in"
+                className="button button-primary auth-submit"
+              >
+                Back to sign in
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          ) : (
+            <form className="auth-form" onSubmit={handleSubmit}>
+              <label>
+                Email address
+
+                <span className="auth-input-icon">
+                  <Mail size={17} />
+
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                </span>
+              </label>
+
+              <button
+                className="button button-primary auth-submit"
+                type="submit"
+              >
+                Send reset link
+                <ArrowRight size={16} />
+              </button>
+            </form>
+          )}
+
+          {!sent && (
+            <p className="auth-switch">
+              Remember your password?{" "}
+              <Link href="/sign-in">Sign in</Link>
+            </p>
+          )}
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
