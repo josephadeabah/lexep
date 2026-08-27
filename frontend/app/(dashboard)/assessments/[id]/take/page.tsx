@@ -36,32 +36,38 @@ export default function TakeAssessmentPage() {
     }
   }
 
-  if (progress.isLoading) return <p className="text-body-md text-on-surface-variant">Loading…</p>;
+  if (progress.isLoading) return <p className="text-base text-[#6d6a66]">Loading…</p>;
   const p = progress.data;
   if (!p || !p.question)
-    return <p className="text-body-md text-on-surface-variant">No questions available.</p>;
+    return <p className="text-base text-[#6d6a66]">No questions available.</p>;
 
   const percent = (p.current_index / p.total_questions) * 100;
 
   return (
-    <div className="bg-surface fixed inset-0 z-40 flex flex-col">
-      <div className="border-outline-variant/40 px-gutter flex items-center justify-between border-b py-4">
-        <span className="text-label-md text-on-background flex items-center gap-2">
-          <span className="text-headline-md text-primary">Lexep</span>
-          <span className="text-on-surface-variant">| {p.assessment_title}</span>
+    <div className="fixed inset-0 z-40 flex flex-col bg-[#fbf9f8]">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-[#e0d8c9] bg-white px-6 py-4">
+        <span className="flex items-center gap-2">
+          <span className="text-2xl font-bold text-[#735c00] font-['Hanken_Grotesk'] tracking-[-0.04em]">
+            Lexep
+          </span>
+          <span className="text-sm text-[#6d6a66]">| {p.assessment_title}</span>
         </span>
         <button
           onClick={() => router.push("/assessments")}
-          className="text-label-md text-on-surface-variant hover:text-primary flex items-center gap-1"
+          className="flex items-center gap-1 text-sm text-[#6d6a66] hover:text-[#735c00]"
         >
           <X className="h-4 w-4" /> Exit Quiz
         </button>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        <aside className="border-outline-variant/40 p-md hidden w-64 flex-shrink-0 overflow-y-auto border-r md:block">
-          <p className="text-headline-md text-on-background">Question Map</p>
-          <div className="text-label-sm text-on-surface-variant mt-2 flex items-center justify-between">
+        {/* Question Map Sidebar */}
+        <aside className="hidden w-72 flex-shrink-0 overflow-y-auto border-r border-[#e0d8c9] bg-white p-6 md:block">
+          <p className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+            Question Map
+          </p>
+          <div className="mt-2 flex items-center justify-between text-sm text-[#6d6a66]">
             <span>Progress</span>
             <span>
               {p.current_index + 1}/{p.total_questions}
@@ -69,7 +75,7 @@ export default function TakeAssessmentPage() {
           </div>
           <ProgressBar value={percent} className="mt-2" />
 
-          <ul className="mt-md flex flex-col gap-1">
+          <ul className="mt-6 flex flex-col gap-2">
             {Array.from({ length: p.total_questions }).map((_, i) => {
               const done = i < p.current_index;
               const current = i === p.current_index;
@@ -78,49 +84,52 @@ export default function TakeAssessmentPage() {
                   key={i}
                   className={cn(
                     "flex items-center gap-3 rounded-md px-3 py-2",
-                    current && "bg-surface-container-low"
+                    current && "bg-[#f5f3f3]"
                   )}
                 >
                   <span
                     className={cn(
-                      "text-label-sm flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full",
-                      done && "bg-primary-container text-on-primary-container",
-                      current && !done && "border-primary-container text-primary border-2",
-                      !done && !current && "border-outline-variant text-on-surface-variant border"
+                      "flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-xs font-semibold",
+                      done && "bg-[#d4af37] text-[#1b1c1c]",
+                      current && !done && "border-2 border-[#d4af37] text-[#735c00]",
+                      !done && !current && "border border-[#e0d8c9] text-[#6d6a66]"
                     )}
                   >
                     {done ? <Check className="h-3.5 w-3.5" /> : i + 1}
                   </span>
-                  <span className="text-label-sm text-on-surface">Question {i + 1}</span>
+                  <span className="text-sm text-[#1b1c1c]">Question {i + 1}</span>
                 </li>
               );
             })}
           </ul>
         </aside>
 
-        <main className="px-gutter py-lg flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-2xl">
-            <p className="text-label-sm text-primary tracking-wide uppercase">
+        {/* Main Content */}
+        <main className="flex-1 overflow-y-auto px-8 py-10">
+          <div className="mx-auto max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-wide text-[#735c00]">
               {p.assessment_title}
             </p>
-            <h1 className="text-headline-lg text-on-background mt-2">{p.question.prompt}</h1>
+            <h1 className="mt-2 text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em] leading-[1.05]">
+              {p.question.prompt}
+            </h1>
 
             {p.question.image_url && (
-              <div className="mt-md border-outline-variant overflow-hidden rounded-lg border">
+              <div className="mt-6 overflow-hidden rounded-lg border border-[#e0d8c9] bg-white">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.question.image_url} alt="" className="w-full" />
               </div>
             )}
 
-            <div className="mt-lg flex flex-col gap-3">
+            <div className="mt-8 flex flex-col gap-4">
               {p.question.options.map((option) => (
                 <label
                   key={option.id}
                   className={cn(
-                    "flex cursor-pointer items-center gap-3 rounded-md border p-4 transition",
+                    "flex cursor-pointer items-center gap-4 rounded-lg border p-5 transition",
                     selectedOption === option.id
-                      ? "border-primary-container bg-surface-container-low"
-                      : "border-outline-variant"
+                      ? "border-[#d4af37] bg-[#fffdf8]"
+                      : "border-[#e0d8c9] bg-white hover:border-[#d4af37]/50"
                   )}
                 >
                   <Radio
@@ -128,15 +137,15 @@ export default function TakeAssessmentPage() {
                     checked={selectedOption === option.id}
                     onChange={() => setSelectedOption(option.id)}
                   />
-                  <span className="bg-surface-container-high text-label-sm flex h-6 w-6 items-center justify-center rounded uppercase">
+                  <span className="flex h-7 w-7 items-center justify-center rounded bg-[#f0f0f0] text-xs font-bold uppercase text-[#6d6a66]">
                     {option.id}
                   </span>
-                  <span className="text-body-md text-on-surface">{option.text}</span>
+                  <span className="text-base text-[#1b1c1c]">{option.text}</span>
                 </label>
               ))}
             </div>
 
-            <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
+            <div className="mt-8 flex items-center justify-between border-t border-[#e0d8c9]/40 pt-6">
               <Button variant="ghost" onClick={handleNext} disabled={isSubmitting}>
                 Skip Question
               </Button>

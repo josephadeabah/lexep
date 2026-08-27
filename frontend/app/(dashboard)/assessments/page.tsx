@@ -23,60 +23,84 @@ export default function AssessmentHubPage() {
   }
 
   return (
-    <div className="gap-lg flex flex-col">
+    <div className="flex flex-col gap-8">
+      {/* Header */}
       <div>
-        <h1 className="text-headline-lg text-on-background">Skill Assessment Hub</h1>
-        <p className="text-body-md text-on-surface-variant mt-1">
+        <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+          Skill Assessment Hub
+        </h1>
+        <p className="mt-2 text-base text-[#6d6a66]">
           Validate your expertise across domains and unlock advanced learning paths.
         </p>
       </div>
 
+      {/* Featured Assessment */}
       {featured && (
-        <Card className="gap-md grid sm:grid-cols-2">
-          <div>
+        <Card className="grid gap-6 sm:grid-cols-2">
+          <div className="p-6">
             <div className="flex gap-2">
               <Badge tone="primary">
                 <Star className="mr-1 h-3 w-3" /> Featured
               </Badge>
               {featured.level && <Badge>{featured.level}</Badge>}
             </div>
-            <h2 className="text-headline-lg text-on-background mt-3">{featured.title}</h2>
-            <p className="text-body-md text-on-surface-variant mt-2">{featured.description}</p>
-            <p className="text-label-sm text-on-surface-variant mt-2">
+            <h2 className="mt-4 text-3xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.04em]">
+              {featured.title}
+            </h2>
+            <p className="mt-2 text-base text-[#6d6a66]">{featured.description}</p>
+            <p className="mt-2 text-sm text-[#6d6a66]">
               {featured.question_count} questions · {featured.duration_minutes} minutes
             </p>
-            <Button className="mt-4" onClick={() => start(featured.id)}>
+            <Button className="mt-6" onClick={() => start(featured.id)}>
               Start Assessment
             </Button>
           </div>
-          <div className="bg-surface-container-high hidden items-center justify-center rounded-lg sm:flex">
-            <span className="text-label-sm text-on-surface-variant">{featured.category}</span>
+          <div className="hidden items-center justify-center rounded-lg bg-[#f5f3f3] sm:flex">
+            <span className="text-sm text-[#6d6a66]">{featured.category}</span>
           </div>
         </Card>
       )}
 
+      {/* In Progress */}
       <div>
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-headline-md text-on-background">In Progress</h2>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+            In Progress
+          </h2>
+          <a href="#" className="text-sm font-semibold text-[#735c00]">
+            View All
+          </a>
         </div>
         {attempts.isLoading ? (
-          <p className="text-body-md text-on-surface-variant">Loading…</p>
+          <p className="text-base text-[#6d6a66]">Loading…</p>
         ) : inProgress.length > 0 ? (
-          <div className="gap-md grid sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {inProgress.map((attempt) => {
               const percent = attempt.total_questions
                 ? Math.round((attempt.current_index / attempt.total_questions) * 100)
                 : 0;
               return (
-                <Card key={attempt.id}>
-                  <p className="text-label-md text-on-background">{attempt.assessment_title}</p>
-                  <div className="text-label-sm text-on-surface-variant mt-3 flex items-center justify-between">
-                    <span>{percent}% Completed</span>
-                    <span>
-                      {attempt.current_index}/{attempt.total_questions} questions
-                    </span>
+                <Card key={attempt.id} className="p-5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-base font-semibold text-[#1b1c1c]">
+                        {attempt.assessment_title}
+                      </p>
+                      <p className="text-sm text-[#6d6a66]">
+                        {attempt.current_index}/{attempt.total_questions} questions
+                      </p>
+                    </div>
+                    <span className="text-2xl">📝</span>
                   </div>
-                  <ProgressBar value={percent} className="mt-2" />
+                  <div className="mt-4">
+                    <div className="flex items-center justify-between text-sm text-[#6d6a66]">
+                      <span>{percent}% Completed</span>
+                      <span>
+                        {percent < 50 ? "25 mins left" : "1.5 hrs left"}
+                      </span>
+                    </div>
+                    <ProgressBar value={percent} className="mt-2" />
+                  </div>
                   <Button
                     variant="secondary"
                     className="mt-4 w-full"
@@ -93,22 +117,27 @@ export default function AssessmentHubPage() {
             })}
           </div>
         ) : (
-          <p className="text-body-md text-on-surface-variant">No assessments in progress.</p>
+          <p className="text-base text-[#6d6a66]">No assessments in progress.</p>
         )}
       </div>
 
+      {/* All Assessments */}
       <div>
-        <h2 className="text-headline-md text-on-background mb-3">All Assessments</h2>
-        <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
+        <h2 className="mb-4 text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+          All Assessments
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {(assessments.data ?? []).map((assessment) => (
-            <Card key={assessment.id}>
+            <Card key={assessment.id} className="p-5">
               <div className="mb-2 flex items-center gap-2">
                 {assessment.level && <Badge>{assessment.level}</Badge>}
-                <span className="text-label-sm text-on-surface-variant">{assessment.category}</span>
+                <span className="text-sm text-[#6d6a66]">{assessment.category}</span>
               </div>
-              <p className="text-headline-md text-on-background">{assessment.title}</p>
-              <p className="text-body-md text-on-surface-variant mt-2">{assessment.description}</p>
-              <p className="text-label-sm text-on-surface-variant mt-2">
+              <p className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+                {assessment.title}
+              </p>
+              <p className="mt-2 text-sm text-[#6d6a66]">{assessment.description}</p>
+              <p className="mt-2 text-sm text-[#6d6a66]">
                 {assessment.question_count} questions · {assessment.duration_minutes} min
               </p>
               <Button variant="ghost" className="mt-4 w-full" onClick={() => start(assessment.id)}>
