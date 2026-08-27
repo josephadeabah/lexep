@@ -9,22 +9,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Gold primary button (matches design system)
         primary: "bg-[#d4af37] text-[#1b1c1c] hover:bg-[#c9a32e] hover:shadow-[0_8px_18px_rgba(62,52,16,0.13)] hover:-translate-y-0.5",
-        
-        // Dark/secondary button
         secondary: "bg-[#1b1c1c] text-white hover:bg-[#2a2b2b] hover:-translate-y-0.5",
-        
-        // Outline button
         outline: "border border-[#d9d3c6] bg-transparent text-[#1b1c1c] hover:bg-[#f5f3f3] hover:border-[#735c00]",
-        
-        // Ghost button
         ghost: "bg-transparent text-[#6d6a66] hover:bg-[#f5f3f3] hover:text-[#1b1c1c]",
-        
-        // Destructive button
         destructive: "bg-[#ba1a1a]/10 text-[#ba1a1a] hover:bg-[#ba1a1a]/20",
-        
-        // Link button
         link: "text-[#735c00] underline-offset-4 hover:underline",
       },
       size: {
@@ -57,7 +46,8 @@ function Button({
   children,
   ...props
 }: ButtonProps) {
-  const classes = cn(buttonVariants({ variant, size, className }));
+  // Fix: Merge className OUTSIDE buttonVariants
+  const classes = cn(buttonVariants({ variant, size }), className);
 
   if (href) {
     return (
