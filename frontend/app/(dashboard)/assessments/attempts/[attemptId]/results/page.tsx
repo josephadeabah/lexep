@@ -27,7 +27,7 @@ export default function AssessmentResultsPage() {
       duration: "12 Hours",
       modules: "4 Modules",
       level: "Intermediate",
-      image: "/images/structural-analysis.jpg",
+      image: "/images/internship.jpg",
     },
     {
       title: "Concrete Design Principles",
@@ -35,7 +35,7 @@ export default function AssessmentResultsPage() {
       duration: "16 Hours",
       modules: "6 Modules",
       level: "Intermediate",
-      image: "/images/concrete-design.jpg",
+      image: "/images/cover-texture.jpg",
     },
     {
       title: "Material Stress Workshop",
