@@ -10,7 +10,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, label, id, children, ...props }, ref) => {
     const selectId = id || label?.toLowerCase().replace(/\s+/g, "-");
     return (
-      <div className="flex flex-col gap-1.5 w-full">
+      <div className="flex w-full flex-col gap-1.5">
         {label && (
           <label htmlFor={selectId} className="text-label-md text-on-surface">
             {label}
@@ -21,15 +21,15 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             id={selectId}
             className={cn(
-              "w-full h-11 appearance-none rounded-md border border-outline-variant bg-surface-container-lowest px-3 pr-9 text-body-md text-on-surface",
-              "focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-primary",
+              "border-outline-variant bg-surface-container-lowest text-body-md text-on-surface h-11 w-full appearance-none rounded-md border px-3 pr-9",
+              "focus:ring-primary-container focus:border-primary focus:ring-2 focus:outline-none",
               className
             )}
             {...props}
           >
             {children}
           </select>
-          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline pointer-events-none" />
+          <ChevronDown className="text-outline pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2" />
         </div>
       </div>
     );

@@ -10,14 +10,14 @@ interface StepperProps {
  *  (onboarding, mentor application, grant application, post-internship). */
 export function Stepper({ currentStep, totalSteps, label }: StepperProps) {
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="flex items-center justify-between text-label-sm text-on-surface-variant">
+    <div className="flex w-full flex-col gap-2">
+      <div className="text-label-sm text-on-surface-variant flex items-center justify-between">
         <span>
           STEP {currentStep} OF {totalSteps}
         </span>
         {label && <span className="text-primary font-label-md">{label}</span>}
       </div>
-      <div className="flex gap-1.5 w-full">
+      <div className="flex w-full gap-1.5">
         {Array.from({ length: totalSteps }).map((_, i) => (
           <div
             key={i}

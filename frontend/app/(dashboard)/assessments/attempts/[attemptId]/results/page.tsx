@@ -35,13 +35,13 @@ export default function AssessmentResultsPage() {
         </Button>
       </div>
 
-      <div className="grid gap-md lg:grid-cols-[1fr_320px]">
+      <div className="gap-md grid lg:grid-cols-[1fr_320px]">
         <Card className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-label-sm uppercase text-on-surface-variant">Final Score</p>
-            <p className="mt-1 text-display-lg text-on-background">{Math.round(r.score)}%</p>
-            <p className="mt-2 text-headline-md text-on-background">{r.mastery_label}</p>
-            <p className="mt-2 max-w-sm text-body-md text-on-surface-variant">
+            <p className="text-label-sm text-on-surface-variant uppercase">Final Score</p>
+            <p className="text-display-lg text-on-background mt-1">{Math.round(r.score)}%</p>
+            <p className="text-headline-md text-on-background mt-2">{r.mastery_label}</p>
+            <p className="text-body-md text-on-surface-variant mt-2 max-w-sm">
               You have demonstrated your understanding across the topics covered in this assessment.
             </p>
             <div className="mt-4 flex gap-2">
@@ -49,8 +49,8 @@ export default function AssessmentResultsPage() {
               <Button href="/assessments">Continue Learning</Button>
             </div>
           </div>
-          <span className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full border-4 border-primary-container">
-            <Award className="h-10 w-10 text-primary-container" />
+          <span className="border-primary-container flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full border-4">
+            <Award className="text-primary-container h-10 w-10" />
           </span>
         </Card>
 
@@ -59,7 +59,7 @@ export default function AssessmentResultsPage() {
           <div className="mt-3 flex flex-col gap-3">
             {r.topic_breakdown.map((t) => (
               <div key={t.topic}>
-                <div className="flex items-center justify-between text-label-sm text-on-surface-variant">
+                <div className="text-label-sm text-on-surface-variant flex items-center justify-between">
                   <span>{t.topic}</span>
                   <span>{t.percent}%</span>
                 </div>
