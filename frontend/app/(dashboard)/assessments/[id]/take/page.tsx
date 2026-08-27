@@ -92,7 +92,7 @@ export default function TakeAssessmentPage() {
                 >
                   <span
                     className={cn(
-                      "flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-xs font-semibold",
+                      "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold",
                       done && "bg-[#d4af37] text-[#1b1c1c]",
                       current && !done && "border-2 border-[#d4af37] text-[#735c00]",
                       !done && !current && "border border-[#e0d8c9] text-[#6d6a66]"
@@ -113,9 +113,9 @@ export default function TakeAssessmentPage() {
             <p className="text-xs font-bold tracking-wide text-[#735c00] uppercase">
               {p.assessment_title}
             </p>
-            <h1 className="mt-2 font-['Hanken_Grotesk'] text-4xl leading-[1.05] font-bold tracking-[-0.045em] text-[#1b1c1c]">
+            <h2 className="mt-2 font-['Hanken_Grotesk'] text-4xl leading-[1.05] font-bold tracking-[-0.045em] text-[#1b1c1c]">
               {p.question.prompt}
-            </h1>
+            </h2>
 
             {p.question.image_url && (
               <div className="mt-6 overflow-hidden rounded-lg border border-[#e0d8c9] bg-white">
