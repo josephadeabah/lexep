@@ -12,7 +12,7 @@ import { Logo } from "@/components/ui/Logo";
 import { useAuthStore } from "@/lib/auth-store";
 import { ApiError } from "@/lib/api";
 
-import styles from "./AuthForm.module.css";
+import styles from "./auth-form.module.css";
 
 interface AuthFormProps {
   mode: "sign-in" | "sign-up";
