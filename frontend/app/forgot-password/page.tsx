@@ -1,10 +1,9 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-
 import Link from "next/link";
-
 import { ArrowLeft, ArrowRight, Check, Mail } from "lucide-react";
+import styles from "./forgot-password.module.css";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -12,41 +11,40 @@ export default function ForgotPasswordPage() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     // Replace this with the real password reset API call later
     setSent(true);
   }
 
   return (
-    <main className="auth-shell auth-shell-simple">
-      <section className="auth-panel auth-panel-full">
-        <div className="auth-card auth-card-reset">
+    <main className={styles.shell}>
+      <section className={styles.panel}>
+        <div className={styles.card}>
           <Link
             href="/sign-in"
-            className="auth-back"
+            className={styles.back}
             aria-label="Back to sign in"
           >
             <ArrowLeft size={16} />
             Back to sign in
           </Link>
 
-          <div className="auth-reset-header">
-            <div className="auth-reset-icon">
+          <div className={styles.header}>
+            <div className={styles.icon}>
               <Mail size={22} />
             </div>
 
-            <p className="auth-kicker">Password recovery</p>
+            <p className={styles.kicker}>Password recovery</p>
 
             <h1>Reset your password</h1>
 
-            <p className="auth-intro">
+            <p className={styles.intro}>
               Enter your email address and we&apos;ll send you a link to reset
               your password.
             </p>
           </div>
 
           {sent ? (
-            <div className="auth-success">
+            <div className={styles.success}>
               <span>
                 <Check size={20} />
               </span>
@@ -60,18 +58,18 @@ export default function ForgotPasswordPage() {
 
               <Link
                 href="/sign-in"
-                className="button button-primary auth-submit"
+                className={styles.submit}
               >
                 Back to sign in
                 <ArrowRight size={16} />
               </Link>
             </div>
           ) : (
-            <form className="auth-form" onSubmit={handleSubmit}>
-              <label>
-                Email address
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <label className={styles.field}>
+                <span>Email address</span>
 
-                <span className="auth-input-icon">
+                <div className={styles.inputIcon}>
                   <Mail size={17} />
 
                   <input
@@ -83,11 +81,11 @@ export default function ForgotPasswordPage() {
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                   />
-                </span>
+                </div>
               </label>
 
               <button
-                className="button button-primary auth-submit"
+                className={styles.submit}
                 type="submit"
               >
                 Send reset link
@@ -97,7 +95,7 @@ export default function ForgotPasswordPage() {
           )}
 
           {!sent && (
-            <p className="auth-switch">
+            <p className={styles.switch}>
               Remember your password?{" "}
               <Link href="/sign-in">Sign in</Link>
             </p>
