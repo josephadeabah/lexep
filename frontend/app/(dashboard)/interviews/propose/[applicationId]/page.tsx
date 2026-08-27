@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
-import { Select } from "@/components/ui/Select";
+import { Select } from "@/components/ui/select/Select";
 import { Textarea } from "@/components/ui/text-area/Textarea";
 
 function nextBusinessSlots(): { label: string; iso: string }[] {

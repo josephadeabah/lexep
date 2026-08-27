@@ -6,7 +6,7 @@ import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
 import { Input } from "@/components/ui/input/Input";
-import { Select } from "@/components/ui/Select";
+import { Select } from "@/components/ui/select/Select";
 import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
 import { Avatar } from "@/components/ui/avatar/Avatar";

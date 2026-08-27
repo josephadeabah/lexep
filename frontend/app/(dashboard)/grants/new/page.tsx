@@ -7,7 +7,7 @@ import { X, Globe2, Lock, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input/Input";
-import { Select } from "@/components/ui/Select";
+import { Select } from "@/components/ui/select/Select";
 import { api } from "@/lib/api";
 
 export default function CreateGrantGroupPage() {

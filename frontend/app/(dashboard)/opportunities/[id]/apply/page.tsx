@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
-import { Select } from "@/components/ui/Select";
+import { Select } from "@/components/ui/select/Select";
 import { Input } from "@/components/ui/input/Input";
 import { Textarea } from "@/components/ui/text-area/Textarea";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";

@@ -7,7 +7,7 @@ import { User as UserIcon, Briefcase, Building2, History, Link as LinkIcon, X } 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input/Input";
-import { Select } from "@/components/ui/Select";
+import { Select } from "@/components/ui/select/Select";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { Textarea } from "@/components/ui/text-area/Textarea";
 import { api } from "@/lib/api";
