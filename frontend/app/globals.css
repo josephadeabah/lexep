@@ -1505,13 +1505,13 @@
 .card-level1 {
   background-color: var(--color-surface-container-lowest);
   box-shadow: var(--shadow-level1);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
 }
 
 .card-level2 {
   background-color: var(--color-surface-container-lowest);
   box-shadow: var(--shadow-level2);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
 }
 
 .container-max {
@@ -1541,15 +1541,8 @@
 /* ============================================ */
 
 :root {
-  --background: #fbf9f8;
-  --foreground: #1b1c1c;
-  --primary: #735c00;
-  --gold: #d4af37;
-  --paper: #fffdf8;
-  --muted: #6d6a66;
-  --line: #d9d3c6;
-  --charcoal: #1b1c1c;
-  --radius: 0.5rem;
+  --background: var(--color-surface);
+  --foreground: var(--color-on-surface);
 }
 
 * {
@@ -1558,17 +1551,24 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--background);
+  background-color: var(--color-surface);
 }
 
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
 }
 
 a {
@@ -1588,6 +1588,8 @@ button {
 .lexep-site {
   overflow: hidden;
 }
+
+
 
 
 /* ============================================ */
@@ -2494,6 +2496,6 @@ h2 em {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(115, 92, 0, 0.45);
-  outline-offset: 3px;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
