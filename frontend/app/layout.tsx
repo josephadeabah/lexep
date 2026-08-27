@@ -1,9 +1,8 @@
-// app/layout.tsx
-
 import "./globals.css";
 
-import { OfflineProvider } from "@/components/OfflineProvider";
 import type { Metadata, Viewport } from "next";
+
+import { OfflineProvider } from "@/components/OfflineProvider";
 
 export const metadata: Metadata = {
   title: "Lexep — Bridge the gap. Build the future.",
@@ -20,7 +19,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body>
