@@ -64,9 +64,9 @@ export default function AssessmentResultsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+          <h2 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
             Assessment Complete
-          </h1>
+          </h2>
         </div>
         <Button variant="ghost" className="flex items-center gap-2">
           <Download className="h-4 w-4" /> Download Report
