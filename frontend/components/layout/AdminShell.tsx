@@ -8,6 +8,7 @@ import { HelpCircle, LogOut, Bell, Settings, Menu, X, Search } from "lucide-reac
 import { Logo } from "../ui/Logo";
 import Link from "next/link";
 import { Avatar } from "@/components/ui/Avatar";
+import { OfflineBanner } from "./OfflineBanner";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -151,6 +152,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
         {/* Main Content */}
         <main className="dashboard-main">
+          <OfflineBanner />
           <div className="max-w-container-max mx-auto w-full">{children}</div>
         </main>
       </div>

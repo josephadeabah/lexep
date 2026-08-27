@@ -10,6 +10,7 @@ import { Avatar } from "@/components/ui/Avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { UserRole } from "@/lib/types";
+import { OfflineBanner } from "./OfflineBanner";
 
 const BRAND_BY_ROLE: Record<
   UserRole,
@@ -213,6 +214,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
         {/* Main Content */}
         <main className="dashboard-main">
+          <OfflineBanner />
           <div className="max-w-container-max mx-auto w-full">{children}</div>
         </main>
       </div>
