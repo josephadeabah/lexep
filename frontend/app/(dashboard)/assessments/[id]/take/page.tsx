@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
-import { Radio } from "@/components/ui/Radio";
+import { Radio } from "@/components/ui/radio/Radio";
 import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 
 export default function TakeAssessmentPage() {

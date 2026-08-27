@@ -4,7 +4,7 @@ export * from "./input/Input";
 export * from "./text-area/Textarea";
 export * from "./select/Select";
 export * from "./checkbox/Checkbox";
-export * from "./Radio";
+export * from "./radio/Radio";
 export * from "./badge/Badge";
 export * from "./avatar/Avatar";
 export * from "./progress-bar/ProgressBar";

@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card/Card";
 import { Input } from "@/components/ui/input/Input";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";
-import { Radio } from "@/components/ui/Radio";
+import { Radio } from "@/components/ui/radio/Radio";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 
 const TABS = [
