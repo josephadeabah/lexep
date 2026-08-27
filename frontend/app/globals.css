@@ -899,7 +899,7 @@
 }
 
 .flex-1 {
-  flex: 1;
+  flex: 1 1 0%;
 }
 
 .flex-shrink-0 {
@@ -1093,6 +1093,14 @@
 
 .w-12 {
   width: 48px;
+}
+
+.w-64 {
+  width: 16rem;
+}
+
+.max-w-2xl {
+  max-width: 672px;
 }
 
 .w-full {

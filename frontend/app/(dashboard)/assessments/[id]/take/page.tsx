@@ -109,15 +109,13 @@ export default function TakeAssessmentPage() {
               </div>
             )}
 
-            <div className="mt-lg flex w-full flex-col gap-3">
+            <div className="mt-lg flex flex-col gap-3">
               {p.question.options.map((option) => (
                 <label
                   key={option.id}
                   className={cn(
-                    "flex w-full cursor-pointer items-center gap-3 rounded-md border p-4 transition",
-                    selectedOption === option.id
-                      ? "border-primary-container bg-surface-container-low"
-                      : "border-outline-variant"
+                    "flex cursor-pointer items-center gap-3 rounded-md border p-4 transition",
+                    selectedOption === option.id ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
                   )}
                 >
                   <Radio
@@ -125,14 +123,10 @@ export default function TakeAssessmentPage() {
                     checked={selectedOption === option.id}
                     onChange={() => setSelectedOption(option.id)}
                   />
-
-                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded bg-surface-container-high text-label-sm uppercase">
+                  <span className="flex h-6 w-6 items-center justify-center rounded bg-surface-container-high text-label-sm uppercase">
                     {option.id}
                   </span>
-
-                  <span className="min-w-0 flex-1 text-body-md text-on-surface">
-                    {option.text}
-                  </span>
+                  <span className="text-body-md text-on-surface">{option.text}</span>
                 </label>
               ))}
             </div>
