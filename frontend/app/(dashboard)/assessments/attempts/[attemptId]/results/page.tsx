@@ -76,8 +76,8 @@ export default function AssessmentResultsPage() {
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* Main Score Card */}
         <Card className="p-8">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div>
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex-1">
               <p className="text-xs font-bold tracking-wide text-[#735c00] uppercase">
                 Final Score
               </p>
@@ -96,27 +96,28 @@ export default function AssessmentResultsPage() {
                   <CheckCircle2 className="mr-1 h-3 w-3" /> Skill Verified
                 </Badge>
               </div>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button 
-                  variant="secondary" 
-                  className="flex items-center gap-2 w-auto"
-                >
-                  <Share2 className="h-4 w-4" /> Share to Profile
-                </Button>
-                <Button 
-                  href="/assessments"
-                  className="flex items-center gap-2"
-                >
-                  Continue Learning
-                </Button>
-              </div>
             </div>
 
-            {/* Award Icon */}
+            {/* Award Icon - top right */}
             <span className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full border-4 border-[#d4af37] bg-[#fffdf8]">
               <Award className="h-14 w-14 text-[#735c00]" />
             </span>
+          </div>
+
+          {/* Buttons - full width below */}
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button 
+              variant="secondary" 
+              className="flex flex-1 items-center justify-center gap-2"
+            >
+              <Share2 className="h-4 w-4" /> Share to Profile
+            </Button>
+            <Button 
+              href="/assessments"
+              className="flex flex-1 items-center justify-center gap-2"
+            >
+              Continue Learning
+            </Button>
           </div>
         </Card>
 
