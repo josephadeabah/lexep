@@ -59,28 +59,19 @@ export function AuthForm({ mode }: AuthFormProps) {
         router.push("/dashboard");
       }
     } catch (err) {
-      setError(
-        err instanceof ApiError
-          ? err.message
-          : "Something went wrong. Please try again."
-      );
+      setError(err instanceof ApiError ? err.message : "Something went wrong. Please try again.");
     }
   }
 
   return (
     <main className={styles.shell}>
-      <section
-        className={styles.visual}
-        aria-label="Lexep introduction"
-      >
+      <section className={styles.visual} aria-label="Lexep introduction">
         <Link href="/" className={styles.logo}>
           <Logo showWordmark />
         </Link>
 
         <div className={styles.visualCopy}>
-          <p className={styles.overline}>
-            Your next chapter starts here
-          </p>
+          <p className={styles.overline}>Your next chapter starts here</p>
 
           <h1>
             {isSignUp ? (
@@ -94,19 +85,13 @@ export function AuthForm({ mode }: AuthFormProps) {
             )}
           </h1>
 
-          <p>
-            Connect with the people, experience, and support that move your
-            career forward.
-          </p>
+          <p>Connect with the people, experience, and support that move your career forward.</p>
         </div>
 
         <div className={styles.quote}>
           <span>“</span>
 
-          <p>
-            Opportunity is not a destination. It is a bridge we build
-            together.
-          </p>
+          <p>Opportunity is not a destination. It is a bridge we build together.</p>
 
           <small>— The Lexep principle</small>
         </div>
@@ -118,15 +103,9 @@ export function AuthForm({ mode }: AuthFormProps) {
             <Logo showWordmark />
           </div>
 
-          <p className={styles.kicker}>
-            {isSignUp ? "Join the movement" : "Welcome back"}
-          </p>
+          <p className={styles.kicker}>{isSignUp ? "Join the movement" : "Welcome back"}</p>
 
-          <h2>
-            {isSignUp
-              ? "Create your account"
-              : "Sign in to Lexep"}
-          </h2>
+          <h2>{isSignUp ? "Create your account" : "Sign in to Lexep"}</h2>
 
           <p className={styles.intro}>
             {isSignUp
@@ -134,10 +113,7 @@ export function AuthForm({ mode }: AuthFormProps) {
               : "Pick up where your next chapter left off."}
           </p>
 
-          <form
-            className={styles.form}
-            onSubmit={handleSubmit}
-          >
+          <form className={styles.form} onSubmit={handleSubmit}>
             {isSignUp && (
               <label className={styles.field}>
                 <span>Full name</span>
@@ -175,11 +151,7 @@ export function AuthForm({ mode }: AuthFormProps) {
                   required
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  autoComplete={
-                    isSignUp
-                      ? "new-password"
-                      : "current-password"
-                  }
+                  autoComplete={isSignUp ? "new-password" : "current-password"}
                   placeholder="At least 8 characters"
                   minLength={isSignUp ? 8 : undefined}
                   value={password}
@@ -189,20 +161,10 @@ export function AuthForm({ mode }: AuthFormProps) {
                 <button
                   type="button"
                   className={styles.passwordToggle}
-                  aria-label={
-                    showPassword
-                      ? "Hide password"
-                      : "Show password"
-                  }
-                  onClick={() =>
-                    setShowPassword((current) => !current)
-                  }
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  onClick={() => setShowPassword((current) => !current)}
                 >
-                  {showPassword ? (
-                    <EyeOff size={17} />
-                  ) : (
-                    <Eye size={17} />
-                  )}
+                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
                 </button>
               </div>
             </label>
@@ -213,18 +175,13 @@ export function AuthForm({ mode }: AuthFormProps) {
                   <input
                     type="checkbox"
                     checked={remember}
-                    onChange={(e) =>
-                      setRemember(e.target.checked)
-                    }
+                    onChange={(e) => setRemember(e.target.checked)}
                   />
 
                   <span>Remember me</span>
                 </label>
 
-                <Link
-                  className={styles.forgot}
-                  href="/forgot-password"
-                >
+                <Link className={styles.forgot} href="/forgot-password">
                   Forgot password?
                 </Link>
               </div>
@@ -235,30 +192,19 @@ export function AuthForm({ mode }: AuthFormProps) {
                 <input type="checkbox" required />
 
                 <span>
-                  I agree to the{" "}
-                  <Link href="#terms">Terms</Link> and{" "}
-                  <Link href="#privacy">
-                    Privacy Policy
-                  </Link>
-                  .
+                  I agree to the <Link href="#terms">Terms</Link> and{" "}
+                  <Link href="#privacy">Privacy Policy</Link>.
                 </span>
               </label>
             )}
 
             {error && (
-              <p
-                className={styles.error}
-                role="alert"
-              >
+              <p className={styles.error} role="alert">
                 {error}
               </p>
             )}
 
-            <button
-              className={styles.submit}
-              type="submit"
-              disabled={isLoading}
-            >
+            <button className={styles.submit} type="submit" disabled={isLoading}>
               {isLoading
                 ? isSignUp
                   ? "Creating account..."
@@ -272,20 +218,9 @@ export function AuthForm({ mode }: AuthFormProps) {
           </form>
 
           <p className={styles.switch}>
-            {isSignUp
-              ? "Already have an account?"
-              : "New to Lexep?"}{" "}
-
-            <Link
-              href={
-                isSignUp
-                  ? "/sign-in"
-                  : "/sign-up"
-              }
-            >
-              {isSignUp
-                ? "Sign in"
-                : "Create an account"}
+            {isSignUp ? "Already have an account?" : "New to Lexep?"}{" "}
+            <Link href={isSignUp ? "/sign-in" : "/sign-up"}>
+              {isSignUp ? "Sign in" : "Create an account"}
             </Link>
           </p>
         </div>

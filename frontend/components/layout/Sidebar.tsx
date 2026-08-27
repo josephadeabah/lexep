@@ -34,14 +34,8 @@ export function Sidebar({
 
   return (
     <>
-      {isOpen && (
-        <button
-          className="sidebar-scrim"
-          aria-label="Close sidebar"
-          onClick={onClose}
-        />
-      )}
-      
+      {isOpen && <button className="sidebar-scrim" aria-label="Close sidebar" onClick={onClose} />}
+
       <aside className={`dashboard-sidebar ${isOpen ? "is-open" : ""}`}>
         <div className="company-brand">
           <div className="company-avatar">
@@ -58,7 +52,7 @@ export function Sidebar({
             <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
             <div className="min-w-0">
               <p className="truncate text-[#f4d36a]">{userSummary.name}</p>
-              <p className="truncate text-[#bdbbb8] text-sm">{userSummary.roleLabel}</p>
+              <p className="truncate text-sm text-[#bdbbb8]">{userSummary.roleLabel}</p>
             </div>
           </div>
         )}
@@ -66,7 +60,7 @@ export function Sidebar({
         {ctaLabel && (
           <Link
             href={ctaHref || "#"}
-            className="dashboard-nav-item bg-[#ddb839] text-[#171717] font-bold rounded-md m-4"
+            className="dashboard-nav-item m-4 rounded-md bg-[#ddb839] font-bold text-[#171717]"
           >
             {ctaLabel}
           </Link>

@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
-import { NAV_BY_ROLE } from "@/lib/nav-config";
-import { HelpCircle, LogOut, Bell, Settings, Menu, X, Search } from "lucide-react";
+import { NAV_BY_ROLE, ADMIN_NAV, NavItem } from "@/lib/nav-config";
+import { HelpCircle, LogOut, Bell, Settings, Menu, X, Search, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Avatar } from "@/components/ui/Avatar";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import type { UserRole } from "@/lib/types";
 import { OfflineBanner } from "./OfflineBanner";
+
 
 const BRAND_BY_ROLE: Record<
   UserRole,
@@ -31,8 +31,8 @@ const BRAND_BY_ROLE: Record<
   company: {
     brand: "Architect Portal",
     tagline: "Empowering African Youth",
-    ctaLabel: "New Application",
-    ctaHref: "/opportunities/new",
+    ctaLabel: "Upgrade Plan",
+    ctaHref: "/upgrade",
     roleLabel: "Company",
   },
   admin: {
@@ -40,6 +40,53 @@ const BRAND_BY_ROLE: Record<
     tagline: "Platform Management",
     roleLabel: "Admin",
   },
+};
+
+const HEADER_LINKS_BY_ROLE: Record<UserRole, { label: string; href: string }[]> = {
+  learner: [
+    { label: "Analytics", href: "#analytics" },
+    { label: "Talent Pool", href: "#talent" },
+    { label: "Help", href: "#help" },
+  ],
+  mentor: [
+    { label: "Analytics", href: "#analytics" },
+    { label: "Students", href: "#students" },
+    { label: "Help", href: "#help" },
+  ],
+  company: [
+    { label: "Analytics", href: "#analytics" },
+    { label: "Talent Pool", href: "#talent" },
+    { label: "Help", href: "#help" },
+  ],
+  admin: [
+    { label: "Admin Settings", href: "#admin-settings" },
+    { label: "Profile", href: "#profile" },
+  ],
+};
+
+const HEADER_BUTTON_BY_ROLE: Record<
+  UserRole,
+  { label: string; href?: string; onClick?: () => void } | undefined
+> = {
+  learner: undefined,
+  mentor: undefined,
+  company: { label: "Post Internship", href: "/opportunities/new" },
+  admin: undefined,
+};
+
+const SIDEBAR_BOTTOM_BY_ROLE: Record<
+  UserRole,
+  {
+    label: string;
+    icon?: React.ComponentType<{ size?: number }>;
+    href?: string;
+    onClick?: () => void;
+  }[]
+> = {
+  learner: [],
+  mentor: [],
+  company: [],
+  admin: [{ label: "System Status", href: "#system-status", icon: ShieldCheck }],
 };
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
@@ -65,7 +112,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     }
   }, [isInitialized, user, router]);
 
-  if (!isInitialized || !user || !user.role || user.role === "admin") {
+  if (!isInitialized || !user || !user.role) {
     return (
       <div className="bg-surface text-body-md text-on-surface-variant flex h-screen items-center justify-center">
         Loading your workspace…
@@ -74,7 +121,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   }
 
   const role = user.role;
-  const config = BRAND_BY_ROLE[role];
+  const brandConfig = BRAND_BY_ROLE[role];
+  const navItems = role === "admin" ? ADMIN_NAV : NAV_BY_ROLE[role];
+  const headerLinks = HEADER_LINKS_BY_ROLE[role] || [];
+  const headerButton = HEADER_BUTTON_BY_ROLE[role];
+  const sidebarBottom = SIDEBAR_BOTTOM_BY_ROLE[role] || [];
 
   return (
     <div className="dashboard-shell">
@@ -85,8 +136,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <Logo variant="dark" size={48} showWordmark={false} />
           </div>
           <div>
-            <strong>{config.brand}</strong>
-            <span>{config.tagline}</span>
+            <strong>{brandConfig.brand}</strong>
+            <span>{brandConfig.tagline}</span>
           </div>
         </div>
 
@@ -95,22 +146,22 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <Avatar name={user.full_name} src={user.avatar_url} size={36} />
             <div className="min-w-0">
               <p className="truncate text-[#f4d36a]">{user.full_name}</p>
-              <p className="truncate text-[#bdbbb8] text-sm">{config.roleLabel}</p>
+              <p className="truncate text-sm text-[#bdbbb8]">{brandConfig.roleLabel}</p>
             </div>
           </div>
         )}
 
-        {config.ctaLabel && (
+        {brandConfig.ctaLabel && (
           <Link
-            href={config.ctaHref || "#"}
-            className="dashboard-nav-item bg-[#ddb839] text-[#171717] font-bold rounded-md m-4"
+            href={brandConfig.ctaHref || "#"}
+            className="dashboard-nav-item m-4 rounded-md bg-[#ddb839] font-bold text-[#171717]"
           >
-            {config.ctaLabel}
+            {brandConfig.ctaLabel}
           </Link>
         )}
 
         <nav className="dashboard-nav">
-          {NAV_BY_ROLE[role].map((item) => {
+          {navItems.map((item) => {
             const Icon = item.icon;
             const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
             return (
@@ -127,10 +178,18 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </nav>
 
         <div className="sidebar-bottom">
+          {sidebarBottom.map((item) => (
+            <Link key={item.label} href={item.href || "#"} className="dashboard-nav-item">
+              {item.icon && <item.icon size={21} />}
+              {item.label}
+            </Link>
+          ))}
+
           <Link href="/help" className="dashboard-nav-item">
             <HelpCircle size={21} />
-            <span>Help Center</span>
+            <span>Support</span>
           </Link>
+
           <button
             className="dashboard-nav-item"
             onClick={() => {
@@ -172,13 +231,17 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </label>
 
           <nav className="dashboard-top-nav" aria-label="Account navigation">
-            <a href="#analytics">Analytics</a>
-            <a href="#talent">Talent Pool</a>
-            <a href="#help">Help</a>
+            {headerLinks.map((link) => (
+              <a key={link.label} href={link.href}>
+                {link.label}
+              </a>
+            ))}
           </nav>
 
-          {role === "company" && (
-            <button className="post-button">Post Internship</button>
+          {headerButton && (
+            <Link href={headerButton.href || "#"} className="post-button">
+              {headerButton.label}
+            </Link>
           )}
 
           <button className="icon-button" aria-label="Notifications">
@@ -194,10 +257,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <Avatar name={user.full_name} src={user.avatar_url} size={40} />
             </summary>
             <nav className="profile-dropdown" aria-label="Mobile account navigation">
-              <a href="#analytics">Analytics</a>
-              <a href="#talent">Talent Pool</a>
-              <a href="#help">Help</a>
-              <a href="#profile">{config.roleLabel} Profile</a>
+              {headerLinks.map((link) => (
+                <a key={link.label} href={link.href}>
+                  {link.label}
+                </a>
+              ))}
+              <a href="#profile">{brandConfig.roleLabel} Profile</a>
               <button
                 className="dashboard-nav-item"
                 onClick={() => {

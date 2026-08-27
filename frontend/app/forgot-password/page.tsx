@@ -19,11 +19,7 @@ export default function ForgotPasswordPage() {
     <main className={styles.shell}>
       <section className={styles.panel}>
         <div className={styles.card}>
-          <Link
-            href="/sign-in"
-            className={styles.back}
-            aria-label="Back to sign in"
-          >
+          <Link href="/sign-in" className={styles.back} aria-label="Back to sign in">
             <ArrowLeft size={16} />
             Back to sign in
           </Link>
@@ -38,8 +34,7 @@ export default function ForgotPasswordPage() {
             <h1>Reset your password</h1>
 
             <p className={styles.intro}>
-              Enter your email address and we&apos;ll send you a link to reset
-              your password.
+              Enter your email address and we&apos;ll send you a link to reset your password.
             </p>
           </div>
 
@@ -52,14 +47,10 @@ export default function ForgotPasswordPage() {
               <strong>Check your inbox.</strong>
 
               <p>
-                We&apos;ve sent password reset instructions to{" "}
-                <strong>{email}</strong>.
+                We&apos;ve sent password reset instructions to <strong>{email}</strong>.
               </p>
 
-              <Link
-                href="/sign-in"
-                className={styles.submit}
-              >
+              <Link href="/sign-in" className={styles.submit}>
                 Back to sign in
                 <ArrowRight size={16} />
               </Link>
@@ -84,10 +75,7 @@ export default function ForgotPasswordPage() {
                 </div>
               </label>
 
-              <button
-                className={styles.submit}
-                type="submit"
-              >
+              <button className={styles.submit} type="submit">
                 Send reset link
                 <ArrowRight size={16} />
               </button>
@@ -96,8 +84,7 @@ export default function ForgotPasswordPage() {
 
           {!sent && (
             <p className={styles.switch}>
-              Remember your password?{" "}
-              <Link href="/sign-in">Sign in</Link>
+              Remember your password? <Link href="/sign-in">Sign in</Link>
             </p>
           )}
         </div>
