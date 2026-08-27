@@ -5,10 +5,7 @@
   background: var(--background);
 }
 
-/* =========================
-   LEFT VISUAL PANEL
-========================= */
-
+/* LEFT VISUAL PANEL */
 .visual {
   position: relative;
   display: none;
@@ -121,10 +118,7 @@
   opacity: 0.65;
 }
 
-/* =========================
-   RIGHT AUTH PANEL
-========================= */
-
+/* RIGHT AUTH PANEL */
 .panel {
   display: flex;
   min-height: 100vh;
@@ -146,20 +140,20 @@
 
 .kicker {
   margin: 0 0 0.625rem;
+  color: var(--primary);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--primary);
 }
 
 .card h2 {
   margin: 0;
+  color: var(--foreground);
   font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.03em;
-  color: var(--foreground);
 }
 
 .intro {
@@ -169,10 +163,7 @@
   line-height: 1.6;
 }
 
-/* =========================
-   FORM
-========================= */
-
+/* FORM */
 .form {
   display: flex;
   flex-direction: column;
@@ -183,14 +174,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  color: var(--foreground);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--foreground);
 }
 
-.field input {
+.form input:not([type="checkbox"]) {
   width: 100%;
   height: 3rem;
+  box-sizing: border-box;
   border: 1px solid var(--border);
   border-radius: 0.625rem;
   padding: 0 0.875rem;
@@ -198,27 +190,26 @@
   color: var(--foreground);
   font: inherit;
   outline: none;
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
-.field input::placeholder {
+.form input:not([type="checkbox"])::placeholder {
   color: var(--muted-foreground);
 }
 
-.field input:focus {
+.form input:not([type="checkbox"]):focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgb(0 0 0 / 0.05);
 }
 
+/* PASSWORD */
 .password {
   position: relative;
   display: block;
 }
 
 .password input {
-  padding-right: 3rem;
+  padding-right: 3rem !important;
 }
 
 .passwordToggle {
@@ -243,10 +234,7 @@
   color: var(--foreground);
 }
 
-/* =========================
-   OPTIONS / CHECKBOX
-========================= */
-
+/* OPTIONS / CHECKBOX */
 .options {
   display: flex;
   align-items: center;
@@ -291,10 +279,7 @@
   font-size: 0.8125rem;
 }
 
-/* =========================
-   ERROR
-========================= */
-
+/* ERROR */
 .error {
   margin: -0.25rem 0 0;
   padding: 0.75rem 0.875rem;
@@ -305,10 +290,7 @@
   line-height: 1.5;
 }
 
-/* =========================
-   SUBMIT BUTTON
-========================= */
-
+/* SUBMIT BUTTON */
 .submit {
   display: inline-flex;
   width: 100%;
@@ -317,35 +299,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border: 0;
-  border-radius: 0.625rem;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    opacity 150ms ease,
-    transform 150ms ease;
 }
 
-.submit:hover:not(:disabled) {
-  opacity: 0.9;
-}
-
-.submit:active:not(:disabled) {
-  transform: translateY(1px);
-}
-
-.submit:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-/* =========================
-   SIGN-UP / SIGN-IN SWITCH
-========================= */
-
+/* SWITCH */
 .switch {
   margin: 1.75rem 0 0;
   color: var(--muted-foreground);
@@ -353,47 +309,35 @@
   text-align: center;
 }
 
-/* =========================
-   DESKTOP
-========================= */
-
+/* DESKTOP */
 @media (min-width: 1024px) {
   .shell {
     grid-template-columns: minmax(0, 1fr) minmax(28rem, 0.85fr);
   }
-
   .visual {
     display: flex;
   }
-
   .mobileLogo {
     display: none;
   }
-
   .panel {
     padding: 3rem;
   }
 }
 
-/* =========================
-   MOBILE
-========================= */
-
+/* MOBILE */
 @media (max-width: 639px) {
   .panel {
     align-items: flex-start;
     padding-top: 2rem;
   }
-
   .mobileLogo {
     margin-bottom: 2.5rem;
   }
-
   .options {
     align-items: flex-start;
     flex-direction: column;
   }
-
   .card h2 {
     font-size: 2rem;
   }
