@@ -100,7 +100,7 @@ export default function AssessmentResultsPage() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button 
                   variant="secondary" 
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 w-auto"
                 >
                   <Share2 className="h-4 w-4" /> Share to Profile
                 </Button>

@@ -9,6 +9,6 @@
 .fill {
   height: 4px;
   border-radius: 9999px;
-  background: var(--gold);
+  background: #d4af37;;
   transition: width 300ms ease;
 }
