@@ -1,4 +1,4 @@
-.authShell {
+.shell {
   display: grid;
   min-height: 100vh;
   grid-template-columns: minmax(0, 1fr);
@@ -9,7 +9,7 @@
    LEFT VISUAL PANEL
 ========================= */
 
-.authVisual {
+.visual {
   position: relative;
   display: none;
   min-height: 100vh;
@@ -21,29 +21,29 @@
   color: var(--primary-foreground);
 }
 
-.authVisual::before {
+.visual::before {
   position: absolute;
+  top: -10rem;
+  right: -10rem;
   width: 28rem;
   height: 28rem;
   border-radius: 9999px;
-  top: -10rem;
-  right: -10rem;
   background: rgb(255 255 255 / 0.06);
   content: "";
 }
 
-.authVisual::after {
+.visual::after {
   position: absolute;
+  bottom: -10rem;
+  left: -8rem;
   width: 22rem;
   height: 22rem;
   border-radius: 9999px;
-  bottom: -10rem;
-  left: -8rem;
   background: rgb(255 255 255 / 0.05);
   content: "";
 }
 
-.authLogo {
+.logo {
   position: relative;
   z-index: 1;
   display: inline-flex;
@@ -52,7 +52,7 @@
   text-decoration: none;
 }
 
-.authVisualCopy {
+.visualCopy {
   position: relative;
   z-index: 1;
   max-width: 38rem;
@@ -67,21 +67,21 @@
   opacity: 0.7;
 }
 
-.authVisualCopy h1 {
-  margin: 0;
+.visualCopy h1 {
   max-width: 40rem;
+  margin: 0;
   font-size: clamp(2.75rem, 4vw, 5rem);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.04em;
 }
 
-.authVisualCopy h1 em {
+.visualCopy h1 em {
   font-style: italic;
   font-weight: inherit;
 }
 
-.authVisualCopy > p:last-child {
+.visualCopy > p:last-child {
   max-width: 34rem;
   margin: 1.5rem 0 0;
   font-size: 1.0625rem;
@@ -89,7 +89,7 @@
   opacity: 0.8;
 }
 
-.authQuote {
+.quote {
   position: relative;
   z-index: 1;
   max-width: 34rem;
@@ -97,7 +97,7 @@
   border-top: 1px solid rgb(255 255 255 / 0.2);
 }
 
-.authQuote > span {
+.quote > span {
   display: block;
   margin-bottom: -1.5rem;
   font-size: 4rem;
@@ -105,7 +105,7 @@
   opacity: 0.4;
 }
 
-.authQuote p {
+.quote p {
   margin: 0;
   padding-left: 1.25rem;
   font-size: 1rem;
@@ -113,7 +113,7 @@
   line-height: 1.6;
 }
 
-.authQuote small {
+.quote small {
   display: block;
   margin-top: 0.75rem;
   padding-left: 1.25rem;
@@ -125,7 +125,7 @@
    RIGHT AUTH PANEL
 ========================= */
 
-.authPanel {
+.panel {
   display: flex;
   min-height: 100vh;
   align-items: center;
@@ -134,17 +134,17 @@
   background: var(--background);
 }
 
-.authCard {
+.card {
   width: 100%;
   max-width: 28rem;
 }
 
-.authMobileLogo {
+.mobileLogo {
   display: flex;
   margin-bottom: 3rem;
 }
 
-.authKicker {
+.kicker {
   margin: 0 0 0.625rem;
   font-size: 0.75rem;
   font-weight: 700;
@@ -153,7 +153,7 @@
   color: var(--primary);
 }
 
-.authCard h2 {
+.card h2 {
   margin: 0;
   font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 700;
@@ -162,7 +162,7 @@
   color: var(--foreground);
 }
 
-.authIntro {
+.intro {
   margin: 0.875rem 0 2rem;
   color: var(--muted-foreground);
   font-size: 0.9375rem;
@@ -173,13 +173,13 @@
    FORM
 ========================= */
 
-.authForm {
+.form {
   display: flex;
   flex-direction: column;
   gap: 1.125rem;
 }
 
-.authForm > label:not(.authCheck) {
+.field {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -188,7 +188,7 @@
   color: var(--foreground);
 }
 
-.authForm input:not([type="checkbox"]) {
+.field input {
   width: 100%;
   height: 3rem;
   border: 1px solid var(--border);
@@ -203,25 +203,25 @@
     box-shadow 150ms ease;
 }
 
-.authForm input:not([type="checkbox"])::placeholder {
+.field input::placeholder {
   color: var(--muted-foreground);
 }
 
-.authForm input:not([type="checkbox"]):focus {
+.field input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgb(0 0 0 / 0.05);
 }
 
-.authPassword {
+.password {
   position: relative;
   display: block;
 }
 
-.authPassword input {
-  padding-right: 3rem !important;
+.password input {
+  padding-right: 3rem;
 }
 
-.authPassword button {
+.passwordToggle {
   position: absolute;
   top: 50%;
   right: 0.75rem;
@@ -238,7 +238,7 @@
   cursor: pointer;
 }
 
-.authPassword button:hover {
+.passwordToggle:hover {
   background: var(--muted);
   color: var(--foreground);
 }
@@ -247,14 +247,14 @@
    OPTIONS / CHECKBOX
 ========================= */
 
-.authOptions {
+.options {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.authCheck {
+.check {
   display: flex;
   align-items: flex-start;
   gap: 0.625rem;
@@ -264,7 +264,7 @@
   cursor: pointer;
 }
 
-.authCheck input {
+.check input {
   width: 1rem;
   height: 1rem;
   flex-shrink: 0;
@@ -272,21 +272,21 @@
   accent-color: var(--primary);
 }
 
-.authCheck a,
-.authForgot,
-.authSwitch a {
+.check a,
+.forgot,
+.switch a {
   color: var(--primary);
   font-weight: 600;
   text-decoration: none;
 }
 
-.authCheck a:hover,
-.authForgot:hover,
-.authSwitch a:hover {
+.check a:hover,
+.forgot:hover,
+.switch a:hover {
   text-decoration: underline;
 }
 
-.authForgot {
+.forgot {
   flex-shrink: 0;
   font-size: 0.8125rem;
 }
@@ -295,7 +295,7 @@
    ERROR
 ========================= */
 
-.authError {
+.error {
   margin: -0.25rem 0 0;
   padding: 0.75rem 0.875rem;
   border-radius: 0.625rem;
@@ -309,51 +309,44 @@
    SUBMIT BUTTON
 ========================= */
 
-.authSubmit {
+.submit {
+  display: inline-flex;
   width: 100%;
   height: 3rem;
   margin-top: 0.25rem;
-}
-
-/* =========================
-   SUCCESS STATE
-========================= */
-
-.authSuccess {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.875rem;
-  padding-top: 0.5rem;
-}
-
-.authSuccess > span {
-  display: inline-flex;
-  width: 2.75rem;
-  height: 2.75rem;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px;
-  background: rgb(34 197 94 / 0.12);
-  color: rgb(22 163 74);
+  gap: 0.5rem;
+  border: 0;
+  border-radius: 0.625rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 }
 
-.authSuccess strong {
-  font-size: 1.25rem;
-  color: var(--foreground);
+.submit:hover:not(:disabled) {
+  opacity: 0.9;
 }
 
-.authSuccess p {
-  margin: 0;
-  color: var(--muted-foreground);
-  line-height: 1.6;
+.submit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 /* =========================
    SIGN-UP / SIGN-IN SWITCH
 ========================= */
 
-.authSwitch {
+.switch {
   margin: 1.75rem 0 0;
   color: var(--muted-foreground);
   font-size: 0.875rem;
@@ -365,19 +358,19 @@
 ========================= */
 
 @media (min-width: 1024px) {
-  .authShell {
+  .shell {
     grid-template-columns: minmax(0, 1fr) minmax(28rem, 0.85fr);
   }
 
-  .authVisual {
+  .visual {
     display: flex;
   }
 
-  .authMobileLogo {
+  .mobileLogo {
     display: none;
   }
 
-  .authPanel {
+  .panel {
     padding: 3rem;
   }
 }
@@ -387,21 +380,21 @@
 ========================= */
 
 @media (max-width: 639px) {
-  .authPanel {
+  .panel {
     align-items: flex-start;
     padding-top: 2rem;
   }
 
-  .authMobileLogo {
+  .mobileLogo {
     margin-bottom: 2.5rem;
   }
 
-  .authOptions {
+  .options {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .authCard h2 {
+  .card h2 {
     font-size: 2rem;
   }
 }
