@@ -23,16 +23,16 @@ export default function AssessmentHubPage() {
   }
 
   return (
-    <div className="gap-lg flex flex-col">
+    <div className="flex flex-col gap-lg">
       <div>
         <h1 className="text-headline-lg text-on-background">Skill Assessment Hub</h1>
-        <p className="text-body-md text-on-surface-variant mt-1">
+        <p className="mt-1 text-body-md text-on-surface-variant">
           Validate your expertise across domains and unlock advanced learning paths.
         </p>
       </div>
 
       {featured && (
-        <Card className="gap-md grid sm:grid-cols-2">
+        <Card className="grid gap-md sm:grid-cols-2">
           <div>
             <div className="flex gap-2">
               <Badge tone="primary">
@@ -40,16 +40,16 @@ export default function AssessmentHubPage() {
               </Badge>
               {featured.level && <Badge>{featured.level}</Badge>}
             </div>
-            <h2 className="text-headline-lg text-on-background mt-3">{featured.title}</h2>
-            <p className="text-body-md text-on-surface-variant mt-2">{featured.description}</p>
-            <p className="text-label-sm text-on-surface-variant mt-2">
+            <h2 className="mt-3 text-headline-lg text-on-background">{featured.title}</h2>
+            <p className="mt-2 text-body-md text-on-surface-variant">{featured.description}</p>
+            <p className="mt-2 text-label-sm text-on-surface-variant">
               {featured.question_count} questions · {featured.duration_minutes} minutes
             </p>
             <Button className="mt-4" onClick={() => start(featured.id)}>
               Start Assessment
             </Button>
           </div>
-          <div className="bg-surface-container-high hidden items-center justify-center rounded-lg sm:flex">
+          <div className="hidden items-center justify-center rounded-lg bg-surface-container-high sm:flex">
             <span className="text-label-sm text-on-surface-variant">{featured.category}</span>
           </div>
         </Card>
@@ -62,7 +62,7 @@ export default function AssessmentHubPage() {
         {attempts.isLoading ? (
           <p className="text-body-md text-on-surface-variant">Loading…</p>
         ) : inProgress.length > 0 ? (
-          <div className="gap-md grid sm:grid-cols-2">
+          <div className="grid gap-md sm:grid-cols-2">
             {inProgress.map((attempt) => {
               const percent = attempt.total_questions
                 ? Math.round((attempt.current_index / attempt.total_questions) * 100)
@@ -70,7 +70,7 @@ export default function AssessmentHubPage() {
               return (
                 <Card key={attempt.id}>
                   <p className="text-label-md text-on-background">{attempt.assessment_title}</p>
-                  <div className="text-label-sm text-on-surface-variant mt-3 flex items-center justify-between">
+                  <div className="mt-3 flex items-center justify-between text-label-sm text-on-surface-variant">
                     <span>{percent}% Completed</span>
                     <span>
                       {attempt.current_index}/{attempt.total_questions} questions
@@ -80,11 +80,7 @@ export default function AssessmentHubPage() {
                   <Button
                     variant="secondary"
                     className="mt-4 w-full"
-                    onClick={() =>
-                      router.push(
-                        `/assessments/${attempt.assessment_id}/take?attempt=${attempt.id}`
-                      )
-                    }
+                    onClick={() => router.push(`/assessments/${attempt.assessment_id}/take?attempt=${attempt.id}`)}
                   >
                     Continue
                   </Button>
@@ -98,8 +94,8 @@ export default function AssessmentHubPage() {
       </div>
 
       <div>
-        <h2 className="text-headline-md text-on-background mb-3">All Assessments</h2>
-        <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
+        <h2 className="mb-3 text-headline-md text-on-background">All Assessments</h2>
+        <div className="grid gap-md sm:grid-cols-2 lg:grid-cols-3">
           {(assessments.data ?? []).map((assessment) => (
             <Card key={assessment.id}>
               <div className="mb-2 flex items-center gap-2">
@@ -107,8 +103,8 @@ export default function AssessmentHubPage() {
                 <span className="text-label-sm text-on-surface-variant">{assessment.category}</span>
               </div>
               <p className="text-headline-md text-on-background">{assessment.title}</p>
-              <p className="text-body-md text-on-surface-variant mt-2">{assessment.description}</p>
-              <p className="text-label-sm text-on-surface-variant mt-2">
+              <p className="mt-2 text-body-md text-on-surface-variant">{assessment.description}</p>
+              <p className="mt-2 text-label-sm text-on-surface-variant">
                 {assessment.question_count} questions · {assessment.duration_minutes} min
               </p>
               <Button variant="ghost" className="mt-4 w-full" onClick={() => start(assessment.id)}>

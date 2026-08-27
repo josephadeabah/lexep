@@ -38,30 +38,29 @@ export default function TakeAssessmentPage() {
 
   if (progress.isLoading) return <p className="text-body-md text-on-surface-variant">Loading…</p>;
   const p = progress.data;
-  if (!p || !p.question)
-    return <p className="text-body-md text-on-surface-variant">No questions available.</p>;
+  if (!p || !p.question) return <p className="text-body-md text-on-surface-variant">No questions available.</p>;
 
   const percent = (p.current_index / p.total_questions) * 100;
 
   return (
-    <div className="bg-surface fixed inset-0 z-40 flex flex-col">
-      <div className="border-outline-variant/40 px-gutter flex items-center justify-between border-b py-4">
-        <span className="text-label-md text-on-background flex items-center gap-2">
+    <div className="fixed inset-0 z-40 flex flex-col bg-surface">
+      <div className="flex items-center justify-between border-b border-outline-variant/40 px-gutter py-4">
+        <span className="flex items-center gap-2 text-label-md text-on-background">
           <span className="text-headline-md text-primary">Lexep</span>
           <span className="text-on-surface-variant">| {p.assessment_title}</span>
         </span>
         <button
           onClick={() => router.push("/assessments")}
-          className="text-label-md text-on-surface-variant hover:text-primary flex items-center gap-1"
+          className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary"
         >
           <X className="h-4 w-4" /> Exit Quiz
         </button>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        <aside className="border-outline-variant/40 p-md hidden w-64 flex-shrink-0 overflow-y-auto border-r md:block">
+        <aside className="hidden w-64 flex-shrink-0 overflow-y-auto border-r border-outline-variant/40 p-md md:block">
           <p className="text-headline-md text-on-background">Question Map</p>
-          <div className="text-label-sm text-on-surface-variant mt-2 flex items-center justify-between">
+          <div className="mt-2 flex items-center justify-between text-label-sm text-on-surface-variant">
             <span>Progress</span>
             <span>
               {p.current_index + 1}/{p.total_questions}
@@ -83,10 +82,10 @@ export default function TakeAssessmentPage() {
                 >
                   <span
                     className={cn(
-                      "text-label-sm flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full",
+                      "flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-label-sm",
                       done && "bg-primary-container text-on-primary-container",
-                      current && !done && "border-primary-container text-primary border-2",
-                      !done && !current && "border-outline-variant text-on-surface-variant border"
+                      current && !done && "border-2 border-primary-container text-primary",
+                      !done && !current && "border border-outline-variant text-on-surface-variant"
                     )}
                   >
                     {done ? <Check className="h-3.5 w-3.5" /> : i + 1}
@@ -98,15 +97,13 @@ export default function TakeAssessmentPage() {
           </ul>
         </aside>
 
-        <main className="px-gutter py-lg flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto px-gutter py-lg">
           <div className="mx-auto max-w-2xl">
-            <p className="text-label-sm text-primary tracking-wide uppercase">
-              {p.assessment_title}
-            </p>
-            <h1 className="text-headline-lg text-on-background mt-2">{p.question.prompt}</h1>
+            <p className="text-label-sm uppercase tracking-wide text-primary">{p.assessment_title}</p>
+            <h1 className="mt-2 text-headline-lg text-on-background">{p.question.prompt}</h1>
 
             {p.question.image_url && (
-              <div className="mt-md border-outline-variant overflow-hidden rounded-lg border">
+              <div className="mt-md overflow-hidden rounded-lg border border-outline-variant">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.question.image_url} alt="" className="w-full" />
               </div>
@@ -118,9 +115,7 @@ export default function TakeAssessmentPage() {
                   key={option.id}
                   className={cn(
                     "flex cursor-pointer items-center gap-3 rounded-md border p-4 transition",
-                    selectedOption === option.id
-                      ? "border-primary-container bg-surface-container-low"
-                      : "border-outline-variant"
+                    selectedOption === option.id ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
                   )}
                 >
                   <Radio
@@ -128,7 +123,7 @@ export default function TakeAssessmentPage() {
                     checked={selectedOption === option.id}
                     onChange={() => setSelectedOption(option.id)}
                   />
-                  <span className="bg-surface-container-high text-label-sm flex h-6 w-6 items-center justify-center rounded uppercase">
+                  <span className="flex h-6 w-6 items-center justify-center rounded bg-surface-container-high text-label-sm uppercase">
                     {option.id}
                   </span>
                   <span className="text-body-md text-on-surface">{option.text}</span>
@@ -136,7 +131,7 @@ export default function TakeAssessmentPage() {
               ))}
             </div>
 
-            <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
+            <div className="mt-lg flex items-center justify-between border-t border-outline-variant/40 pt-md">
               <Button variant="ghost" onClick={handleNext} disabled={isSubmitting}>
                 Skip Question
               </Button>
