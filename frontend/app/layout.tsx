@@ -1,5 +1,7 @@
-// @ts-ignore — Next.js processes this global stylesheet at build time.
+// app/layout.tsx
+
 import "./globals.css";
+
 import { OfflineProvider } from "@/components/OfflineProvider";
 import type { Metadata, Viewport } from "next";
 
@@ -16,10 +18,12 @@ export const viewport: Viewport = {
   userScalable: true,
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="bg-[#fbf9f8]">
-      <body className="antialiased">
+    <html lang="en">
+      <body>
         <OfflineProvider />
         {children}
       </body>
