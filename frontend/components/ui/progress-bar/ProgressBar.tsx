@@ -9,7 +9,7 @@ export function ProgressBar({ value, className, trackClassName }: ProgressBarPro
   
   return (
     <div 
-      className={`h-1 w-full rounded-full bg-[#f0f0f0] overflow-hidden ${trackClassName || ""}`}
+      className={`h-1 w-full rounded-full bg-[#f0f0f0] ${trackClassName || ""}`}
       data-testid="progress-track"
     >
       <div 
