@@ -12,12 +12,12 @@ import {
 } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Avatar } from "@/components/ui/Avatar";
-import { Textarea } from "@/components/ui/Textarea";
-import { Checkbox } from "@/components/ui/Checkbox";
+import { Badge } from "@/components/ui/badge/Badge";
+import { Avatar } from "@/components/ui/avatar/Avatar";
+import { Textarea } from "@/components/ui/text-area/Textarea";
+import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 
 const CHECKLIST_ITEMS: {
   key: "identity_verified" | "academic_verified" | "professional_verified";

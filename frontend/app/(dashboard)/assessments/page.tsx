@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/card/Card";
+import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
-import { ProgressBar } from "@/components/ui/ProgressBar";
+import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 
 export default function AssessmentHubPage() {
   const router = useRouter();

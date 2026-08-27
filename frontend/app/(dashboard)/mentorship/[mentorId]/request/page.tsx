@@ -5,10 +5,10 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
-import { Textarea } from "@/components/ui/Textarea";
-import { Avatar } from "@/components/ui/Avatar";
+import { Textarea } from "@/components/ui/text-area/Textarea";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 
 const SESSION_TYPES = [
   {

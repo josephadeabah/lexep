@@ -6,10 +6,10 @@ import { Search, MapPin, Clock, Wallet, Bookmark } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
+import { Card } from "@/components/ui/card/Card";
+import { Input } from "@/components/ui/input/Input";
 import { Select } from "@/components/ui/Select";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 

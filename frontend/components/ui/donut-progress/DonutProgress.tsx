@@ -1,3 +1,5 @@
+import styles from "./donut-progress.module.css";
+
 interface DonutProgressProps {
   percent: number;
   size?: number;
@@ -5,7 +7,6 @@ interface DonutProgressProps {
   label?: string;
 }
 
-/** Circular "Donut" progress used for match scores (DESIGN.md > Progress Indicators). */
 export function DonutProgress({ percent, size = 64, strokeWidth = 5, label }: DonutProgressProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -13,10 +14,10 @@ export function DonutProgress({ percent, size = 64, strokeWidth = 5, label }: Do
 
   return (
     <div
-      className="relative inline-flex items-center justify-center"
+      className={styles.wrapper}
       style={{ width: size, height: size }}
     >
-      <svg width={size} height={size} className="-rotate-90">
+      <svg width={size} height={size} className={styles.svg}>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -24,7 +25,7 @@ export function DonutProgress({ percent, size = 64, strokeWidth = 5, label }: Do
           stroke="currentColor"
           strokeWidth={strokeWidth}
           fill="none"
-          className="text-surface-container-high"
+          className={styles.track}
         />
         <circle
           cx={size / 2}
@@ -36,10 +37,10 @@ export function DonutProgress({ percent, size = 64, strokeWidth = 5, label }: Do
           strokeDasharray={circumference}
           strokeDashoffset={offset}
           strokeLinecap="round"
-          className="text-primary-container transition-all"
+          className={styles.fill}
         />
       </svg>
-      <span className="text-label-sm font-label-md text-on-surface absolute">
+      <span className={styles.label}>
         {label ?? `${percent}%`}
       </span>
     </div>

@@ -7,7 +7,7 @@ import { ADMIN_NAV } from "@/lib/nav-config";
 import { HelpCircle, LogOut, Bell, Settings, Menu, X, Search } from "lucide-react";
 import { Logo } from "../ui/Logo";
 import Link from "next/link";
-import { Avatar } from "@/components/ui/Avatar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 import { OfflineBanner } from "./OfflineBanner";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {

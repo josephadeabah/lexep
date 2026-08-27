@@ -5,11 +5,11 @@ import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Bookmark, Heart, Clock, Globe2 } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { Avatar } from "@/components/ui/Avatar";
-import { DonutProgress } from "@/components/ui/DonutProgress";
+import { Badge } from "@/components/ui/badge/Badge";
+import { Avatar } from "@/components/ui/avatar/Avatar";
+import { DonutProgress } from "@/components/ui/donut-progress/DonutProgress";
 
 export default function MentorProfilePage() {
   const params = useParams<{ mentorId: string }>();

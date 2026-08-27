@@ -1,0 +1,27 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg {
+  transform: rotate(-90deg);
+}
+
+.track {
+  color: #f0f0f0;
+}
+
+.fill {
+  color: var(--primary);
+  transition: stroke-dashoffset 300ms ease;
+}
+
+.label {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground);
+  font-family: "Inter", sans-serif;
+}

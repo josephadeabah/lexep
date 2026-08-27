@@ -5,11 +5,11 @@ import { MapPin, Clock, Wallet, CheckCircle2 } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/card/Card";
+import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
-import { Avatar } from "@/components/ui/Avatar";
-import { DonutProgress } from "@/components/ui/DonutProgress";
+import { Avatar } from "@/components/ui/avatar/Avatar";
+import { DonutProgress } from "@/components/ui/donut-progress/DonutProgress";
 import type { ApplicationStatus } from "@/lib/types";
 
 const STATUS_LABEL: Record<ApplicationStatus, string> = {

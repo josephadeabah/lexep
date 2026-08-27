@@ -4,10 +4,10 @@ import { useState } from "react";
 import { ClipboardList, Clock, CheckCircle2 } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/card/Card";
+import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
-import { Avatar } from "@/components/ui/Avatar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 import { formatDate } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { useAsync } from "@/lib/use-async";
 import { api, ApiError } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input/Input";
 import { Logo } from "@/components/ui/Logo";
 import { useAuthStore } from "@/lib/auth-store";
 

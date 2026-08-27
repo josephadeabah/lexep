@@ -4,9 +4,9 @@ import { useParams, useRouter } from "next/navigation";
 import { CheckCircle2, Calendar, Clock, Video, ArrowLeft } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
-import { Avatar } from "@/components/ui/Avatar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 import { formatDate, formatTime } from "@/lib/utils";
 
 export default function InterviewConfirmedPage() {

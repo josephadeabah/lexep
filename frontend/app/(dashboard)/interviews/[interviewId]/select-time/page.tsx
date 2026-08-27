@@ -6,7 +6,7 @@ import { Building2, Clock, Video, User as UserIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
 
 export default function SelectInterviewTimePage() {

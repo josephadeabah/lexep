@@ -6,7 +6,7 @@ import Link from "next/link";
 import { X, Globe2, Lock, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input/Input";
 import { Select } from "@/components/ui/Select";
 import { api } from "@/lib/api";
 

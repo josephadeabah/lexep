@@ -4,10 +4,10 @@ import { useState } from "react";
 import { Building2, ClipboardCheck, Briefcase, Download, Plus } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/card/Card";
+import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input/Input";
 
 const TIER_LABEL: Record<string, string> = { basic: "Basic", pro: "Pro", enterprise: "Enterprise" };
 

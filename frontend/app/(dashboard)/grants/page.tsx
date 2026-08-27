@@ -5,9 +5,9 @@ import { GraduationCap, Landmark, ArrowRight } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
-import { ProgressBar } from "@/components/ui/ProgressBar";
+import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 import { formatCurrency } from "@/lib/utils";
 
 export default function GrantsPage() {

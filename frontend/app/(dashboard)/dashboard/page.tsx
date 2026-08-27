@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/card/Card";
+import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
-import { ProgressBar } from "@/components/ui/ProgressBar";
+import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 import { formatDate, formatTime, formatCurrency } from "@/lib/utils";
 import { Users, Briefcase, CalendarClock, TrendingUp } from "lucide-react";
 

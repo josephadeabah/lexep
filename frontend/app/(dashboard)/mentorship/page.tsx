@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Search, Star } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/card/Card";
+import { Input } from "@/components/ui/input/Input";
+import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
-import { Avatar } from "@/components/ui/Avatar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 import { useAuthStore } from "@/lib/auth-store";
 
 export default function MentorshipPage() {

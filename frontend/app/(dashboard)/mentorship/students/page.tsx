@@ -3,9 +3,9 @@
 import { Users, CalendarClock, AlertCircle, MessageSquare, Folder } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Avatar } from "@/components/ui/Avatar";
-import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/card/Card";
+import { Avatar } from "@/components/ui/avatar/Avatar";
+import { Badge } from "@/components/ui/badge/Badge";
 import { formatDate, formatTime } from "@/lib/utils";
 
 export default function MentorStudentsPage() {

@@ -4,10 +4,10 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Textarea } from "@/components/ui/Textarea";
+import { Input } from "@/components/ui/input/Input";
+import { Textarea } from "@/components/ui/text-area/Textarea";
 import { cn } from "@/lib/utils";
 
 export default function MentorPackagesPage() {

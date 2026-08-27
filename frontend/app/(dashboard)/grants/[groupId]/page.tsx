@@ -5,11 +5,11 @@ import { useParams } from "next/navigation";
 import { GraduationCap, Share2, ArrowRight } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { ProgressBar } from "@/components/ui/ProgressBar";
-import { Avatar } from "@/components/ui/Avatar";
+import { Input } from "@/components/ui/input/Input";
+import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 export default function GrantGroupDetailPage() {

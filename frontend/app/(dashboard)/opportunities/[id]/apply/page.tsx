@@ -9,9 +9,9 @@ import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
-import { Input } from "@/components/ui/Input";
-import { Textarea } from "@/components/ui/Textarea";
-import { Checkbox } from "@/components/ui/Checkbox";
+import { Input } from "@/components/ui/input/Input";
+import { Textarea } from "@/components/ui/text-area/Textarea";
+import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { useAuthStore } from "@/lib/auth-store";
 
 const STEPS = ["Professional Details", "Experience & Portfolio", "Review & Submit"];

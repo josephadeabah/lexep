@@ -1,6 +1,7 @@
 import { SelectHTMLAttributes, forwardRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import styles from "./select.module.css";
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
@@ -10,26 +11,22 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, label, id, children, ...props }, ref) => {
     const selectId = id || label?.toLowerCase().replace(/\s+/g, "-");
     return (
-      <div className="flex w-full flex-col gap-1.5">
+      <div className={styles.wrapper}>
         {label && (
-          <label htmlFor={selectId} className="text-label-md text-on-surface">
+          <label htmlFor={selectId} className={styles.label}>
             {label}
           </label>
         )}
-        <div className="relative">
+        <div className={styles.selectWrapper}>
           <select
             ref={ref}
             id={selectId}
-            className={cn(
-              "border-outline-variant bg-surface-container-lowest text-body-md text-on-surface h-11 w-full appearance-none rounded-md border px-3 pr-9",
-              "focus:ring-primary-container focus:border-primary focus:ring-2 focus:outline-none",
-              className
-            )}
+            className={cn(styles.select, className)}
             {...props}
           >
             {children}
           </select>
-          <ChevronDown className="text-outline pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2" />
+          <ChevronDown className={styles.chevron} />
         </div>
       </div>
     );

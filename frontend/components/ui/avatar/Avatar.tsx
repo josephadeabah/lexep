@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { initials } from "@/lib/utils";
+import styles from "./avatar.module.css";
 
 interface AvatarProps {
   src?: string | null;
@@ -17,17 +18,14 @@ export function Avatar({ src, name, size = 40, className }: AvatarProps) {
         alt={name}
         width={size}
         height={size}
-        className={cn("rounded-full object-cover", className)}
+        className={cn(styles.avatar, className)}
         style={{ width: size, height: size }}
       />
     );
   }
   return (
     <span
-      className={cn(
-        "bg-primary-container text-on-primary-container font-label-md flex items-center justify-center rounded-full",
-        className
-      )}
+      className={cn(styles.avatarFallback, className)}
       style={{ width: size, height: size }}
     >
       {initials(name)}

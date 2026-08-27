@@ -6,7 +6,7 @@ import { useAuthStore } from "@/lib/auth-store";
 import { NAV_BY_ROLE, ADMIN_NAV, NavItem } from "@/lib/nav-config";
 import { HelpCircle, LogOut, Bell, Settings, Menu, X, Search, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-import { Avatar } from "@/components/ui/Avatar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 import Link from "next/link";
 import type { UserRole } from "@/lib/types";
 import { OfflineBanner } from "./OfflineBanner";

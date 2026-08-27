@@ -1,6 +1,7 @@
 import { InputHTMLAttributes, forwardRef } from "react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import styles from "./checkbox.module.css";
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: React.ReactNode;
@@ -13,9 +14,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     return (
       <label
         htmlFor={boxId}
-        className={cn("flex cursor-pointer items-start gap-3 select-none", className)}
+        className={cn(styles.label, className)}
       >
-        <span className="relative mt-0.5 flex-shrink-0">
+        <span className={styles.boxWrapper}>
           <input
             ref={ref}
             id={boxId}
@@ -24,21 +25,15 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             className="peer sr-only"
             {...props}
           />
-          <span
-            className={cn(
-              "border-outline-variant bg-surface-container-lowest flex h-5 w-5 items-center justify-center rounded-sm border transition",
-              "peer-checked:bg-primary-container peer-checked:border-primary-container",
-              "peer-focus-visible:ring-primary-container peer-focus-visible:ring-2"
-            )}
-          >
-            {checked && <Check className="text-on-primary-container h-3.5 w-3.5" strokeWidth={3} />}
+          <span className={styles.box}>
+            {checked && <Check className={styles.checkIcon} strokeWidth={3} />}
           </span>
         </span>
         {(label || description) && (
-          <span className="flex flex-col">
-            {label && <span className="text-body-md text-on-surface">{label}</span>}
+          <span className={styles.textWrapper}>
+            {label && <span className={styles.labelText}>{label}</span>}
             {description && (
-              <span className="text-label-sm text-on-surface-variant">{description}</span>
+              <span className={styles.description}>{description}</span>
             )}
           </span>
         )}

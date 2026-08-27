@@ -4,13 +4,13 @@ import { useState } from "react";
 import { Search, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
+import { Card } from "@/components/ui/card/Card";
+import { Input } from "@/components/ui/input/Input";
 import { Select } from "@/components/ui/Select";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
-import { Avatar } from "@/components/ui/Avatar";
-import { ProgressBar } from "@/components/ui/ProgressBar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
+import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 
 const STATUS_LABEL: Record<
   string,

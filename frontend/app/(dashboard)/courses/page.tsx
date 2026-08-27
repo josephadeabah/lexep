@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Search, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/card/Card";
+import { Input } from "@/components/ui/input/Input";
+import { Badge } from "@/components/ui/badge/Badge";
 
 // Static catalog for now. Swap for `api.listCourses()` once a Course model
 // is added to the backend — the shape below is intentionally close to what

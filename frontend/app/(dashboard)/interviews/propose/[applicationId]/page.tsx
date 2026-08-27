@@ -5,10 +5,10 @@ import { useParams, useRouter } from "next/navigation";
 import { X, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
-import { Textarea } from "@/components/ui/Textarea";
+import { Textarea } from "@/components/ui/text-area/Textarea";
 
 function nextBusinessSlots(): { label: string; iso: string }[] {
   const slots: { label: string; iso: string }[] = [];

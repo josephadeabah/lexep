@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input/Input";
 import { Select } from "@/components/ui/Select";
-import { Checkbox } from "@/components/ui/Checkbox";
+import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 

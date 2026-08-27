@@ -5,12 +5,12 @@ import { User as UserIcon, Bell, Shield, Mail, Smartphone, Check } from "lucide-
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/lib/auth-store";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
+import { Card } from "@/components/ui/card/Card";
+import { Input } from "@/components/ui/input/Input";
 import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/Checkbox";
+import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { Radio } from "@/components/ui/Radio";
-import { Avatar } from "@/components/ui/Avatar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 
 const TABS = [
   { id: "account", label: "Account Information", icon: UserIcon },

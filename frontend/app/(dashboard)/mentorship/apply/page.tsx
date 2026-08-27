@@ -6,10 +6,10 @@ import Link from "next/link";
 import { User as UserIcon, Briefcase, Building2, History, Link as LinkIcon, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input/Input";
 import { Select } from "@/components/ui/Select";
-import { Checkbox } from "@/components/ui/Checkbox";
-import { Textarea } from "@/components/ui/Textarea";
+import { Checkbox } from "@/components/ui/checkbox/Checkbox";
+import { Textarea } from "@/components/ui/text-area/Textarea";
 import { api } from "@/lib/api";
 
 const INDUSTRIES = ["Technology", "Design", "Finance", "Healthcare", "Education", "Marketing"];

@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Stepper } from "@/components/ui/Stepper";
+import { Stepper } from "@/components/ui/stepper/Stepper";
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input/Input";
 import { Radio } from "@/components/ui/Radio";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";

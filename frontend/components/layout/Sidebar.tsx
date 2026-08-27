@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HelpCircle, LogOut } from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 import { Logo } from "@/components/ui/Logo";
 import type { NavItem } from "@/lib/nav-config";
 
