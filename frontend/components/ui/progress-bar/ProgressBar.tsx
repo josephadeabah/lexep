@@ -1,3 +1,6 @@
+import { cn } from "@/lib/utils";
+import styles from "./progress-bar.module.css";
+
 interface ProgressBarProps {
   value: number;
   className?: string;
@@ -8,12 +11,9 @@ export function ProgressBar({ value, className, trackClassName }: ProgressBarPro
   const clamped = Math.min(100, Math.max(0, value));
   
   return (
-    <div 
-      className={`h-1 w-full rounded-full bg-[#f0f0f0] ${trackClassName || ""}`}
-      data-testid="progress-track"
-    >
+    <div className={`${styles.track} ${trackClassName || ""}`} data-testid="progress-track">
       <div 
-        className={`h-1 rounded-full bg-[#d4af37] transition-all duration-300 ${className || ""}`}
+        className={`${styles.fill} ${className || ""}`} 
         style={{ width: `${clamped}%` }}
         data-testid="progress-fill"
       />

@@ -3,12 +3,11 @@
   height: 4px;
   border-radius: 9999px;
   background: #f0f0f0;
-  overflow: hidden;
 }
 
 .fill {
   height: 4px;
   border-radius: 9999px;
-  background: #d4af37; /* Direct gold hex - no CSS variable */
+  background: var(--gold);
   transition: width 300ms ease;
 }
