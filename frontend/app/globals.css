@@ -488,6 +488,14 @@
   border-color: var(--color-outline-variant);
 }
 
+.border-outline-variant\/40 {
+  border-color: color-mix(
+    in srgb,
+    var(--color-outline-variant) 40%,
+    transparent
+  );
+}
+
 .border-primary {
   border-color: var(--color-primary);
 }
@@ -1387,6 +1395,10 @@
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.hover\:text-primary:hover {
+  color: var(--color-primary);
 }
 
 
