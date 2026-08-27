@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, forwardRef } from "react";
+import { ButtonHTMLAttributes, forwardRef, ElementType } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -42,18 +42,66 @@ const buttonVariants = cva(
   }
 );
 
-function Button({
-  className,
-  variant = "default",
-  size = "default",
-  ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+// Base props that all variants share
+type BaseButtonProps = {
+  className?: string;
+  children?: React.ReactNode;
+} & VariantProps<typeof buttonVariants>;
+
+// Button-specific props (when used as a button)
+type ButtonAsButtonProps = BaseButtonProps & {
+  as?: "button";
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+// Link-specific props (when used as a Link)
+type ButtonAsLinkProps = BaseButtonProps & {
+  as: "link";
+  href: string;
+} & React.ComponentProps<typeof Link>;
+
+// Anchor-specific props (when used as an anchor)
+type ButtonAsAnchorProps = BaseButtonProps & {
+  as: "a";
+  href: string;
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
+type ButtonProps = ButtonAsButtonProps | ButtonAsLinkProps | ButtonAsAnchorProps;
+
+function Button(props: ButtonProps) {
+  const { className, variant, size, children } = props;
+
+  const classNames = cn(buttonVariants({ variant, size, className }));
+
+  // Render as Next.js Link
+  if (props.as === "link") {
+    const { href, ...rest } = props;
+    return (
+      <Link href={href} className={classNames} {...rest}>
+        {children}
+      </Link>
+    );
+  }
+
+  // Render as anchor tag
+  if (props.as === "a") {
+    const { href, ...rest } = props;
+    return (
+      <a href={href} className={classNames} {...rest}>
+        {children}
+      </a>
+    );
+  }
+
+  // Default: Render as button
+  const { as, ...rest } = props;
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
+      className={classNames}
+      {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
+      {children}
+    </ButtonPrimitive>
   );
 }
 
