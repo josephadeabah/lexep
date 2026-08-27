@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
-import { NAV_BY_ROLE, ADMIN_NAV, NavItem } from "@/lib/nav-config";
+import { NAV_BY_ROLE, ADMIN_NAV } from "@/lib/nav-config";
 import { HelpCircle, LogOut, Bell, Settings, Menu, X, Search, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Avatar } from "@/components/ui/avatar/Avatar";
@@ -91,6 +91,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const { user, isInitialized, hydrate, logout } = useAuthStore();
 
   useEffect(() => {
@@ -109,6 +110,18 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       router.replace(`/onboarding/${user.role}`);
     }
   }, [isInitialized, user, router]);
+
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileOpen && !(event.target as Element).closest(".profile-menu")) {
+        setProfileOpen(false);
+      }
+    };
+    
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [profileOpen]);
 
   if (!isInitialized || !user || !user.role) {
     return (
@@ -236,43 +249,57 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
 
-          {headerButton && (
-            <Link href={headerButton.href || "#"} className="post-button">
-              {headerButton.label}
-            </Link>
-          )}
+          {/* Right-side group - always stays at right */}
+          <div className="ml-auto flex items-center gap-2">
+            {headerButton && (
+              <Link href={headerButton.href || "#"} className="post-button">
+                {headerButton.label}
+              </Link>
+            )}
 
-          <button className="icon-button" aria-label="Notifications">
-            <Bell size={23} />
-          </button>
+            <button className="icon-button" aria-label="Notifications">
+              <Bell size={23} />
+            </button>
 
-          <button className="icon-button" aria-label="Settings">
-            <Settings size={23} />
-          </button>
+            <button className="icon-button" aria-label="Settings">
+              <Settings size={23} />
+            </button>
 
-          <details className="profile-menu">
-            <summary className="profile-avatar" aria-label="Open profile menu">
-              <Avatar name={user.full_name} src={user.avatar_url} size={40} />
-            </summary>
-            <nav className="profile-dropdown" aria-label="Mobile account navigation">
-              {headerLinks.map((link) => (
-                <a key={link.label} href={link.href}>
-                  {link.label}
-                </a>
-              ))}
-              <a href="#profile">{brandConfig.roleLabel} Profile</a>
+            {/* Profile Menu */}
+            <div className="profile-menu">
               <button
-                className="dashboard-nav-item"
-                onClick={() => {
-                  logout();
-                  router.replace("/sign-in");
-                }}
+                className="profile-avatar"
+                aria-label="Open profile menu"
+                onClick={() => setProfileOpen(!profileOpen)}
               >
-                <LogOut size={16} />
-                Logout
+                <Avatar name={user.full_name} src={user.avatar_url} size={40} />
               </button>
-            </nav>
-          </details>
+
+              {profileOpen && (
+                <nav className="profile-dropdown" aria-label="Account navigation">
+                  {headerLinks.map((link) => (
+                    <a key={link.label} href={link.href} onClick={() => setProfileOpen(false)}>
+                      {link.label}
+                    </a>
+                  ))}
+                  <a href="#profile" onClick={() => setProfileOpen(false)}>
+                    {brandConfig.roleLabel} Profile
+                  </a>
+                  <button
+                    className="dashboard-nav-item"
+                    onClick={() => {
+                      setProfileOpen(false);
+                      logout();
+                      router.replace("/sign-in");
+                    }}
+                  >
+                    <LogOut size={16} />
+                    Logout
+                  </button>
+                </nav>
+              )}
+            </div>
+          </div>
         </header>
 
         {/* Main Content */}
