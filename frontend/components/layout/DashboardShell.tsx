@@ -44,12 +44,11 @@ const BRAND_BY_ROLE: Record<
 const HEADER_LINKS_BY_ROLE: Record<UserRole, { label: string; href: string }[]> = {
   learner: [
     { label: "Analytics", href: "#analytics" },
-    { label: "Talent Pool", href: "#talent" },
     { label: "Help", href: "#help" },
   ],
   mentor: [
     { label: "Analytics", href: "#analytics" },
-    { label: "Students", href: "#students" },
+    { label: "Learners", href: "#learners" },
     { label: "Help", href: "#help" },
   ],
   company: [
