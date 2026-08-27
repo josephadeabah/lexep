@@ -10,9 +10,9 @@ interface ProgressBarProps {
 export function ProgressBar({ value, className, trackClassName }: ProgressBarProps) {
   const clamped = Math.min(100, Math.max(0, value));
   return (
-    <div className={cn("bg-surface-container-high h-1 w-full rounded-full", trackClassName)}>
+    <div className={cn("h-1 w-full rounded-full bg-surface-container-high", trackClassName)}>
       <div
-        className={cn("bg-primary-container h-1 rounded-full transition-all", className)}
+        className={cn("h-1 rounded-full bg-primary-container transition-all", className)}
         style={{ width: `${clamped}%` }}
       />
     </div>
