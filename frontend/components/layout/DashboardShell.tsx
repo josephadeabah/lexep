@@ -1,11 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Sidebar } from "./Sidebar";
-import { OfflineBanner } from "./OfflineBanner";
 import { useAuthStore } from "@/lib/auth-store";
 import { NAV_BY_ROLE } from "@/lib/nav-config";
+import { HelpCircle, LogOut, Bell, Settings, Menu, X, Search } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
+import { Avatar } from "@/components/ui/Avatar";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { UserRole } from "@/lib/types";
 
 const BRAND_BY_ROLE: Record<
@@ -40,6 +43,8 @@ const BRAND_BY_ROLE: Record<
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, isInitialized, hydrate, logout } = useAuthStore();
 
   useEffect(() => {
@@ -72,28 +77,145 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="dashboard-shell">
-      <Sidebar
-        brand={config.brand}
-        tagline={config.tagline}
-        navItems={NAV_BY_ROLE[role]}
-        ctaLabel={config.ctaLabel}
-        ctaHref={config.ctaHref}
-        userSummary={{
-          name: user.full_name,
-          roleLabel: config.roleLabel,
-          avatarUrl: user.avatar_url,
-        }}
-        onLogout={() => {
-          logout();
-          router.replace("/sign-in");
-        }}
-      />
-      <main className="dashboard-content">
-        <OfflineBanner />
-        <div className="dashboard-main">
-          <div className="max-w-container-max mx-auto w-full">{children}</div>
+      {/* Sidebar */}
+      <aside className={`dashboard-sidebar ${sidebarOpen ? "is-open" : ""}`}>
+        <div className="company-brand">
+          <div className="company-avatar">
+            <Logo variant="dark" size={48} showWordmark={false} />
+          </div>
+          <div>
+            <strong>{config.brand}</strong>
+            <span>{config.tagline}</span>
+          </div>
         </div>
-      </main>
+
+        {user && (
+          <div className="flex items-center gap-3 rounded-md bg-white/5 p-3">
+            <Avatar name={user.full_name} src={user.avatar_url} size={36} />
+            <div className="min-w-0">
+              <p className="truncate text-[#f4d36a]">{user.full_name}</p>
+              <p className="truncate text-[#bdbbb8] text-sm">{config.roleLabel}</p>
+            </div>
+          </div>
+        )}
+
+        {config.ctaLabel && (
+          <Link
+            href={config.ctaHref || "#"}
+            className="dashboard-nav-item bg-[#ddb839] text-[#171717] font-bold rounded-md m-4"
+          >
+            {config.ctaLabel}
+          </Link>
+        )}
+
+        <nav className="dashboard-nav">
+          {NAV_BY_ROLE[role].map((item) => {
+            const Icon = item.icon;
+            const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`dashboard-nav-item ${active ? "active" : ""}`}
+              >
+                <Icon size={21} />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="sidebar-bottom">
+          <Link href="/help" className="dashboard-nav-item">
+            <HelpCircle size={21} />
+            <span>Help Center</span>
+          </Link>
+          <button
+            className="dashboard-nav-item"
+            onClick={() => {
+              logout();
+              router.replace("/sign-in");
+            }}
+          >
+            <LogOut size={21} />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* Mobile scrim */}
+      {sidebarOpen && (
+        <button
+          className="sidebar-scrim"
+          aria-label="Close sidebar"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Content */}
+      <div className="dashboard-content">
+        {/* Top Navigation */}
+        <header className="dashboard-header">
+          <button
+            className="dashboard-menu"
+            aria-label={sidebarOpen ? "Close dashboard menu" : "Open dashboard menu"}
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          <label className="dashboard-search">
+            <Search size={17} aria-hidden="true" />
+            <span className="sr-only">Search</span>
+            <input placeholder="Search..." />
+          </label>
+
+          <nav className="dashboard-top-nav" aria-label="Account navigation">
+            <a href="#analytics">Analytics</a>
+            <a href="#talent">Talent Pool</a>
+            <a href="#help">Help</a>
+          </nav>
+
+          {role === "company" && (
+            <button className="post-button">Post Internship</button>
+          )}
+
+          <button className="icon-button" aria-label="Notifications">
+            <Bell size={23} />
+          </button>
+
+          <button className="icon-button" aria-label="Settings">
+            <Settings size={23} />
+          </button>
+
+          <details className="profile-menu">
+            <summary className="profile-avatar" aria-label="Open profile menu">
+              <Avatar name={user.full_name} src={user.avatar_url} size={40} />
+            </summary>
+            <nav className="profile-dropdown" aria-label="Mobile account navigation">
+              <a href="#analytics">Analytics</a>
+              <a href="#talent">Talent Pool</a>
+              <a href="#help">Help</a>
+              <a href="#profile">{config.roleLabel} Profile</a>
+              <button
+                className="dashboard-nav-item"
+                onClick={() => {
+                  logout();
+                  router.replace("/sign-in");
+                }}
+              >
+                <LogOut size={16} />
+                Logout
+              </button>
+            </nav>
+          </details>
+        </header>
+
+        {/* Main Content */}
+        <main className="dashboard-main">
+          <div className="max-w-container-max mx-auto w-full">{children}</div>
+        </main>
+      </div>
     </div>
   );
 }

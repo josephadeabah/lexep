@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HelpCircle, LogOut } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/Avatar";
 import { Logo } from "@/components/ui/Logo";
 import type { NavItem } from "@/lib/nav-config";
@@ -16,6 +15,8 @@ interface SidebarProps {
   ctaHref?: string;
   userSummary?: { name: string; roleLabel: string; avatarUrl?: string | null };
   onLogout?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 export function Sidebar({
@@ -26,67 +27,79 @@ export function Sidebar({
   ctaHref = "/opportunities/new",
   userSummary,
   onLogout,
+  isOpen = false,
+  onClose,
 }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="dashboard-sidebar">
-      <div className="company-brand">
-        <div className="company-avatar">
-          <Logo variant="dark" size={48} showWordmark={false} />
-        </div>
-        <div>
-          <strong>{brand}</strong>
-          <span>{tagline}</span>
-        </div>
-      </div>
-
-      {userSummary && (
-        <div className="flex items-center gap-3 rounded-md bg-white/5 p-3">
-          <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
-          <div className="min-w-0">
-            <p className="truncate text-[#f4d36a]">{userSummary.name}</p>
-            <p className="truncate text-[#bdbbb8] text-sm">{userSummary.roleLabel}</p>
+    <>
+      {isOpen && (
+        <button
+          className="sidebar-scrim"
+          aria-label="Close sidebar"
+          onClick={onClose}
+        />
+      )}
+      
+      <aside className={`dashboard-sidebar ${isOpen ? "is-open" : ""}`}>
+        <div className="company-brand">
+          <div className="company-avatar">
+            <Logo variant="dark" size={48} showWordmark={false} />
+          </div>
+          <div>
+            <strong>{brand}</strong>
+            <span>{tagline}</span>
           </div>
         </div>
-      )}
 
-      {ctaLabel && (
-        <Link
-          href={ctaHref || "#"}
-          className="dashboard-nav-item bg-[#ddb839] text-[#171717] font-bold rounded-md m-4"
-        >
-          {ctaLabel}
-        </Link>
-      )}
+        {userSummary && (
+          <div className="flex items-center gap-3 rounded-md bg-white/5 p-3">
+            <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
+            <div className="min-w-0">
+              <p className="truncate text-[#f4d36a]">{userSummary.name}</p>
+              <p className="truncate text-[#bdbbb8] text-sm">{userSummary.roleLabel}</p>
+            </div>
+          </div>
+        )}
 
-      <nav className="dashboard-nav">
-        {navItems.map((item) => {
-          const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`dashboard-nav-item ${active ? "active" : ""}`}
-            >
-              <Icon size={21} />
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
+        {ctaLabel && (
+          <Link
+            href={ctaHref || "#"}
+            className="dashboard-nav-item bg-[#ddb839] text-[#171717] font-bold rounded-md m-4"
+          >
+            {ctaLabel}
+          </Link>
+        )}
 
-      <div className="sidebar-bottom">
-        <Link href="/help" className="dashboard-nav-item">
-          <HelpCircle size={21} />
-          Help Center
-        </Link>
-        <button onClick={onLogout} className="dashboard-nav-item">
-          <LogOut size={21} />
-          Logout
-        </button>
-      </div>
-    </aside>
+        <nav className="dashboard-nav">
+          {navItems.map((item) => {
+            const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`dashboard-nav-item ${active ? "active" : ""}`}
+              >
+                <Icon size={21} />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="sidebar-bottom">
+          <Link href="/help" className="dashboard-nav-item">
+            <HelpCircle size={21} />
+            Help Center
+          </Link>
+          <button onClick={onLogout} className="dashboard-nav-item">
+            <LogOut size={21} />
+            Logout
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
