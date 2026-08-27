@@ -32,16 +32,14 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="gap-lg flex flex-col items-center">
-      <div className="card-level1 gap-md p-md flex w-full flex-col">
+    <div className="flex flex-col items-center gap-lg">
+      <div className="card-level1 w-full p-md flex flex-col gap-md">
         <div className="text-center">
-          <div className="flex justify-center">
-            <Logo variant="light" size={64} />
-          </div>
-          <p className="text-body-md text-on-surface-variant mt-1">Create an account</p>
+          <div className="flex justify-center"><Logo variant="light" size={32} /></div>
+          <p className="mt-1 text-body-md text-on-surface-variant">Create an account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="gap-md flex flex-col">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-md">
           <Input
             label="Full Name"
             placeholder="Jane Doe"
@@ -73,29 +71,21 @@ export default function SignUpPage() {
             {isLoading ? "Creating account…" : "Sign Up"}
           </Button>
 
-          <div className="text-label-sm text-on-surface-variant relative my-1 text-center">
-            <span className="bg-surface-container-lowest relative px-3">Or continue with</span>
-            <div className="bg-outline-variant absolute top-1/2 right-0 left-0 -z-10 h-px" />
+          <div className="relative my-1 text-center text-label-sm text-on-surface-variant">
+            <span className="relative bg-surface-container-lowest px-3">Or continue with</span>
+            <div className="absolute left-0 right-0 top-1/2 -z-10 h-px bg-outline-variant" />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => setError("Google sign-up isn't configured yet.")}
-            >
+            <Button type="button" variant="ghost" onClick={() => setError("Google sign-up isn't configured yet.")}>
               Google
             </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => setError("LinkedIn sign-up isn't configured yet.")}
-            >
+            <Button type="button" variant="ghost" onClick={() => setError("LinkedIn sign-up isn't configured yet.")}>
               LinkedIn
             </Button>
           </div>
 
-          <p className="text-body-md text-on-surface-variant text-center">
+          <p className="text-center text-body-md text-on-surface-variant">
             Already have an account?{" "}
             <Link href="/sign-in" className="font-label-md text-primary hover:underline">
               Log in instead
@@ -104,8 +94,8 @@ export default function SignUpPage() {
         </form>
       </div>
 
-      <p className="text-label-sm text-on-surface-variant flex items-center gap-2">
-        <Users className="text-primary h-4 w-4" />
+      <p className="flex items-center gap-2 text-label-sm text-on-surface-variant">
+        <Users className="h-4 w-4 text-primary" />
         Join 10,000+ African youth shaping the future
       </p>
     </div>

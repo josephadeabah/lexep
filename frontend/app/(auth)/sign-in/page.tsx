@@ -37,17 +37,13 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="gap-lg flex flex-col items-center">
+    <div className="flex flex-col items-center gap-lg">
       <div className="text-center">
-        <div className="flex justify-center">
-          <Logo variant="light" size={64} />
-        </div>
-        <p className="text-body-md text-on-surface-variant mt-2">
-          Welcome back. Please enter your details.
-        </p>
+        <div className="flex justify-center"><Logo variant="light" size={32} /></div>
+        <p className="mt-2 text-body-md text-on-surface-variant">Welcome back. Please enter your details.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="card-level1 gap-md p-md flex w-full flex-col">
+      <form onSubmit={handleSubmit} className="card-level1 w-full p-md flex flex-col gap-md">
         <Input
           label="Email"
           type="email"
@@ -70,7 +66,7 @@ export default function SignInPage() {
         <button
           type="button"
           onClick={() => setShowPassword((v) => !v)}
-          className="text-label-sm text-on-surface-variant hover:text-primary -mt-2 self-end"
+          className="-mt-2 self-end text-label-sm text-on-surface-variant hover:text-primary"
         >
           <span className="inline-flex items-center gap-1">
             {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
@@ -95,24 +91,16 @@ export default function SignInPage() {
           {isLoading ? "Signing in…" : "Sign In"}
         </Button>
 
-        <div className="text-label-sm text-on-surface-variant relative my-1 text-center">
-          <span className="bg-surface-container-lowest relative px-3">Or continue with</span>
-          <div className="bg-outline-variant absolute top-1/2 right-0 left-0 -z-10 h-px" />
+        <div className="relative my-1 text-center text-label-sm text-on-surface-variant">
+          <span className="relative bg-surface-container-lowest px-3">Or continue with</span>
+          <div className="absolute left-0 right-0 top-1/2 -z-10 h-px bg-outline-variant" />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => setError("Google sign-in isn't configured yet.")}
-          >
+          <Button type="button" variant="ghost" onClick={() => setError("Google sign-in isn't configured yet.")}>
             Google
           </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => setError("LinkedIn sign-in isn't configured yet.")}
-          >
+          <Button type="button" variant="ghost" onClick={() => setError("LinkedIn sign-in isn't configured yet.")}>
             LinkedIn
           </Button>
         </div>
