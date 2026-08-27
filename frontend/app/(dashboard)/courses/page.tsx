@@ -78,7 +78,7 @@ export default function CoursesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+        <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Explore Learning Paths
         </h1>
         <p className="mt-1 text-base text-[#6d6a66]">
@@ -121,10 +121,8 @@ export default function CoursesPage() {
                 <Badge>{course.level}</Badge>
                 <Badge tone={course.tier === "Pro" ? "primary" : "neutral"}>{course.tier}</Badge>
               </div>
-              <p className="text-xs text-[#6d6a66] uppercase tracking-wide">
-                {course.category}
-              </p>
-              <p className="mt-1 text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+              <p className="text-xs tracking-wide text-[#6d6a66] uppercase">{course.category}</p>
+              <p className="mt-1 font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
                 {course.title}
               </p>
               <p className="mt-2 text-base text-[#6d6a66]">{course.description}</p>

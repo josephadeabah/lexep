@@ -11,7 +11,6 @@ import Link from "next/link";
 import type { UserRole } from "@/lib/types";
 import { OfflineBanner } from "./OfflineBanner";
 
-
 const BRAND_BY_ROLE: Record<
   UserRole,
   { brand: string; tagline: string; ctaLabel?: string; ctaHref?: string; roleLabel: string }

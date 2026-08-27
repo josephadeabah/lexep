@@ -36,7 +36,9 @@
   font-size: 16px;
   font-family: "Inter", sans-serif;
   outline: none;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .input::placeholder {

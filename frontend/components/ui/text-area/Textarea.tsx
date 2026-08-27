@@ -17,12 +17,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             {label}
           </label>
         )}
-        <textarea
-          ref={ref}
-          id={areaId}
-          className={cn(styles.textarea, className)}
-          {...props}
-        />
+        <textarea ref={ref} id={areaId} className={cn(styles.textarea, className)} {...props} />
         {hint && <span className={styles.hint}>{hint}</span>}
       </div>
     );

@@ -24,10 +24,7 @@ export function Avatar({ src, name, size = 40, className }: AvatarProps) {
     );
   }
   return (
-    <span
-      className={cn(styles.avatarFallback, className)}
-      style={{ width: size, height: size }}
-    >
+    <span className={cn(styles.avatarFallback, className)} style={{ width: size, height: size }}>
       {initials(name)}
     </span>
   );

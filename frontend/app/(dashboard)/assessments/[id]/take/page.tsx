@@ -38,8 +38,7 @@ export default function TakeAssessmentPage() {
 
   if (progress.isLoading) return <p className="text-base text-[#6d6a66]">Loading…</p>;
   const p = progress.data;
-  if (!p || !p.question)
-    return <p className="text-base text-[#6d6a66]">No questions available.</p>;
+  if (!p || !p.question) return <p className="text-base text-[#6d6a66]">No questions available.</p>;
 
   const percent = (p.current_index / p.total_questions) * 100;
 
@@ -48,7 +47,7 @@ export default function TakeAssessmentPage() {
       {/* Header */}
       <div className="flex items-center justify-between border-b border-[#e0d8c9] bg-white px-6 py-4">
         <span className="flex items-center gap-2">
-          <span className="text-2xl font-bold text-[#735c00] font-['Hanken_Grotesk'] tracking-[-0.04em]">
+          <span className="font-['Hanken_Grotesk'] text-2xl font-bold tracking-[-0.04em] text-[#735c00]">
             Lexep
           </span>
           <span className="text-sm text-[#6d6a66]">| {p.assessment_title}</span>
@@ -64,7 +63,7 @@ export default function TakeAssessmentPage() {
       <div className="flex flex-1 overflow-hidden">
         {/* Question Map Sidebar */}
         <aside className="hidden w-72 flex-shrink-0 overflow-y-auto border-r border-[#e0d8c9] bg-white p-6 md:block">
-          <p className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+          <p className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
             Question Map
           </p>
           <div className="mt-2 flex items-center justify-between text-sm text-[#6d6a66]">
@@ -107,10 +106,10 @@ export default function TakeAssessmentPage() {
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto px-8 py-10">
           <div className="mx-auto max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-wide text-[#735c00]">
+            <p className="text-xs font-bold tracking-wide text-[#735c00] uppercase">
               {p.assessment_title}
             </p>
-            <h1 className="mt-2 text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em] leading-[1.05]">
+            <h1 className="mt-2 font-['Hanken_Grotesk'] text-4xl leading-[1.05] font-bold tracking-[-0.045em] text-[#1b1c1c]">
               {p.question.prompt}
             </h1>
 
@@ -137,7 +136,7 @@ export default function TakeAssessmentPage() {
                     checked={selectedOption === option.id}
                     onChange={() => setSelectedOption(option.id)}
                   />
-                  <span className="flex h-7 w-7 items-center justify-center rounded bg-[#f0f0f0] text-xs font-bold uppercase text-[#6d6a66]">
+                  <span className="flex h-7 w-7 items-center justify-center rounded bg-[#f0f0f0] text-xs font-bold text-[#6d6a66] uppercase">
                     {option.id}
                   </span>
                   <span className="text-base text-[#1b1c1c]">{option.text}</span>

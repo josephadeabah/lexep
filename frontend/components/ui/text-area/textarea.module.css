@@ -24,7 +24,9 @@
   font-family: "Inter", sans-serif;
   outline: none;
   resize: vertical;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .textarea::placeholder {

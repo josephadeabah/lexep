@@ -26,7 +26,7 @@ export default function AssessmentHubPage() {
     <div className="flex flex-col gap-8">
       {/* Header */}
       <div>
-        <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Skill Assessment Hub
         </h1>
         <p className="mt-2 text-base text-[#6d6a66]">
@@ -44,7 +44,7 @@ export default function AssessmentHubPage() {
               </Badge>
               {featured.level && <Badge>{featured.level}</Badge>}
             </div>
-            <h2 className="mt-4 text-3xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.04em]">
+            <h2 className="mt-4 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.04em] text-[#1b1c1c]">
               {featured.title}
             </h2>
             <p className="mt-2 text-base text-[#6d6a66]">{featured.description}</p>
@@ -64,7 +64,7 @@ export default function AssessmentHubPage() {
       {/* In Progress */}
       <div>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+          <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
             In Progress
           </h2>
           <a href="#" className="text-sm font-semibold text-[#735c00]">
@@ -95,9 +95,7 @@ export default function AssessmentHubPage() {
                   <div className="mt-4">
                     <div className="flex items-center justify-between text-sm text-[#6d6a66]">
                       <span>{percent}% Completed</span>
-                      <span>
-                        {percent < 50 ? "25 mins left" : "1.5 hrs left"}
-                      </span>
+                      <span>{percent < 50 ? "25 mins left" : "1.5 hrs left"}</span>
                     </div>
                     <ProgressBar value={percent} className="mt-2" />
                   </div>
@@ -123,7 +121,7 @@ export default function AssessmentHubPage() {
 
       {/* All Assessments */}
       <div>
-        <h2 className="mb-4 text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+        <h2 className="mb-4 font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
           All Assessments
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -133,7 +131,7 @@ export default function AssessmentHubPage() {
                 {assessment.level && <Badge>{assessment.level}</Badge>}
                 <span className="text-sm text-[#6d6a66]">{assessment.category}</span>
               </div>
-              <p className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+              <p className="font-['Hanken_Grotesk'] text-lg font-semibold text-[#1b1c1c]">
                 {assessment.title}
               </p>
               <p className="mt-2 text-sm text-[#6d6a66]">{assessment.description}</p>

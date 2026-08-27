@@ -12,10 +12,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className, label, description, id, checked, ...props }, ref) => {
     const boxId = id || Math.random().toString(36).slice(2);
     return (
-      <label
-        htmlFor={boxId}
-        className={cn(styles.label, className)}
-      >
+      <label htmlFor={boxId} className={cn(styles.label, className)}>
         <span className={styles.boxWrapper}>
           <input
             ref={ref}
@@ -32,9 +29,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         {(label || description) && (
           <span className={styles.textWrapper}>
             {label && <span className={styles.labelText}>{label}</span>}
-            {description && (
-              <span className={styles.description}>{description}</span>
-            )}
+            {description && <span className={styles.description}>{description}</span>}
           </span>
         )}
       </label>

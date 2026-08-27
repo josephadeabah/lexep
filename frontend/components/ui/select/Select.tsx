@@ -18,12 +18,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </label>
         )}
         <div className={styles.selectWrapper}>
-          <select
-            ref={ref}
-            id={selectId}
-            className={cn(styles.select, className)}
-            {...props}
-          >
+          <select ref={ref} id={selectId} className={cn(styles.select, className)} {...props}>
             {children}
           </select>
           <ChevronDown className={styles.chevron} />

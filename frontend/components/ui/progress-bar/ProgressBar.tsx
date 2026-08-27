@@ -11,10 +11,7 @@ export function ProgressBar({ value, className, trackClassName }: ProgressBarPro
   const clamped = Math.min(100, Math.max(0, value));
   return (
     <div className={cn(styles.track, trackClassName)}>
-      <div
-        className={cn(styles.fill, className)}
-        style={{ width: `${clamped}%` }}
-      />
+      <div className={cn(styles.fill, className)} style={{ width: `${clamped}%` }} />
     </div>
   );
 }

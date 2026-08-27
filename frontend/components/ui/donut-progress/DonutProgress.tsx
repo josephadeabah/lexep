@@ -13,10 +13,7 @@ export function DonutProgress({ percent, size = 64, strokeWidth = 5, label }: Do
   const offset = circumference - (percent / 100) * circumference;
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{ width: size, height: size }}
-    >
+    <div className={styles.wrapper} style={{ width: size, height: size }}>
       <svg width={size} height={size} className={styles.svg}>
         <circle
           cx={size / 2}
@@ -40,9 +37,7 @@ export function DonutProgress({ percent, size = 64, strokeWidth = 5, label }: Do
           className={styles.fill}
         />
       </svg>
-      <span className={styles.label}>
-        {label ?? `${percent}%`}
-      </span>
+      <span className={styles.label}>{label ?? `${percent}%`}</span>
     </div>
   );
 }

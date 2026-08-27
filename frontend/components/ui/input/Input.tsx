@@ -20,9 +20,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </label>
         )}
         <div className={styles.inputWrapper}>
-          {icon && (
-            <span className={styles.icon}>{icon}</span>
-          )}
+          {icon && <span className={styles.icon}>{icon}</span>}
           <input
             ref={ref}
             id={inputId}

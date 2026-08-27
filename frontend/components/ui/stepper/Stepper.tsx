@@ -20,10 +20,7 @@ export function Stepper({ currentStep, totalSteps, label }: StepperProps) {
         {Array.from({ length: totalSteps }).map((_, i) => (
           <div
             key={i}
-            className={cn(
-              styles.step,
-              i < currentStep ? styles.active : styles.inactive
-            )}
+            className={cn(styles.step, i < currentStep ? styles.active : styles.inactive)}
           />
         ))}
       </div>
