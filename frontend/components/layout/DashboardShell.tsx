@@ -32,8 +32,8 @@ const BRAND_BY_ROLE: Record<
     roleLabel: "Company",
   },
   admin: {
-    brand: "Architect Portal",
-    tagline: "Empowering African Youth",
+    brand: "Lexep Admin",
+    tagline: "Platform Management",
     roleLabel: "Admin",
   },
 };
@@ -71,7 +71,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const config = BRAND_BY_ROLE[role];
 
   return (
-    <div className="bg-surface flex min-h-screen">
+    <div className="dashboard-shell">
       <Sidebar
         brand={config.brand}
         tagline={config.tagline}
@@ -88,9 +88,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           router.replace("/sign-in");
         }}
       />
-      <main className="flex-1 overflow-y-auto">
+      <main className="dashboard-content">
         <OfflineBanner />
-        <div className="px-md py-lg md:px-xl md:py-xl">
+        <div className="dashboard-main">
           <div className="max-w-container-max mx-auto w-full">{children}</div>
         </div>
       </main>

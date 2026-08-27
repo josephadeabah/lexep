@@ -1,14 +1,18 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import { Sidebar } from "./Sidebar";
 import { OfflineBanner } from "./OfflineBanner";
 import { ADMIN_NAV } from "@/lib/nav-config";
+import { HelpCircle, LogOut } from "lucide-react";
+import { Logo } from "../ui/Logo";
+import Link from "next/link";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { user, isInitialized, hydrate, logout } = useAuthStore();
 
   useEffect(() => {
@@ -33,21 +37,56 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="bg-surface flex min-h-screen">
-      <Sidebar
-        brand="Lexep Admin"
-        tagline="Platform Management"
-        navItems={ADMIN_NAV}
-        ctaLabel=""
-        userSummary={{ name: user.full_name, roleLabel: "Admin" }}
-        onLogout={() => {
-          logout();
-          router.replace("/sign-in");
-        }}
-      />
-      <main className="flex-1 overflow-y-auto">
+    <div className="dashboard-shell">
+      <aside className="dashboard-sidebar">
+        <div className="company-brand">
+          <div className="company-avatar">
+            <Logo variant="dark" size={48} showWordmark={false} />
+          </div>
+          <div>
+            <strong>Lexep Admin</strong>
+            <span>Platform Management</span>
+          </div>
+        </div>
+
+        <nav className="dashboard-nav">
+          {ADMIN_NAV.map((item) => {
+            const Icon = item.icon;
+            const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`dashboard-nav-item ${active ? "active" : ""}`}
+              >
+                <Icon size={21} />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="sidebar-bottom">
+          <button className="role-nav-item">
+            <HelpCircle size={21} />
+            <span>Help Center</span>
+          </button>
+          <button
+            className="role-nav-item"
+            onClick={() => {
+              logout();
+              router.replace("/sign-in");
+            }}
+          >
+            <LogOut size={21} />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <main className="dashboard-content">
         <OfflineBanner />
-        <div className="px-md py-lg md:px-xl md:py-xl">
+        <div className="dashboard-main">
           <div className="max-w-container-max mx-auto w-full">{children}</div>
         </div>
       </main>
