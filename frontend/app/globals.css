@@ -13,6 +13,13 @@
   --line: #d9d3c6;
   --charcoal: #1b1c1c;
   --radius: 0.5rem;
+
+  --popover: #ffffff;
+  --popover-foreground: #1b1c1c;
+  --accent: #f5f3f3;
+  --accent-foreground: #1b1c1c;
+  --muted: #6d6a66;
+  --muted-foreground: #6d6a66;
 }
 * {
   box-sizing: border-box;

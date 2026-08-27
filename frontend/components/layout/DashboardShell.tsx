@@ -10,6 +10,14 @@ import { Avatar } from "@/components/ui/avatar/Avatar";
 import Link from "next/link";
 import type { UserRole } from "@/lib/types";
 import { OfflineBanner } from "./OfflineBanner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu/dropdown-menu";
 
 const BRAND_BY_ROLE: Record<
   UserRole,
@@ -91,7 +99,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
   const { user, isInitialized, hydrate, logout } = useAuthStore();
 
   useEffect(() => {
@@ -110,18 +117,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       router.replace(`/onboarding/${user.role}`);
     }
   }, [isInitialized, user, router]);
-
-  // Close profile dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (profileOpen && !(event.target as Element).closest(".profile-menu")) {
-        setProfileOpen(false);
-      }
-    };
-    
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [profileOpen]);
 
   if (!isInitialized || !user || !user.role) {
     return (
@@ -265,40 +260,42 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <Settings size={23} />
             </button>
 
-            {/* Profile Menu */}
-            <div className="profile-menu">
-              <button
-                className="profile-avatar"
-                aria-label="Open profile menu"
-                onClick={() => setProfileOpen(!profileOpen)}
-              >
-                <Avatar name={user.full_name} src={user.avatar_url} size={40} />
-              </button>
-
-              {profileOpen && (
-                <nav className="profile-dropdown" aria-label="Account navigation">
-                  {headerLinks.map((link) => (
-                    <a key={link.label} href={link.href} onClick={() => setProfileOpen(false)}>
-                      {link.label}
-                    </a>
-                  ))}
-                  <a href="#profile" onClick={() => setProfileOpen(false)}>
-                    {brandConfig.roleLabel} Profile
-                  </a>
-                  <button
-                    className="dashboard-nav-item"
-                    onClick={() => {
-                      setProfileOpen(false);
-                      logout();
-                      router.replace("/sign-in");
-                    }}
-                  >
-                    <LogOut size={16} />
-                    Logout
-                  </button>
-                </nav>
-              )}
-            </div>
+            {/* Profile Menu - Using shadcn DropdownMenu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="profile-avatar" aria-label="Open profile menu">
+                  <Avatar name={user.full_name} src={user.avatar_url} size={40} />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-semibold">{user.full_name}</span>
+                    <span className="text-xs text-muted-foreground">{brandConfig.roleLabel}</span>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {headerLinks.map((link) => (
+                  <DropdownMenuItem key={link.label} asChild>
+                    <Link href={link.href}>{link.label}</Link>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuItem asChild>
+                  <Link href="#profile">{brandConfig.roleLabel} Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="text-red-600 focus:text-red-600"
+                  onClick={() => {
+                    logout();
+                    router.replace("/sign-in");
+                  }}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
 
