@@ -39,7 +39,7 @@ export function Sidebar({
       <aside className={`dashboard-sidebar ${isOpen ? "is-open" : ""}`}>
         <div className="company-brand">
           <div className="company-avatar">
-            <Logo variant="dark" size={48} showWordmark={false} />
+            <Logo variant="light" size={56} showWordmark={false} />
           </div>
           <div>
             <strong>{brand}</strong>
