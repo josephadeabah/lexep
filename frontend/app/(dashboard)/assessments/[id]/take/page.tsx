@@ -36,7 +36,11 @@ export default function TakeAssessmentPage() {
     }
   }
 
-  if (progress.isLoading) return <p className="text-base text-[#6d6a66]">Loading…</p>;
+  // Only show loading on initial load, not during refetch
+  if (progress.isLoading && !progress.data) {
+    return <p className="text-base text-[#6d6a66]">Loading…</p>;
+  }
+  
   const p = progress.data;
   if (!p || !p.question) return <p className="text-base text-[#6d6a66]">No questions available.</p>;
 
