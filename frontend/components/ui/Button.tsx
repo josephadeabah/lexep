@@ -5,7 +5,7 @@ import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "flex shrink-0 items-center justify-center gap-2 font-['Inter'] font-semibold transition-all outline-none select-none disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "shrink-0 items-center justify-center gap-2 font-['Inter'] font-semibold transition-all outline-none select-none disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -46,6 +46,7 @@ function Button({
   children,
   ...props
 }: ButtonProps) {
+  // Remove `flex`/`inline-flex` from base classes - allow className to set it
   const classes = cn(buttonVariants({ variant, size }), className);
 
   if (href) {
