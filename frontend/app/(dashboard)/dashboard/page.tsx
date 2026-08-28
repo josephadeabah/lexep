@@ -249,9 +249,9 @@ function CompanyDashboard() {
     <div className="flex flex-col gap-8">
       {/* Welcome Header */}
       <div>
-        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
+        <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Welcome, {user.full_name}
-        </h1>
+        </h2>
         <p className="mt-1 text-base text-[#6d6a66]">
           Here is a summary of your current recruitment pipeline.
         </p>
@@ -379,9 +379,9 @@ function MentorDashboard() {
     <div className="flex flex-col gap-8">
       {/* Welcome Header */}
       <div>
-        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
+        <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Welcome back, {user.full_name.split(" ")[0]}.
-        </h1>
+        </h2>
         <p className="mt-1 text-base text-[#6d6a66]">
           Here is a summary of your mentorship activities today.
         </p>
