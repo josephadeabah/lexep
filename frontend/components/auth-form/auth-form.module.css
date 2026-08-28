@@ -38,12 +38,14 @@
   letter-spacing: -0.04em;
   color: #1b1c1c;
   margin: 0 0 0.5rem;
+  text-align: center;
 }
 
 .header p {
   color: #6d6a66;
   font-size: 1rem;
   margin: 0;
+  text-align: center;
 }
 
 /* CARD */
@@ -87,6 +89,8 @@
   left: 0.875rem;
   color: #6d6a66;
   pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .inputIconLeft {
@@ -94,6 +98,8 @@
   left: 0.875rem;
   color: #6d6a66;
   pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .form input:not([type="checkbox"]) {
@@ -122,10 +128,13 @@
 /* PASSWORD */
 .passwordWrapper {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .passwordWrapper input {
   padding-right: 3rem !important;
+  padding-left: 2.75rem !important;
 }
 
 .passwordToggle {
