@@ -59,7 +59,7 @@ export default function GrantsPage() {
           </p>
         </Card>
 
-        <Card className="bg-black p-6 text-white">
+        <div className="rounded-lg border border-[#e0d8c9] bg-[#1b1c1c] p-6 text-white shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
           <p className="text-sm font-semibold">Start a new initiative</p>
           <p className="mt-2 text-sm text-[#c9c7c6]">
             Empower more youth by starting a dedicated funding group.
@@ -70,7 +70,7 @@ export default function GrantsPage() {
           >
             Get Started <ArrowRight className="h-4 w-4" />
           </Link>
-        </Card>
+        </div>
       </div>
 
       {/* Featured Opportunities */}
