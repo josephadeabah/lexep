@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { GraduationCap, Landmark, ArrowRight } from "lucide-react";
+import { GraduationCap, Landmark, ArrowRight, Users, TrendingUp } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/badge/Badge";
 import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 import { formatCurrency } from "@/lib/utils";
 
@@ -18,91 +19,108 @@ export default function GrantsPage() {
   const totalRaised = (groups.data ?? []).reduce((sum, g) => sum + g.raised_amount, 0);
 
   return (
-    <div className="gap-lg flex flex-col">
+    <div className="flex flex-col gap-8">
+      {/* Welcome Header */}
       <div>
-        <h1 className="text-headline-lg text-on-background">
+        <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Welcome back, {user?.full_name.split(" ")[0]}
-        </h1>
-        <p className="text-body-md text-on-surface-variant mt-1">
+        </h2>
+        <p className="mt-1 text-base text-[#6d6a66]">
           Here is the latest impact from your community funding initiatives.
         </p>
       </div>
 
-      <div className="gap-md grid sm:grid-cols-3">
-        <Card>
+      {/* Metrics */}
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Card className="p-6">
           <div className="flex items-center justify-between">
-            <span className="text-label-md text-on-surface-variant">Total Youth Sponsored</span>
-            <GraduationCap className="text-primary h-4 w-4" />
+            <span className="text-sm font-semibold text-[#6d6a66]">Total Youth Sponsored</span>
+            <GraduationCap className="h-5 w-5 text-[#d4af37]" />
           </div>
-          <p
-            className="text-display-lg text-on-background mt-3"
-            style={{ fontSize: 40, lineHeight: "48px" }}
-          >
+          <p className="mt-3 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {totalYouth.toLocaleString()}
           </p>
+          <p className="mt-1 flex items-center gap-1 text-sm text-[#6d6a66]">
+            <TrendingUp className="h-3.5 w-3.5 text-[#276b3b]" />
+            +12% this quarter
+          </p>
         </Card>
-        <Card>
+
+        <Card className="p-6">
           <div className="flex items-center justify-between">
-            <span className="text-label-md text-on-surface-variant">Total Grants Issued</span>
-            <Landmark className="text-primary h-4 w-4" />
+            <span className="text-sm font-semibold text-[#6d6a66]">Total Grants Issued</span>
+            <Landmark className="h-5 w-5 text-[#d4af37]" />
           </div>
-          <p
-            className="text-display-lg text-on-background mt-3"
-            style={{ fontSize: 40, lineHeight: "48px" }}
-          >
+          <p className="mt-3 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {formatCurrency(totalRaised)}
           </p>
-          <p className="text-label-sm text-on-surface-variant mt-1">
+          <p className="mt-1 text-sm text-[#6d6a66]">
             Across {groups.data?.length ?? 0} active groups
           </p>
         </Card>
-        <Card className="bg-inverse-surface text-inverse-on-surface">
-          <p className="text-label-md">Start a new initiative</p>
-          <p className="text-label-sm mt-2 text-[#c9c7c6]">
+
+        <Card className="bg-[#1b1c1c] p-6 text-white">
+          <p className="text-sm font-semibold">Start a new initiative</p>
+          <p className="mt-2 text-sm text-[#c9c7c6]">
             Empower more youth by starting a dedicated funding group.
           </p>
           <Link
             href="/grants/new"
-            className="text-label-md text-primary-fixed-dim mt-4 inline-flex items-center gap-1 hover:underline"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#d4af37] hover:underline"
           >
-            Get Started <ArrowRight className="h-3.5 w-3.5" />
+            Get Started <ArrowRight className="h-4 w-4" />
           </Link>
         </Card>
       </div>
 
+      {/* Featured Opportunities */}
       <div>
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-headline-md text-on-background">Featured Opportunities</h2>
-          <Button href="/grants/apply" variant="ghost" size="sm">
+        <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
+            Featured Opportunities
+          </h2>
+          <Button href="/grants/apply" variant="outline" size="sm">
             Apply for an individual grant
           </Button>
         </div>
-        <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {groups.isLoading ? (
-            <p className="text-body-md text-on-surface-variant">Loading…</p>
+            <p className="text-base text-[#6d6a66]">Loading…</p>
           ) : groups.data && groups.data.length > 0 ? (
             groups.data.map((group) => (
-              <Card key={group.id}>
-                <p className="text-headline-md text-on-background">{group.name}</p>
-                <p className="text-body-md text-on-surface-variant mt-1">{group.tagline}</p>
+              <Card key={group.id} className="flex flex-col p-6">
+                <div className="mb-3 flex items-center justify-between">
+                  <Badge className="bg-[#f5f3f3] text-[#6d6a66]">
+                    {group.category ?? "General"}
+                  </Badge>
+                  <Users className="h-4 w-4 text-[#6d6a66]" />
+                </div>
+
+                <h3 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
+                  {group.name}
+                </h3>
+                <p className="mt-1 flex-1 text-sm text-[#6d6a66]">{group.tagline}</p>
+
                 <div className="mt-4">
-                  <div className="text-label-sm text-on-surface-variant flex items-center justify-between">
+                  <div className="flex items-center justify-between text-sm text-[#6d6a66]">
                     <span>Funding Goal</span>
-                    <span>
+                    <span className="font-semibold text-[#1b1c1c]">
                       {formatCurrency(group.raised_amount)} / {formatCurrency(group.goal_amount)}
                     </span>
                   </div>
                   <ProgressBar value={group.percent_funded} className="mt-2" />
                 </div>
-                <Button href={`/grants/${group.id}`} variant="ghost" className="mt-4 w-full">
+
+                <Button href={`/grants/${group.id}`} variant="outline" className="mt-4 w-full">
                   View Group
                 </Button>
               </Card>
             ))
           ) : (
-            <p className="text-body-md text-on-surface-variant">
+            <p className="text-base text-[#6d6a66]">
               No funding groups yet.{" "}
-              <Link href="/grants/new" className="text-primary hover:underline">
+              <Link href="/grants/new" className="text-[#735c00] hover:underline">
                 Create one →
               </Link>
             </p>
