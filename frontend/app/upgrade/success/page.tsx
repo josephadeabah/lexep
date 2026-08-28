@@ -20,9 +20,9 @@ export default function UpgradeSuccessPage() {
 
         {/* Content */}
         <div>
-          <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-4xl">
+          <h2 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-4xl">
             Welcome to Lexep Pro
-          </h1>
+          </h2>
           <p className="mt-2 text-base text-[#6d6a66]">
             Your upgrade was successful. You now have full access to our premium suite of tools.
           </p>
