@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { User as UserIcon, Briefcase, Building2, History, Link as LinkIcon, X } from "lucide-react";
+import { User, Briefcase, Building2, History, Link as LinkIcon, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input/Input";
@@ -11,6 +11,7 @@ import { Select } from "@/components/ui/select/Select";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { Textarea } from "@/components/ui/text-area/Textarea";
 import { api } from "@/lib/api";
+import styles from "./onboarding.module.css";
 
 const INDUSTRIES = ["Technology", "Design", "Finance", "Healthcare", "Education", "Marketing"];
 const SKILLS = [
@@ -95,41 +96,34 @@ export default function MentorApplicationPage() {
   }
 
   return (
-    <div className="bg-surface-container-low px-gutter py-xl min-h-screen">
-      <div className="pb-md mx-auto flex max-w-2xl items-center justify-between">
-        <span className="text-headline-md text-primary">Lexep</span>
-        <Link
-          href="/dashboard"
-          className="text-label-md text-on-surface-variant hover:text-primary flex items-center gap-1"
-        >
-          <X className="h-4 w-4" /> Cancel
-        </Link>
+    <div className={styles.shell}>
+      <div className={styles.header}>
+        <span className={styles.headerLogo}>Lexep</span>
+        <p className={styles.headerSubtitle}>Mentor Application Portal</p>
       </div>
-      <p className="mb-lg text-body-md text-on-surface-variant mx-auto -mt-3 max-w-2xl text-center">
-        Mentor Application Portal
-      </p>
 
-      <div className="bg-surface-container-lowest shadow-level1 mx-auto max-w-2xl overflow-hidden rounded-lg">
-        <div className="bg-surface-container-high h-1 w-full">
-          <div
-            className="bg-primary-container h-1 transition-all"
-            style={{ width: `${(step / 3) * 100}%` }}
-          />
-        </div>
+      <div className={styles.content}>
+        <div className={styles.card}>
+          <div className={styles.progressLabel}>
+            <span>APPLICATION PROGRESS</span>
+            <span className={styles.progressLabelRight}>Step {step} of 3</span>
+          </div>
+          <div className={styles.progressBar}>
+            <div className={styles.progressFill} style={{ width: `${(step / 3) * 100}%` }} />
+          </div>
 
-        <div className="p-md">
           {step === 1 && (
-            <div>
-              <p className="text-label-sm text-on-surface-variant">STEP 1 OF 3</p>
-              <h1 className="text-headline-lg text-on-background mt-1">
-                Personal &amp; Professional Info
-              </h1>
-              <p className="text-body-md text-on-surface-variant mt-2 max-w-md">
-                Tell us about your background and expertise to help us match you with the right
-                learners.
-              </p>
+            <div className={styles.formGrid}>
+              <div>
+                <p className={styles.stepLabel}>STEP 1 OF 3</p>
+                <h1 className={styles.cardTitle}>Personal & Professional Info</h1>
+                <p className={styles.cardSubtitle}>
+                  Tell us about your background and expertise to help us match you with the right
+                  learners.
+                </p>
+              </div>
 
-              <div className="mt-lg gap-md flex flex-col">
+              <div className={styles.formGrid}>
                 <Input
                   label="Current Role"
                   placeholder="Senior Architect"
@@ -144,7 +138,7 @@ export default function MentorApplicationPage() {
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                 />
-                <div className="gap-md grid sm:grid-cols-2">
+                <div className={styles.twoCol}>
                   <Select
                     label="Years of Exp."
                     value={years}
@@ -166,11 +160,8 @@ export default function MentorApplicationPage() {
                 </div>
               </div>
 
-              <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
-                <Link
-                  href="/dashboard"
-                  className="text-label-md text-on-surface-variant hover:text-primary"
-                >
+              <div className={styles.footer}>
+                <Link href="/dashboard" className="text-sm text-[#6d6a66] hover:text-[#735c00]">
                   Cancel
                 </Link>
                 <Button onClick={handleStep1Continue} disabled={isSubmitting}>
@@ -181,18 +172,18 @@ export default function MentorApplicationPage() {
           )}
 
           {step === 2 && (
-            <div>
-              <p className="text-label-sm text-on-surface-variant">STEP 2 OF 3</p>
-              <h1 className="text-headline-lg text-on-background mt-1">
-                Expertise &amp; Availability
-              </h1>
+            <div className={styles.formGrid}>
+              <div>
+                <p className={styles.stepLabel}>STEP 2 OF 3</p>
+                <h1 className={styles.cardTitle}>Expertise & Availability</h1>
+              </div>
 
-              <div className="mt-lg">
-                <h2 className="text-headline-md text-on-background">Area of Expertise</h2>
-                <p className="text-label-sm text-on-surface-variant">
+              <div>
+                <h2 className={styles.sectionTitle}>Area of Expertise</h2>
+                <p className={styles.sectionSubtitle}>
                   Select your primary industry and specific skills you can mentor on.
                 </p>
-                <div className="mt-3">
+                <div className={styles.formGrid}>
                   <Select
                     label="Primary Industry"
                     value={industry}
@@ -203,69 +194,63 @@ export default function MentorApplicationPage() {
                       <option key={i}>{i}</option>
                     ))}
                   </Select>
-                </div>
-                <div className="mt-3">
-                  <p className="text-label-md text-on-surface mb-2">
-                    Specific Skills (Select up to 5)
-                  </p>
-                  <div className="bg-surface-container-low grid grid-cols-2 gap-2 rounded-md p-3 sm:grid-cols-3">
-                    {SKILLS.map((skill) => (
-                      <Checkbox
-                        key={skill}
-                        label={skill}
-                        checked={skills.includes(skill)}
-                        onChange={() => toggle(skills, setSkills, skill, 5)}
-                      />
-                    ))}
+                  <div>
+                    <p className={styles.optionTitle}>Specific Skills (Select up to 5)</p>
+                    <div className={styles.optionsGridThree}>
+                      {SKILLS.map((skill) => (
+                        <Checkbox
+                          key={skill}
+                          label={skill}
+                          checked={skills.includes(skill)}
+                          onChange={() => toggle(skills, setSkills, skill, 5)}
+                          className={styles.checkboxCard}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-lg border-outline-variant/40 pt-md border-t">
-                <h2 className="text-headline-md text-on-background">Weekly Availability</h2>
-                <p className="text-label-sm text-on-surface-variant">
+              <div>
+                <h2 className={styles.sectionTitle}>Weekly Availability</h2>
+                <p className={styles.sectionSubtitle}>
                   Estimate the hours you can dedicate to mentoring students each week.
                 </p>
-                <div className="gap-md mt-3 grid sm:grid-cols-2">
-                  <div className="flex flex-col gap-2">
-                    <p className="text-label-md text-on-surface">Hours per Week</p>
+                <div className={styles.twoCol}>
+                  <div>
+                    <p className={styles.optionTitle}>Hours per Week</p>
                     {HOURS.map((h) => (
                       <label
                         key={h}
-                        className={cn(
-                          "flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3",
-                          hours === h
-                            ? "border-primary-container bg-surface-container-low"
-                            : "border-outline-variant"
-                        )}
+                        className={cn(styles.radioCard, hours === h && styles.radioCardSelected)}
                       >
                         <input
                           type="radio"
                           name="hours"
                           checked={hours === h}
                           onChange={() => setHours(h)}
-                          className="text-primary h-4 w-4 accent-current"
+                          className="h-4 w-4 accent-[#d4af37]"
                         />
                         {h}
                       </label>
                     ))}
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <p className="text-label-md text-on-surface">Preferred Timeframes</p>
+                  <div>
+                    <p className={styles.optionTitle}>Preferred Timeframes</p>
                     {TIMEFRAMES.map((t) => (
                       <Checkbox
                         key={t}
                         label={t}
                         checked={timeframes.includes(t)}
                         onChange={() => toggle(timeframes, setTimeframes, t)}
-                        className="border-outline-variant rounded-md border px-4 py-3"
+                        className={cn(styles.checkboxCard)}
                       />
                     ))}
                   </div>
                 </div>
               </div>
 
-              <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
+              <div className={styles.footer}>
                 <Button variant="ghost" onClick={() => setStep(1)}>
                   ← Back
                 </Button>
@@ -277,17 +262,17 @@ export default function MentorApplicationPage() {
           )}
 
           {step === 3 && (
-            <div>
-              <p className="text-label-sm text-on-surface-variant">STEP 3 OF 3</p>
-              <h1 className="text-headline-lg text-on-background mt-1">
-                Motivation &amp; Submission
-              </h1>
-              <p className="text-body-md text-on-surface-variant mt-2 max-w-md">
-                We&apos;d love to know what drives you to share your expertise with the next
-                generation.
-              </p>
+            <div className={styles.formGrid}>
+              <div>
+                <p className={styles.stepLabel}>STEP 3 OF 3</p>
+                <h1 className={styles.cardTitle}>Motivation & Submission</h1>
+                <p className={styles.cardSubtitle}>
+                  We'd love to know what drives you to share your expertise with the next generation
+                  of architects.
+                </p>
+              </div>
 
-              <div className="mt-lg">
+              <div>
                 <Textarea
                   label="Why do you want to mentor on Lexep?"
                   placeholder="Share your story, your vision for African youth, or the specific skills you wish you had early in your career…"
@@ -297,21 +282,22 @@ export default function MentorApplicationPage() {
                 />
               </div>
 
-              <div className="mt-md">
+              <div>
                 <Checkbox
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
                   label={
                     <>
-                      I agree to the <span className="text-primary">Terms &amp; Conditions</span>{" "}
-                      and <span className="text-primary">Mentor Code of Conduct</span>. I confirm
-                      that all information provided is accurate.
+                      I agree to the <span className="text-[#735c00]">Terms & Conditions</span> and{" "}
+                      <span className="text-[#735c00]">Mentor Code of Conduct</span>. I confirm that
+                      all information provided is accurate.
                     </>
                   }
+                  className={styles.checkboxCard}
                 />
               </div>
 
-              <div className="mt-lg border-outline-variant/40 pt-md flex items-center justify-between border-t">
+              <div className={styles.footer}>
                 <Button variant="ghost" onClick={() => setStep(2)}>
                   ← Back
                 </Button>

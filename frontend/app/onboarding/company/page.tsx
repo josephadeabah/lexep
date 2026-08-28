@@ -10,6 +10,7 @@ import { Select } from "@/components/ui/select/Select";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
+import styles from "../onboarding.module.css";
 
 const GOALS = [
   {
@@ -64,99 +65,101 @@ export default function CompanyOnboardingPage() {
   }
 
   return (
-    <div className="bg-surface px-gutter py-xl min-h-screen">
-      <div className="card-level1 mx-auto max-w-2xl overflow-hidden p-0">
-        <div className="bg-surface-container-low px-md py-md">
-          <p className="text-label-sm text-on-surface-variant flex items-center gap-2">
-            <Building2 className="h-4 w-4" /> Step 1 of 1
-          </p>
-          <h1 className="text-headline-lg text-on-background mt-2">Set Up Your Company Profile</h1>
-          <p className="text-body-md text-on-surface-variant mt-1">
-            Complete your profile to start connecting with top emerging talent.
-          </p>
-        </div>
+    <div className={styles.shell}>
+      <div className={styles.content}>
+        <div className={styles.card}>
+          <div className={styles.cardHeader}>
+            <p className={styles.stepLabel}>
+              <Building2 className="mr-1 inline h-4 w-4" /> Step 1 of 1
+            </p>
+            <h1 className={styles.cardTitle}>Set Up Your Company Profile</h1>
+            <p className={styles.cardSubtitle}>
+              Complete your profile to start connecting with top emerging talent.
+            </p>
+          </div>
 
-        <div className="gap-lg p-md flex flex-col">
-          <div>
-            <h2 className="text-headline-md text-on-background">Company Details</h2>
-            <div className="gap-md mt-3 grid sm:grid-cols-2">
-              <Input
-                label="Industry"
-                placeholder="e.g. Technology, Finance"
-                value={industry}
-                onChange={(e) => setIndustry(e.target.value)}
-              />
-              <Select
-                label="Company Size"
-                value={companySize}
-                onChange={(e) => setCompanySize(e.target.value)}
-              >
-                <option value="">Select size</option>
-                <option value="1-10">1-10</option>
-                <option value="11-50">11-50</option>
-                <option value="51-200">51-200</option>
-                <option value="200+">200+</option>
-              </Select>
-              <div className="sm:col-span-2">
+          <div className={styles.formGrid}>
+            <div>
+              <h2 className={styles.sectionTitle}>Company Details</h2>
+              <div className={styles.twoCol}>
                 <Input
-                  label="Website URL"
-                  placeholder="https://www.example.com"
-                  value={websiteUrl}
-                  onChange={(e) => setWebsiteUrl(e.target.value)}
+                  label="Industry"
+                  placeholder="e.g. Technology, Finance"
+                  value={industry}
+                  onChange={(e) => setIndustry(e.target.value)}
+                />
+                <Select
+                  label="Company Size"
+                  value={companySize}
+                  onChange={(e) => setCompanySize(e.target.value)}
+                >
+                  <option value="">Select size</option>
+                  <option value="1-10">1-10</option>
+                  <option value="11-50">11-50</option>
+                  <option value="51-200">51-200</option>
+                  <option value="200+">200+</option>
+                </Select>
+                <div className={styles.fullWidth}>
+                  <Input
+                    label="Website URL"
+                    placeholder="https://www.example.com"
+                    value={websiteUrl}
+                    onChange={(e) => setWebsiteUrl(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2 className={styles.sectionTitle}>Hiring Goals</h2>
+              <p className={styles.sectionSubtitle}>
+                What are you hoping to achieve on this platform? (Select all that apply)
+              </p>
+              <div className={styles.optionsGrid}>
+                {GOALS.map((goal) => (
+                  <label
+                    key={goal.id}
+                    className={cn(
+                      styles.checkboxCard,
+                      goals.includes(goal.id) && styles.checkboxCardSelected
+                    )}
+                  >
+                    <Checkbox
+                      checked={goals.includes(goal.id)}
+                      onChange={() => toggleGoal(goal.id)}
+                    />
+                    <div>
+                      <p className={styles.optionTitle}>{goal.title}</p>
+                      <p className={styles.optionDescription}>{goal.description}</p>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2 className={styles.sectionTitle}>Preferred Outreach</h2>
+              <div className={styles.formGrid}>
+                <Checkbox
+                  label="Receive regular email digests of top candidates."
+                  checked={emailDigests}
+                  onChange={(e) => setEmailDigests(e.target.checked)}
+                  className={cn(styles.checkboxCard)}
+                />
+                <Checkbox
+                  label="Allow students to send direct inquiries."
+                  checked={directInquiries}
+                  onChange={(e) => setDirectInquiries(e.target.checked)}
+                  className={cn(styles.checkboxCard)}
                 />
               </div>
             </div>
-          </div>
 
-          <div>
-            <h2 className="text-headline-md text-on-background">Hiring Goals</h2>
-            <p className="text-label-sm text-on-surface-variant">
-              What are you hoping to achieve on this platform? (Select all that apply)
-            </p>
-            <div className="mt-3 grid gap-3 sm:grid-cols-3">
-              {GOALS.map((goal) => (
-                <label
-                  key={goal.id}
-                  className={cn(
-                    "flex cursor-pointer flex-col gap-2 rounded-md border p-4",
-                    goals.includes(goal.id)
-                      ? "border-primary-container bg-surface-container-low"
-                      : "border-outline-variant"
-                  )}
-                >
-                  <Checkbox
-                    checked={goals.includes(goal.id)}
-                    onChange={() => toggleGoal(goal.id)}
-                    label={goal.title}
-                  />
-                  <span className="text-label-sm text-on-surface-variant pl-8">
-                    {goal.description}
-                  </span>
-                </label>
-              ))}
+            <div className={styles.footer} style={{ justifyContent: "flex-end" }}>
+              <Button onClick={handleSubmit} disabled={isSubmitting}>
+                {isSubmitting ? "Saving…" : "Finish Setup"}
+              </Button>
             </div>
-          </div>
-
-          <div>
-            <h2 className="text-headline-md text-on-background">Preferred Outreach</h2>
-            <div className="mt-3 flex flex-col gap-3">
-              <Checkbox
-                label="Receive regular email digests of top candidates."
-                checked={emailDigests}
-                onChange={(e) => setEmailDigests(e.target.checked)}
-              />
-              <Checkbox
-                label="Allow students to send direct inquiries."
-                checked={directInquiries}
-                onChange={(e) => setDirectInquiries(e.target.checked)}
-              />
-            </div>
-          </div>
-
-          <div className="border-outline-variant/40 pt-md flex justify-end border-t">
-            <Button onClick={handleSubmit} disabled={isSubmitting}>
-              {isSubmitting ? "Saving…" : "Finish Setup"}
-            </Button>
           </div>
         </div>
       </div>

@@ -4,7 +4,17 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import { NAV_BY_ROLE, ADMIN_NAV } from "@/lib/nav-config";
-import { Bell, Settings, Menu, X, Search, ShieldCheck, Compass, FileText, Bookmark } from "lucide-react";
+import {
+  Bell,
+  Settings,
+  Menu,
+  X,
+  Search,
+  ShieldCheck,
+  Compass,
+  FileText,
+  Bookmark,
+} from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { OfflineBanner } from "./OfflineBanner";
 import Link from "next/link";
@@ -52,7 +62,10 @@ const BRAND_BY_ROLE: Record<
   },
 };
 
-const HEADER_LINKS_BY_ROLE: Record<UserRole, { label: string; href: string; icon?: React.ComponentType<{ size?: number }> }[]> = {
+const HEADER_LINKS_BY_ROLE: Record<
+  UserRole,
+  { label: string; href: string; icon?: React.ComponentType<{ size?: number }> }[]
+> = {
   learner: [
     { label: "Browse", href: "/opportunities", icon: Compass },
     { label: "Applications", href: "/applications", icon: FileText },

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 import type { UserRole } from "@/lib/types";
+import styles from "../onboarding.module.css";
 
 const ROLES: { id: UserRole; title: string; description: string; icon: typeof GraduationCap }[] = [
   {
@@ -44,19 +45,15 @@ export default function ChooseRolePage() {
   }
 
   return (
-    <div className="bg-surface min-h-screen">
-      <header className="border-outline-variant/40 border-b py-4 text-center">
-        <span className="text-headline-md text-primary">Lexep</span>
-      </header>
-
-      <div className="px-gutter py-xl mx-auto max-w-3xl text-center">
-        <h1 className="text-headline-lg text-on-background">Choose your journey</h1>
-        <p className="text-body-md text-on-surface-variant mx-auto mt-3 max-w-xl">
+    <div className={styles.shell}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Choose your journey</h1>
+        <p className={styles.subtitle}>
           Select the path that best describes your goals on Lexep. This helps us tailor your
           experience.
         </p>
 
-        <div className="mt-lg gap-md grid sm:grid-cols-3">
+        <div className={cn(styles.optionsGrid, styles.optionsGridThree)}>
           {ROLES.map((role) => {
             const Icon = role.icon;
             const active = selected === role.id;
@@ -64,32 +61,30 @@ export default function ChooseRolePage() {
               <button
                 key={role.id}
                 onClick={() => setSelected(role.id)}
-                className={cn(
-                  "card-level1 p-md flex flex-col items-start gap-4 text-left transition",
-                  active ? "ring-primary-container ring-2" : "hover:shadow-level2"
-                )}
+                className={cn(styles.optionCard, active && styles.optionCardSelected)}
               >
-                <span className="bg-surface-container-high flex h-12 w-12 items-center justify-center rounded-full">
-                  <Icon className="text-on-surface h-5 w-5" />
+                <span className={styles.optionIcon}>
+                  <Icon className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="text-headline-md text-on-background">{role.title}</p>
-                  <p className="text-body-md text-on-surface-variant mt-1">{role.description}</p>
+                  <p className={styles.optionTitle}>{role.title}</p>
+                  <p className={styles.optionDescription}>{role.description}</p>
                 </div>
               </button>
             );
           })}
         </div>
 
-        <Button
-          onClick={handleContinue}
-          disabled={!selected || isSubmitting}
-          size="lg"
-          className="mt-lg"
-          variant={selected ? "primary" : "ghost"}
-        >
-          {isSubmitting ? "Saving…" : "Continue"}
-        </Button>
+        <div className={styles.footer} style={{ justifyContent: "center" }}>
+          <Button
+            onClick={handleContinue}
+            disabled={!selected || isSubmitting}
+            size="lg"
+            variant={selected ? "primary" : "ghost"}
+          >
+            {isSubmitting ? "Saving…" : "Continue"}
+          </Button>
+        </div>
       </div>
     </div>
   );
