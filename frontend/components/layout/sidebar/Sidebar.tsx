@@ -41,7 +41,7 @@ export function Sidebar({
         {/* Brand */}
         <div className={styles.brand}>
           <div className={styles.avatar}>
-            <Logo variant="light" size={56} showWordmark={false} />
+            <Logo variant="light" size={64} showWordmark={false} />
           </div>
           <div>
             <strong>{brand}</strong>

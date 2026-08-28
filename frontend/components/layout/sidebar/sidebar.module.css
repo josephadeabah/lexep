@@ -23,13 +23,13 @@
   place-items: center;
   border-radius: 50%;
   overflow: hidden;
-  background: #f8f7f2;
+  background: #1b1c1c;
 }
 
-.avatar img {
+/* .avatar img {
   width: 38px;
   height: 38px;
-}
+} */
 
 .brand strong {
   display: block;
