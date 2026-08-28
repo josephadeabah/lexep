@@ -72,9 +72,9 @@ export default function CompanyOnboardingPage() {
             <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
               <Building2 className="h-4 w-4" /> Step 1 of 1
             </p>
-            <h1 className="mt-2 font-['Hanken_Grotesk'] text-2xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+            <h2 className="mt-2 font-['Hanken_Grotesk'] text-2xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
               Set Up Your Company Profile
-            </h1>
+            </h2>
             <p className="mt-1 text-sm text-[#6d6a66]">
               Complete your profile to start connecting with top emerging talent.
             </p>
