@@ -196,7 +196,7 @@ function LearnerDashboard() {
                   />
                   <div>
                     <p className="text-lg font-semibold text-[#1b1c1c]">
-                      Dr. {mentors.data[0].user.full_name}
+                      {mentors.data[0].user.full_name}
                     </p>
                     <p className="text-sm text-[#6d6a66]">
                       {mentors.data[0].title} @ {mentors.data[0].company}
