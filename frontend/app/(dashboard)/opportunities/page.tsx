@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, MapPin, Clock, Wallet, Bookmark } from "lucide-react";
+import { Search, MapPin, Clock, Wallet, Bookmark, Briefcase, Users, ArrowRight } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
 import { Input } from "@/components/ui/input/Input";
-import { Select } from "@/components/ui/select/Select";
 import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -34,26 +33,30 @@ function LearnerOpportunities() {
   );
 
   return (
-    <div className="gap-lg flex flex-col">
+    <div className="flex flex-col gap-8">
+      {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-headline-lg text-on-background">Find Your Next Opportunity</h1>
-          <p className="text-body-md text-on-surface-variant mt-1">
+          <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+            Find Your Next Opportunity
+          </h1>
+          <p className="mt-2 text-base text-[#6d6a66]">
             Discover premium internships tailored for the next generation of African leaders.
           </p>
         </div>
       </div>
 
-      <div className="gap-lg border-outline-variant/40 flex border-b">
+      {/* Tabs */}
+      <div className="flex gap-6 border-b border-[#e0d8c9]">
         {(["browse", "applications"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={cn(
-              "text-label-md border-b-2 px-1 pb-3 capitalize transition",
+              "pb-3 text-sm font-semibold capitalize transition",
               tab === t
-                ? "border-primary-container text-on-background"
-                : "text-on-surface-variant border-transparent"
+                ? "border-b-2 border-[#d4af37] text-[#1b1c1c]"
+                : "border-b-2 border-transparent text-[#6d6a66] hover:text-[#1b1c1c]"
             )}
           >
             {t}
@@ -63,57 +66,70 @@ function LearnerOpportunities() {
 
       {tab === "browse" ? (
         <>
-          <Card className="flex flex-col gap-3 sm:flex-row sm:items-end">
+          {/* Search */}
+          <div className="flex items-center gap-4">
             <div className="flex-1">
               <Input
-                label="Search"
-                placeholder="Keywords, job title, company…"
+                placeholder="Search opportunities..."
                 icon={<Search className="h-4 w-4" />}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                className="h-12 rounded-lg border-[#e0d8c9] bg-white text-base"
               />
             </div>
-          </Card>
+          </div>
 
-          <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
+          {/* Opportunity Cards Grid */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {opportunities.isLoading ? (
-              <p className="text-body-md text-on-surface-variant">Loading opportunities…</p>
+              <p className="text-base text-[#6d6a66]">Loading opportunities…</p>
             ) : filtered.length > 0 ? (
               filtered.map((o) => (
-                <Card key={o.id} className="flex flex-col justify-between">
-                  <div>
-                    <div className="mb-3 flex items-start justify-between">
-                      <Badge tone="neutral">{o.category ?? "General"}</Badge>
-                      <Bookmark className="text-outline h-4 w-4" />
-                    </div>
-                    <p className="text-headline-md text-on-background">{o.title}</p>
-                    <p className="text-body-md text-on-surface-variant">{o.company_name}</p>
-                    <div className="text-label-sm text-on-surface-variant mt-3 flex flex-col gap-1">
-                      {o.location && (
-                        <span className="flex items-center gap-2">
-                          <MapPin className="h-3.5 w-3.5" /> {o.location}
-                        </span>
-                      )}
-                      {o.duration && (
-                        <span className="flex items-center gap-2">
-                          <Clock className="h-3.5 w-3.5" /> {o.duration}
-                        </span>
-                      )}
-                      <span className="flex items-center gap-2">
-                        <Wallet className="h-3.5 w-3.5" />
-                        {o.stipend_provided
-                          ? `Paid${o.stipend_amount ? ` (${o.stipend_currency} ${o.stipend_amount}/mo)` : ""}`
-                          : "Unpaid"}
-                      </span>
-                    </div>
+                <Card key={o.id} className="flex flex-col p-6">
+                  <div className="mb-4 flex items-start justify-between">
+                    <Badge tone="neutral" className="bg-[#f5f3f3] text-[#6d6a66]">
+                      {o.category ?? "General"}
+                    </Badge>
+                    <button className="text-[#6d6a66] hover:text-[#1b1c1c]">
+                      <Bookmark className="h-4 w-4" />
+                    </button>
                   </div>
-                  <Button href={`/opportunities/${o.id}`} variant="ghost" className="mt-4">
+
+                  <h3 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+                    {o.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-[#6d6a66]">{o.company_name}</p>
+
+                  <div className="mt-4 flex flex-col gap-2 text-sm text-[#6d6a66]">
+                    {o.location && (
+                      <span className="flex items-center gap-2">
+                        <MapPin className="h-3.5 w-3.5" /> {o.location}
+                      </span>
+                    )}
+                    {o.duration && (
+                      <span className="flex items-center gap-2">
+                        <Clock className="h-3.5 w-3.5" /> {o.duration}
+                      </span>
+                    )}
+                    <span className="flex items-center gap-2">
+                      <Wallet className="h-3.5 w-3.5" />
+                      {o.stipend_provided
+                        ? `Paid${o.stipend_amount ? ` (${o.stipend_currency} ${o.stipend_amount}/mo)` : ""}`
+                        : "Unpaid"}
+                    </span>
+                  </div>
+
+                  <Button
+                    href={`/opportunities/${o.id}`}
+                    variant="outline"
+                    className="mt-6 w-full"
+                  >
                     View Details
                   </Button>
                 </Card>
               ))
             ) : (
-              <p className="text-body-md text-on-surface-variant">
+              <p className="text-base text-[#6d6a66]">
                 No opportunities match your search yet.
               </p>
             )}
@@ -121,18 +137,25 @@ function LearnerOpportunities() {
         </>
       ) : (
         <Card className="overflow-hidden p-0">
+          <div className="border-b border-[#e0d8c9] bg-[#f5f3f3] px-6 py-4">
+            <h2 className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+              Your Applications
+            </h2>
+          </div>
           {applications.isLoading ? (
-            <p className="p-md text-body-md text-on-surface-variant">Loading…</p>
+            <p className="p-6 text-base text-[#6d6a66]">Loading…</p>
           ) : applications.data && applications.data.length > 0 ? (
-            <ul className="divide-outline-variant/40 divide-y">
+            <ul className="divide-y divide-[#e0d8c9]">
               {applications.data.map((app) => (
-                <li key={app.id} className="p-md flex items-center justify-between">
+                <li key={app.id} className="flex items-center justify-between px-6 py-4">
                   <div>
-                    <p className="text-label-md text-on-background">{app.opportunity_title}</p>
-                    <p className="text-label-sm text-on-surface-variant">
+                    <p className="text-base font-semibold text-[#1b1c1c]">
+                      {app.opportunity_title}
+                    </p>
+                    <p className="text-sm text-[#6d6a66]">
                       {app.company_name} {app.location && `· ${app.location}`}
                     </p>
-                    <p className="text-label-sm text-on-surface-variant mt-1">
+                    <p className="mt-1 text-xs text-[#6d6a66]">
                       Applied: {new Date(app.applied_at).toLocaleDateString()}
                     </p>
                   </div>
@@ -143,7 +166,7 @@ function LearnerOpportunities() {
               ))}
             </ul>
           ) : (
-            <p className="p-md text-body-md text-on-surface-variant">
+            <p className="p-6 text-base text-[#6d6a66]">
               You haven&apos;t applied to anything yet.
             </p>
           )}
@@ -157,43 +180,62 @@ function CompanyOpportunities() {
   const opportunities = useAsync(() => api.listOpportunities(true), []);
 
   return (
-    <div className="gap-lg flex flex-col">
+    <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-headline-lg text-on-background">Opportunities</h1>
-          <p className="text-body-md text-on-surface-variant mt-1">
+          <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+            Opportunities
+          </h1>
+          <p className="mt-2 text-base text-[#6d6a66]">
             Manage your open roles and review applicants.
           </p>
         </div>
-        <Button href="/opportunities/new">+ New Application</Button>
+        <Button
+          href="/opportunities/new"
+          className="h-12 rounded-md bg-[#d4af37] px-6 font-semibold text-[#1b1c1c] hover:bg-[#c9a32e]"
+        >
+          + New Application
+        </Button>
       </div>
 
-      <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {opportunities.isLoading ? (
-          <p className="text-body-md text-on-surface-variant">Loading…</p>
+          <p className="text-base text-[#6d6a66]">Loading…</p>
         ) : opportunities.data && opportunities.data.length > 0 ? (
           opportunities.data.map((o) => (
-            <Card key={o.id}>
-              <div className="mb-2 flex items-center justify-between">
-                <Badge tone={o.status === "published" ? "success" : "neutral"} dot>
+            <Card key={o.id} className="p-6">
+              <div className="mb-4 flex items-center justify-between">
+                <Badge
+                  tone={o.status === "published" ? "success" : "neutral"}
+                  dot
+                  className={o.status === "published" ? "bg-[#dcefe1] text-[#276b3b]" : "bg-[#f5f3f3] text-[#6d6a66]"}
+                >
                   {o.status}
                 </Badge>
-                <span className="text-label-sm text-on-surface-variant capitalize">
+                <span className="text-xs capitalize text-[#6d6a66]">{o.work_mode}</span>
+              </div>
+
+              <h3 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+                {o.title}
+              </h3>
+              <p className="mt-1 text-sm text-[#6d6a66]">{o.location}</p>
+
+              <div className="mt-4 flex items-center gap-4 border-t border-[#e0d8c9]/40 pt-4">
+                <span className="flex items-center gap-2 text-sm text-[#6d6a66]">
+                  <Briefcase className="h-3.5 w-3.5" />
                   {o.work_mode}
                 </span>
+                <Link
+                  href={`/opportunities/${o.id}`}
+                  className="ml-auto flex items-center gap-1 text-sm font-semibold text-[#735c00] hover:underline"
+                >
+                  Review <ArrowRight className="h-3 w-3" />
+                </Link>
               </div>
-              <p className="text-headline-md text-on-background">{o.title}</p>
-              <p className="text-body-md text-on-surface-variant">{o.location}</p>
-              <Link
-                href={`/opportunities/${o.id}`}
-                className="text-label-md text-primary mt-4 inline-block hover:underline"
-              >
-                Review Applicants →
-              </Link>
             </Card>
           ))
         ) : (
-          <p className="text-body-md text-on-surface-variant">No opportunities posted yet.</p>
+          <p className="text-base text-[#6d6a66]">No opportunities posted yet.</p>
         )}
       </div>
     </div>
