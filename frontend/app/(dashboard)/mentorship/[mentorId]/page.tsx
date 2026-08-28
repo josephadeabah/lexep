@@ -206,7 +206,7 @@ export default function MentorProfilePage() {
                       <Button
                         href={`/mentorship/${mentorId}/request?package=${pkg.id}`}
                         variant={pkg.is_popular ? "secondary" : "outline"}
-                        className="mt-4 w-full"
+                        className={pkg.is_popular ? "mt-4 w-full text-white" : "mt-4 w-full"}
                       >
                         Select Package
                       </Button>
