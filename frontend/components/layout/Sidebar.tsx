@@ -59,10 +59,10 @@ export function Sidebar({
 
         {/* CTA Button */}
         {ctaLabel && (
-          <div className="mx-4 my-4">
+          <div className="px-4 pt-4">
             <Link
               href={ctaHref || "#"}
-              className="flex h-11 items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition hover:bg-[#c9a32e]"
+              className="flex h-11 w-full items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition hover:bg-[#c9a32e]"
             >
               {ctaLabel}
             </Link>
