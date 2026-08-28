@@ -248,9 +248,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   <Link href={link.href}>{link.label}</Link>
                 </DropdownMenuItem>
               ))}
-              <DropdownMenuItem asChild>
-                <Link href="#profile">{brandConfig.roleLabel} Profile</Link>
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="text-red-600 focus:text-red-600"
