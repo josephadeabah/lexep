@@ -41,7 +41,10 @@ export default function UpgradeSuccessPage() {
 
           {/* Actions */}
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Button href="/dashboard" className="bg-[#d4af37] font-semibold text-[#1b1c1c] hover:bg-[#c9a32e]">
+            <Button
+              href="/dashboard"
+              className="bg-[#d4af37] font-semibold text-[#1b1c1c] hover:bg-[#c9a32e]"
+            >
               Go to Dashboard
             </Button>
             <Button href="/dashboard" variant="outline" className="border-[#e0d8c9]">

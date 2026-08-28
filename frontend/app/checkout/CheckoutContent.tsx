@@ -123,7 +123,10 @@ export default function CheckoutContent() {
         </div>
 
         {/* Right: Payment Details */}
-        <form onSubmit={handlePay} className="rounded-2xl bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+        <form
+          onSubmit={handlePay}
+          className="rounded-2xl bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
+        >
           <h2 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
             Payment Details
           </h2>
@@ -152,17 +155,15 @@ export default function CheckoutContent() {
                 <span
                   className={cn(
                     "absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full border",
-                    method === m.id
-                      ? "border-[#d4af37]"
-                      : "border-[#e0d8c9]"
+                    method === m.id ? "border-[#d4af37]" : "border-[#e0d8c9]"
                   )}
                 >
-                  {method === m.id && (
-                    <span className="h-2 w-2 rounded-full bg-[#d4af37]" />
-                  )}
+                  {method === m.id && <span className="h-2 w-2 rounded-full bg-[#d4af37]" />}
                 </span>
 
-                <m.icon className={cn("h-5 w-5", method === m.id ? "text-[#d4af37]" : "text-[#6d6a66]")} />
+                <m.icon
+                  className={cn("h-5 w-5", method === m.id ? "text-[#d4af37]" : "text-[#6d6a66]")}
+                />
                 <span className="text-sm font-medium text-[#1b1c1c]">{m.label}</span>
               </button>
             ))}

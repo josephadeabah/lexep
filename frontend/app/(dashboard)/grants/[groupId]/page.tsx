@@ -97,13 +97,11 @@ export default function GrantGroupDetailPage() {
                     disabled={isContributing || !amount}
                     className="h-12 rounded-lg bg-[#d4af37] px-6 font-semibold"
                   >
-                    {isContributing ? "Processing…" : "Contribute Now"} <ArrowRight className="h-4 w-4" />
+                    {isContributing ? "Processing…" : "Contribute Now"}{" "}
+                    <ArrowRight className="h-4 w-4" />
                   </Button>
                 </div>
-                <Button
-                  variant="outline"
-                  className="h-12 rounded-lg border-[#e0d8c9] px-6"
-                >
+                <Button variant="outline" className="h-12 rounded-lg border-[#e0d8c9] px-6">
                   <Share2 className="h-4 w-4" /> Share Group
                 </Button>
               </div>
@@ -146,9 +144,7 @@ export default function GrantGroupDetailPage() {
                   ))}
                 </ul>
               ) : (
-                <p className="p-6 text-base text-[#6d6a66]">
-                  No contributions yet — be the first!
-                </p>
+                <p className="p-6 text-base text-[#6d6a66]">No contributions yet — be the first!</p>
               )}
             </Card>
           </div>
@@ -162,7 +158,7 @@ export default function GrantGroupDetailPage() {
             <p className="mt-4 font-['Hanken_Grotesk'] text-5xl font-bold text-[#d4af37]">
               {g.youth_sponsored}
             </p>
-            <p className="mt-2 text-sm font-semibold uppercase tracking-wider text-[#c9c7c6]">
+            <p className="mt-2 text-sm font-semibold tracking-wider text-[#c9c7c6] uppercase">
               Youth Sponsored
             </p>
           </Card>
@@ -213,7 +209,7 @@ export default function GrantGroupDetailPage() {
             <div className="p-6">
               <p className="text-base font-semibold text-[#1b1c1c]">Samuel O.</p>
               <p className="text-sm text-[#6d6a66]">Lagos, Nigeria</p>
-              <p className="mt-3 text-sm italic text-[#6d6a66]">
+              <p className="mt-3 text-sm text-[#6d6a66] italic">
                 "The grant provided me with a MacBook Pro, allowing me..."
               </p>
               <div className="mt-4">
@@ -229,11 +225,7 @@ export default function GrantGroupDetailPage() {
           {/* Impact Card 2 */}
           <Card className="overflow-hidden p-0">
             <div className="relative h-48 bg-[#f5f3f3]">
-              <img
-                src="/images/grants.jpg"
-                alt="Joy M."
-                className="h-full w-full object-cover"
-              />
+              <img src="/images/grants.jpg" alt="Joy M." className="h-full w-full object-cover" />
               <Badge className="absolute bottom-4 left-4 bg-[#d4af37] text-[#1b1c1c]">
                 Data Science
               </Badge>
@@ -241,7 +233,7 @@ export default function GrantGroupDetailPage() {
             <div className="p-6">
               <p className="text-base font-semibold text-[#1b1c1c]">Joy M.</p>
               <p className="text-sm text-[#6d6a66]">Nairobi, Kenya</p>
-              <p className="mt-3 text-sm italic text-[#6d6a66]">
+              <p className="mt-3 text-sm text-[#6d6a66] italic">
                 "Access to cloud computing credits through this group h..."
               </p>
               <div className="mt-4">

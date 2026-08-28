@@ -4,15 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import { ADMIN_NAV } from "@/lib/nav-config";
-import {
-  Bell,
-  Settings,
-  Menu,
-  X,
-  Search,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from "lucide-react";
+import { Bell, Settings, Menu, X, Search, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { Sidebar } from "./sidebar/Sidebar";
 import { OfflineBanner } from "./OfflineBanner";
