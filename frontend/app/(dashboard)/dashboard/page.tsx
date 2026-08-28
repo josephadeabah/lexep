@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 import { formatDate, formatTime, formatCurrency } from "@/lib/utils";
 import { Users, Briefcase, CalendarClock, TrendingUp, Award, BookOpen, Clock } from "lucide-react";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 
 const STATUS_TONE: Record<string, "neutral" | "success" | "warning" | "error"> = {
   applied: "neutral",
@@ -54,7 +55,7 @@ function LearnerDashboard() {
           <Card className="flex flex-col overflow-hidden">
             <div className="relative h-40 bg-[#f5f3f3]">
               <img 
-                src="/images/architecture.jpg" 
+                src="/images/mentorship.jpg" 
                 alt="Advanced Structural Analysis" 
                 className="h-full w-full object-cover"
               />
@@ -88,7 +89,7 @@ function LearnerDashboard() {
           <Card className="flex flex-col overflow-hidden">
             <div className="relative h-40 bg-[#f5f3f3]">
               <img 
-                src="/images/sustainability.jpg" 
+                src="/images/cover-texture.jpg" 
                 alt="Sustainable Building Materials" 
                 className="h-full w-full object-cover"
               />
