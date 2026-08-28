@@ -59,10 +59,25 @@ export function Sidebar({
 
         {/* CTA Button */}
         {ctaLabel && (
-          <div className="px-4 pt-4">
+          <div style={{ padding: '16px 16px 0' }}>
             <Link
               href={ctaHref || "#"}
-              className="flex h-11 w-full items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition hover:bg-[#c9a32e]"
+              style={{
+                display: 'flex',
+                height: '44px',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '6px',
+                backgroundColor: '#ddb839',
+                color: '#171717',
+                fontWeight: 700,
+                fontSize: '15px',
+                textDecoration: 'none',
+                transition: 'background-color 0.2s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#c9a32e')}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#ddb839')}
             >
               {ctaLabel}
             </Link>
