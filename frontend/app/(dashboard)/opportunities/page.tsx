@@ -33,21 +33,21 @@ function LearnerOpportunities() {
   );
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-0 sm:py-0">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+          <h1 className="text-3xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em] sm:text-4xl">
             Find Your Next Opportunity
           </h1>
-          <p className="mt-2 text-base text-[#6d6a66]">
+          <p className="mt-2 text-sm text-[#6d6a66] sm:text-base">
             Discover premium internships tailored for the next generation of African leaders.
           </p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-6 border-b border-[#e0d8c9]">
+      <div className="flex gap-4 border-b border-[#e0d8c9] sm:gap-6">
         {(["browse", "applications"] as const).map((t) => (
           <button
             key={t}
@@ -68,24 +68,24 @@ function LearnerOpportunities() {
         <>
           {/* Search */}
           <div className="flex items-center gap-4">
-            <div className="flex-1">
+            <div className="w-full">
               <Input
                 placeholder="Search opportunities..."
                 icon={<Search className="h-4 w-4" />}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="h-12 rounded-lg border-[#e0d8c9] bg-white text-base"
+                className="h-11 w-full rounded-lg border-[#e0d8c9] bg-white text-base sm:h-12"
               />
             </div>
           </div>
 
           {/* Opportunity Cards Grid */}
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {opportunities.isLoading ? (
               <p className="text-base text-[#6d6a66]">Loading opportunities…</p>
             ) : filtered.length > 0 ? (
               filtered.map((o) => (
-                <Card key={o.id} className="flex flex-col p-6">
+                <Card key={o.id} className="flex flex-col p-5 sm:p-6">
                   <div className="mb-4 flex items-start justify-between">
                     <Badge tone="neutral" className="bg-[#f5f3f3] text-[#6d6a66]">
                       {o.category ?? "General"}
@@ -95,7 +95,7 @@ function LearnerOpportunities() {
                     </button>
                   </div>
 
-                  <h3 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+                  <h3 className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em] sm:text-xl">
                     {o.title}
                   </h3>
                   <p className="mt-1 text-sm text-[#6d6a66]">{o.company_name}</p>
@@ -137,17 +137,17 @@ function LearnerOpportunities() {
         </>
       ) : (
         <Card className="overflow-hidden p-0">
-          <div className="border-b border-[#e0d8c9] bg-[#f5f3f3] px-6 py-4">
+          <div className="border-b border-[#e0d8c9] bg-[#f5f3f3] px-5 py-4 sm:px-6">
             <h2 className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
               Your Applications
             </h2>
           </div>
           {applications.isLoading ? (
-            <p className="p-6 text-base text-[#6d6a66]">Loading…</p>
+            <p className="p-5 text-base text-[#6d6a66] sm:p-6">Loading…</p>
           ) : applications.data && applications.data.length > 0 ? (
             <ul className="divide-y divide-[#e0d8c9]">
               {applications.data.map((app) => (
-                <li key={app.id} className="flex items-center justify-between px-6 py-4">
+                <li key={app.id} className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                   <div>
                     <p className="text-base font-semibold text-[#1b1c1c]">
                       {app.opportunity_title}
@@ -166,7 +166,7 @@ function LearnerOpportunities() {
               ))}
             </ul>
           ) : (
-            <p className="p-6 text-base text-[#6d6a66]">
+            <p className="p-5 text-base text-[#6d6a66] sm:p-6">
               You haven&apos;t applied to anything yet.
             </p>
           )}
@@ -180,30 +180,30 @@ function CompanyOpportunities() {
   const opportunities = useAsync(() => api.listOpportunities(true), []);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-0 sm:py-0">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+          <h1 className="text-3xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em] sm:text-4xl">
             Opportunities
           </h1>
-          <p className="mt-2 text-base text-[#6d6a66]">
+          <p className="mt-2 text-sm text-[#6d6a66] sm:text-base">
             Manage your open roles and review applicants.
           </p>
         </div>
         <Button
           href="/opportunities/new"
-          className="h-12 rounded-md bg-[#d4af37] px-6 font-semibold text-[#1b1c1c] hover:bg-[#c9a32e]"
+          className="h-11 rounded-md bg-[#d4af37] px-4 font-semibold text-[#1b1c1c] hover:bg-[#c9a32e] sm:h-12 sm:px-6"
         >
           + New Application
         </Button>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {opportunities.isLoading ? (
           <p className="text-base text-[#6d6a66]">Loading…</p>
         ) : opportunities.data && opportunities.data.length > 0 ? (
           opportunities.data.map((o) => (
-            <Card key={o.id} className="p-6">
+            <Card key={o.id} className="p-5 sm:p-6">
               <div className="mb-4 flex items-center justify-between">
                 <Badge
                   tone={o.status === "published" ? "success" : "neutral"}
@@ -215,7 +215,7 @@ function CompanyOpportunities() {
                 <span className="text-xs capitalize text-[#6d6a66]">{o.work_mode}</span>
               </div>
 
-              <h3 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+              <h3 className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em] sm:text-xl">
                 {o.title}
               </h3>
               <p className="mt-1 text-sm text-[#6d6a66]">{o.location}</p>
