@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input/Input";
 import { Logo } from "@/components/ui/Logo";
 import { useAuthStore } from "@/lib/auth-store";
+import Link from "next/link";
 
 type PaymentMethod = "card" | "paypal" | "paystack";
 

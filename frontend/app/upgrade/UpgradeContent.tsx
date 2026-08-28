@@ -67,9 +67,9 @@ export default function UpgradeContent() {
         <div className="rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm">
           {/* Header */}
           <div className="text-center">
-            <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
+            <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
               Upgrade to Professional
-            </h1>
+            </h2>
             <p className="mx-auto mt-2 max-w-md text-base text-[#6d6a66]">
               Unlock advanced features and dedicated support to accelerate your learning journey.
             </p>
