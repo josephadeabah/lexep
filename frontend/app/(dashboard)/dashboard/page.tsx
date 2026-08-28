@@ -9,7 +9,19 @@ import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
 import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 import { formatDate, formatTime, formatCurrency } from "@/lib/utils";
-import { Users, Briefcase, CalendarClock, TrendingUp, Award, BookOpen, Clock } from "lucide-react";
+import {
+  Users,
+  Briefcase,
+  CalendarClock,
+  TrendingUp,
+  Award,
+  BookOpen,
+  Clock,
+  Mail,
+  MoreHorizontal,
+  Check,
+  X,
+} from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 
 const STATUS_TONE: Record<string, "neutral" | "success" | "warning" | "error"> = {
@@ -19,6 +31,8 @@ const STATUS_TONE: Record<string, "neutral" | "success" | "warning" | "error"> =
   accepted: "success",
   declined: "error",
 };
+
+/* =========================== LEARNER DASHBOARD =========================== */
 
 function LearnerDashboard() {
   const user = useAuthStore((s) => s.user)!;
@@ -33,9 +47,7 @@ function LearnerDashboard() {
           <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
             Welcome back, {user.full_name.split(" ")[0]}.
           </h2>
-          <p className="mt-1 text-base text-[#6d6a66]">
-            Here is an overview of your progress today.
-          </p>
+          <p className="mt-1 text-base text-[#6d6a66]">Here is an overview of your progress today.</p>
         </div>
       </div>
 
@@ -204,11 +216,7 @@ function LearnerDashboard() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Button
-                  href={`/mentorship/${mentors.data[0].user.id}`}
-                  variant="primary"
-                  className="w-full"
-                >
+                <Button href={`/mentorship/${mentors.data[0].user.id}`} variant="primary" className="w-full">
                   Join Session
                 </Button>
                 <Button variant="outline" className="w-full">
@@ -230,6 +238,8 @@ function LearnerDashboard() {
   );
 }
 
+/* =========================== COMPANY DASHBOARD =========================== */
+
 function CompanyDashboard() {
   const user = useAuthStore((s) => s.user)!;
   const opportunities = useAsync(() => api.listOpportunities(true), []);
@@ -237,6 +247,7 @@ function CompanyDashboard() {
 
   return (
     <div className="flex flex-col gap-8">
+      {/* Welcome Header */}
       <div>
         <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Welcome, {user.full_name}
@@ -259,6 +270,7 @@ function CompanyDashboard() {
             {opportunities.data?.length ?? "—"}
           </p>
         </Card>
+
         <Card>
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#f5f3f3]">
@@ -270,6 +282,7 @@ function CompanyDashboard() {
             {interviews.data?.length ?? "—"}
           </p>
         </Card>
+
         <Card className="bg-[#1b1c1c] text-white">
           <p className="text-sm font-semibold">Post a new role</p>
           <p className="mt-2 text-sm text-[#c9c7c6]">
@@ -287,13 +300,11 @@ function CompanyDashboard() {
           <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
             Active Listings
           </h2>
-          <Link
-            href="/opportunities"
-            className="text-sm font-semibold text-[#735c00] hover:underline"
-          >
+          <Link href="/opportunities" className="text-sm font-semibold text-[#735c00] hover:underline">
             View All
           </Link>
         </div>
+
         <Card className="overflow-hidden p-0">
           {opportunities.isLoading ? (
             <p className="p-6 text-base text-[#6d6a66]">Loading…</p>
@@ -346,6 +357,8 @@ function CompanyDashboard() {
   );
 }
 
+/* =========================== MENTOR DASHBOARD =========================== */
+
 function MentorDashboard() {
   const user = useAuthStore((s) => s.user)!;
   const stats = useAsync(() => api.mentorDashboardStats(), []);
@@ -364,6 +377,7 @@ function MentorDashboard() {
 
   return (
     <div className="flex flex-col gap-8">
+      {/* Welcome Header */}
       <div>
         <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Welcome back, {user.full_name.split(" ")[0]}.
@@ -373,23 +387,40 @@ function MentorDashboard() {
         </p>
       </div>
 
-      {/* Metrics */}
+      {/* Metrics Grid */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <Card>
-          <p className="text-sm text-[#6d6a66]">TOTAL EARNINGS</p>
-          <p className="mt-2 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
+        {/* Earnings Card */}
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+            <p className="text-lg font-bold text-[#d4af37]">payments</p>
+            <Badge className="bg-[#f5f3f3] text-[#6d6a66]">+12% this month</Badge>
+          </div>
+          <p className="mt-3 text-sm font-semibold text-[#6d6a66]">TOTAL EARNINGS</p>
+          <p className="mt-1 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {formatCurrency(stats.data?.total_earnings ?? 0)}
           </p>
         </Card>
-        <Card>
-          <p className="text-sm text-[#6d6a66]">STUDENTS MENTORED</p>
-          <p className="mt-2 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
+
+        {/* Students Card */}
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+            <p className="text-lg font-bold text-[#d4af37]">group</p>
+            <Badge className="bg-[#f5f3f3] text-[#6d6a66]">Active</Badge>
+          </div>
+          <p className="mt-3 text-sm font-semibold text-[#6d6a66]">STUDENTS MENTORED</p>
+          <p className="mt-1 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {stats.data?.students_mentored ?? 0}
           </p>
         </Card>
-        <Card>
-          <p className="text-sm text-[#6d6a66]">AVERAGE RATING</p>
-          <p className="mt-2 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
+
+        {/* Rating Card */}
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+            <p className="text-lg font-bold text-[#d4af37]">star</p>
+            <Badge className="bg-[#f5f3f3] text-[#6d6a66]">verified</Badge>
+          </div>
+          <p className="mt-3 text-sm font-semibold text-[#6d6a66]">AVERAGE RATING</p>
+          <p className="mt-1 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {stats.data?.average_rating?.toFixed(1) ?? "—"} <span className="text-2xl">/ 5.0</span>
           </p>
         </Card>
@@ -397,6 +428,7 @@ function MentorDashboard() {
 
       {/* Pending Requests & Schedule */}
       <div className="grid gap-6 lg:grid-cols-2">
+        {/* Pending Requests */}
         <Card className="overflow-hidden p-0">
           <div className="flex items-center justify-between p-6">
             <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
@@ -409,18 +441,25 @@ function MentorDashboard() {
               View All
             </Link>
           </div>
+
           {requests.isLoading ? (
             <p className="px-6 pb-6 text-base text-[#6d6a66]">Loading…</p>
           ) : requests.data && requests.data.length > 0 ? (
             <ul className="divide-y divide-[#e0d8c9]">
               {requests.data.slice(0, 3).map((r) => (
                 <li key={r.id} className="flex items-center justify-between gap-3 p-6">
-                  <div>
-                    <p className="text-base font-semibold text-[#1b1c1c]">{r.learner_name}</p>
-                    <p className="text-sm text-[#6d6a66]">{r.session_type ?? "Session"}</p>
+                  <div className="flex items-center gap-4">
+                    <Avatar name={r.learner_name} size={48} />
+                    <div>
+                      <p className="text-base font-semibold text-[#1b1c1c]">{r.learner_name}</p>
+                      <p className="text-sm text-[#6d6a66]">
+                        {r.session_type ?? "Session"} • 30 Min
+                      </p>
+                    </div>
                   </div>
+
                   <div className="flex gap-2">
-                    <Button size="sm" variant="ghost" onClick={() => decline(r.id)}>
+                    <Button size="sm" variant="outline" onClick={() => decline(r.id)}>
                       Decline
                     </Button>
                     <Button size="sm" onClick={() => accept(r.id)}>
@@ -435,52 +474,44 @@ function MentorDashboard() {
           )}
         </Card>
 
+        {/* Today's Schedule */}
         <Card className="overflow-hidden p-0">
           <div className="flex items-center justify-between p-6">
             <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
               Today&apos;s Schedule
             </h2>
+            <MoreHorizontal className="h-5 w-5 text-[#6d6a66]" />
           </div>
+
           {stats.data && stats.data.todays_schedule.length > 0 ? (
-            <ul className="divide-y divide-[#e0d8c9]">
-              {stats.data.todays_schedule.map((s) => (
-                <li key={s.id} className="p-6">
-                  <p className="text-sm text-[#6d6a66]">{formatTime(s.time)}</p>
-                  <p className="text-base font-semibold text-[#1b1c1c]">{s.title}</p>
-                  <p className="text-sm text-[#6d6a66]">with {s.with_name}</p>
-                </li>
-              ))}
-            </ul>
+            <div className="px-6 pb-4">
+              {/* Timeline */}
+              <div className="relative border-l-2 border-[#e0d8c9] pl-6">
+                {stats.data.todays_schedule.map((s, index) => (
+                  <div key={s.id} className="relative mb-6 last:mb-0">
+                    {/* Timeline dot */}
+                    <span className="absolute -left-[31px] top-1 flex h-3 w-3 items-center justify-center rounded-full bg-[#d4af37]" />
+
+                    <p className="text-sm text-[#6d6a66]">{formatTime(s.time)}</p>
+                    <div className="mt-1 rounded-md bg-[#f5f3f3] p-3">
+                      <p className="text-base font-semibold text-[#1b1c1c]">{s.title}</p>
+                      <p className="mt-1 flex items-center gap-2 text-sm text-[#6d6a66]">
+                        <Users className="h-3.5 w-3.5" /> with {s.with_name}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           ) : (
             <p className="px-6 pb-6 text-base text-[#6d6a66]">Nothing scheduled today.</p>
           )}
+
           <div className="p-6 pt-0">
-            <Button href="/mentorship/students" variant="ghost" className="w-full">
-              View All Students
+            <Button href="/mentorship/students" variant="outline" className="w-full">
+              View Calendar
             </Button>
           </div>
-        </Card>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Card>
-          <p className="text-base font-semibold text-[#1b1c1c]">Your Mentor Profile</p>
-          <p className="mt-2 text-sm text-[#6d6a66]">
-            Keep your expertise and availability up to date so learners can find the right fit.
-          </p>
-          <Button href="/mentorship/apply" variant="secondary" className="mt-4">
-            Edit Application
-          </Button>
-        </Card>
-        <Card>
-          <p className="text-base font-semibold text-[#1b1c1c]">Community Grants</p>
-          <p className="mt-2 text-sm text-[#6d6a66]">
-            Start or contribute to a funding group for the youth you mentor.
-          </p>
-          <Button href="/grants" variant="secondary" className="mt-4">
-            Go to Grant Hub
-          </Button>
         </Card>
       </div>
     </div>
