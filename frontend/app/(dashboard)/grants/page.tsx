@@ -59,7 +59,7 @@ export default function GrantsPage() {
           </p>
         </Card>
 
-        <Card className="bg-[#1b1c1c] p-6 text-white">
+        <Card className="bg-black p-6 text-white">
           <p className="text-sm font-semibold">Start a new initiative</p>
           <p className="mt-2 text-sm text-[#c9c7c6]">
             Empower more youth by starting a dedicated funding group.
