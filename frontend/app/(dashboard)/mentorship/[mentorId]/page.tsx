@@ -38,7 +38,7 @@ export default function MentorProfilePage() {
       {/* Exit Button */}
       <button
         onClick={() => router.push("/mentorship")}
-        className="fixed right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:bg-[#f5f3f3]"
+        className="fixed top-6 right-6 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:bg-[#f5f3f3]"
         aria-label="Close profile"
       >
         <X className="h-5 w-5 text-[#1b1c1c]" />
@@ -104,7 +104,7 @@ export default function MentorProfilePage() {
 
             {/* Location Card */}
             <Card>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+              <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                 LOCATION
               </p>
               <div className="mt-3 space-y-2">
@@ -127,14 +127,12 @@ export default function MentorProfilePage() {
               <p className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
                 Shaping the future of African cities through sustainable design.
               </p>
-              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[#6d6a66]">
-                {m.bio}
-              </p>
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[#6d6a66]">{m.bio}</p>
             </section>
 
             {/* Areas of Expertise */}
             <section>
-              <h2 className="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+              <h2 className="flex items-center gap-3 text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                 <span className="h-px w-8 bg-[#d4af37]" />
                 Areas of Expertise
               </h2>
@@ -163,7 +161,7 @@ export default function MentorProfilePage() {
 
             {/* Mentorship Packages */}
             <section>
-              <h2 className="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+              <h2 className="flex items-center gap-3 text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                 <span className="h-px w-8 bg-[#d4af37]" />
                 Mentorship Packages
               </h2>
@@ -172,10 +170,7 @@ export default function MentorProfilePage() {
                   packages.data.map((pkg) => (
                     <Card
                       key={pkg.id}
-                      className={cn(
-                        "relative p-6",
-                        pkg.is_popular && "border-[#d4af37]"
-                      )}
+                      className={cn("relative p-6", pkg.is_popular && "border-[#d4af37]")}
                     >
                       {pkg.is_popular && (
                         <Badge className="absolute -top-3 right-6 bg-[#d4af37] text-[#1b1c1c]">

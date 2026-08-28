@@ -50,10 +50,7 @@ export default function MentorshipPage() {
             className="h-12 rounded-lg border-[#e0d8c9] bg-white text-base"
           />
         </div>
-        <Button
-          variant="outline"
-          className="h-12 gap-2 rounded-lg border-[#e0d8c9] px-6"
-        >
+        <Button variant="outline" className="h-12 gap-2 rounded-lg border-[#e0d8c9] px-6">
           <Filter className="h-4 w-4" /> Filters
         </Button>
       </div>

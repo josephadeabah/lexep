@@ -2,13 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
@@ -161,7 +155,7 @@ export default function RequestSessionPage() {
                     )}
                   >
                     {sessionType === type.id && (
-                      <CheckCircle2 className="absolute right-4 top-4 h-5 w-5 text-[#d4af37]" />
+                      <CheckCircle2 className="absolute top-4 right-4 h-5 w-5 text-[#d4af37]" />
                     )}
                     <p className="font-['Hanken_Grotesk'] text-lg font-semibold text-[#1b1c1c]">
                       {type.title}
