@@ -1,17 +1,12 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import { ArrowRight, Eye, EyeOff } from "lucide-react";
-
+import { ArrowRight, Eye, EyeOff, Mail, Lock, Github, Linkedin } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-
 import { useAuthStore } from "@/lib/auth-store";
 import { ApiError } from "@/lib/api";
-
 import styles from "./auth-form.module.css";
 
 interface AuthFormProps {
@@ -42,7 +37,6 @@ export function AuthForm({ mode }: AuthFormProps) {
     try {
       if (isSignUp) {
         await register(email, fullName, password);
-
         router.push("/onboarding/choose-role");
         return;
       }
@@ -65,166 +59,153 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   return (
     <main className={styles.shell}>
-      <section className={styles.visual} aria-label="Lexep introduction">
+      {/* Header */}
+      <div className={styles.header}>
         <Link href="/" className={styles.logo}>
           <Logo showWordmark />
         </Link>
+        <h1>{isSignUp ? "Create an account" : "Welcome back"}</h1>
+        <p>
+          {isSignUp
+            ? "Join Lexep and start your journey today."
+            : "Please enter your details."}
+        </p>
+      </div>
 
-        <div className={styles.visualCopy}>
-          <p className={styles.overline}>Your next chapter starts here</p>
-
-          <h1>
-            {isSignUp ? (
-              <>
-                Make room for <em>what&apos;s next.</em>
-              </>
-            ) : (
-              <>
-                Welcome back to <em>Lexep.</em>
-              </>
-            )}
-          </h1>
-
-          <p>Connect with the people, experience, and support that move your career forward.</p>
-        </div>
-
-        <div className={styles.quote}>
-          <span>“</span>
-
-          <p>Opportunity is not a destination. It is a bridge we build together.</p>
-
-          <small>— The Lexep principle</small>
-        </div>
-      </section>
-
-      <section className={styles.panel}>
-        <div className={styles.card}>
-          <div className={styles.mobileLogo}>
-            <Logo showWordmark />
-          </div>
-
-          <p className={styles.kicker}>{isSignUp ? "Join the movement" : "Welcome back"}</p>
-
-          <h2>{isSignUp ? "Create your account" : "Sign in to Lexep"}</h2>
-
-          <p className={styles.intro}>
-            {isSignUp
-              ? "Start building your path to meaningful work."
-              : "Pick up where your next chapter left off."}
-          </p>
-
-          <form className={styles.form} onSubmit={handleSubmit}>
-            {isSignUp && (
-              <label className={styles.field}>
-                <span>Full name</span>
-
+      {/* Card */}
+      <div className={styles.card}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          {isSignUp && (
+            <label className={styles.field}>
+              <span>Full Name</span>
+              <div className={styles.inputWrapper}>
                 <input
                   required
                   name="name"
                   autoComplete="name"
-                  placeholder="Your name"
+                  placeholder="Jane Doe"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                 />
-              </label>
-            )}
+              </div>
+            </label>
+          )}
 
-            <label className={styles.field}>
-              <span>Email address</span>
-
+          <label className={styles.field}>
+            <span>Email address</span>
+            <div className={styles.inputWrapper}>
+              <Mail size={17} className={styles.inputIcon} />
               <input
                 required
                 type="email"
                 name="email"
                 autoComplete="email"
-                placeholder="you@example.com"
+                placeholder="jane@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </label>
+            </div>
+          </label>
 
-            <label className={styles.field}>
-              <span>Password</span>
+          <label className={styles.field}>
+            <span>Password</span>
+            <div className={styles.passwordWrapper}>
+              <Lock size={17} className={styles.inputIconLeft} />
+              <input
+                required
+                type={showPassword ? "text" : "password"}
+                name="password"
+                autoComplete={isSignUp ? "new-password" : "current-password"}
+                placeholder="••••••••"
+                minLength={isSignUp ? 8 : undefined}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className={styles.passwordToggle}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                onClick={() => setShowPassword((current) => !current)}
+              >
+                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+              </button>
+            </div>
+          </label>
 
-              <div className={styles.password}>
-                <input
-                  required
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  autoComplete={isSignUp ? "new-password" : "current-password"}
-                  placeholder="At least 8 characters"
-                  minLength={isSignUp ? 8 : undefined}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-
-                <button
-                  type="button"
-                  className={styles.passwordToggle}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  onClick={() => setShowPassword((current) => !current)}
-                >
-                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
-                </button>
-              </div>
-            </label>
-
-            {!isSignUp && (
-              <div className={styles.options}>
-                <label className={styles.check}>
-                  <input
-                    type="checkbox"
-                    checked={remember}
-                    onChange={(e) => setRemember(e.target.checked)}
-                  />
-
-                  <span>Remember me</span>
-                </label>
-
-                <Link className={styles.forgot} href="/forgot-password">
-                  Forgot password?
-                </Link>
-              </div>
-            )}
-
-            {isSignUp && (
+          {!isSignUp && (
+            <div className={styles.options}>
               <label className={styles.check}>
-                <input type="checkbox" required />
-
-                <span>
-                  I agree to the <Link href="#terms">Terms</Link> and{" "}
-                  <Link href="#privacy">Privacy Policy</Link>.
-                </span>
+                <input
+                  type="checkbox"
+                  checked={remember}
+                  onChange={(e) => setRemember(e.target.checked)}
+                />
+                <span>Remember me</span>
               </label>
-            )}
 
-            {error && (
-              <p className={styles.error} role="alert">
-                {error}
-              </p>
-            )}
+              <Link className={styles.forgot} href="/forgot-password">
+                Forgot password?
+              </Link>
+            </div>
+          )}
 
-            <button className={styles.submit} type="submit" disabled={isLoading}>
-              {isLoading
-                ? isSignUp
-                  ? "Creating account..."
-                  : "Signing in..."
-                : isSignUp
-                  ? "Create account"
-                  : "Sign in"}
+          {isSignUp && (
+            <label className={styles.check}>
+              <input type="checkbox" required />
+              <span>
+                I agree to the <Link href="#terms">Terms</Link> and{" "}
+                <Link href="#privacy">Privacy Policy</Link>.
+              </span>
+            </label>
+          )}
 
-              {!isLoading && <ArrowRight size={16} />}
-            </button>
-          </form>
+          {error && (
+            <p className={styles.error} role="alert">
+              {error}
+            </p>
+          )}
 
-          <p className={styles.switch}>
-            {isSignUp ? "Already have an account?" : "New to Lexep?"}{" "}
-            <Link href={isSignUp ? "/sign-in" : "/sign-up"}>
-              {isSignUp ? "Sign in" : "Create an account"}
-            </Link>
-          </p>
+          <button className={styles.submit} type="submit" disabled={isLoading}>
+            {isLoading
+              ? isSignUp
+                ? "Creating account..."
+                : "Signing in..."
+              : isSignUp
+                ? "Sign Up"
+                : "Sign In"}
+          </button>
+        </form>
+
+        {/* Divider */}
+        <div className={styles.divider}>Or continue with</div>
+
+        {/* Social Buttons */}
+        <div className={styles.socialButtons}>
+          <button className={styles.socialButton} type="button">
+            <Github size={17} />
+            Google
+          </button>
+          <button className={styles.socialButton} type="button">
+            <Linkedin size={17} />
+            LinkedIn
+          </button>
         </div>
-      </section>
+
+        {/* Badge */}
+        {isSignUp && (
+          <div className={styles.badge}>
+            <span>🎉</span> Join 10,000+ African youth shaping the future
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className={styles.footer}>
+        {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+        <Link href={isSignUp ? "/sign-in" : "/sign-up"}>
+          {isSignUp ? "Log in instead" : "Create an account"}
+        </Link>
+      </div>
     </main>
   );
 }
