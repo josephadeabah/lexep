@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { User, Briefcase, Building2, History, Link as LinkIcon, X } from "lucide-react";
+import { Briefcase, Building2, Link as LinkIcon, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input/Input";
@@ -11,7 +11,6 @@ import { Select } from "@/components/ui/select/Select";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { Textarea } from "@/components/ui/text-area/Textarea";
 import { api } from "@/lib/api";
-import styles from "../../../onboarding/onboarding.module.css";
 
 const INDUSTRIES = ["Technology", "Design", "Finance", "Healthcare", "Education", "Marketing"];
 const SKILLS = [
@@ -96,49 +95,67 @@ export default function MentorApplicationPage() {
   }
 
   return (
-    <div className={styles.shell}>
-      <div className={styles.header}>
-        <span className={styles.headerLogo}>Lexep</span>
-        <p className={styles.headerSubtitle}>Mentor Application Portal</p>
+    <div className="min-h-screen bg-[#fbf9f8]">
+      {/* Header */}
+      <div className="border-b border-[#e0d8c9]/40 bg-white px-6 py-4 text-center">
+        <span className="font-['Hanken_Grotesk'] text-xl font-bold text-[#735c00]">Lexep</span>
+        <p className="text-sm text-[#6d6a66]">Mentor Application Portal</p>
       </div>
 
-      <div className={styles.content}>
-        <div className={styles.card}>
-          <div className={styles.progressLabel}>
-            <span>APPLICATION PROGRESS</span>
-            <span className={styles.progressLabelRight}>Step {step} of 3</span>
+      <div className="mx-auto max-w-2xl px-4 py-12">
+        <div className="rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm">
+          {/* Progress */}
+          <div className="mb-6 flex items-center justify-between text-xs font-semibold">
+            <span className="text-[#6d6a66]">APPLICATION PROGRESS</span>
+            <span className="text-[#735c00]">Step {step} of 3</span>
           </div>
-          <div className={styles.progressBar}>
-            <div className={styles.progressFill} style={{ width: `${(step / 3) * 100}%` }} />
+          <div className="mb-8 h-1 rounded-full bg-[#e0d8c9]">
+            <div
+              className="h-1 rounded-full bg-[#d4af37] transition-all duration-300"
+              style={{ width: `${(step / 3) * 100}%` }}
+            />
           </div>
 
           {step === 1 && (
-            <div className={styles.formGrid}>
+            <div className="space-y-8">
               <div>
-                <p className={styles.stepLabel}>STEP 1 OF 3</p>
-                <h1 className={styles.cardTitle}>Personal & Professional Info</h1>
-                <p className={styles.cardSubtitle}>
+                <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+                  STEP 1 OF 3
+                </p>
+                <h1 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+                  Personal & Professional Info
+                </h1>
+                <p className="mt-2 text-[#6d6a66]">
                   Tell us about your background and expertise to help us match you with the right
                   learners.
                 </p>
               </div>
 
-              <div className={styles.formGrid}>
+              <div className="space-y-4">
                 <Input
-                  label="Current Role"
-                  placeholder="Senior Architect"
+                  label="Full Name"
+                  placeholder="Jane Doe"
                   icon={<Briefcase className="h-4 w-4" />}
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                 />
-                <Input
-                  label="Company / Organization"
-                  placeholder="Studio Design Group"
-                  icon={<Building2 className="h-4 w-4" />}
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                />
-                <div className={styles.twoCol}>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Input
+                    label="Current Role"
+                    placeholder="Senior Architect"
+                    icon={<Briefcase className="h-4 w-4" />}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                  />
+                  <Input
+                    label="Company / Organization"
+                    placeholder="Studio Design Group"
+                    icon={<Building2 className="h-4 w-4" />}
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                  />
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
                   <Select
                     label="Years of Exp."
                     value={years}
@@ -160,7 +177,7 @@ export default function MentorApplicationPage() {
                 </div>
               </div>
 
-              <div className={styles.footer}>
+              <div className="flex items-center justify-between border-t border-[#e0d8c9]/40 pt-6">
                 <Link href="/dashboard" className="text-sm text-[#6d6a66] hover:text-[#735c00]">
                   Cancel
                 </Link>
@@ -172,18 +189,24 @@ export default function MentorApplicationPage() {
           )}
 
           {step === 2 && (
-            <div className={styles.formGrid}>
+            <div className="space-y-8">
               <div>
-                <p className={styles.stepLabel}>STEP 2 OF 3</p>
-                <h1 className={styles.cardTitle}>Expertise & Availability</h1>
+                <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+                  STEP 2 OF 3
+                </p>
+                <h1 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+                  Expertise & Availability
+                </h1>
               </div>
 
               <div>
-                <h2 className={styles.sectionTitle}>Area of Expertise</h2>
-                <p className={styles.sectionSubtitle}>
+                <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
+                  Area of Expertise
+                </h2>
+                <p className="mt-1 text-sm text-[#6d6a66]">
                   Select your primary industry and specific skills you can mentor on.
                 </p>
-                <div className={styles.formGrid}>
+                <div className="mt-4 space-y-4">
                   <Select
                     label="Primary Industry"
                     value={industry}
@@ -195,15 +218,17 @@ export default function MentorApplicationPage() {
                     ))}
                   </Select>
                   <div>
-                    <p className={styles.optionTitle}>Specific Skills (Select up to 5)</p>
-                    <div className={styles.optionsGridThree}>
+                    <p className="text-sm font-semibold text-[#1b1c1c]">
+                      Specific Skills (Select up to 5)
+                    </p>
+                    <div className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3">
                       {SKILLS.map((skill) => (
                         <Checkbox
                           key={skill}
                           label={skill}
                           checked={skills.includes(skill)}
                           onChange={() => toggle(skills, setSkills, skill, 5)}
-                          className={styles.checkboxCard}
+                          className="rounded-lg border border-[#e0d8c9] p-3"
                         />
                       ))}
                     </div>
@@ -212,45 +237,56 @@ export default function MentorApplicationPage() {
               </div>
 
               <div>
-                <h2 className={styles.sectionTitle}>Weekly Availability</h2>
-                <p className={styles.sectionSubtitle}>
+                <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
+                  Weekly Availability
+                </h2>
+                <p className="mt-1 text-sm text-[#6d6a66]">
                   Estimate the hours you can dedicate to mentoring students each week.
                 </p>
-                <div className={styles.twoCol}>
+                <div className="mt-4 grid gap-6 sm:grid-cols-2">
                   <div>
-                    <p className={styles.optionTitle}>Hours per Week</p>
-                    {HOURS.map((h) => (
-                      <label
-                        key={h}
-                        className={cn(styles.radioCard, hours === h && styles.radioCardSelected)}
-                      >
-                        <input
-                          type="radio"
-                          name="hours"
-                          checked={hours === h}
-                          onChange={() => setHours(h)}
-                          className="h-4 w-4 accent-[#d4af37]"
-                        />
-                        {h}
-                      </label>
-                    ))}
+                    <p className="text-sm font-semibold text-[#1b1c1c]">Hours per Week</p>
+                    <div className="mt-2 space-y-2">
+                      {HOURS.map((h) => (
+                        <label
+                          key={h}
+                          className={cn(
+                            "flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition",
+                            hours === h
+                              ? "border-[#d4af37] bg-[#fffdf8]"
+                              : "border-[#e0d8c9] hover:border-[#d4af37]"
+                          )}
+                        >
+                          <input
+                            type="radio"
+                            name="hours"
+                            checked={hours === h}
+                            onChange={() => setHours(h)}
+                            className="h-4 w-4 accent-[#d4af37]"
+                          />
+                          <span className="text-sm text-[#1b1c1c]">{h}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
                   <div>
-                    <p className={styles.optionTitle}>Preferred Timeframes</p>
-                    {TIMEFRAMES.map((t) => (
-                      <Checkbox
-                        key={t}
-                        label={t}
-                        checked={timeframes.includes(t)}
-                        onChange={() => toggle(timeframes, setTimeframes, t)}
-                        className={cn(styles.checkboxCard)}
-                      />
-                    ))}
+                    <p className="text-sm font-semibold text-[#1b1c1c]">Preferred Timeframes</p>
+                    <div className="mt-2 space-y-2">
+                      {TIMEFRAMES.map((t) => (
+                        <Checkbox
+                          key={t}
+                          label={t}
+                          checked={timeframes.includes(t)}
+                          onChange={() => toggle(timeframes, setTimeframes, t)}
+                          className="rounded-lg border border-[#e0d8c9] p-3"
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className={styles.footer}>
+              <div className="flex items-center justify-between border-t border-[#e0d8c9]/40 pt-6">
                 <Button variant="ghost" onClick={() => setStep(1)}>
                   ← Back
                 </Button>
@@ -262,13 +298,17 @@ export default function MentorApplicationPage() {
           )}
 
           {step === 3 && (
-            <div className={styles.formGrid}>
+            <div className="space-y-8">
               <div>
-                <p className={styles.stepLabel}>STEP 3 OF 3</p>
-                <h1 className={styles.cardTitle}>Motivation & Submission</h1>
-                <p className={styles.cardSubtitle}>
-                  We'd love to know what drives you to share your expertise with the next generation
-                  of architects.
+                <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+                  STEP 3 OF 3
+                </p>
+                <h1 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+                  Motivation & Submission
+                </h1>
+                <p className="mt-2 text-[#6d6a66]">
+                  We'd love to know what drives you to share your expertise with the next
+                  generation of architects.
                 </p>
               </div>
 
@@ -288,16 +328,16 @@ export default function MentorApplicationPage() {
                   onChange={(e) => setAgreed(e.target.checked)}
                   label={
                     <>
-                      I agree to the <span className="text-[#735c00]">Terms & Conditions</span> and{" "}
-                      <span className="text-[#735c00]">Mentor Code of Conduct</span>. I confirm that
-                      all information provided is accurate.
+                      I agree to the <span className="text-[#735c00]">Terms & Conditions</span>{" "}
+                      and <span className="text-[#735c00]">Mentor Code of Conduct</span>. I confirm
+                      that all information provided is accurate.
                     </>
                   }
-                  className={styles.checkboxCard}
+                  className="rounded-lg border border-[#e0d8c9] p-4"
                 />
               </div>
 
-              <div className={styles.footer}>
+              <div className="flex items-center justify-between border-t border-[#e0d8c9]/40 pt-6">
                 <Button variant="ghost" onClick={() => setStep(2)}>
                   ← Back
                 </Button>
