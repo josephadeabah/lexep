@@ -2,6 +2,13 @@
 
 import { useMemo, useState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
@@ -9,6 +16,8 @@ import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/text-area/Textarea";
 import { Avatar } from "@/components/ui/avatar/Avatar";
+import { Badge } from "@/components/ui/badge/Badge";
+import { Logo } from "@/components/ui/Logo";
 
 const SESSION_TYPES = [
   {
@@ -79,173 +88,242 @@ export default function RequestSessionPage() {
   const m = mentor.data;
 
   return (
-    <div>
-      <div className="mb-lg">
-        <h1 className="text-headline-lg text-on-background">Request Session</h1>
-        <p className="text-body-md text-on-surface-variant mt-1">
-          Propose times for a mentorship session with your selected mentor.
-        </p>
-      </div>
+    <div className="min-h-screen bg-[#fbf9f8]">
+      {/* Full Page Layout */}
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Back Button */}
+        <button
+          onClick={() => router.push(`/mentorship/${mentorId}`)}
+          className="mb-6 flex items-center gap-2 text-sm font-semibold text-[#6d6a66] transition hover:text-[#735c00]"
+        >
+          <ArrowLeft className="h-4 w-4" /> Back to Mentors
+        </button>
 
-      <div className="gap-md grid lg:grid-cols-[1fr_320px]">
-        <div className="gap-md flex flex-col">
-          {m && (
-            <Card className="flex items-center gap-4">
-              <Avatar name={m.user.full_name} src={m.user.avatar_url} size={56} />
-              <div>
-                <p className="text-headline-md text-on-background">{m.user.full_name}</p>
-                <p className="text-body-md text-on-surface-variant">
-                  {m.title} {m.company && `at ${m.company}`}
-                </p>
-              </div>
-            </Card>
-          )}
-
-          <Card>
-            <p className="text-label-md text-on-background flex items-center gap-2">
-              <span className="bg-primary-fixed text-label-sm flex h-6 w-6 items-center justify-center rounded-full">
-                1
-              </span>
-              Session Type
-            </p>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              {SESSION_TYPES.map((type) => (
-                <button
-                  key={type.id}
-                  onClick={() => setSessionType(type.id)}
-                  className={cn(
-                    "rounded-md border p-4 text-left transition",
-                    sessionType === type.id
-                      ? "border-primary-container bg-surface-container-low"
-                      : "border-outline-variant"
-                  )}
-                >
-                  <p className="text-label-md text-on-background">{type.title}</p>
-                  <p className="text-label-sm text-on-surface-variant mt-1">{type.description}</p>
-                </button>
-              ))}
-            </div>
-          </Card>
-
-          <Card>
-            <p className="text-label-md text-on-background flex items-center gap-2">
-              <span className="bg-primary-fixed text-label-sm flex h-6 w-6 items-center justify-center rounded-full">
-                2
-              </span>
-              Message for Mentor
-            </p>
-            <div className="mt-3">
-              <Textarea
-                label="What would you like to discuss?"
-                placeholder="Briefly describe your goals for this session…"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-              />
-            </div>
-          </Card>
-
-          <Card>
-            <p className="text-label-md text-on-background flex items-center gap-2">
-              <span className="bg-primary-fixed text-label-sm flex h-6 w-6 items-center justify-center rounded-full">
-                3
-              </span>
-              Propose Times
-            </p>
-            <p className="text-label-sm text-on-surface-variant">
-              Select up to 3 time slots that work for you.
-            </p>
-
-            <div className="mt-3 flex gap-1 overflow-x-auto pb-2">
-              {days.map((day) => {
-                const active = day.toDateString() === selectedDate.toDateString();
-                return (
-                  <button
-                    key={day.toISOString()}
-                    onClick={() => setSelectedDate(day)}
-                    className={cn(
-                      "text-label-sm flex min-w-[56px] flex-col items-center rounded-md px-3 py-2",
-                      active
-                        ? "bg-primary-container text-on-primary-container"
-                        : "bg-surface-container-low text-on-surface-variant"
-                    )}
-                  >
-                    <span>{day.toLocaleDateString("en-US", { weekday: "short" })}</span>
-                    <span className="text-label-md">{day.getDate()}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="bg-surface-container-low mt-3 rounded-md p-3">
-              <p className="text-label-sm text-on-surface-variant mb-2">
-                Available slots for{" "}
-                {selectedDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-              </p>
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {SLOTS.map((slot) => {
-                  const iso = new Date(`${selectedDate.toDateString()} ${slot}`).toISOString();
-                  const active = selectedSlots.includes(iso);
-                  return (
-                    <button
-                      key={slot}
-                      onClick={() => toggleSlot(slot)}
-                      className={cn(
-                        "text-label-sm rounded-md border px-3 py-2",
-                        active
-                          ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
-                          : "border-outline-variant bg-surface-container-lowest"
-                      )}
-                    >
-                      {slot}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </Card>
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
+            Request Session
+          </h1>
+          <p className="mt-2 text-lg text-[#6d6a66]">
+            Propose times for a mentorship session with your selected mentor.
+          </p>
         </div>
 
-        <div>
-          <Card>
-            <h2 className="text-headline-md text-on-background">Request Summary</h2>
-            <div className="border-outline-variant/40 text-body-md mt-3 flex flex-col gap-3 border-t pt-3">
-              <div className="flex justify-between">
-                <span className="text-on-surface-variant">Mentor</span>
-                <span className="text-on-background">{m?.user.full_name ?? "—"}</span>
+        <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+          {/* Left Content */}
+          <div className="space-y-6">
+            {/* Mentor Info */}
+            {m && (
+              <Card className="p-6">
+                <div className="flex items-center gap-4">
+                  <Avatar
+                    name={m.user.full_name}
+                    src={m.user.avatar_url}
+                    size={64}
+                    className="rounded-full"
+                  />
+                  <div>
+                    <p className="flex items-center gap-2 font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
+                      {m.user.full_name}
+                      <span className="text-[#6d6a66]">@</span>
+                      {m.company}
+                    </p>
+                    <p className="mt-1 text-sm text-[#6d6a66]">
+                      {m.title} at {m.company}
+                    </p>
+                    <div className="mt-2 flex gap-2">
+                      <Badge className="bg-[#f5f3f3] text-[#6d6a66]">Portfolio Review</Badge>
+                      <Badge className="bg-[#f5f3f3] text-[#6d6a66]">Career Advice</Badge>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            )}
+
+            {/* Session Type */}
+            <Card className="p-6">
+              <p className="flex items-center gap-3 text-sm font-semibold text-[#1b1c1c]">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#d4af37] text-xs font-bold text-[#1b1c1c]">
+                  1
+                </span>
+                Session Type
+              </p>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                {SESSION_TYPES.map((type) => (
+                  <button
+                    key={type.id}
+                    onClick={() => setSessionType(type.id)}
+                    className={cn(
+                      "relative rounded-xl border p-5 text-left transition",
+                      sessionType === type.id
+                        ? "border-[#d4af37] bg-[#fffdf8] shadow-[0_0_0_3px_rgba(212,175,55,0.1)]"
+                        : "border-[#e0d8c9] hover:border-[#d4af37]"
+                    )}
+                  >
+                    {sessionType === type.id && (
+                      <CheckCircle2 className="absolute right-4 top-4 h-5 w-5 text-[#d4af37]" />
+                    )}
+                    <p className="font-['Hanken_Grotesk'] text-lg font-semibold text-[#1b1c1c]">
+                      {type.title}
+                    </p>
+                    <p className="mt-1 text-sm text-[#6d6a66]">{type.description}</p>
+                  </button>
+                ))}
               </div>
-              <div className="flex justify-between">
-                <span className="text-on-surface-variant">Session Type</span>
-                <span className="text-on-background">{sessionType}</span>
+            </Card>
+
+            {/* Message */}
+            <Card className="p-6">
+              <p className="flex items-center gap-3 text-sm font-semibold text-[#1b1c1c]">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#d4af37] text-xs font-bold text-[#1b1c1c]">
+                  2
+                </span>
+                Message for Mentor
+              </p>
+              <div className="mt-4">
+                <Textarea
+                  label="What would you like to discuss?"
+                  placeholder="Briefly describe your goals for this session..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="min-h-[160px] rounded-lg border-[#e0d8c9]"
+                />
               </div>
-              <div>
-                <span className="text-on-surface-variant">Proposed Times</span>
-                <ul className="text-label-sm text-on-background mt-1 list-disc pl-5">
-                  {selectedSlots.length === 0 && (
-                    <li className="text-on-surface-variant list-none">None selected yet</li>
-                  )}
-                  {selectedSlots.map((s) => (
-                    <li key={s}>
-                      {new Date(s).toLocaleDateString("en-US", { month: "short", day: "numeric" })},{" "}
-                      {new Date(s).toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "2-digit",
-                      })}
-                    </li>
+            </Card>
+
+            {/* Propose Times */}
+            <Card className="p-6">
+              <p className="flex items-center gap-3 text-sm font-semibold text-[#1b1c1c]">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#d4af37] text-xs font-bold text-[#1b1c1c]">
+                  3
+                </span>
+                Propose Times
+              </p>
+              <p className="mt-2 text-sm text-[#6d6a66]">
+                Select up to 3 time slots that work for you.
+              </p>
+
+              {/* Calendar */}
+              <div className="mt-4 rounded-xl border border-[#e0d8c9] p-4">
+                {/* Month Navigation */}
+                <div className="flex items-center justify-between">
+                  <button className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-[#f5f3f3]">
+                    <ChevronLeft className="h-4 w-4 text-[#6d6a66]" />
+                  </button>
+                  <p className="text-sm font-semibold text-[#1b1c1c]">
+                    {selectedDate.toLocaleDateString("en-US", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <button className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-[#f5f3f3]">
+                    <ChevronRight className="h-4 w-4 text-[#6d6a66]" />
+                  </button>
+                </div>
+
+                {/* Days Grid */}
+                <div className="mt-4 grid grid-cols-7 gap-2">
+                  {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((day) => (
+                    <div key={day} className="text-center text-xs font-semibold text-[#6d6a66]">
+                      {day}
+                    </div>
                   ))}
-                </ul>
+                  {days.map((day) => {
+                    const active = day.toDateString() === selectedDate.toDateString();
+                    return (
+                      <button
+                        key={day.toISOString()}
+                        onClick={() => setSelectedDate(day)}
+                        className={cn(
+                          "flex h-10 w-full items-center justify-center rounded-full text-sm transition",
+                          active
+                            ? "bg-[#d4af37] font-bold text-[#1b1c1c]"
+                            : "text-[#1b1c1c] hover:bg-[#f5f3f3]"
+                        )}
+                      >
+                        {day.getDate()}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-            <Button
-              className="mt-md w-full"
-              onClick={handleSend}
-              disabled={selectedSlots.length === 0 || isSubmitting}
-            >
-              {isSubmitting ? "Sending…" : "Send Request ▷"}
-            </Button>
-            <p className="text-label-sm text-on-surface-variant mt-2">
-              The mentor will have 48 hours to confirm.
-            </p>
-          </Card>
+
+              {/* Time Slots */}
+              <div className="mt-4 rounded-xl bg-[#f5f3f3] p-4">
+                <p className="text-sm text-[#6d6a66]">
+                  Available slots for{" "}
+                  {selectedDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                </p>
+                <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {SLOTS.map((slot) => {
+                    const iso = new Date(`${selectedDate.toDateString()} ${slot}`).toISOString();
+                    const active = selectedSlots.includes(iso);
+                    return (
+                      <button
+                        key={slot}
+                        onClick={() => toggleSlot(slot)}
+                        className={cn(
+                          "rounded-md border px-3 py-2 text-sm font-medium transition",
+                          active
+                            ? "border-[#d4af37] bg-[#fffdf8] text-[#1b1c1c]"
+                            : "border-[#e0d8c9] bg-white text-[#6d6a66] hover:border-[#d4af37]"
+                        )}
+                      >
+                        {slot}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Right Summary */}
+          <div className="space-y-6">
+            <Card className="p-6">
+              <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
+                Request Summary
+              </h2>
+
+              <div className="mt-4 space-y-4 border-t border-[#e0d8c9]/40 pt-4">
+                <div className="flex justify-between">
+                  <span className="text-sm text-[#6d6a66]">Mentor</span>
+                  <span className="text-sm font-semibold text-[#1b1c1c]">
+                    {m?.user.full_name ?? "—"}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-[#6d6a66]">Session Type</span>
+                  <span className="text-sm font-semibold text-[#1b1c1c]">{sessionType}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-[#6d6a66]">Proposed Times</span>
+                  <span className="text-sm font-semibold text-[#1b1c1c]">
+                    {selectedSlots.length > 0
+                      ? `${new Date(selectedSlots[0]).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        })}, ${new Date(selectedSlots[0]).toLocaleTimeString("en-US", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}`
+                      : "None selected"}
+                  </span>
+                </div>
+              </div>
+
+              <Button
+                className="mt-6 w-full bg-[#d4af37] font-semibold text-[#1b1c1c] hover:bg-[#c9a32e]"
+                onClick={handleSend}
+                disabled={selectedSlots.length === 0 || isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Request"} <ArrowRight className="h-4 w-4" />
+              </Button>
+              <p className="mt-3 text-center text-xs text-[#6d6a66]">
+                The mentor will have 48 hours to confirm.
+              </p>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
