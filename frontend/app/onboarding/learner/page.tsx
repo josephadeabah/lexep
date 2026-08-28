@@ -78,9 +78,9 @@ export default function LearnerOnboardingPage() {
             <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
               STEP {step} OF 2
             </p>
-            <h1 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c] sm:text-4xl">
+            <h2 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c] sm:text-4xl">
               {step === 1 ? "Tailor Your Learning Journey" : "Your Goals & Preferences"}
-            </h1>
+            </h2>
             <p className="mx-auto mt-3 max-w-md text-[#6d6a66]">
               {step === 1
                 ? "Tell us a bit about your background so we can customize your Lexep experience."
