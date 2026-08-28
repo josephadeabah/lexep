@@ -110,9 +110,9 @@ export default function MentorOnboardingPage() {
         <div className="rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm sm:p-10">
           {/* Header */}
           <div className="mb-8 text-center">
-            <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+            <h2 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
               Refine Your Mentorship Profile
-            </h1>
+            </h2>
             <p className="mx-auto mt-3 max-w-lg text-[#6d6a66]">
               Help us connect you with the right mentees by defining your approach and preferences.
             </p>
