@@ -8,7 +8,6 @@ import { useAsync } from "@/lib/use-async";
 import { api, ApiError } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input/Input";
-import { Logo } from "@/components/ui/Logo";
 import { useAuthStore } from "@/lib/auth-store";
 import Link from "next/link";
 
@@ -72,14 +71,14 @@ export default function CheckoutContent() {
 
       <div className="mx-auto grid max-w-4xl gap-6 px-4 py-12 md:grid-cols-2">
         {/* Left: Upgrade Summary */}
-        <div className="h-fit rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm">
+        <div className="h-fit rounded-2xl bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
           <h2 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
             Upgrade Summary
           </h2>
 
           <div className="mt-6 flex items-start gap-4">
-            <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#f5f3f3]">
-              <ShieldCheck className="h-6 w-6 text-[#735c00]" />
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f5f3f3]">
+              <ShieldCheck className="h-5 w-5 text-[#735c00]" />
             </span>
             <div>
               <p className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
@@ -124,7 +123,7 @@ export default function CheckoutContent() {
         </div>
 
         {/* Right: Payment Details */}
-        <form onSubmit={handlePay} className="rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm">
+        <form onSubmit={handlePay} className="rounded-2xl bg-white p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
           <h2 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
             Payment Details
           </h2>
@@ -143,12 +142,26 @@ export default function CheckoutContent() {
                 key={m.id}
                 onClick={() => setMethod(m.id)}
                 className={cn(
-                  "flex flex-col items-center gap-2 rounded-lg border p-4 transition",
+                  "relative flex flex-col items-center gap-2 rounded-lg border p-4 transition",
                   method === m.id
                     ? "border-[#d4af37] bg-[#fffdf8]"
                     : "border-[#e0d8c9] hover:border-[#d4af37]"
                 )}
               >
+                {/* Radio indicator */}
+                <span
+                  className={cn(
+                    "absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full border",
+                    method === m.id
+                      ? "border-[#d4af37]"
+                      : "border-[#e0d8c9]"
+                  )}
+                >
+                  {method === m.id && (
+                    <span className="h-2 w-2 rounded-full bg-[#d4af37]" />
+                  )}
+                </span>
+
                 <m.icon className={cn("h-5 w-5", method === m.id ? "text-[#d4af37]" : "text-[#6d6a66]")} />
                 <span className="text-sm font-medium text-[#1b1c1c]">{m.label}</span>
               </button>
