@@ -449,7 +449,7 @@ function MentorDashboard() {
               {requests.data.slice(0, 3).map((r) => (
                 <li key={r.id} className="flex items-center justify-between gap-3 p-6">
                   <div className="flex items-center gap-4">
-                    <Avatar name={r.learner_name ?? "Unknown learner"} size={48} />
+                    <Avatar name={r.learner_name ?? "Unknown Learner"} size={48} />
                     <div>
                       <p className="text-base font-semibold text-[#1b1c1c]">{r.learner_name}</p>
                       <p className="text-sm text-[#6d6a66]">
@@ -512,6 +512,28 @@ function MentorDashboard() {
               View Calendar
             </Button>
           </div>
+        </Card>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Card>
+          <p className="text-base font-semibold text-[#1b1c1c]">Your Mentor Profile</p>
+          <p className="mt-2 text-sm text-[#6d6a66]">
+            Keep your expertise and availability up to date so learners can find the right fit.
+          </p>
+          <Button href="/mentorship/apply" variant="secondary" className="mt-4">
+            Edit Application
+          </Button>
+        </Card>
+        <Card>
+          <p className="text-base font-semibold text-[#1b1c1c]">Community Grants</p>
+          <p className="mt-2 text-sm text-[#6d6a66]">
+            Start or contribute to a funding group for the youth you mentor.
+          </p>
+          <Button href="/grants" variant="secondary" className="mt-4">
+            Go to Grant Hub
+          </Button>
         </Card>
       </div>
     </div>
