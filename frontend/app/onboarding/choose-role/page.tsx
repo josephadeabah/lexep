@@ -45,15 +45,19 @@ export default function ChooseRolePage() {
 
   return (
     <div className="min-h-screen bg-[#fbf9f8]">
-      <div className="mx-auto max-w-5xl px-6 py-16 text-center">
-        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-5xl">
-          Choose your journey
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-[#6d6a66]">
-          Select the path that best describes your goals on Lexep. This helps us tailor your
-          experience.
-        </p>
+      <div className="mx-auto max-w-5xl px-6 py-16">
+        {/* Header - explicitly centered */}
+        <div className="text-center">
+          <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-5xl">
+            Choose your journey
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-[#6d6a66]">
+            Select the path that best describes your goals on Lexep. This helps us tailor your
+            experience.
+          </p>
+        </div>
 
+        {/* Role Cards */}
         <div className="mt-12 grid gap-6 sm:grid-cols-3">
           {ROLES.map((role) => {
             const Icon = role.icon;
@@ -83,6 +87,7 @@ export default function ChooseRolePage() {
           })}
         </div>
 
+        {/* Continue Button */}
         <div className="mt-12 flex justify-center">
           <Button
             onClick={handleContinue}
