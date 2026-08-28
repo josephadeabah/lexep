@@ -53,9 +53,9 @@ function LearnerOpportunities() {
     <div className="flex flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-0 sm:py-0">
       {/* Page Header */}
       <div className="flex flex-col gap-2">
-        <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-4xl">
+        <h2 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-4xl">
           Find Your Next Opportunity
-        </h1>
+        </h2>
         <p className="mt-2 text-sm text-[#6d6a66] sm:text-base">
           Discover premium internships tailored for the next generation of African leaders and
           architects of the future.
