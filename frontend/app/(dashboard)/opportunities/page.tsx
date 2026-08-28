@@ -11,12 +11,14 @@ import {
   Briefcase,
   Users,
   ArrowRight,
+  ChevronDown,
 } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
 import { Input } from "@/components/ui/input/Input";
+import { Select } from "@/components/ui/select/Select";
 import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -30,105 +32,147 @@ const STATUS_TONE: Record<string, "neutral" | "success" | "warning" | "error"> =
 };
 
 function LearnerOpportunities() {
-  const [tab, setTab] = useState<"browse" | "applications">("browse");
+  const [tab, setTab] = useState<"browse" | "applications" | "saved">("browse");
   const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("all");
+  const [locationType, setLocationType] = useState("any");
   const opportunities = useAsync(() => api.listOpportunities(false, true), []);
   const applications = useAsync(() => api.myApplications(), []);
 
-  const filtered = (opportunities.data ?? []).filter((o) =>
-    `${o.title} ${o.company_name ?? ""} ${o.category ?? ""}`
+  const filtered = (opportunities.data ?? []).filter((o) => {
+    const matchesQuery = `${o.title} ${o.company_name ?? ""} ${o.category ?? ""}`
       .toLowerCase()
-      .includes(query.toLowerCase())
-  );
+      .includes(query.toLowerCase());
+    const matchesCategory =
+      category === "all" || o.category?.toLowerCase() === category.toLowerCase();
+    const matchesLocation = locationType === "any" || o.work_mode === locationType;
+    return matchesQuery && matchesCategory && matchesLocation;
+  });
 
   return (
     <div className="flex flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-0 sm:py-0">
       {/* Page Header */}
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-4xl">
-            Find Your Next Opportunity
-          </h1>
-          <p className="mt-2 text-sm text-[#6d6a66] sm:text-base">
-            Discover premium internships tailored for the next generation of African leaders.
-          </p>
-        </div>
+      <div className="flex flex-col gap-2">
+        <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-4xl">
+          Find Your Next Opportunity
+        </h1>
+        <p className="mt-2 text-sm text-[#6d6a66] sm:text-base">
+          Discover premium internships tailored for the next generation of African leaders and
+          architects of the future.
+        </p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-4 border-b border-[#e0d8c9] sm:gap-6">
-        {(["browse", "applications"] as const).map((t) => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={cn(
-              "pb-3 text-sm font-semibold capitalize transition",
-              tab === t
-                ? "border-b-2 border-[#d4af37] text-[#1b1c1c]"
-                : "border-b-2 border-transparent text-[#6d6a66] hover:text-[#1b1c1c]"
-            )}
-          >
-            {t}
-          </button>
-        ))}
+      {/* Filters */}
+      <div className="flex flex-col gap-4 rounded-lg border border-[#e0d8c9] bg-white p-4 sm:flex-row sm:items-end sm:gap-6">
+        <div className="flex-1">
+          <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">Search</label>
+          <div className="relative">
+            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6d6a66]" />
+            <input
+              type="text"
+              placeholder="Keywords, job title, company..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="h-11 w-full rounded-md border border-[#e0d8c9] bg-white pr-4 pl-10 text-base transition outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20"
+            />
+          </div>
+        </div>
+
+        <div className="sm:w-48">
+          <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">Category</label>
+          <div className="relative">
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="h-11 w-full appearance-none rounded-md border border-[#e0d8c9] bg-white px-4 pr-8 text-base transition outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20"
+            >
+              <option value="all">All Categories</option>
+              <option value="technology">Technology</option>
+              <option value="design">Design</option>
+              <option value="engineering">Engineering</option>
+              <option value="sustainability">Sustainability</option>
+              <option value="business">Business</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-[#6d6a66]" />
+          </div>
+        </div>
+
+        <div className="sm:w-48">
+          <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">Location Type</label>
+          <div className="relative">
+            <select
+              value={locationType}
+              onChange={(e) => setLocationType(e.target.value)}
+              className="h-11 w-full appearance-none rounded-md border border-[#e0d8c9] bg-white px-4 pr-8 text-base transition outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20"
+            >
+              <option value="any">Any</option>
+              <option value="remote">Remote</option>
+              <option value="hybrid">Hybrid</option>
+              <option value="onsite">On-site</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-[#6d6a66]" />
+          </div>
+        </div>
       </div>
 
       {tab === "browse" ? (
         <>
-          {/* Search */}
-          <div className="flex items-center gap-4">
-            <div className="w-full">
-              <Input
-                placeholder="Search opportunities..."
-                icon={<Search className="h-4 w-4" />}
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="h-11 w-full rounded-lg border-[#e0d8c9] bg-white text-base sm:h-12"
-              />
-            </div>
-          </div>
-
           {/* Opportunity Cards Grid */}
-          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {opportunities.isLoading ? (
               <p className="text-base text-[#6d6a66]">Loading opportunities…</p>
             ) : filtered.length > 0 ? (
               filtered.map((o) => (
-                <Card key={o.id} className="flex flex-col p-5 sm:p-6">
+                <Card key={o.id} className="flex flex-col p-6">
+                  {/* Header: Company Logo & Bookmark */}
                   <div className="mb-4 flex items-start justify-between">
-                    <Badge tone="neutral" className="bg-[#f5f3f3] text-[#6d6a66]">
-                      {o.category ?? "General"}
-                    </Badge>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#f5f3f3]">
+                      <span className="text-lg font-bold text-[#735c00]">
+                        {o.company_name?.[0] ?? "?"}
+                      </span>
+                    </div>
                     <button className="text-[#6d6a66] hover:text-[#1b1c1c]">
-                      <Bookmark className="h-4 w-4" />
+                      <Bookmark className="h-5 w-5" />
                     </button>
                   </div>
 
-                  <h3 className="font-['Hanken_Grotesk'] text-lg font-semibold tracking-[-0.02em] text-[#1b1c1c] sm:text-xl">
+                  {/* Category */}
+                  <Badge className="mb-3 w-fit bg-[#f5f3f3] text-[#6d6a66]">
+                    {o.category ?? "General"}
+                  </Badge>
+
+                  {/* Title & Company */}
+                  <h3 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
                     {o.title}
                   </h3>
                   <p className="mt-1 text-sm text-[#6d6a66]">{o.company_name}</p>
 
-                  <div className="mt-4 flex flex-col gap-2 text-sm text-[#6d6a66]">
+                  {/* Details */}
+                  <div className="mt-5 flex flex-col gap-2.5 border-t border-[#e0d8c9]/40 pt-5 text-sm text-[#6d6a66]">
                     {o.location && (
                       <span className="flex items-center gap-2">
-                        <MapPin className="h-3.5 w-3.5" /> {o.location}
+                        <MapPin className="h-4 w-4" /> {o.location} ({o.work_mode})
                       </span>
                     )}
                     {o.duration && (
                       <span className="flex items-center gap-2">
-                        <Clock className="h-3.5 w-3.5" /> {o.duration}
+                        <Clock className="h-4 w-4" /> {o.duration}
                       </span>
                     )}
                     <span className="flex items-center gap-2">
-                      <Wallet className="h-3.5 w-3.5" />
+                      <Wallet className="h-4 w-4" />
                       {o.stipend_provided
-                        ? `Paid${o.stipend_amount ? ` (${o.stipend_currency} ${o.stipend_amount}/mo)` : ""}`
-                        : "Unpaid"}
+                        ? `Paid Stipend${o.stipend_amount ? ` (${o.stipend_currency} ${o.stipend_amount}/mo)` : ""}`
+                        : "Unpaid (Academic Credit)"}
                     </span>
                   </div>
 
-                  <Button href={`/opportunities/${o.id}`} variant="outline" className="mt-6 w-full">
+                  {/* Action */}
+                  <Button
+                    href={`/opportunities/${o.id}`}
+                    variant="outline"
+                    className="mt-6 w-full border-[#e0d8c9] text-[#1b1c1c] hover:bg-[#f5f3f3]"
+                  >
                     View Details
                   </Button>
                 </Card>
@@ -140,19 +184,19 @@ function LearnerOpportunities() {
         </>
       ) : (
         <Card className="overflow-hidden p-0">
-          <div className="border-b border-[#e0d8c9] bg-[#f5f3f3] px-5 py-4 sm:px-6">
+          <div className="border-b border-[#e0d8c9] bg-[#f5f3f3] px-6 py-4">
             <h2 className="font-['Hanken_Grotesk'] text-lg font-semibold text-[#1b1c1c]">
-              Your Applications
+              {tab === "applications" ? "Your Applications" : "Saved Opportunities"}
             </h2>
           </div>
           {applications.isLoading ? (
-            <p className="p-5 text-base text-[#6d6a66] sm:p-6">Loading…</p>
+            <p className="p-6 text-base text-[#6d6a66]">Loading…</p>
           ) : applications.data && applications.data.length > 0 ? (
             <ul className="divide-y divide-[#e0d8c9]">
               {applications.data.map((app) => (
                 <li
                   key={app.id}
-                  className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6"
+                  className="flex flex-col gap-2 px-6 py-4 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div>
                     <p className="text-base font-semibold text-[#1b1c1c]">
@@ -172,8 +216,10 @@ function LearnerOpportunities() {
               ))}
             </ul>
           ) : (
-            <p className="p-5 text-base text-[#6d6a66] sm:p-6">
-              You haven&apos;t applied to anything yet.
+            <p className="p-6 text-base text-[#6d6a66]">
+              {tab === "applications"
+                ? "You haven't applied to anything yet."
+                : "No saved opportunities yet."}
             </p>
           )}
         </Card>
@@ -204,12 +250,12 @@ function CompanyOpportunities() {
         </Button>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         {opportunities.isLoading ? (
           <p className="text-base text-[#6d6a66]">Loading…</p>
         ) : opportunities.data && opportunities.data.length > 0 ? (
           opportunities.data.map((o) => (
-            <Card key={o.id} className="p-5 sm:p-6">
+            <Card key={o.id} className="p-6">
               <div className="mb-4 flex items-center justify-between">
                 <Badge
                   tone={o.status === "published" ? "success" : "neutral"}
@@ -225,14 +271,14 @@ function CompanyOpportunities() {
                 <span className="text-xs text-[#6d6a66] capitalize">{o.work_mode}</span>
               </div>
 
-              <h3 className="font-['Hanken_Grotesk'] text-lg font-semibold tracking-[-0.02em] text-[#1b1c1c] sm:text-xl">
+              <h3 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
                 {o.title}
               </h3>
               <p className="mt-1 text-sm text-[#6d6a66]">{o.location}</p>
 
-              <div className="mt-4 flex items-center gap-4 border-t border-[#e0d8c9]/40 pt-4">
+              <div className="mt-5 flex items-center gap-4 border-t border-[#e0d8c9]/40 pt-5">
                 <span className="flex items-center gap-2 text-sm text-[#6d6a66]">
-                  <Briefcase className="h-3.5 w-3.5" />
+                  <Briefcase className="h-4 w-4" />
                   {o.work_mode}
                 </span>
                 <Link

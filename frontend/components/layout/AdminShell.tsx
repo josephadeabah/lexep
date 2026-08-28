@@ -39,11 +39,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }, [isInitialized, user, router]);
 
   if (!isInitialized || !user || user.role !== "admin") {
-    return (
-      <div className="flex h-screen items-center justify-center bg-[#fbf9f8]">
-        Loading…
-      </div>
-    );
+    return <div className="flex h-screen items-center justify-center bg-[#fbf9f8]">Loading…</div>;
   }
 
   return (
@@ -88,7 +84,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             />
           </label>
 
-          <nav className="ml-auto flex items-center gap-6 text-[15px]" aria-label="Account navigation">
+          <nav
+            className="ml-auto flex items-center gap-6 text-[15px]"
+            aria-label="Account navigation"
+          >
             <a href="#analytics" className="hidden text-[#38342d] hover:text-[#735c00] sm:block">
               Analytics
             </a>
@@ -100,11 +99,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </a>
           </nav>
 
-          <button className="grid place-items-center border-0 bg-transparent p-1 text-[#38342d]" aria-label="Notifications">
+          <button
+            className="grid place-items-center border-0 bg-transparent p-1 text-[#38342d]"
+            aria-label="Notifications"
+          >
             <Bell size={22} />
           </button>
 
-          <button className="hidden border-0 bg-transparent p-1 text-[#38342d] sm:grid" aria-label="Settings">
+          <button
+            className="hidden border-0 bg-transparent p-1 text-[#38342d] sm:grid"
+            aria-label="Settings"
+          >
             <Settings size={22} />
           </button>
 
@@ -119,7 +124,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <DropdownMenuLabel>
                 <div className="flex flex-col">
                   <span className="text-sm font-semibold">{user.full_name}</span>
-                  <span className="text-xs text-muted-foreground">Admin</span>
+                  <span className="text-muted-foreground text-xs">Admin</span>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
