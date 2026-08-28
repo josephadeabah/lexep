@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Star } from "lucide-react";
+import { Search, Star, Filter, MessageCircle } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
@@ -23,67 +23,104 @@ export default function MentorshipPage() {
   );
 
   return (
-    <div className="gap-lg flex flex-col">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-headline-lg text-on-background">Find Your Mentor</h1>
-          <p className="text-body-md text-on-surface-variant mt-1">
-            Connect with industry experts to guide your career path.
-          </p>
-        </div>
-        {role === "mentor" && <Button href="/mentorship/apply">Become a Mentor</Button>}
+    <div className="flex flex-col gap-8">
+      {/* Header */}
+      <div className="flex flex-col gap-2">
+        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
+          Find Your Mentor
+        </h1>
+        <p className="text-base text-[#6d6a66]">
+          Connect with industry experts to guide your career path.
+        </p>
+        {role === "mentor" && (
+          <div className="mt-2">
+            <Button href="/mentorship/apply">Become a Mentor</Button>
+          </div>
+        )}
       </div>
 
-      <Card>
-        <Input
-          placeholder="Search by name, role, or company…"
-          icon={<Search className="h-4 w-4" />}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </Card>
+      {/* Search & Filters */}
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex-1">
+          <Input
+            placeholder="Search by name, role, or company..."
+            icon={<Search className="h-5 w-5" />}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="h-12 rounded-lg border-[#e0d8c9] bg-white text-base"
+          />
+        </div>
+        <Button
+          variant="outline"
+          className="h-12 gap-2 rounded-lg border-[#e0d8c9] px-6"
+        >
+          <Filter className="h-4 w-4" /> Filters
+        </Button>
+      </div>
 
-      <div className="gap-md grid sm:grid-cols-2 lg:grid-cols-3">
+      {/* Mentor Cards Grid */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {mentors.isLoading ? (
-          <p className="text-body-md text-on-surface-variant">Loading mentors…</p>
+          <p className="text-base text-[#6d6a66]">Loading mentors…</p>
         ) : filtered.length > 0 ? (
           filtered.map((mentor) => (
-            <Card key={mentor.id} className="flex flex-col justify-between">
-              <div>
-                <div className="flex items-start gap-3">
-                  <Avatar name={mentor.user.full_name} src={mentor.user.avatar_url} size={48} />
-                  <div>
-                    <p className="text-label-md text-on-background flex items-center gap-2">
-                      {mentor.user.full_name}
-                      {mentor.rating > 0 && (
-                        <span className="bg-surface-container-high text-label-sm flex items-center gap-1 rounded-full px-2 py-0.5">
-                          <Star className="fill-primary-container text-primary-container h-3 w-3" />{" "}
-                          {mentor.rating.toFixed(1)}
-                        </span>
-                      )}
-                    </p>
-                    <p className="text-label-sm text-primary">{mentor.title}</p>
-                  </div>
-                </div>
-                <p className="text-body-md text-on-surface-variant mt-3 line-clamp-3">
-                  {mentor.bio}
+            <Card key={mentor.id} className="flex flex-col p-6">
+              {/* Mentor Info */}
+              <div className="flex flex-col items-center text-center">
+                <Avatar
+                  name={mentor.user.full_name}
+                  src={mentor.user.avatar_url}
+                  size={80}
+                  className="h-20 w-20 rounded-full"
+                />
+                <p className="mt-3 font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
+                  {mentor.user.full_name}
                 </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {mentor.skills.slice(0, 3).map((skill) => (
-                    <Badge key={skill}>{skill}</Badge>
-                  ))}
-                </div>
+                <p className="text-sm font-medium text-[#735c00]">{mentor.title}</p>
+
+                {/* Rating */}
+                {mentor.rating > 0 && (
+                  <span className="mt-2 flex items-center gap-1 rounded-full bg-[#f5f3f3] px-3 py-1 text-xs font-semibold text-[#6d6a66]">
+                    <Star className="h-3 w-3 fill-[#d4af37] text-[#d4af37]" />
+                    {mentor.rating.toFixed(1)}
+                  </span>
+                )}
               </div>
-              <div className="border-outline-variant/40 mt-4 flex items-center justify-between border-t pt-3">
-                <span className="text-label-sm text-on-surface-variant">Free Session</span>
-                <Button size="sm" href={`/mentorship/${mentor.user.id}`}>
+
+              {/* Bio */}
+              <p className="mt-4 flex-1 text-center text-sm leading-relaxed text-[#6d6a66]">
+                {mentor.bio}
+              </p>
+
+              {/* Skills */}
+              <div className="mt-4 flex flex-wrap justify-center gap-2">
+                {mentor.skills.slice(0, 3).map((skill) => (
+                  <Badge
+                    key={skill}
+                    className="rounded-md bg-[#f5f3f3] px-3 py-1.5 text-xs font-medium text-[#6d6a66]"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
+
+              {/* Actions */}
+              <div className="mt-6 flex items-center justify-between border-t border-[#e0d8c9]/40 pt-4">
+                <span className="flex items-center gap-2 text-sm text-[#6d6a66]">
+                  <MessageCircle className="h-4 w-4" /> Free Session
+                </span>
+                <Button
+                  size="sm"
+                  href={`/mentorship/${mentor.user.id}`}
+                  className="bg-[#d4af37] font-semibold text-[#1b1c1c] hover:bg-[#c9a32e]"
+                >
                   Request Session
                 </Button>
               </div>
             </Card>
           ))
         ) : (
-          <p className="text-body-md text-on-surface-variant">No mentors found yet.</p>
+          <p className="text-base text-[#6d6a66]">No mentors found yet.</p>
         )}
       </div>
     </div>
