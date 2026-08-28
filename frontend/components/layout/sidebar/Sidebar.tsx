@@ -8,12 +8,20 @@ import { Logo } from "@/components/ui/Logo";
 import type { NavItem } from "@/lib/nav-config";
 import styles from "./sidebar.module.css";
 
+interface SidebarItem {
+  label: string;
+  icon?: React.ComponentType<{ size?: number }>;
+  href?: string;
+  onClick?: () => void;
+}
+
 interface SidebarProps {
   brand?: string;
   tagline?: string;
   navItems: NavItem[];
   ctaLabel?: string;
   ctaHref?: string;
+  sidebarBottom?: SidebarItem[];
   userSummary?: { name: string; roleLabel: string; avatarUrl?: string | null };
   onLogout?: () => void;
   isOpen?: boolean;
@@ -24,8 +32,9 @@ export function Sidebar({
   brand = "Architect Portal",
   tagline = "Empowering African Youth",
   navItems,
-  ctaLabel = "New Application",
-  ctaHref = "/opportunities/new",
+  ctaLabel = "Upgrade to Pro",
+  ctaHref = "/upgrade",
+  sidebarBottom = [],
   userSummary,
   onLogout,
   isOpen = false,
@@ -89,10 +98,25 @@ export function Sidebar({
 
         {/* Bottom Section */}
         <div className={styles.bottom}>
+          {/* Additional sidebar items (e.g. Post Internship for company) */}
+          {sidebarBottom.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href || "#"}
+              className={styles.navItem}
+            >
+              {item.icon && <item.icon size={21} />}
+              {item.label}
+            </Link>
+          ))}
+
+          {/* Help/Support */}
           <Link href="/help" className={styles.navItem}>
             <HelpCircle size={21} />
             Help Center
           </Link>
+
+          {/* Logout */}
           <button onClick={onLogout} className={styles.navItem}>
             <LogOut size={21} />
             Logout

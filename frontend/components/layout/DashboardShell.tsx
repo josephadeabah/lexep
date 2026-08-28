@@ -14,6 +14,7 @@ import {
   Compass,
   FileText,
   Bookmark,
+  Briefcase,
 } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { OfflineBanner } from "./OfflineBanner";
@@ -27,7 +28,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu/dropdown-menu";
-import { Logo } from "@/components/ui/Logo";
 import { HelpCircle, LogOut } from "lucide-react";
 import { Sidebar } from "./sidebar/Sidebar";
 import { cn } from "@/lib/utils";
@@ -46,6 +46,8 @@ const BRAND_BY_ROLE: Record<
   mentor: {
     brand: "Architect Portal",
     tagline: "Empowering African Youth",
+    ctaLabel: "Upgrade to Pro",
+    ctaHref: "/upgrade?plan=mentor_pro",
     roleLabel: "Mentor",
   },
   company: {
@@ -58,6 +60,8 @@ const BRAND_BY_ROLE: Record<
   admin: {
     brand: "Lexep Admin",
     tagline: "Platform Management",
+    ctaLabel: "Upgrade to Pro",
+    ctaHref: "/upgrade",
     roleLabel: "Admin",
   },
 };
@@ -88,16 +92,6 @@ const HEADER_LINKS_BY_ROLE: Record<
   ],
 };
 
-const HEADER_BUTTON_BY_ROLE: Record<
-  UserRole,
-  { label: string; href?: string; onClick?: () => void } | undefined
-> = {
-  learner: undefined,
-  mentor: undefined,
-  company: { label: "Post Internship", href: "/opportunities/new" },
-  admin: undefined,
-};
-
 const SIDEBAR_BOTTOM_BY_ROLE: Record<
   UserRole,
   {
@@ -109,7 +103,9 @@ const SIDEBAR_BOTTOM_BY_ROLE: Record<
 > = {
   learner: [],
   mentor: [],
-  company: [],
+  company: [
+    { label: "Post Internship", href: "/opportunities/new", icon: Briefcase },
+  ],
   admin: [{ label: "System Status", href: "#system-status", icon: ShieldCheck }],
 };
 
@@ -148,7 +144,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const brandConfig = BRAND_BY_ROLE[role];
   const navItems = role === "admin" ? ADMIN_NAV : NAV_BY_ROLE[role];
   const headerLinks = HEADER_LINKS_BY_ROLE[role] || [];
-  const headerButton = HEADER_BUTTON_BY_ROLE[role];
   const sidebarBottom = SIDEBAR_BOTTOM_BY_ROLE[role] || [];
 
   return (
@@ -160,6 +155,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         navItems={navItems}
         ctaLabel={brandConfig.ctaLabel}
         ctaHref={brandConfig.ctaHref}
+        sidebarBottom={sidebarBottom}
         userSummary={{
           name: user.full_name,
           roleLabel: brandConfig.roleLabel,
@@ -217,15 +213,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               );
             })}
           </nav>
-
-          {headerButton && (
-            <Link
-              href={headerButton.href || "#"}
-              className="hidden rounded-md bg-[#ddb839] px-4 py-2.5 text-[15px] font-bold text-[#161616] hover:bg-[#c9a32e] md:block"
-            >
-              {headerButton.label}
-            </Link>
-          )}
 
           <button
             className="grid place-items-center border-0 bg-transparent p-1 text-[#38342d]"
