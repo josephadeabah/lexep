@@ -62,80 +62,100 @@ export default function UpgradeContent() {
   const price = cycle === "annual" ? plan.annual_price! : plan.monthly_price! * 12;
 
   return (
-    <div className="bg-surface px-gutter py-xl flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-lg">
-        <div className="card-level1 p-md">
+    <div className="bg-[#fbf9f8] px-4 py-12 sm:px-6">
+      <div className="mx-auto w-full max-w-lg">
+        <div className="rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm">
+          {/* Header */}
           <div className="text-center">
-            <h1 className="text-headline-lg text-on-background">Upgrade to Professional</h1>
-            <p className="text-body-md text-on-surface-variant mt-2">
+            <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
+              Upgrade to Professional
+            </h1>
+            <p className="mx-auto mt-2 max-w-md text-base text-[#6d6a66]">
               Unlock advanced features and dedicated support to accelerate your learning journey.
             </p>
           </div>
 
-          <div className="mt-md bg-surface-container-low mx-auto flex w-fit items-center gap-1 rounded-full p-1">
-            <button
-              onClick={() => setCycle("monthly")}
-              className={cn(
-                "text-label-md rounded-full px-4 py-2 transition",
-                cycle === "monthly"
-                  ? "bg-inverse-surface text-inverse-on-surface"
-                  : "text-on-surface-variant"
-              )}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setCycle("annual")}
-              className={cn(
-                "text-label-md flex items-center gap-2 rounded-full px-4 py-2 transition",
-                cycle === "annual"
-                  ? "bg-inverse-surface text-inverse-on-surface"
-                  : "text-on-surface-variant"
-              )}
-            >
-              Annually
-              <span className="bg-primary-fixed text-label-sm text-on-primary-fixed-variant rounded-full px-2 py-0.5">
-                Save 20%
-              </span>
-            </button>
+          {/* Billing Cycle Toggle */}
+          <div className="mt-8 flex justify-center">
+            <div className="flex items-center gap-1 rounded-full bg-[#f5f3f3] p-1">
+              <button
+                onClick={() => setCycle("monthly")}
+                className={cn(
+                  "rounded-full px-5 py-2 text-sm font-semibold transition",
+                  cycle === "monthly"
+                    ? "bg-[#1b1c1c] text-white"
+                    : "text-[#6d6a66] hover:text-[#1b1c1c]"
+                )}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setCycle("annual")}
+                className={cn(
+                  "flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition",
+                  cycle === "annual"
+                    ? "bg-[#1b1c1c] text-white"
+                    : "text-[#6d6a66] hover:text-[#1b1c1c]"
+                )}
+              >
+                Annually
+                <span className="rounded-full bg-[#d4af37] px-2 py-0.5 text-xs font-bold text-[#1b1c1c]">
+                  Save 20%
+                </span>
+              </button>
+            </div>
           </div>
 
-          <div className="mt-md border-outline-variant p-md rounded-md border">
+          {/* Plan Details */}
+          <div className="mt-8 rounded-xl border border-[#e0d8c9] p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-label-md text-on-background">{plan.name}</p>
-                <p className="text-label-sm text-on-surface-variant">Billed {cycle}</p>
+                <p className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
+                  {plan.name}
+                </p>
+                <p className="mt-1 text-sm text-[#6d6a66]">Billed {cycle}</p>
               </div>
-              <p className="text-headline-lg text-on-background">
+              <p className="font-['Hanken_Grotesk'] text-3xl font-bold text-[#1b1c1c]">
                 ${price}{" "}
-                <span className="text-label-md text-on-surface-variant">
+                <span className="text-sm font-normal text-[#6d6a66]">
                   / {cycle === "annual" ? "year" : "month"}
                 </span>
               </p>
             </div>
-            <ul className="mt-md border-outline-variant/40 pt-md flex flex-col gap-3 border-t">
-              {plan.features.map((f) => (
-                <li key={f} className="text-body-md text-on-surface flex items-center gap-2">
-                  <Check className="text-primary h-4 w-4" /> {f}
-                </li>
-              ))}
-            </ul>
+
+            <div className="mt-6 border-t border-[#e0d8c9]/40 pt-6">
+              <ul className="flex flex-col gap-3">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-center gap-3 text-base text-[#1b1c1c]">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-[#d4af37]">
+                      <Check className="h-3.5 w-3.5 text-[#d4af37]" strokeWidth={3} />
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
+          {/* Action Button */}
           <Button
-            className="mt-md w-full"
+            className="mt-8 w-full"
             size="lg"
             onClick={() => router.push(`/checkout?plan=${plan.id}&cycle=${cycle}`)}
           >
             Complete Upgrade <ArrowRight className="h-4 w-4" />
           </Button>
+
+          {/* Cancel Link */}
           <Link
             href="/dashboard"
-            className="text-label-md text-on-surface-variant hover:text-primary mt-3 block text-center"
+            className="mt-4 block text-center text-sm text-[#6d6a66] hover:text-[#735c00]"
           >
             Cancel
           </Link>
-          <p className="text-label-sm text-on-surface-variant mt-3 text-center">
+
+          {/* Terms */}
+          <p className="mt-4 text-center text-xs text-[#6d6a66]">
             By upgrading, you agree to our{" "}
             <Link href="/help" className="underline">
               Terms of Service
