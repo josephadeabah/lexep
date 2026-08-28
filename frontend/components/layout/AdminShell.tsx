@@ -4,7 +4,15 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import { ADMIN_NAV } from "@/lib/nav-config";
-import { Bell, Settings, Menu, X, Search } from "lucide-react";
+import {
+  Bell,
+  Settings,
+  Menu,
+  X,
+  Search,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { Sidebar } from "./sidebar/Sidebar";
 import { OfflineBanner } from "./OfflineBanner";
@@ -23,6 +31,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { user, isInitialized, hydrate, logout } = useAuthStore();
 
   useEffect(() => {
@@ -62,12 +71,23 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         }}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        isCollapsed={sidebarCollapsed}
       />
 
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Top Navigation - sticky */}
         <header className="sticky top-0 z-30 flex min-h-20 items-center gap-4 border-b border-[#d8d1c4] bg-[#fbf9f8] px-5 sm:px-8">
+          {/* Desktop sidebar toggle */}
+          <button
+            className="hidden border-0 bg-transparent p-1 text-[#38342d] hover:text-[#735c00] md:block"
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            aria-label={sidebarCollapsed ? "Open sidebar" : "Close sidebar"}
+          >
+            {sidebarCollapsed ? <PanelLeftOpen size={22} /> : <PanelLeftClose size={22} />}
+          </button>
+
+          {/* Mobile menu toggle */}
           <button
             className="grid place-items-center border-0 bg-transparent p-1 md:hidden"
             aria-label={sidebarOpen ? "Close dashboard menu" : "Open dashboard menu"}

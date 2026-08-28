@@ -26,6 +26,7 @@ interface SidebarProps {
   onLogout?: () => void;
   isOpen?: boolean;
   onClose?: () => void;
+  isCollapsed?: boolean;
 }
 
 export function Sidebar({
@@ -39,6 +40,7 @@ export function Sidebar({
   onLogout,
   isOpen = false,
   onClose,
+  isCollapsed = false,
 }: SidebarProps) {
   const pathname = usePathname();
 
@@ -46,7 +48,11 @@ export function Sidebar({
     <>
       {isOpen && <button className={styles.scrim} aria-label="Close sidebar" onClick={onClose} />}
 
-      <aside className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ""}`}>
+      <aside
+        className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ""} ${
+          isCollapsed ? styles.sidebarCollapsed : ""
+        }`}
+      >
         {/* Brand */}
         <div className={styles.brand}>
           <div className={styles.avatar}>

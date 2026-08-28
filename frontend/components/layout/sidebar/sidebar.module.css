@@ -11,6 +11,13 @@
   position: sticky;
   top: 0;
   overflow-y: auto;
+  transition: width 0.3s ease, flex-basis 0.3s ease, transform 0.3s ease;
+}
+
+.sidebarCollapsed {
+  width: 0;
+  flex-basis: 0;
+  overflow: hidden;
 }
 
 .brand {
@@ -18,6 +25,7 @@
   align-items: center;
   gap: 16px;
   padding: 32px 30px;
+  white-space: nowrap;
 }
 
 .avatar {
@@ -28,6 +36,7 @@
   border-radius: 50%;
   overflow: hidden;
   background: #1b1c1c;
+  flex-shrink: 0;
 }
 
 .brand strong {
@@ -51,6 +60,7 @@
   padding: 12px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
 }
 
 .userSummaryName {
@@ -71,6 +81,7 @@
 
 .ctaWrapper {
   margin: 16px 30px;
+  white-space: nowrap;
 }
 
 .ctaButton {
@@ -111,10 +122,8 @@
   font-size: 18px;
   cursor: pointer;
   text-decoration: none;
-  transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
 }
 
 .navItem:hover {
@@ -137,6 +146,7 @@
   padding: 0 30px 32px;
   display: flex;
   flex-direction: column;
+  white-space: nowrap;
 }
 
 .bottom .navItem {
