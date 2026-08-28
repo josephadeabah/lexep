@@ -168,9 +168,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       />
 
       {/* Content */}
-      <div className="min-w-0 flex-1">
-        {/* Top Navigation */}
-        <header className="flex min-h-[80px] items-center gap-4 border-b border-[#d8d1c4] px-5 sm:px-8">
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Top Navigation - sticky */}
+        <header className="sticky top-0 z-30 flex min-h-20 items-center gap-4 border-b border-[#d8d1c4] bg-[#fbf9f8] px-5 sm:px-8">
           <button
             className="grid place-items-center border-0 bg-transparent p-1 md:hidden"
             aria-label={sidebarOpen ? "Close dashboard menu" : "Open dashboard menu"}
@@ -262,9 +262,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Main Content */}
-        <main className="px-4 py-8 sm:px-8 sm:py-12">
+        <main className="flex-1 px-4 py-8 sm:px-8 sm:py-12">
           <OfflineBanner />
-          <div className="mx-auto w-full max-w-[1280px]">{children}</div>
+          <div className="mx-auto w-full max-w-7xl">{children}</div>
         </main>
       </div>
     </div>

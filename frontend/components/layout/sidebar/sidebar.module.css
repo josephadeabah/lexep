@@ -7,6 +7,10 @@
   flex-direction: column;
   background: #1b1c1c;
   color: #e9e7e2;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
 }
 
 .brand {
@@ -25,11 +29,6 @@
   overflow: hidden;
   background: #1b1c1c;
 }
-
-/* .avatar img {
-  width: 38px;
-  height: 38px;
-} */
 
 .brand strong {
   display: block;
@@ -152,8 +151,10 @@
     z-index: 10;
     inset: 0 auto 0 0;
     width: 285px;
+    height: 100vh;
     transform: translateX(-100%);
     transition: transform 0.25s ease;
+    overflow-y: auto;
   }
 
   .sidebarOpen {
