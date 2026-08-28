@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAuthStore } from "@/lib/auth-store";
 import { ApiError } from "@/lib/api";
@@ -35,9 +35,7 @@ interface AuthFormProps {
 
 export function AuthForm({ mode }: AuthFormProps) {
   const router = useRouter();
-
   const isSignUp = mode === "sign-up";
-
   const login = useAuthStore((s) => s.login);
   const register = useAuthStore((s) => s.register);
   const isLoading = useAuthStore((s) => s.isLoading);
@@ -51,7 +49,6 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     setError(null);
 
     try {
@@ -81,9 +78,11 @@ export function AuthForm({ mode }: AuthFormProps) {
     <main className={styles.shell}>
       {/* Header */}
       <div className={styles.header}>
-        <Link href="/" className={styles.logo}>
-          <Logo showWordmark />
-        </Link>
+        <div className={styles.logoWrapper}>
+          <Link href="/" className={styles.logo}>
+            <Logo showWordmark size={36} />
+          </Link>
+        </div>
         <h1>{isSignUp ? "Create an account" : "Welcome back"}</h1>
         <p>
           {isSignUp
@@ -162,7 +161,6 @@ export function AuthForm({ mode }: AuthFormProps) {
                 />
                 <span>Remember me</span>
               </label>
-
               <Link className={styles.forgot} href="/forgot-password">
                 Forgot password?
               </Link>

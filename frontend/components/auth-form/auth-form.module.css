@@ -11,24 +11,20 @@
 .header {
   text-align: center;
   padding: 4rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logoWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .header .logo {
   display: inline-flex;
-  margin-bottom: 1.5rem;
-}
-
-.wordmark {
-  font-family: "Hanken Grotesk", sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: #1b1c1c;
-}
-
-.wordmarkLogo {
-  width: 40px;
-  height: 40px;
 }
 
 .header h1 {
@@ -39,6 +35,7 @@
   color: #1b1c1c;
   margin: 0 0 0.5rem;
   text-align: center;
+  width: 100%;
 }
 
 .header p {
@@ -46,6 +43,7 @@
   font-size: 1rem;
   margin: 0;
   text-align: center;
+  width: 100%;
 }
 
 /* CARD */
