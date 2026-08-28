@@ -1577,7 +1577,6 @@ h2 em {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: #f8f7f2;
   overflow: hidden;
 }
 .company-avatar .logo-mark {

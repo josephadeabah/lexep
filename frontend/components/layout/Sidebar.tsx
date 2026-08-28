@@ -6,6 +6,7 @@ import { HelpCircle, LogOut } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { Logo } from "@/components/ui/Logo";
 import type { NavItem } from "@/lib/nav-config";
+import { Button } from "../ui/Button";
 
 interface SidebarProps {
   brand?: string;
@@ -58,12 +59,12 @@ export function Sidebar({
         )}
 
         {ctaLabel && (
-          <Link
+          <Button
             href={ctaHref || "#"}
-            className="dashboard-nav-item m-4 rounded-md bg-[#ddb839] font-bold text-[#171717]"
+            variant="primary"
           >
             {ctaLabel}
-          </Link>
+          </Button>
         )}
 
         <nav className="dashboard-nav">
