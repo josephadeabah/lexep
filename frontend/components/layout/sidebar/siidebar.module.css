@@ -1,0 +1,175 @@
+/* sidebar.module.css */
+
+.sidebar {
+  width: 350px;
+  flex: 0 0 350px;
+  display: flex;
+  flex-direction: column;
+  background: #292929;
+  color: #e9e7e2;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 30px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f8f7f2;
+}
+
+.avatar img {
+  width: 38px;
+  height: 38px;
+}
+
+.brand strong {
+  display: block;
+  color: #f4d36a;
+  font: 700 20px "Hanken Grotesk";
+}
+
+.brand span {
+  display: block;
+  margin-top: 3px;
+  color: #bdbbb8;
+  font-size: 14px;
+}
+
+.userSummary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 30px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.userSummaryName {
+  color: #f4d36a;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userSummaryRole {
+  color: #bdbbb8;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ctaWrapper {
+  margin: 16px 30px;
+}
+
+.ctaButton {
+  display: flex;
+  width: 100%;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #ddb839;
+  color: #171717;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.ctaButton:hover {
+  background: #c9a32e;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.navItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 19px 30px;
+  border: 0;
+  border-left: 5px solid transparent;
+  background: transparent;
+  color: #d2d0cc;
+  text-align: left;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.navItem:hover {
+  background: #383838;
+}
+
+.navItemActive {
+  border-left-color: #f3d36a;
+  background: #404040;
+  color: #f4d36a;
+  font-weight: 700;
+}
+
+.navItem svg {
+  flex-shrink: 0;
+}
+
+.bottom {
+  margin-top: auto;
+  padding: 0 30px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom .navItem {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* MOBILE */
+@media (max-width: 760px) {
+  .sidebar {
+    position: fixed;
+    z-index: 10;
+    inset: 0 auto 0 0;
+    width: 285px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .scrim {
+    display: block;
+    position: fixed;
+    z-index: 9;
+    inset: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .brand {
+    padding: 24px;
+  }
+}

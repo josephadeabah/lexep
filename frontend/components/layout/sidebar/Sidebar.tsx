@@ -6,6 +6,7 @@ import { HelpCircle, LogOut } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { Logo } from "@/components/ui/Logo";
 import type { NavItem } from "@/lib/nav-config";
+import styles from "./sidebar.module.css";
 
 interface SidebarProps {
   brand?: string;
@@ -34,11 +35,12 @@ export function Sidebar({
 
   return (
     <>
-      {isOpen && <button className="sidebar-scrim" aria-label="Close sidebar" onClick={onClose} />}
+      {isOpen && <button className={styles.scrim} aria-label="Close sidebar" onClick={onClose} />}
 
-      <aside className={`dashboard-sidebar ${isOpen ? "is-open" : ""}`}>
-        <div className="company-brand">
-          <div className="company-avatar">
+      <aside className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ""}`}>
+        {/* Brand */}
+        <div className={styles.brand}>
+          <div className={styles.avatar}>
             <Logo variant="light" size={56} showWordmark={false} />
           </div>
           <div>
@@ -47,17 +49,28 @@ export function Sidebar({
           </div>
         </div>
 
+        {/* User Summary */}
         {userSummary && (
-          <div className="flex items-center gap-3 rounded-md bg-white/5 p-3">
+          <div className={styles.userSummary}>
             <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
             <div className="min-w-0">
-              <p className="truncate text-[#f4d36a]">{userSummary.name}</p>
-              <p className="truncate text-sm text-[#bdbbb8]">{userSummary.roleLabel}</p>
+              <p className={styles.userSummaryName}>{userSummary.name}</p>
+              <p className={styles.userSummaryRole}>{userSummary.roleLabel}</p>
             </div>
           </div>
         )}
 
-        <nav className="dashboard-nav">
+        {/* CTA Button */}
+        {ctaLabel && (
+          <div className={styles.ctaWrapper}>
+            <Link href={ctaHref || "#"} className={styles.ctaButton}>
+              {ctaLabel}
+            </Link>
+          </div>
+        )}
+
+        {/* Navigation */}
+        <nav className={styles.nav}>
           {navItems.map((item) => {
             const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
             const Icon = item.icon;
@@ -65,7 +78,7 @@ export function Sidebar({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`dashboard-nav-item ${active ? "active" : ""}`}
+                className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
               >
                 <Icon size={21} />
                 {item.label}
@@ -74,20 +87,13 @@ export function Sidebar({
           })}
         </nav>
 
-        <div className="sidebar-bottom">
-          {ctaLabel && (
-            <Link
-              href={ctaHref || "#"}
-              className="dashboard-nav-item m-4 rounded-md bg-[#ddb839] font-bold text-[#171717]"
-            >
-              {ctaLabel}
-            </Link>
-          )}
-          <Link href="/help" className="dashboard-nav-item">
+        {/* Bottom Section */}
+        <div className={styles.bottom}>
+          <Link href="/help" className={styles.navItem}>
             <HelpCircle size={21} />
             Help Center
           </Link>
-          <button onClick={onLogout} className="dashboard-nav-item">
+          <button onClick={onLogout} className={styles.navItem}>
             <LogOut size={21} />
             Logout
           </button>

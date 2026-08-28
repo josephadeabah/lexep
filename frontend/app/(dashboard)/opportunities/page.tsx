@@ -2,7 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, MapPin, Clock, Wallet, Bookmark, Briefcase, Users, ArrowRight } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Clock,
+  Wallet,
+  Bookmark,
+  Briefcase,
+  Users,
+  ArrowRight,
+} from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
@@ -37,7 +46,7 @@ function LearnerOpportunities() {
       {/* Page Header */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em] sm:text-4xl">
+          <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-4xl">
             Find Your Next Opportunity
           </h1>
           <p className="mt-2 text-sm text-[#6d6a66] sm:text-base">
@@ -95,7 +104,7 @@ function LearnerOpportunities() {
                     </button>
                   </div>
 
-                  <h3 className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em] sm:text-xl">
+                  <h3 className="font-['Hanken_Grotesk'] text-lg font-semibold tracking-[-0.02em] text-[#1b1c1c] sm:text-xl">
                     {o.title}
                   </h3>
                   <p className="mt-1 text-sm text-[#6d6a66]">{o.company_name}</p>
@@ -119,26 +128,20 @@ function LearnerOpportunities() {
                     </span>
                   </div>
 
-                  <Button
-                    href={`/opportunities/${o.id}`}
-                    variant="outline"
-                    className="mt-6 w-full"
-                  >
+                  <Button href={`/opportunities/${o.id}`} variant="outline" className="mt-6 w-full">
                     View Details
                   </Button>
                 </Card>
               ))
             ) : (
-              <p className="text-base text-[#6d6a66]">
-                No opportunities match your search yet.
-              </p>
+              <p className="text-base text-[#6d6a66]">No opportunities match your search yet.</p>
             )}
           </div>
         </>
       ) : (
         <Card className="overflow-hidden p-0">
           <div className="border-b border-[#e0d8c9] bg-[#f5f3f3] px-5 py-4 sm:px-6">
-            <h2 className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+            <h2 className="font-['Hanken_Grotesk'] text-lg font-semibold text-[#1b1c1c]">
               Your Applications
             </h2>
           </div>
@@ -147,7 +150,10 @@ function LearnerOpportunities() {
           ) : applications.data && applications.data.length > 0 ? (
             <ul className="divide-y divide-[#e0d8c9]">
               {applications.data.map((app) => (
-                <li key={app.id} className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <li
+                  key={app.id}
+                  className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6"
+                >
                   <div>
                     <p className="text-base font-semibold text-[#1b1c1c]">
                       {app.opportunity_title}
@@ -183,7 +189,7 @@ function CompanyOpportunities() {
     <div className="flex flex-col gap-6 px-4 py-6 sm:gap-8 sm:px-0 sm:py-0">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em] sm:text-4xl">
+          <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-4xl">
             Opportunities
           </h1>
           <p className="mt-2 text-sm text-[#6d6a66] sm:text-base">
@@ -208,14 +214,18 @@ function CompanyOpportunities() {
                 <Badge
                   tone={o.status === "published" ? "success" : "neutral"}
                   dot
-                  className={o.status === "published" ? "bg-[#dcefe1] text-[#276b3b]" : "bg-[#f5f3f3] text-[#6d6a66]"}
+                  className={
+                    o.status === "published"
+                      ? "bg-[#dcefe1] text-[#276b3b]"
+                      : "bg-[#f5f3f3] text-[#6d6a66]"
+                  }
                 >
                   {o.status}
                 </Badge>
-                <span className="text-xs capitalize text-[#6d6a66]">{o.work_mode}</span>
+                <span className="text-xs text-[#6d6a66] capitalize">{o.work_mode}</span>
               </div>
 
-              <h3 className="text-lg font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em] sm:text-xl">
+              <h3 className="font-['Hanken_Grotesk'] text-lg font-semibold tracking-[-0.02em] text-[#1b1c1c] sm:text-xl">
                 {o.title}
               </h3>
               <p className="mt-1 text-sm text-[#6d6a66]">{o.location}</p>

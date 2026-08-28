@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import { NAV_BY_ROLE, ADMIN_NAV } from "@/lib/nav-config";
-import { HelpCircle, LogOut, Bell, Settings, Menu, X, Search, ShieldCheck } from "lucide-react";
-import { Logo } from "@/components/ui/Logo";
+import { Bell, Settings, Menu, X, Search, ShieldCheck } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
+import { OfflineBanner } from "./OfflineBanner";
 import Link from "next/link";
 import type { UserRole } from "@/lib/types";
-import { OfflineBanner } from "./OfflineBanner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +17,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu/dropdown-menu";
+import { Logo } from "@/components/ui/Logo";
+import { HelpCircle, LogOut } from "lucide-react";
+import { Sidebar } from "./sidebar/Sidebar";
 
 const BRAND_BY_ROLE: Record<
   UserRole,
@@ -120,7 +122,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   if (!isInitialized || !user || !user.role) {
     return (
-      <div className="bg-surface text-body-md text-on-surface-variant flex h-screen items-center justify-center">
+      <div className="flex h-screen items-center justify-center bg-[#fbf9f8]">
         Loading your workspace…
       </div>
     );
@@ -134,175 +136,128 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const sidebarBottom = SIDEBAR_BOTTOM_BY_ROLE[role] || [];
 
   return (
-    <div className="dashboard-shell">
+    <div className="flex min-h-screen bg-[#fbfaf8]">
       {/* Sidebar */}
-      <aside className={`dashboard-sidebar ${sidebarOpen ? "is-open" : ""}`}>
-        <div className="company-brand">
-          <div className="company-avatar">
-            <Logo variant="dark" size={48} showWordmark={false} />
-          </div>
-          <div>
-            <strong>{brandConfig.brand}</strong>
-            <span>{brandConfig.tagline}</span>
-          </div>
-        </div>
-
-        {user && (
-          <div className="flex items-center gap-3 rounded-md bg-white/5 p-3">
-            <Avatar name={user.full_name} src={user.avatar_url} size={36} />
-            <div className="min-w-0">
-              <p className="truncate text-[#f4d36a]">{user.full_name}</p>
-              <p className="truncate text-sm text-[#bdbbb8]">{brandConfig.roleLabel}</p>
-            </div>
-          </div>
-        )}
-
-        {brandConfig.ctaLabel && (
-          <Link
-            href={brandConfig.ctaHref || "#"}
-            className="dashboard-nav-item m-4 rounded-md bg-[#ddb839] font-bold text-[#171717]"
-          >
-            {brandConfig.ctaLabel}
-          </Link>
-        )}
-
-        <nav className="dashboard-nav">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`dashboard-nav-item ${active ? "active" : ""}`}
-              >
-                <Icon size={21} />
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="sidebar-bottom">
-          {sidebarBottom.map((item) => (
-            <Link key={item.label} href={item.href || "#"} className="dashboard-nav-item">
-              {item.icon && <item.icon size={21} />}
-              {item.label}
-            </Link>
-          ))}
-
-          <Link href="/help" className="dashboard-nav-item">
-            <HelpCircle size={21} />
-            <span>Support</span>
-          </Link>
-
-          <button
-            className="dashboard-nav-item"
-            onClick={() => {
-              logout();
-              router.replace("/sign-in");
-            }}
-          >
-            <LogOut size={21} />
-            <span>Logout</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* Mobile scrim */}
-      {sidebarOpen && (
-        <button
-          className="sidebar-scrim"
-          aria-label="Close sidebar"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      <Sidebar
+        brand={brandConfig.brand}
+        tagline={brandConfig.tagline}
+        navItems={navItems}
+        ctaLabel={brandConfig.ctaLabel}
+        ctaHref={brandConfig.ctaHref}
+        userSummary={{
+          name: user.full_name,
+          roleLabel: brandConfig.roleLabel,
+          avatarUrl: user.avatar_url,
+        }}
+        onLogout={() => {
+          logout();
+          router.replace("/sign-in");
+        }}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
       {/* Content */}
-      <div className="dashboard-content">
+      <div className="min-w-0 flex-1">
         {/* Top Navigation */}
-        <header className="dashboard-header">
+        <header className="flex min-h-[80px] items-center gap-4 border-b border-[#d8d1c4] px-5 sm:px-8">
           <button
-            className="dashboard-menu"
+            className="grid place-items-center border-0 bg-transparent p-1 md:hidden"
             aria-label={sidebarOpen ? "Close dashboard menu" : "Open dashboard menu"}
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <label className="dashboard-search">
+          <label className="flex h-11 w-full max-w-[320px] flex-1 items-center gap-3 rounded-md border border-[#cbbfae] bg-white px-4">
             <Search size={17} aria-hidden="true" />
             <span className="sr-only">Search</span>
-            <input placeholder="Search..." />
+            <input
+              placeholder="Search..."
+              className="w-full min-w-0 border-0 bg-transparent text-[16px] outline-none"
+            />
           </label>
 
-          <nav className="dashboard-top-nav" aria-label="Account navigation">
+          <nav
+            className="ml-auto flex items-center gap-6 text-[15px]"
+            aria-label="Account navigation"
+          >
             {headerLinks.map((link) => (
-              <a key={link.label} href={link.href}>
+              <a
+                key={link.label}
+                href={link.href}
+                className="hidden text-[#38342d] hover:text-[#735c00] sm:block"
+              >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          {/* Right-side group - always stays at right */}
-          <div className="ml-auto flex items-center gap-2">
-            {headerButton && (
-              <Link href={headerButton.href || "#"} className="post-button">
-                {headerButton.label}
-              </Link>
-            )}
+          {headerButton && (
+            <Link
+              href={headerButton.href || "#"}
+              className="hidden rounded-md bg-[#ddb839] px-4 py-2.5 text-[15px] font-bold text-[#161616] hover:bg-[#c9a32e] md:block"
+            >
+              {headerButton.label}
+            </Link>
+          )}
 
-            <button className="icon-button" aria-label="Notifications">
-              <Bell size={23} />
-            </button>
+          <button
+            className="grid place-items-center border-0 bg-transparent p-1 text-[#38342d]"
+            aria-label="Notifications"
+          >
+            <Bell size={22} />
+          </button>
 
-            <button className="icon-button" aria-label="Settings">
-              <Settings size={23} />
-            </button>
+          <button
+            className="hidden border-0 bg-transparent p-1 text-[#38342d] sm:grid"
+            aria-label="Settings"
+          >
+            <Settings size={22} />
+          </button>
 
-            {/* Profile Menu - Using shadcn DropdownMenu */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="profile-avatar" aria-label="Open profile menu">
-                  <Avatar name={user.full_name} src={user.avatar_url} size={40} />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-semibold">{user.full_name}</span>
-                    <span className="text-muted-foreground text-xs">{brandConfig.roleLabel}</span>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {headerLinks.map((link) => (
-                  <DropdownMenuItem key={link.label} asChild>
-                    <Link href={link.href}>{link.label}</Link>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuItem asChild>
-                  <Link href="#profile">{brandConfig.roleLabel} Profile</Link>
+          {/* Profile Menu */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="profile-avatar" aria-label="Open profile menu">
+                <Avatar name={user.full_name} src={user.avatar_url} size={40} />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold">{user.full_name}</span>
+                  <span className="text-muted-foreground text-xs">{brandConfig.roleLabel}</span>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {headerLinks.map((link) => (
+                <DropdownMenuItem key={link.label} asChild>
+                  <Link href={link.href}>{link.label}</Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-red-600 focus:text-red-600"
-                  onClick={() => {
-                    logout();
-                    router.replace("/sign-in");
-                  }}
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+              ))}
+              <DropdownMenuItem asChild>
+                <Link href="#profile">{brandConfig.roleLabel} Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="text-red-600 focus:text-red-600"
+                onClick={() => {
+                  logout();
+                  router.replace("/sign-in");
+                }}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </header>
 
         {/* Main Content */}
-        <main className="dashboard-main">
+        <main className="px-4 py-8 sm:px-8 sm:py-12">
           <OfflineBanner />
-          <div className="max-w-container-max mx-auto w-full">{children}</div>
+          <div className="mx-auto w-full max-w-[1280px]">{children}</div>
         </main>
       </div>
     </div>

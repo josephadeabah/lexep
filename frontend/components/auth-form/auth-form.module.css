@@ -111,7 +111,9 @@
   font-family: "Inter", sans-serif;
   font-size: 0.9375rem;
   outline: none;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .form input:not([type="checkbox"]):focus {
@@ -206,7 +208,10 @@
   font-weight: 700;
   font-size: 0.9375rem;
   cursor: pointer;
-  transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  transition:
+    background-color 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .submit:hover {
@@ -260,7 +265,9 @@
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 150ms ease, border-color 150ms ease;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
   text-decoration: none;
 }
 

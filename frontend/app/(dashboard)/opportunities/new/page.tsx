@@ -40,9 +40,7 @@ function StepHeader({ step }: { step: number }) {
               <span
                 className={cn(
                   "flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold",
-                  done || active
-                    ? "bg-[#d4af37] text-[#1b1c1c]"
-                    : "bg-[#f0f0f0] text-[#6d6a66]"
+                  done || active ? "bg-[#d4af37] text-[#1b1c1c]" : "bg-[#f0f0f0] text-[#6d6a66]"
                 )}
               >
                 {done ? <Check className="h-4 w-4" strokeWidth={3} /> : index}
@@ -116,10 +114,10 @@ export default function NewOpportunityPage() {
     <div className="mx-auto max-w-3xl px-6 py-12">
       {/* Header */}
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           {STEP_TITLES[step - 1].title}
         </h1>
-        <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-[#735c00]">
+        <p className="mt-2 text-sm font-semibold tracking-wide text-[#735c00] uppercase">
           {STEP_TITLES[step - 1].subtitle}
         </p>
       </div>
@@ -144,9 +142,7 @@ export default function NewOpportunityPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">
-                Category
-              </label>
+              <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">Category</label>
               <Select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -181,11 +177,9 @@ export default function NewOpportunityPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">
-                Location
-              </label>
+              <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6d6a66]" />
+                <MapPin className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#6d6a66]" />
                 <Input
                   placeholder="City, Country"
                   value={location}
@@ -200,7 +194,7 @@ export default function NewOpportunityPage() {
         {step === 2 && (
           <div className="flex flex-col gap-8">
             <div>
-              <p className="text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+              <p className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
                 Role Details
               </p>
               <p className="mt-1 text-sm text-[#6d6a66]">
@@ -209,9 +203,7 @@ export default function NewOpportunityPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">
-                Duration
-              </label>
+              <label className="mb-2 block text-sm font-semibold text-[#1b1c1c]">Duration</label>
               <Select
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
@@ -229,17 +221,13 @@ export default function NewOpportunityPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-base font-semibold text-[#1b1c1c]">Stipend Provided</p>
-                  <p className="text-sm text-[#6d6a66]">
-                    Is this a paid internship?
-                  </p>
+                  <p className="text-sm text-[#6d6a66]">Is this a paid internship?</p>
                 </div>
                 <button
                   onClick={() => setStipendProvided((v) => !v)}
                   className={cn(
                     "flex h-7 w-12 items-center rounded-full p-1 transition",
-                    stipendProvided
-                      ? "bg-[#d4af37] justify-end"
-                      : "bg-[#e0d8c9] justify-start"
+                    stipendProvided ? "justify-end bg-[#d4af37]" : "justify-start bg-[#e0d8c9]"
                   )}
                 >
                   <span className="h-5 w-5 rounded-full bg-white shadow" />
@@ -251,7 +239,7 @@ export default function NewOpportunityPage() {
                     Monthly Stipend Amount
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-lg text-[#6d6a66]">
+                    <span className="absolute top-1/2 left-3 -translate-y-1/2 text-lg text-[#6d6a66]">
                       $
                     </span>
                     <Input
@@ -285,7 +273,7 @@ export default function NewOpportunityPage() {
         {step === 3 && (
           <div className="flex flex-col gap-8">
             <div>
-              <p className="text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+              <p className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
                 Final Requirements
               </p>
             </div>
@@ -337,7 +325,7 @@ export default function NewOpportunityPage() {
 
             <div className="rounded-md bg-[#f5f3f3] p-6">
               <div className="mb-4 flex items-center justify-between">
-                <p className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+                <p className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
                   Review Details
                 </p>
                 <button
@@ -349,13 +337,13 @@ export default function NewOpportunityPage() {
               </div>
               <div className="grid gap-6 text-base text-[#1b1c1c] sm:grid-cols-2">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-[#6d6a66]">
+                  <p className="text-xs font-semibold tracking-wide text-[#6d6a66] uppercase">
                     Role Title
                   </p>
                   <p className="mt-1">{title || "—"}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-[#6d6a66]">
+                  <p className="text-xs font-semibold tracking-wide text-[#6d6a66] uppercase">
                     Location
                   </p>
                   <p className="mt-1">
@@ -363,13 +351,13 @@ export default function NewOpportunityPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-[#6d6a66]">
+                  <p className="text-xs font-semibold tracking-wide text-[#6d6a66] uppercase">
                     Duration
                   </p>
                   <p className="mt-1">{duration || "—"}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-[#6d6a66]">
+                  <p className="text-xs font-semibold tracking-wide text-[#6d6a66] uppercase">
                     Stipend
                   </p>
                   <p className="mt-1">
@@ -377,7 +365,7 @@ export default function NewOpportunityPage() {
                   </p>
                 </div>
                 <div className="sm:col-span-2">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-[#6d6a66]">
+                  <p className="text-xs font-semibold tracking-wide text-[#6d6a66] uppercase">
                     Description Summary
                   </p>
                   <p className="mt-1">{description || "—"}</p>
