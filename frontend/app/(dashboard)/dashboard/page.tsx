@@ -30,9 +30,9 @@ function LearnerDashboard() {
       {/* Welcome Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+          <h2 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
             Welcome back, {user.full_name.split(" ")[0]}.
-          </h1>
+          </h2>
           <p className="mt-1 text-base text-[#6d6a66]">
             Here is an overview of your progress today.
           </p>
