@@ -75,7 +75,7 @@ export default function LearnerOnboardingPage() {
         <div className="rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm sm:p-10">
           {/* Header */}
           <div className="mb-8 text-center">
-            <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+            <p className="text-xs font-bold tracking-wider text-[#6d6a66] uppercase">
               STEP {step} OF 2
             </p>
             <h2 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c] sm:text-4xl">
@@ -91,12 +91,8 @@ export default function LearnerOnboardingPage() {
           {/* Stepper */}
           <div className="mb-8">
             <div className="flex items-center justify-between text-xs font-semibold">
-              <span className="text-[#6d6a66]">
-                {step === 1 ? "Step 1" : "Step 2"}
-              </span>
-              <span className="text-[#735c00]">
-                {step === 1 ? "Almost Done" : "Almost Done"}
-              </span>
+              <span className="text-[#6d6a66]">{step === 1 ? "Step 1" : "Step 2"}</span>
+              <span className="text-[#735c00]">{step === 1 ? "Almost Done" : "Almost Done"}</span>
             </div>
             <div className="mt-2 h-1 rounded-full bg-[#e0d8c9]">
               <div
@@ -212,7 +208,9 @@ export default function LearnerOnboardingPage() {
                 <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
                   Weekly Time Commitment
                 </h2>
-                <p className="mt-1 text-sm text-[#6d6a66]">How much time can you dedicate to Lexep?</p>
+                <p className="mt-1 text-sm text-[#6d6a66]">
+                  How much time can you dedicate to Lexep?
+                </p>
                 <div className="mt-4 space-y-3">
                   {TIME_COMMITMENTS.map((option) => (
                     <label

@@ -69,7 +69,7 @@ export default function CompanyOnboardingPage() {
         <div className="rounded-2xl border border-[#e0d8c9] bg-white shadow-sm">
           {/* Header */}
           <div className="border-b border-[#e0d8c9]/40 bg-[#f5f3f3] px-8 py-6">
-            <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+            <p className="flex items-center gap-2 text-xs font-bold tracking-wider text-[#6d6a66] uppercase">
               <Building2 className="h-4 w-4" /> Step 1 of 1
             </p>
             <h2 className="mt-2 font-['Hanken_Grotesk'] text-2xl font-bold tracking-[-0.03em] text-[#1b1c1c]">

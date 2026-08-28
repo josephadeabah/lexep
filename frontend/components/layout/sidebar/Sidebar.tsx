@@ -100,11 +100,7 @@ export function Sidebar({
         <div className={styles.bottom}>
           {/* Additional sidebar items (e.g. Post Internship for company) */}
           {sidebarBottom.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href || "#"}
-              className={styles.navItem}
-            >
+            <Link key={item.label} href={item.href || "#"} className={styles.navItem}>
               {item.icon && <item.icon size={21} />}
               {item.label}
             </Link>

@@ -103,9 +103,7 @@ const SIDEBAR_BOTTOM_BY_ROLE: Record<
 > = {
   learner: [],
   mentor: [],
-  company: [
-    { label: "Post Internship", href: "/opportunities/new", icon: Briefcase },
-  ],
+  company: [{ label: "Post Internship", href: "/opportunities/new", icon: Briefcase }],
   admin: [{ label: "System Status", href: "#system-status", icon: ShieldCheck }],
 };
 

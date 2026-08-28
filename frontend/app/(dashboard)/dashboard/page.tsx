@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/Button";
 import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
 import { formatDate, formatTime, formatCurrency } from "@/lib/utils";
 import {
+  Wallet,
+  Star,
   Users,
   Briefcase,
   CalendarClock,
@@ -47,7 +49,9 @@ function LearnerDashboard() {
           <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
             Welcome back, {user.full_name.split(" ")[0]}.
           </h2>
-          <p className="mt-1 text-base text-[#6d6a66]">Here is an overview of your progress today.</p>
+          <p className="mt-1 text-base text-[#6d6a66]">
+            Here is an overview of your progress today.
+          </p>
         </div>
       </div>
 
@@ -216,7 +220,11 @@ function LearnerDashboard() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Button href={`/mentorship/${mentors.data[0].user.id}`} variant="primary" className="w-full">
+                <Button
+                  href={`/mentorship/${mentors.data[0].user.id}`}
+                  variant="primary"
+                  className="w-full"
+                >
                   Join Session
                 </Button>
                 <Button variant="outline" className="w-full">
@@ -300,7 +308,10 @@ function CompanyDashboard() {
           <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
             Active Listings
           </h2>
-          <Link href="/opportunities" className="text-sm font-semibold text-[#735c00] hover:underline">
+          <Link
+            href="/opportunities"
+            className="text-sm font-semibold text-[#735c00] hover:underline"
+          >
             View All
           </Link>
         </div>
@@ -392,7 +403,9 @@ function MentorDashboard() {
         {/* Earnings Card */}
         <Card className="p-6">
           <div className="flex items-center justify-between">
-            <p className="text-lg font-bold text-[#d4af37]">payments</p>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f5f3f3]">
+              <Wallet className="h-5 w-5 text-[#d4af37]" />
+            </span>
             <Badge className="bg-[#f5f3f3] text-[#6d6a66]">+12% this month</Badge>
           </div>
           <p className="mt-3 text-sm font-semibold text-[#6d6a66]">TOTAL EARNINGS</p>
@@ -404,7 +417,9 @@ function MentorDashboard() {
         {/* Students Card */}
         <Card className="p-6">
           <div className="flex items-center justify-between">
-            <p className="text-lg font-bold text-[#d4af37]">group</p>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f5f3f3]">
+              <Users className="h-5 w-5 text-[#d4af37]" />
+            </span>
             <Badge className="bg-[#f5f3f3] text-[#6d6a66]">Active</Badge>
           </div>
           <p className="mt-3 text-sm font-semibold text-[#6d6a66]">STUDENTS MENTORED</p>
@@ -416,7 +431,9 @@ function MentorDashboard() {
         {/* Rating Card */}
         <Card className="p-6">
           <div className="flex items-center justify-between">
-            <p className="text-lg font-bold text-[#d4af37]">star</p>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f5f3f3]">
+              <Star className="h-5 w-5 text-[#d4af37]" />
+            </span>
             <Badge className="bg-[#f5f3f3] text-[#6d6a66]">verified</Badge>
           </div>
           <p className="mt-3 text-sm font-semibold text-[#6d6a66]">AVERAGE RATING</p>
@@ -490,7 +507,7 @@ function MentorDashboard() {
                 {stats.data.todays_schedule.map((s, index) => (
                   <div key={s.id} className="relative mb-6 last:mb-0">
                     {/* Timeline dot */}
-                    <span className="absolute -left-[31px] top-1 flex h-3 w-3 items-center justify-center rounded-full bg-[#d4af37]" />
+                    <span className="absolute top-1 -left-[31px] flex h-3 w-3 items-center justify-center rounded-full bg-[#d4af37]" />
 
                     <p className="text-sm text-[#6d6a66]">{formatTime(s.time)}</p>
                     <div className="mt-1 rounded-md bg-[#f5f3f3] p-3">
@@ -522,7 +539,7 @@ function MentorDashboard() {
           <p className="mt-2 text-sm text-[#6d6a66]">
             Keep your expertise and availability up to date so learners can find the right fit.
           </p>
-          <Button href="/mentorship/apply" variant="secondary" className="mt-4">
+          <Button href="/mentorship/apply" variant="primary" className="mt-4">
             Edit Application
           </Button>
         </Card>
@@ -531,7 +548,7 @@ function MentorDashboard() {
           <p className="mt-2 text-sm text-[#6d6a66]">
             Start or contribute to a funding group for the youth you mentor.
           </p>
-          <Button href="/grants" variant="secondary" className="mt-4">
+          <Button href="/grants" variant="primary" className="mt-4">
             Go to Grant Hub
           </Button>
         </Card>

@@ -119,7 +119,7 @@ export default function MentorApplicationPage() {
           {step === 1 && (
             <div className="space-y-8">
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+                <p className="text-xs font-bold tracking-wider text-[#6d6a66] uppercase">
                   STEP 1 OF 3
                 </p>
                 <h2 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
@@ -191,7 +191,7 @@ export default function MentorApplicationPage() {
           {step === 2 && (
             <div className="space-y-8">
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+                <p className="text-xs font-bold tracking-wider text-[#6d6a66] uppercase">
                   STEP 2 OF 3
                 </p>
                 <h2 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
@@ -300,15 +300,15 @@ export default function MentorApplicationPage() {
           {step === 3 && (
             <div className="space-y-8">
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+                <p className="text-xs font-bold tracking-wider text-[#6d6a66] uppercase">
                   STEP 3 OF 3
                 </p>
                 <h2 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
                   Motivation & Submission
                 </h2>
                 <p className="mt-2 text-[#6d6a66]">
-                  We'd love to know what drives you to share your expertise with the next
-                  generation of architects.
+                  We'd love to know what drives you to share your expertise with the next generation
+                  of architects.
                 </p>
               </div>
 
@@ -328,9 +328,9 @@ export default function MentorApplicationPage() {
                   onChange={(e) => setAgreed(e.target.checked)}
                   label={
                     <>
-                      I agree to the <span className="text-[#735c00]">Terms & Conditions</span>{" "}
-                      and <span className="text-[#735c00]">Mentor Code of Conduct</span>. I confirm
-                      that all information provided is accurate.
+                      I agree to the <span className="text-[#735c00]">Terms & Conditions</span> and{" "}
+                      <span className="text-[#735c00]">Mentor Code of Conduct</span>. I confirm that
+                      all information provided is accurate.
                     </>
                   }
                   className="rounded-lg border border-[#e0d8c9] p-4"
