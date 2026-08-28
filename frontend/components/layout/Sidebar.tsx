@@ -57,15 +57,16 @@ export function Sidebar({
           </div>
         )}
 
+        {/* CTA Button */}
         {ctaLabel && (
-          <nav className="dashboard-nav">
-          <Link
-            href={ctaHref || "#"}
-            className="dashboard-nav-item m-4 rounded-md bg-[#ddb839] font-bold text-[#171717]"
-          >
-            {ctaLabel}
-          </Link>
-          </nav>
+          <div className="mx-4 my-4">
+            <Link
+              href={ctaHref || "#"}
+              className="flex h-11 items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition hover:bg-[#c9a32e]"
+            >
+              {ctaLabel}
+            </Link>
+          </div>
         )}
 
         <nav className="dashboard-nav">
