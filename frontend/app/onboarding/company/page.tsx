@@ -10,7 +10,6 @@ import { Select } from "@/components/ui/select/Select";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
-import styles from "../onboarding.module.css";
 
 const GOALS = [
   {
@@ -65,23 +64,29 @@ export default function CompanyOnboardingPage() {
   }
 
   return (
-    <div className={styles.shell}>
-      <div className={styles.content}>
-        <div className={styles.card}>
-          <div className={styles.cardHeader}>
-            <p className={styles.stepLabel}>
-              <Building2 className="mr-1 inline h-4 w-4" /> Step 1 of 1
+    <div className="min-h-screen bg-[#fbf9f8]">
+      <div className="mx-auto max-w-2xl px-4 py-12">
+        <div className="rounded-2xl border border-[#e0d8c9] bg-white shadow-sm">
+          {/* Header */}
+          <div className="border-b border-[#e0d8c9]/40 bg-[#f5f3f3] px-8 py-6">
+            <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+              <Building2 className="h-4 w-4" /> Step 1 of 1
             </p>
-            <h1 className={styles.cardTitle}>Set Up Your Company Profile</h1>
-            <p className={styles.cardSubtitle}>
+            <h1 className="mt-2 font-['Hanken_Grotesk'] text-2xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+              Set Up Your Company Profile
+            </h1>
+            <p className="mt-1 text-sm text-[#6d6a66]">
               Complete your profile to start connecting with top emerging talent.
             </p>
           </div>
 
-          <div className={styles.formGrid}>
+          <div className="space-y-8 p-8">
+            {/* Company Details */}
             <div>
-              <h2 className={styles.sectionTitle}>Company Details</h2>
-              <div className={styles.twoCol}>
+              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
+                Company Details
+              </h2>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
                 <Input
                   label="Industry"
                   placeholder="e.g. Technology, Finance"
@@ -99,7 +104,7 @@ export default function CompanyOnboardingPage() {
                   <option value="51-200">51-200</option>
                   <option value="200+">200+</option>
                 </Select>
-                <div className={styles.fullWidth}>
+                <div className="sm:col-span-2">
                   <Input
                     label="Website URL"
                     placeholder="https://www.example.com"
@@ -110,18 +115,23 @@ export default function CompanyOnboardingPage() {
               </div>
             </div>
 
+            {/* Hiring Goals */}
             <div>
-              <h2 className={styles.sectionTitle}>Hiring Goals</h2>
-              <p className={styles.sectionSubtitle}>
+              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
+                Hiring Goals
+              </h2>
+              <p className="mt-1 text-sm text-[#6d6a66]">
                 What are you hoping to achieve on this platform? (Select all that apply)
               </p>
-              <div className={styles.optionsGrid}>
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
                 {GOALS.map((goal) => (
                   <label
                     key={goal.id}
                     className={cn(
-                      styles.checkboxCard,
-                      goals.includes(goal.id) && styles.checkboxCardSelected
+                      "flex cursor-pointer flex-col gap-2 rounded-lg border p-4 transition",
+                      goals.includes(goal.id)
+                        ? "border-[#d4af37] bg-[#fffdf8]"
+                        : "border-[#e0d8c9] hover:border-[#d4af37]"
                     )}
                   >
                     <Checkbox
@@ -129,33 +139,37 @@ export default function CompanyOnboardingPage() {
                       onChange={() => toggleGoal(goal.id)}
                     />
                     <div>
-                      <p className={styles.optionTitle}>{goal.title}</p>
-                      <p className={styles.optionDescription}>{goal.description}</p>
+                      <p className="text-sm font-semibold text-[#1b1c1c]">{goal.title}</p>
+                      <p className="mt-1 text-xs text-[#6d6a66]">{goal.description}</p>
                     </div>
                   </label>
                 ))}
               </div>
             </div>
 
+            {/* Preferred Outreach */}
             <div>
-              <h2 className={styles.sectionTitle}>Preferred Outreach</h2>
-              <div className={styles.formGrid}>
+              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
+                Preferred Outreach
+              </h2>
+              <div className="mt-4 space-y-3">
                 <Checkbox
                   label="Receive regular email digests of top candidates."
                   checked={emailDigests}
                   onChange={(e) => setEmailDigests(e.target.checked)}
-                  className={cn(styles.checkboxCard)}
+                  className="rounded-lg border border-[#e0d8c9] p-4"
                 />
                 <Checkbox
                   label="Allow students to send direct inquiries."
                   checked={directInquiries}
                   onChange={(e) => setDirectInquiries(e.target.checked)}
-                  className={cn(styles.checkboxCard)}
+                  className="rounded-lg border border-[#e0d8c9] p-4"
                 />
               </div>
             </div>
 
-            <div className={styles.footer} style={{ justifyContent: "flex-end" }}>
+            {/* Footer */}
+            <div className="flex justify-end border-t border-[#e0d8c9]/40 pt-6">
               <Button onClick={handleSubmit} disabled={isSubmitting}>
                 {isSubmitting ? "Saving…" : "Finish Setup"}
               </Button>

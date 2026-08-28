@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/Button";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 import type { UserRole } from "@/lib/types";
-import styles from "../onboarding.module.css";
 
 const ROLES: { id: UserRole; title: string; description: string; icon: typeof GraduationCap }[] = [
   {
@@ -45,15 +44,17 @@ export default function ChooseRolePage() {
   }
 
   return (
-    <div className={styles.shell}>
-      <div className={styles.content}>
-        <h1 className={styles.title}>Choose your journey</h1>
-        <p className={styles.subtitle}>
+    <div className="min-h-screen bg-[#fbf9f8]">
+      <div className="mx-auto max-w-5xl px-6 py-16 text-center">
+        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c] sm:text-5xl">
+          Choose your journey
+        </h1>
+        <p className="mx-auto mt-4 max-w-xl text-lg text-[#6d6a66]">
           Select the path that best describes your goals on Lexep. This helps us tailor your
           experience.
         </p>
 
-        <div className={cn(styles.optionsGrid, styles.optionsGridThree)}>
+        <div className="mt-12 grid gap-6 sm:grid-cols-3">
           {ROLES.map((role) => {
             const Icon = role.icon;
             const active = selected === role.id;
@@ -61,26 +62,34 @@ export default function ChooseRolePage() {
               <button
                 key={role.id}
                 onClick={() => setSelected(role.id)}
-                className={cn(styles.optionCard, active && styles.optionCardSelected)}
+                className={cn(
+                  "flex flex-col items-start gap-4 rounded-xl border bg-white p-8 text-left transition-all",
+                  active
+                    ? "border-[#d4af37] bg-[#fffdf8] shadow-[0_0_0_3px_rgba(212,175,55,0.1)]"
+                    : "border-[#e0d8c9] hover:border-[#d4af37] hover:shadow-md"
+                )}
               >
-                <span className={styles.optionIcon}>
-                  <Icon className="h-5 w-5" />
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f5f3f3]">
+                  <Icon className="h-6 w-6 text-[#1b1c1c]" />
                 </span>
                 <div>
-                  <p className={styles.optionTitle}>{role.title}</p>
-                  <p className={styles.optionDescription}>{role.description}</p>
+                  <p className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
+                    {role.title}
+                  </p>
+                  <p className="mt-1 text-sm text-[#6d6a66]">{role.description}</p>
                 </div>
               </button>
             );
           })}
         </div>
 
-        <div className={styles.footer} style={{ justifyContent: "center" }}>
+        <div className="mt-12 flex justify-center">
           <Button
             onClick={handleContinue}
             disabled={!selected || isSubmitting}
             size="lg"
             variant={selected ? "primary" : "ghost"}
+            className={selected ? "" : "bg-[#f0f0f0] text-[#6d6a66]"}
           >
             {isSubmitting ? "Saving…" : "Continue"}
           </Button>
