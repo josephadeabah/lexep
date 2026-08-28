@@ -3,19 +3,16 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
-  ArrowLeft,
-  Bookmark,
-  Heart,
-  Clock,
-  Globe2,
+  X,
   Star,
   CheckCircle2,
   MapPin,
-  Award,
-  MessageSquare,
+  Clock,
+  Globe2,
   Compass,
   Code2,
   Landmark,
+  Heart,
 } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
@@ -24,8 +21,6 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/badge/Badge";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { cn } from "@/lib/utils";
-// Import Search icon
-import { Search } from "lucide-react";
 
 export default function MentorProfilePage() {
   const params = useParams<{ mentorId: string }>();
@@ -33,46 +28,24 @@ export default function MentorProfilePage() {
   const mentorId = Number(params.mentorId);
   const mentor = useAsync(() => api.getMentor(mentorId), [mentorId]);
   const packages = useAsync(() => api.mentorPackages(mentorId), [mentorId]);
-  const [activeTab, setActiveTab] = useState("mentors");
 
   if (mentor.isLoading) return <p className="text-base text-[#6d6a66]">Loading…</p>;
   const m = mentor.data;
   if (!m) return <p className="text-base text-[#ba1a1a]">Mentor not found.</p>;
 
   return (
-    <div className="min-h-screen bg-[#fbf9f8]">
-      {/* Public Header */}
-      <header className="border-b border-[#e0d8c9]/40 bg-white px-6 py-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <div className="flex items-center gap-8">
-            <span className="font-['Hanken_Grotesk'] text-xl font-bold text-[#1b1c1c]">
-              Lexep
-            </span>
-            <nav className="hidden items-center gap-6 text-sm font-medium text-[#6d6a66] md:flex">
-              <button className="hover:text-[#1b1c1c]">Explore</button>
-              <button className="border-b-2 border-[#d4af37] pb-1 text-[#1b1c1c]">
-                Mentors
-              </button>
-              <button className="hover:text-[#1b1c1c]">Projects</button>
-              <button className="hover:text-[#1b1c1c]">Insights</button>
-            </nav>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden items-center gap-2 rounded-md border border-[#e0d8c9] px-4 py-2 md:flex">
-              <Search size={16} className="text-[#6d6a66]" />
-              <input
-                placeholder="Search mentors..."
-                className="w-40 border-0 bg-transparent text-sm outline-none"
-              />
-            </div>
-            <span className="text-sm font-semibold text-[#1b1c1c]">My Portal</span>
-            <Avatar name={m.user.full_name} src={m.user.avatar_url} size={36} />
-          </div>
-        </div>
-      </header>
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#fbf9f8]">
+      {/* Exit Button */}
+      <button
+        onClick={() => router.push("/mentorship")}
+        className="fixed right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition hover:bg-[#f5f3f3]"
+        aria-label="Close profile"
+      >
+        <X className="h-5 w-5 text-[#1b1c1c]" />
+      </button>
 
       {/* Main Content */}
-      <div className="mx-auto max-w-6xl px-6 py-8">
+      <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
           {/* Left Sidebar */}
           <div className="space-y-6">
@@ -82,7 +55,7 @@ export default function MentorProfilePage() {
                 name={m.user.full_name}
                 src={m.user.avatar_url}
                 size={120}
-                className="mx-auto h-30 w-30"
+                className="mx-auto"
               />
               <h2 className="mt-4 font-['Hanken_Grotesk'] text-2xl font-bold text-[#1b1c1c]">
                 {m.user.full_name}
@@ -95,10 +68,7 @@ export default function MentorProfilePage() {
               >
                 <Heart className="h-4 w-4" /> Book Session
               </Button>
-              <Button
-                variant="outline"
-                className="mt-2 w-full border-[#e0d8c9]"
-              >
+              <Button variant="outline" className="mt-2 w-full border-[#e0d8c9]">
                 Message
               </Button>
 
@@ -250,21 +220,6 @@ export default function MentorProfilePage() {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="border-t border-[#e0d8c9]/40 bg-white px-6 py-6">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-[#6d6a66] sm:flex-row">
-          <span className="font-['Hanken_Grotesk'] text-lg font-bold text-[#1b1c1c]">Lexep</span>
-          <span>© 2024 Lexep Architectural Career Platform. All rights reserved.</span>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-[#735c00]">About</a>
-            <a href="#" className="hover:text-[#735c00]">Privacy Policy</a>
-            <a href="#" className="hover:text-[#735c00]">Terms of Service</a>
-            <a href="#" className="hover:text-[#735c00]">Contact</a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
-
