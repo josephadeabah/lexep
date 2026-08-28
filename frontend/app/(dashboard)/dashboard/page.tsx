@@ -30,7 +30,7 @@ function LearnerDashboard() {
       {/* Welcome Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+          <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
             Welcome back, {user.full_name.split(" ")[0]}.
           </h2>
           <p className="mt-1 text-base text-[#6d6a66]">
@@ -42,7 +42,7 @@ function LearnerDashboard() {
       {/* Active Progress Section */}
       <div>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+          <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
             Active Progress
           </h2>
           <Link href="/courses" className="text-sm font-semibold text-[#735c00] hover:underline">
@@ -54,23 +54,19 @@ function LearnerDashboard() {
           {/* Course 1 - In Progress */}
           <Card className="flex flex-col overflow-hidden">
             <div className="relative h-40 bg-[#f5f3f3]">
-              <img 
-                src="/images/mentorship.jpg" 
-                alt="Advanced Structural Analysis" 
+              <img
+                src="/images/mentorship.jpg"
+                alt="Advanced Structural Analysis"
                 className="h-full w-full object-cover"
               />
-              <Badge className="absolute top-4 left-4 bg-white text-[#1b1c1c]">
-                Architecture
-              </Badge>
+              <Badge className="absolute top-4 left-4 bg-white text-[#1b1c1c]">Architecture</Badge>
             </div>
             <div className="flex flex-1 flex-col p-6">
-              <h3 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+              <h3 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
                 Advanced Structural Analysis & Design
               </h3>
-              <p className="mt-2 text-sm text-[#6d6a66]">
-                Module 4: Load Bearing Systems
-              </p>
-              
+              <p className="mt-2 text-sm text-[#6d6a66]">Module 4: Load Bearing Systems</p>
+
               <div className="mt-4">
                 <div className="flex items-center justify-between text-sm text-[#6d6a66]">
                   <span>65% Complete</span>
@@ -88,9 +84,9 @@ function LearnerDashboard() {
           {/* Course 2 - 30% */}
           <Card className="flex flex-col overflow-hidden">
             <div className="relative h-40 bg-[#f5f3f3]">
-              <img 
-                src="/images/cover-texture.jpg" 
-                alt="Sustainable Building Materials" 
+              <img
+                src="/images/cover-texture.jpg"
+                alt="Sustainable Building Materials"
                 className="h-full w-full object-cover"
               />
               <Badge className="absolute top-4 left-4 bg-white text-[#1b1c1c]">
@@ -98,13 +94,11 @@ function LearnerDashboard() {
               </Badge>
             </div>
             <div className="flex flex-1 flex-col p-6">
-              <h3 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+              <h3 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
                 Sustainable Building Materials
               </h3>
-              <p className="mt-2 text-sm text-[#6d6a66]">
-                Module 2: Alternative Composites
-              </p>
-              
+              <p className="mt-2 text-sm text-[#6d6a66]">Module 2: Alternative Composites</p>
+
               <div className="mt-4">
                 <div className="flex items-center justify-between text-sm text-[#6d6a66]">
                   <span>30% Complete</span>
@@ -124,7 +118,7 @@ function LearnerDashboard() {
       {/* Recommended Paths */}
       <div>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+          <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
             Recommended Paths
           </h2>
           <Link href="/courses" className="text-sm font-semibold text-[#735c00] hover:underline">
@@ -169,7 +163,7 @@ function LearnerDashboard() {
 
       {/* Upcoming Mentorship */}
       <div>
-        <h2 className="mb-4 text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+        <h2 className="mb-4 font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
           Upcoming Mentorship
         </h2>
         <Card className="p-6">
@@ -181,18 +175,18 @@ function LearnerDashboard() {
               <div className="flex items-center gap-4">
                 <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-[#d4af37]">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk']">
+                    <p className="font-['Hanken_Grotesk'] text-2xl font-bold text-[#1b1c1c]">
                       {Math.round(mentors.data[0].rating * 20)}%
                     </p>
                     <p className="text-[10px] text-[#6d6a66]">MATCH</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4">
-                  <Avatar 
-                    name={mentors.data[0].user.full_name} 
-                    src={mentors.data[0].user.avatar_url} 
-                    size={48} 
+                  <Avatar
+                    name={mentors.data[0].user.full_name}
+                    src={mentors.data[0].user.avatar_url}
+                    size={48}
                   />
                   <div>
                     <p className="text-lg font-semibold text-[#1b1c1c]">
@@ -210,7 +204,11 @@ function LearnerDashboard() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Button href={`/mentorship/${mentors.data[0].user.id}`} variant="primary" className="w-full">
+                <Button
+                  href={`/mentorship/${mentors.data[0].user.id}`}
+                  variant="primary"
+                  className="w-full"
+                >
                   Join Session
                 </Button>
                 <Button variant="outline" className="w-full">
@@ -240,7 +238,7 @@ function CompanyDashboard() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Welcome, {user.full_name}
         </h1>
         <p className="mt-1 text-base text-[#6d6a66]">
@@ -257,7 +255,7 @@ function CompanyDashboard() {
             </span>
             <span className="text-sm text-[#6d6a66]">Active Internships</span>
           </div>
-          <p className="mt-3 text-5xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk']">
+          <p className="mt-3 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {opportunities.data?.length ?? "—"}
           </p>
         </Card>
@@ -268,7 +266,7 @@ function CompanyDashboard() {
             </span>
             <span className="text-sm text-[#6d6a66]">Interviews Scheduled</span>
           </div>
-          <p className="mt-3 text-5xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk']">
+          <p className="mt-3 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {interviews.data?.length ?? "—"}
           </p>
         </Card>
@@ -286,10 +284,13 @@ function CompanyDashboard() {
       {/* Active Listings */}
       <div>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+          <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
             Active Listings
           </h2>
-          <Link href="/opportunities" className="text-sm font-semibold text-[#735c00] hover:underline">
+          <Link
+            href="/opportunities"
+            className="text-sm font-semibold text-[#735c00] hover:underline"
+          >
             View All
           </Link>
         </div>
@@ -313,9 +314,7 @@ function CompanyDashboard() {
                       <p className="text-base font-semibold text-[#1b1c1c]">{o.title}</p>
                       <p className="text-sm text-[#6d6a66]">{o.location}</p>
                     </td>
-                    <td className="px-6 py-4 text-base capitalize text-[#1b1c1c]">
-                      {o.work_mode}
-                    </td>
+                    <td className="px-6 py-4 text-base text-[#1b1c1c] capitalize">{o.work_mode}</td>
                     <td className="px-6 py-4">
                       <Badge tone={o.status === "published" ? "success" : "neutral"} dot>
                         {o.status}
@@ -366,7 +365,7 @@ function MentorDashboard() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h1 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Welcome back, {user.full_name.split(" ")[0]}.
         </h1>
         <p className="mt-1 text-base text-[#6d6a66]">
@@ -378,21 +377,20 @@ function MentorDashboard() {
       <div className="grid gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-sm text-[#6d6a66]">TOTAL EARNINGS</p>
-          <p className="mt-2 text-5xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk']">
+          <p className="mt-2 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {formatCurrency(stats.data?.total_earnings ?? 0)}
           </p>
         </Card>
         <Card>
           <p className="text-sm text-[#6d6a66]">STUDENTS MENTORED</p>
-          <p className="mt-2 text-5xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk']">
+          <p className="mt-2 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
             {stats.data?.students_mentored ?? 0}
           </p>
         </Card>
         <Card>
           <p className="text-sm text-[#6d6a66]">AVERAGE RATING</p>
-          <p className="mt-2 text-5xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk']">
-            {stats.data?.average_rating?.toFixed(1) ?? "—"}{" "}
-            <span className="text-2xl">/ 5.0</span>
+          <p className="mt-2 font-['Hanken_Grotesk'] text-5xl font-bold text-[#1b1c1c]">
+            {stats.data?.average_rating?.toFixed(1) ?? "—"} <span className="text-2xl">/ 5.0</span>
           </p>
         </Card>
       </div>
@@ -400,11 +398,14 @@ function MentorDashboard() {
       {/* Pending Requests & Schedule */}
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="overflow-hidden p-0">
-          <div className="p-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+          <div className="flex items-center justify-between p-6">
+            <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
               Pending Requests
             </h2>
-            <Link href="/mentorship/requests" className="text-sm font-semibold text-[#735c00] hover:underline">
+            <Link
+              href="/mentorship/requests"
+              className="text-sm font-semibold text-[#735c00] hover:underline"
+            >
               View All
             </Link>
           </div>
@@ -413,12 +414,10 @@ function MentorDashboard() {
           ) : requests.data && requests.data.length > 0 ? (
             <ul className="divide-y divide-[#e0d8c9]">
               {requests.data.slice(0, 3).map((r) => (
-                <li key={r.id} className="p-6 flex items-center justify-between gap-3">
+                <li key={r.id} className="flex items-center justify-between gap-3 p-6">
                   <div>
                     <p className="text-base font-semibold text-[#1b1c1c]">{r.learner_name}</p>
-                    <p className="text-sm text-[#6d6a66]">
-                      {r.session_type ?? "Session"}
-                    </p>
+                    <p className="text-sm text-[#6d6a66]">{r.session_type ?? "Session"}</p>
                   </div>
                   <div className="flex gap-2">
                     <Button size="sm" variant="ghost" onClick={() => decline(r.id)}>
@@ -437,8 +436,8 @@ function MentorDashboard() {
         </Card>
 
         <Card className="overflow-hidden p-0">
-          <div className="p-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk']">
+          <div className="flex items-center justify-between p-6">
+            <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
               Today&apos;s Schedule
             </h2>
           </div>
@@ -453,9 +452,7 @@ function MentorDashboard() {
               ))}
             </ul>
           ) : (
-            <p className="px-6 pb-6 text-base text-[#6d6a66]">
-              Nothing scheduled today.
-            </p>
+            <p className="px-6 pb-6 text-base text-[#6d6a66]">Nothing scheduled today.</p>
           )}
           <div className="p-6 pt-0">
             <Button href="/mentorship/students" variant="ghost" className="w-full">

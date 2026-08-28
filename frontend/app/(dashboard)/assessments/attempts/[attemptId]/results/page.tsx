@@ -1,7 +1,16 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { Award, Download, Share2, ArrowRight, CheckCircle2, Clock, FileText, Users } from "lucide-react";
+import {
+  Award,
+  Download,
+  Share2,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  FileText,
+  Users,
+} from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
@@ -23,7 +32,8 @@ export default function AssessmentResultsPage() {
   const recommendedPaths = [
     {
       title: "Structural Analysis II",
-      description: "Dive deeper into dynamic loads, lateral forces, and advanced materials behaviors under extreme stress conditions.",
+      description:
+        "Dive deeper into dynamic loads, lateral forces, and advanced materials behaviors under extreme stress conditions.",
       duration: "12 Hours",
       modules: "4 Modules",
       level: "Intermediate",
@@ -31,7 +41,8 @@ export default function AssessmentResultsPage() {
     },
     {
       title: "Concrete Design Principles",
-      description: "Apply your statics knowledge to reinforced concrete structural design, focusing on safety and modern standards.",
+      description:
+        "Apply your statics knowledge to reinforced concrete structural design, focusing on safety and modern standards.",
       duration: "16 Hours",
       modules: "6 Modules",
       level: "Intermediate",
@@ -39,7 +50,8 @@ export default function AssessmentResultsPage() {
     },
     {
       title: "Material Stress Workshop",
-      description: "Strengthen your understanding of material stress and fatigue through a 1-on-1 mentored workshop.",
+      description:
+        "Strengthen your understanding of material stress and fatigue through a 1-on-1 mentored workshop.",
       duration: "1-on-1",
       modules: "Mentored",
       level: "Suggested Focus",
@@ -51,10 +63,7 @@ export default function AssessmentResultsPage() {
     <div className="flex flex-col gap-8">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-[#6d6a66]">
-        <button 
-          onClick={() => router.push("/assessments")} 
-          className="hover:text-[#735c00]"
-        >
+        <button onClick={() => router.push("/assessments")} className="hover:text-[#735c00]">
           ← Back to Dashboard
         </button>
         <span>/</span>
@@ -64,7 +73,7 @@ export default function AssessmentResultsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-4xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+          <h2 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
             Assessment Complete
           </h2>
         </div>
@@ -81,16 +90,17 @@ export default function AssessmentResultsPage() {
               <p className="text-xs font-bold tracking-wide text-[#735c00] uppercase">
                 Final Score
               </p>
-              <p className="mt-2 text-7xl font-bold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.045em]">
+              <p className="mt-2 font-['Hanken_Grotesk'] text-7xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
                 {Math.round(r.score)}%
               </p>
-              <p className="mt-2 text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+              <p className="mt-2 font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
                 {r.mastery_label}
               </p>
               <p className="mt-2 max-w-sm text-base text-[#6d6a66]">
-                You have demonstrated exceptional understanding of load distribution, statics, and material behavior principles.
+                You have demonstrated exceptional understanding of load distribution, statics, and
+                material behavior principles.
               </p>
-              
+
               <div className="mt-4">
                 <Badge tone="success">
                   <CheckCircle2 className="mr-1 h-3 w-3" /> Skill Verified
@@ -106,16 +116,10 @@ export default function AssessmentResultsPage() {
 
           {/* Buttons - full width below */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button 
-              variant="secondary" 
-              className="flex flex-1 items-center justify-center gap-2"
-            >
+            <Button variant="secondary" className="flex flex-1 items-center justify-center gap-2">
               <Share2 className="h-4 w-4" /> Share to Profile
             </Button>
-            <Button 
-              href="/assessments"
-              className="flex flex-1 items-center justify-center gap-2"
-            >
+            <Button href="/assessments" className="flex flex-1 items-center justify-center gap-2">
               Continue Learning
             </Button>
           </div>
@@ -123,7 +127,7 @@ export default function AssessmentResultsPage() {
 
         {/* Topic Breakdown Card */}
         <Card className="p-8">
-          <h2 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+          <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
             Topic Breakdown
           </h2>
           <div className="mt-4 flex flex-col gap-4">
@@ -144,7 +148,7 @@ export default function AssessmentResultsPage() {
       <div>
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+            <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
               Recommended Next Paths
             </h2>
             <p className="mt-1 text-sm text-[#6d6a66]">
@@ -162,11 +166,7 @@ export default function AssessmentResultsPage() {
               {/* Image Section */}
               <div className="relative h-48 bg-[#f5f3f3]">
                 {path.image ? (
-                  <img 
-                    src={path.image} 
-                    alt={path.title} 
-                    className="h-full w-full object-cover"
-                  />
+                  <img src={path.image} alt={path.title} className="h-full w-full object-cover" />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-[#735c00]">
                     <Users className="h-16 w-16 text-[#d4af37]" />
@@ -179,12 +179,10 @@ export default function AssessmentResultsPage() {
 
               {/* Content */}
               <div className="flex flex-1 flex-col p-6">
-                <h3 className="text-xl font-semibold text-[#1b1c1c] font-['Hanken_Grotesk'] tracking-[-0.02em]">
+                <h3 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
                   {path.title}
                 </h3>
-                <p className="mt-2 flex-1 text-sm text-[#6d6a66]">
-                  {path.description}
-                </p>
+                <p className="mt-2 flex-1 text-sm text-[#6d6a66]">{path.description}</p>
 
                 {/* Meta Info */}
                 <div className="mt-4 flex items-center gap-4 text-sm text-[#6d6a66]">

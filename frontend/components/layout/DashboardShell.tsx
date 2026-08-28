@@ -271,7 +271,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
                     <span className="text-sm font-semibold">{user.full_name}</span>
-                    <span className="text-xs text-muted-foreground">{brandConfig.roleLabel}</span>
+                    <span className="text-muted-foreground text-xs">{brandConfig.roleLabel}</span>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />

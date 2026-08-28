@@ -57,15 +57,6 @@ export function Sidebar({
           </div>
         )}
 
-        {ctaLabel && (
-          <Link
-            href={ctaHref || "#"}
-            className="dashboard-nav-item m-4 rounded-md bg-[#ddb839] font-bold text-[#171717]"
-          >
-            {ctaLabel}
-          </Link>
-        )}
-
         <nav className="dashboard-nav">
           {navItems.map((item) => {
             const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
@@ -84,6 +75,14 @@ export function Sidebar({
         </nav>
 
         <div className="sidebar-bottom">
+          {ctaLabel && (
+            <Link
+              href={ctaHref || "#"}
+              className="dashboard-nav-item m-4 rounded-md bg-[#ddb839] font-bold text-[#171717]"
+            >
+              {ctaLabel}
+            </Link>
+          )}
           <Link href="/help" className="dashboard-nav-item">
             <HelpCircle size={21} />
             Help Center
