@@ -327,7 +327,14 @@
     padding: 1.5rem;
   }
 
+  /* Keep social buttons side by side on mobile */
   .socialButtons {
-    flex-direction: column;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .socialButton {
+    padding: 0 0.5rem;
+    font-size: 0.8125rem;
   }
 }
