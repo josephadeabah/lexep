@@ -449,7 +449,7 @@ function MentorDashboard() {
               {requests.data.slice(0, 3).map((r) => (
                 <li key={r.id} className="flex items-center justify-between gap-3 p-6">
                   <div className="flex items-center gap-4">
-                    <Avatar name={r.learner_name} size={48} />
+                    <Avatar name={r.learner_name ?? "Unknown learner"} size={48} />
                     <div>
                       <p className="text-base font-semibold text-[#1b1c1c]">{r.learner_name}</p>
                       <p className="text-sm text-[#6d6a66]">
