@@ -11,7 +11,7 @@ import { Select } from "@/components/ui/select/Select";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { Textarea } from "@/components/ui/text-area/Textarea";
 import { api } from "@/lib/api";
-import styles from "./onboarding.module.css";
+import styles from "../../../onboarding/onboarding.module.css";
 
 const INDUSTRIES = ["Technology", "Design", "Finance", "Healthcare", "Education", "Marketing"];
 const SKILLS = [
