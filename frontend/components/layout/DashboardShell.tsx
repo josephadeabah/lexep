@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import { NAV_BY_ROLE, ADMIN_NAV } from "@/lib/nav-config";
-import { Bell, Settings, Menu, X, Search, ShieldCheck } from "lucide-react";
+import { Bell, Settings, Menu, X, Search, ShieldCheck, Compass, FileText, Bookmark } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { OfflineBanner } from "./OfflineBanner";
 import Link from "next/link";
@@ -20,6 +20,7 @@ import {
 import { Logo } from "@/components/ui/Logo";
 import { HelpCircle, LogOut } from "lucide-react";
 import { Sidebar } from "./sidebar/Sidebar";
+import { cn } from "@/lib/utils";
 
 const BRAND_BY_ROLE: Record<
   UserRole,
@@ -51,20 +52,22 @@ const BRAND_BY_ROLE: Record<
   },
 };
 
-const HEADER_LINKS_BY_ROLE: Record<UserRole, { label: string; href: string }[]> = {
+const HEADER_LINKS_BY_ROLE: Record<UserRole, { label: string; href: string; icon?: React.ComponentType<{ size?: number }> }[]> = {
   learner: [
-    { label: "Analytics", href: "#analytics" },
-    { label: "Help", href: "#help" },
+    { label: "Browse", href: "/opportunities", icon: Compass },
+    { label: "Applications", href: "/applications", icon: FileText },
+    { label: "Saved", href: "/saved", icon: Bookmark },
+    { label: "Help", href: "/help", icon: HelpCircle },
   ],
   mentor: [
     { label: "Analytics", href: "#analytics" },
     { label: "Learners", href: "#learners" },
-    { label: "Help", href: "#help" },
+    { label: "Help", href: "/help" },
   ],
   company: [
     { label: "Analytics", href: "#analytics" },
     { label: "Talent Pool", href: "#talent" },
-    { label: "Help", href: "#help" },
+    { label: "Help", href: "/help" },
   ],
   admin: [
     { label: "Admin Settings", href: "#admin-settings" },
@@ -173,24 +176,33 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             <Search size={17} aria-hidden="true" />
             <span className="sr-only">Search</span>
             <input
-              placeholder="Search..."
+              placeholder="Search internships..."
               className="w-full min-w-0 border-0 bg-transparent text-[16px] outline-none"
             />
           </label>
 
+          {/* Nav Links */}
           <nav
-            className="ml-auto flex items-center gap-6 text-[15px]"
+            className="ml-auto flex items-center gap-1 text-[15px]"
             aria-label="Account navigation"
           >
-            {headerLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="hidden text-[#38342d] hover:text-[#735c00] sm:block"
-              >
-                {link.label}
-              </a>
-            ))}
+            {headerLinks.map((link) => {
+              const isActive = pathname === link.href || pathname?.startsWith(`${link.href}/`);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={cn(
+                    "hidden rounded-md px-3 py-2 text-sm font-semibold transition sm:block",
+                    isActive
+                      ? "border-b-2 border-[#d4af37] text-[#1b1c1c]"
+                      : "text-[#6d6a66] hover:text-[#1b1c1c]"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {headerButton && (

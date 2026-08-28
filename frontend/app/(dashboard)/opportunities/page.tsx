@@ -17,27 +17,15 @@ import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
-import { Input } from "@/components/ui/input/Input";
-import { Select } from "@/components/ui/select/Select";
 import { Badge } from "@/components/ui/badge/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
-const STATUS_TONE: Record<string, "neutral" | "success" | "warning" | "error"> = {
-  applied: "neutral",
-  under_review: "warning",
-  interview_scheduled: "primary" as never,
-  accepted: "success",
-  declined: "error",
-};
-
 function LearnerOpportunities() {
-  const [tab, setTab] = useState<"browse" | "applications" | "saved">("browse");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [locationType, setLocationType] = useState("any");
   const opportunities = useAsync(() => api.listOpportunities(false, true), []);
-  const applications = useAsync(() => api.myApplications(), []);
 
   const filtered = (opportunities.data ?? []).filter((o) => {
     const matchesQuery = `${o.title} ${o.company_name ?? ""} ${o.category ?? ""}`
@@ -115,115 +103,70 @@ function LearnerOpportunities() {
         </div>
       </div>
 
-      {tab === "browse" ? (
-        <>
-          {/* Opportunity Cards Grid */}
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {opportunities.isLoading ? (
-              <p className="text-base text-[#6d6a66]">Loading opportunities…</p>
-            ) : filtered.length > 0 ? (
-              filtered.map((o) => (
-                <Card key={o.id} className="flex flex-col p-6">
-                  {/* Header: Company Logo & Bookmark */}
-                  <div className="mb-4 flex items-start justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#f5f3f3]">
-                      <span className="text-lg font-bold text-[#735c00]">
-                        {o.company_name?.[0] ?? "?"}
-                      </span>
-                    </div>
-                    <button className="text-[#6d6a66] hover:text-[#1b1c1c]">
-                      <Bookmark className="h-5 w-5" />
-                    </button>
-                  </div>
+      {/* Opportunity Cards Grid */}
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {opportunities.isLoading ? (
+          <p className="text-base text-[#6d6a66]">Loading opportunities…</p>
+        ) : filtered.length > 0 ? (
+          filtered.map((o) => (
+            <Card key={o.id} className="flex flex-col p-6">
+              {/* Header: Company Logo & Bookmark */}
+              <div className="mb-4 flex items-start justify-between">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#f5f3f3]">
+                  <span className="text-lg font-bold text-[#735c00]">
+                    {o.company_name?.[0] ?? "?"}
+                  </span>
+                </div>
+                <button className="text-[#6d6a66] hover:text-[#1b1c1c]">
+                  <Bookmark className="h-5 w-5" />
+                </button>
+              </div>
 
-                  {/* Category */}
-                  <Badge className="mb-3 w-fit bg-[#f5f3f3] text-[#6d6a66]">
-                    {o.category ?? "General"}
-                  </Badge>
+              {/* Category */}
+              <Badge className="mb-3 w-fit bg-[#f5f3f3] text-[#6d6a66]">
+                {o.category ?? "General"}
+              </Badge>
 
-                  {/* Title & Company */}
-                  <h3 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
-                    {o.title}
-                  </h3>
-                  <p className="mt-1 text-sm text-[#6d6a66]">{o.company_name}</p>
+              {/* Title & Company */}
+              <h3 className="font-['Hanken_Grotesk'] text-xl font-semibold tracking-[-0.02em] text-[#1b1c1c]">
+                {o.title}
+              </h3>
+              <p className="mt-1 text-sm text-[#6d6a66]">{o.company_name}</p>
 
-                  {/* Details */}
-                  <div className="mt-5 flex flex-col gap-2.5 border-t border-[#e0d8c9]/40 pt-5 text-sm text-[#6d6a66]">
-                    {o.location && (
-                      <span className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4" /> {o.location} ({o.work_mode})
-                      </span>
-                    )}
-                    {o.duration && (
-                      <span className="flex items-center gap-2">
-                        <Clock className="h-4 w-4" /> {o.duration}
-                      </span>
-                    )}
-                    <span className="flex items-center gap-2">
-                      <Wallet className="h-4 w-4" />
-                      {o.stipend_provided
-                        ? `Paid Stipend${o.stipend_amount ? ` (${o.stipend_currency} ${o.stipend_amount}/mo)` : ""}`
-                        : "Unpaid (Academic Credit)"}
-                    </span>
-                  </div>
+              {/* Details */}
+              <div className="mt-5 flex flex-col gap-2.5 border-t border-[#e0d8c9]/40 pt-5 text-sm text-[#6d6a66]">
+                {o.location && (
+                  <span className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" /> {o.location} ({o.work_mode})
+                  </span>
+                )}
+                {o.duration && (
+                  <span className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" /> {o.duration}
+                  </span>
+                )}
+                <span className="flex items-center gap-2">
+                  <Wallet className="h-4 w-4" />
+                  {o.stipend_provided
+                    ? `Paid Stipend${o.stipend_amount ? ` (${o.stipend_currency} ${o.stipend_amount}/mo)` : ""}`
+                    : "Unpaid (Academic Credit)"}
+                </span>
+              </div>
 
-                  {/* Action */}
-                  <Button
-                    href={`/opportunities/${o.id}`}
-                    variant="outline"
-                    className="mt-6 w-full border-[#e0d8c9] text-[#1b1c1c] hover:bg-[#f5f3f3]"
-                  >
-                    View Details
-                  </Button>
-                </Card>
-              ))
-            ) : (
-              <p className="text-base text-[#6d6a66]">No opportunities match your search yet.</p>
-            )}
-          </div>
-        </>
-      ) : (
-        <Card className="overflow-hidden p-0">
-          <div className="border-b border-[#e0d8c9] bg-[#f5f3f3] px-6 py-4">
-            <h2 className="font-['Hanken_Grotesk'] text-lg font-semibold text-[#1b1c1c]">
-              {tab === "applications" ? "Your Applications" : "Saved Opportunities"}
-            </h2>
-          </div>
-          {applications.isLoading ? (
-            <p className="p-6 text-base text-[#6d6a66]">Loading…</p>
-          ) : applications.data && applications.data.length > 0 ? (
-            <ul className="divide-y divide-[#e0d8c9]">
-              {applications.data.map((app) => (
-                <li
-                  key={app.id}
-                  className="flex flex-col gap-2 px-6 py-4 sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div>
-                    <p className="text-base font-semibold text-[#1b1c1c]">
-                      {app.opportunity_title}
-                    </p>
-                    <p className="text-sm text-[#6d6a66]">
-                      {app.company_name} {app.location && `· ${app.location}`}
-                    </p>
-                    <p className="mt-1 text-xs text-[#6d6a66]">
-                      Applied: {new Date(app.applied_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <Badge tone={STATUS_TONE[app.status] ?? "neutral"} dot>
-                    {app.status.replace("_", " ")}
-                  </Badge>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="p-6 text-base text-[#6d6a66]">
-              {tab === "applications"
-                ? "You haven't applied to anything yet."
-                : "No saved opportunities yet."}
-            </p>
-          )}
-        </Card>
-      )}
+              {/* Action */}
+              <Button
+                href={`/opportunities/${o.id}`}
+                variant="outline"
+                className="mt-6 w-full border-[#e0d8c9] text-[#1b1c1c] hover:bg-[#f5f3f3]"
+              >
+                View Details
+              </Button>
+            </Card>
+          ))
+        ) : (
+          <p className="text-base text-[#6d6a66]">No opportunities match your search yet.</p>
+        )}
+      </div>
     </div>
   );
 }
@@ -246,7 +189,7 @@ function CompanyOpportunities() {
           href="/opportunities/new"
           className="h-11 rounded-md bg-[#d4af37] px-4 font-semibold text-[#1b1c1c] hover:bg-[#c9a32e] sm:h-12 sm:px-6"
         >
-          + New Application
+          + New Opportunity
         </Button>
       </div>
 
