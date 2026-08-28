@@ -122,9 +122,9 @@ export default function MentorApplicationPage() {
                 <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
                   STEP 1 OF 3
                 </p>
-                <h1 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+                <h2 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
                   Personal & Professional Info
-                </h1>
+                </h2>
                 <p className="mt-2 text-[#6d6a66]">
                   Tell us about your background and expertise to help us match you with the right
                   learners.
@@ -194,9 +194,9 @@ export default function MentorApplicationPage() {
                 <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
                   STEP 2 OF 3
                 </p>
-                <h1 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+                <h2 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
                   Expertise & Availability
-                </h1>
+                </h2>
               </div>
 
               <div>
@@ -303,9 +303,9 @@ export default function MentorApplicationPage() {
                 <p className="text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
                   STEP 3 OF 3
                 </p>
-                <h1 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+                <h2 className="mt-2 font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
                   Motivation & Submission
-                </h1>
+                </h2>
                 <p className="mt-2 text-[#6d6a66]">
                   We'd love to know what drives you to share your expertise with the next
                   generation of architects.
