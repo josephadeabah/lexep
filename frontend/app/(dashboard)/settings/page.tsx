@@ -39,45 +39,89 @@ function AccountTab() {
   }
 
   return (
-    <Card>
-      <div className="flex items-center justify-between">
-        <h2 className="text-headline-md text-on-background">Account Information</h2>
+    <Card className="p-8">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-[#e0d8c9]/40 pb-4">
+        <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
+          Account Information
+        </h2>
         {!editing && (
           <button
             onClick={() => setEditing(true)}
-            className="text-label-md text-primary hover:underline"
+            className="text-sm font-semibold text-[#735c00] hover:underline"
           >
             Edit
           </button>
         )}
       </div>
 
-      <div className="mt-md gap-md border-outline-variant/40 pb-md flex items-center border-b">
-        <Avatar name={user.full_name} src={user.avatar_url} size={72} />
+      {/* Avatar & Name */}
+      <div className="mt-6 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+        <Avatar name={user.full_name} src={user.avatar_url} size={120} className="rounded-full" />
+        <div className="w-full flex-1">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Input
+              label="First Name"
+              value={fullName.split(" ")[0]}
+              onChange={(e) => {
+                const parts = fullName.split(" ");
+                parts[0] = e.target.value;
+                setFullName(parts.join(" "));
+              }}
+              disabled={!editing}
+              className="h-12 rounded-lg border-[#e0d8c9]"
+            />
+            <Input
+              label="Last Name"
+              value={fullName.split(" ").slice(1).join(" ") || ""}
+              onChange={(e) => {
+                const parts = fullName.split(" ");
+                parts[parts.length - 1] = e.target.value;
+                setFullName(parts.join(" "));
+              }}
+              disabled={!editing}
+              className="h-12 rounded-lg border-[#e0d8c9]"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Email */}
+      <div className="mt-6">
+        <Input
+          label="Email Address"
+          value={user.email}
+          disabled
+          className="h-12 rounded-lg border-[#e0d8c9]"
+        />
+      </div>
+
+      {/* Password */}
+      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="flex-1">
           <Input
-            label="Full Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            disabled={!editing}
+            label="Password"
+            type="password"
+            value="•••••••••••"
+            disabled
+            className="h-12 rounded-lg border-[#e0d8c9] bg-[#f5f3f3]"
           />
         </div>
+        <Button
+          variant="outline"
+          className="h-12 border-[#e0d8c9] font-semibold"
+        >
+          Change Password
+        </Button>
       </div>
 
-      <div className="mt-md gap-md flex flex-col">
-        <Input label="Email Address" value={user.email} disabled />
-        <div className="flex items-end gap-3">
-          <Input label="Password" type="password" value="•••••••••••" disabled className="flex-1" />
-          <Button variant="ghost">Change Password</Button>
-        </div>
-      </div>
-
+      {/* Actions */}
       {editing && (
-        <div className="mt-md flex justify-end gap-2">
+        <div className="mt-6 flex justify-end gap-2 border-t border-[#e0d8c9]/40 pt-4">
           <Button variant="ghost" onClick={() => setEditing(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={saving}>
+          <Button onClick={handleSave} disabled={saving} className="bg-[#d4af37] font-semibold">
             {saving ? "Saving…" : "Save Changes"}
           </Button>
         </div>
@@ -144,64 +188,70 @@ function NotificationsTab() {
       <button
         onClick={() => setPrefs((p) => ({ ...p, [optKey]: !p[optKey] }))}
         className={cn(
-          "flex h-6 w-11 flex-shrink-0 items-center rounded-full px-0.5 transition",
-          on ? "bg-primary-container justify-end" : "bg-outline-variant justify-start"
+          "flex h-7 w-12 flex-shrink-0 items-center rounded-full px-1 transition",
+          on ? "bg-[#d4af37] justify-end" : "bg-[#e0d8c9] justify-start"
         )}
       >
         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white shadow">
-          {on && <Check className="text-primary h-3 w-3" />}
+          {on && <Check className="h-3 w-3 text-[#735c00]" />}
         </span>
       </button>
     );
   }
 
   return (
-    <Card>
-      <div className="flex items-center gap-3">
-        <span className="bg-primary-fixed flex h-10 w-10 items-center justify-center rounded-full">
-          <Bell className="text-on-primary-fixed-variant h-5 w-5" />
+    <Card className="p-8">
+      {/* Header */}
+      <div className="flex items-center gap-4 border-b border-[#e0d8c9]/40 pb-4">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f7edc9]">
+          <Bell className="h-6 w-6 text-[#735c00]" />
         </span>
         <div>
-          <h2 className="text-headline-md text-on-background">Notification Preferences</h2>
-          <p className="text-label-sm text-on-surface-variant">
-            Control how and when you receive updates.
-          </p>
+          <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
+            Notification Preferences
+          </h2>
+          <p className="text-sm text-[#6d6a66]">Control how and when you receive updates.</p>
         </div>
       </div>
 
-      <p className="mt-md text-label-sm text-on-surface-variant flex items-center gap-2 tracking-wide uppercase">
-        <Mail className="h-3.5 w-3.5" /> Email Notifications
+      {/* Email Notifications */}
+      <p className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+        <Mail className="h-4 w-4" /> Email Notifications
       </p>
-      <div className="divide-outline-variant/40 mt-2 flex flex-col divide-y">
+      <div className="mt-2 flex flex-col divide-y divide-[#e0d8c9]/40">
         {EMAIL_OPTIONS.map((o) => (
           <div key={o.key} className="flex items-center justify-between gap-4 py-4">
             <span>
-              <span className="text-body-md text-on-surface block">{o.label}</span>
-              <span className="text-label-sm text-on-surface-variant block">{o.description}</span>
+              <span className="block text-base font-semibold text-[#1b1c1c]">{o.label}</span>
+              <span className="block text-sm text-[#6d6a66]">{o.description}</span>
             </span>
             <Toggle optKey={o.key} />
           </div>
         ))}
       </div>
 
-      <p className="mt-md text-label-sm text-on-surface-variant flex items-center gap-2 tracking-wide uppercase">
-        <Smartphone className="h-3.5 w-3.5" /> Push Notifications
+      {/* Push Notifications */}
+      <p className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+        <Smartphone className="h-4 w-4" /> Push Notifications
       </p>
-      <div className="divide-outline-variant/40 mt-2 flex flex-col divide-y">
+      <div className="mt-2 flex flex-col divide-y divide-[#e0d8c9]/40">
         {PUSH_OPTIONS.map((o) => (
           <div key={o.key} className="flex items-center justify-between gap-4 py-4">
             <span>
-              <span className="text-body-md text-on-surface block">{o.label}</span>
-              <span className="text-label-sm text-on-surface-variant block">{o.description}</span>
+              <span className="block text-base font-semibold text-[#1b1c1c]">{o.label}</span>
+              <span className="block text-sm text-[#6d6a66]">{o.description}</span>
             </span>
             <Toggle optKey={o.key} />
           </div>
         ))}
       </div>
 
-      <div className="mt-md border-outline-variant/40 pt-md flex justify-end gap-2 border-t">
-        <Button variant="ghost">Cancel</Button>
-        <Button onClick={handleSave} disabled={saving}>
+      {/* Actions */}
+      <div className="mt-6 flex justify-end gap-2 border-t border-[#e0d8c9]/40 pt-4">
+        <Button variant="outline" className="border-[#e0d8c9]">
+          Cancel
+        </Button>
+        <Button onClick={handleSave} disabled={saving} className="bg-[#d4af37] font-semibold">
           {saving ? "Saving…" : saved ? "Saved!" : "Save Changes"}
         </Button>
       </div>
@@ -248,68 +298,77 @@ function PrivacyTab() {
   ];
 
   return (
-    <Card>
-      <h2 className="text-headline-md text-on-background">Profile Visibility</h2>
-      <p className="text-label-sm text-on-surface-variant">
+    <Card className="p-8">
+      <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
+        Profile Visibility
+      </h2>
+      <p className="mt-1 text-sm text-[#6d6a66]">
         Control who can see your profile and academic achievements within the network.
       </p>
-      <div className="mt-3 flex flex-col gap-3">
+
+      <div className="mt-4 flex flex-col gap-3">
         {VISIBILITY_OPTIONS.map((o) => (
           <label key={o.id} className="flex cursor-pointer items-start gap-3">
             <Radio checked={visibility === o.id} onChange={() => setVisibility(o.id)} />
             <span>
-              <span className="text-body-md text-on-surface block">{o.label}</span>
-              <span className="text-label-sm text-on-surface-variant block">{o.description}</span>
+              <span className="block text-base font-semibold text-[#1b1c1c]">{o.label}</span>
+              <span className="block text-sm text-[#6d6a66]">{o.description}</span>
             </span>
           </label>
         ))}
       </div>
 
-      <h2 className="mt-lg border-outline-variant/40 pt-md text-headline-md text-on-background border-t">
+      {/* Data Sharing */}
+      <h2 className="mt-8 border-t border-[#e0d8c9]/40 pt-6 font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
         Data Sharing
       </h2>
-      <p className="text-label-sm text-on-surface-variant">
+      <p className="mt-1 text-sm text-[#6d6a66]">
         Manage how your data is used to improve our services and programs.
       </p>
-      <label className="bg-surface-container-low mt-3 flex cursor-pointer items-start gap-3 rounded-md p-4">
+
+      <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-lg bg-[#f5f3f3] p-4">
         <Checkbox
           checked={shareAnonymizedData}
           onChange={(e) => setShareAnonymizedData(e.target.checked)}
         />
         <span>
-          <span className="text-body-md text-on-surface block">
+          <span className="block text-base font-semibold text-[#1b1c1c]">
             Share anonymized data with educational partners
           </span>
-          <span className="text-label-sm text-on-surface-variant block">
+          <span className="block text-sm text-[#6d6a66]">
             We use this data to secure more grants and opportunities for the community. Your
             personal identity remains hidden.
           </span>
         </span>
       </label>
 
-      <h2 className="mt-lg border-outline-variant/40 pt-md text-headline-md text-on-background border-t">
+      {/* Account Security */}
+      <h2 className="mt-8 border-t border-[#e0d8c9]/40 pt-6 font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
         Account Security
       </h2>
-      <p className="text-label-sm text-on-surface-variant">
+      <p className="mt-1 text-sm text-[#6d6a66]">
         Enhance the protection of your professional account.
       </p>
-      <div className="border-outline-variant mt-3 flex items-center justify-between rounded-md border p-4">
+
+      <div className="mt-4 flex items-center justify-between rounded-lg border border-[#e0d8c9] p-4">
         <span className="flex items-center gap-3">
-          <Shield className="text-on-surface-variant h-5 w-5" />
+          <Shield className="h-5 w-5 text-[#6d6a66]" />
           <span>
-            <span className="text-body-md text-on-surface block">
+            <span className="block text-base font-semibold text-[#1b1c1c]">
               Two-Factor Authentication (2FA)
             </span>
-            <span className="text-label-sm text-on-surface-variant block">
+            <span className="block text-sm text-[#6d6a66]">
               Add an extra layer of security by requiring a code from your mobile device upon login.
             </span>
           </span>
         </span>
-        <Button variant="ghost">Enable 2FA</Button>
+        <Button variant="outline" className="border-[#e0d8c9]">
+          Enable 2FA
+        </Button>
       </div>
 
-      <div className="mt-md border-outline-variant/40 pt-md flex justify-end border-t">
-        <Button onClick={handleSave} disabled={saving}>
+      <div className="mt-6 flex justify-end border-t border-[#e0d8c9]/40 pt-4">
+        <Button onClick={handleSave} disabled={saving} className="bg-[#d4af37] font-semibold">
           {saving ? "Saving…" : saved ? "Saved!" : "Save Privacy Settings"}
         </Button>
       </div>
@@ -322,24 +381,27 @@ export default function SettingsPage() {
 
   return (
     <div>
-      <div className="mb-lg">
-        <h1 className="text-headline-lg text-on-background">Settings &amp; Profile</h1>
-        <p className="text-body-md text-on-surface-variant mt-1">
+      <div className="mb-8">
+        <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
+          Settings &amp; Profile
+        </h1>
+        <p className="mt-2 text-base text-[#6d6a66]">
           Manage your account preferences, notifications, and security settings.
         </p>
       </div>
 
-      <div className="gap-md grid lg:grid-cols-[240px_1fr]">
-        <nav className="flex flex-col gap-1">
+      <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
+        {/* Sidebar Tabs */}
+        <nav className="flex flex-col gap-2">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
               className={cn(
-                "text-label-md flex items-center gap-3 rounded-md border-l-2 px-3 py-2.5 text-left transition",
+                "flex items-center gap-3 rounded-lg border-l-2 px-4 py-3 text-left text-sm font-semibold transition",
                 tab === t.id
-                  ? "border-primary-container bg-surface-container-low text-primary"
-                  : "text-on-surface-variant hover:bg-surface-container-low border-transparent"
+                  ? "border-[#d4af37] bg-[#fffdf8] text-[#735c00]"
+                  : "border-transparent text-[#6d6a66] hover:bg-[#f5f3f3] hover:text-[#1b1c1c]"
               )}
             >
               <t.icon className="h-4 w-4" />
@@ -348,9 +410,12 @@ export default function SettingsPage() {
           ))}
         </nav>
 
-        {tab === "account" && <AccountTab />}
-        {tab === "notifications" && <NotificationsTab />}
-        {tab === "privacy" && <PrivacyTab />}
+        {/* Content */}
+        <div>
+          {tab === "account" && <AccountTab />}
+          {tab === "notifications" && <NotificationsTab />}
+          {tab === "privacy" && <PrivacyTab />}
+        </div>
       </div>
     </div>
   );
