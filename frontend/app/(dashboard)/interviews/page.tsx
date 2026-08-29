@@ -135,14 +135,15 @@ export default function InterviewsPage() {
             {pending.isLoading ? (
               <p className="mt-4 text-base text-[#6d6a66]">Loading…</p>
             ) : pending.data && pending.data.length > 0 ? (
-              <ul className="mt-4 flex flex-col gap-3">
+              <ul className="mt-4 flex flex-col gap-4">
                 {pending.data.map((i) => (
-                  <li key={i.id} className="rounded-lg border border-[#e0d8c9] p-4">
-                    <div className="flex items-center justify-between">
+                  <li key={i.id} className="rounded-xl border border-[#e0d8c9] p-4">
+                    {/* Candidate Info */}
+                    <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-3">
                         <Avatar
                           name={i.candidate_name ?? "Candidate"}
-                          size={40}
+                          size={44}
                           className="rounded-full"
                         />
                         <div>
@@ -154,11 +155,15 @@ export default function InterviewsPage() {
                           </p>
                         </div>
                       </div>
-                      <Mail className="h-4 w-4 text-[#6d6a66]" />
+                      <Mail className="h-4 w-4 flex-shrink-0 text-[#6d6a66]" />
                     </div>
-                    <p className="mt-2 text-xs text-[#6d6a66]">
-                      Requested 2 days ago
-                    </p>
+
+                    {/* Requested Time */}
+                    <div className="mt-3 border-t border-[#e0d8c9]/40 pt-3">
+                      <p className="text-xs text-[#6d6a66]">
+                        Requested 2 days ago
+                      </p>
+                    </div>
                   </li>
                 ))}
               </ul>
