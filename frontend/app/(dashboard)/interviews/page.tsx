@@ -139,8 +139,8 @@ export default function InterviewsPage() {
                 {pending.data.map((i) => (
                   <li key={i.id} className="rounded-xl border border-[#e0d8c9] p-4">
                     {/* Candidate Info */}
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-3">
+                    <div className="flex min-w-0 items-start justify-between gap-2">
+                      <div className="flex min-w-0 flex-1 items-start gap-3">
                         <div className="flex-shrink-0">
                           <Avatar
                             name={i.candidate_name ?? "Candidate"}
