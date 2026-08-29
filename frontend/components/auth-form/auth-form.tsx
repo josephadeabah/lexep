@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Mail, Lock, User, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, CheckCircle2 } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAuthStore } from "@/lib/auth-store";
 import { ApiError } from "@/lib/api";
@@ -97,27 +97,24 @@ export function AuthForm({ mode, className }: AuthFormProps) {
 
   return (
     <div className={cn("w-full", className)}>
-      {/* Card Container */}
-      <div className="rounded-xl border border-[#d0c5af] bg-white p-8 shadow-[0_18px_50px_rgba(48,48,49,0.08)]">
+      {/* Card Container - Dark Charcoal */}
+      <div className="rounded-xl bg-[#303031] p-8 text-white">
         {/* Header */}
         <div className="mb-8">
           <div className="mb-6 flex items-center gap-2">
-            <Logo size={36} showWordMark={false} />
-            <span className="text-lg font-semibold tracking-[-0.04em]">Lexep</span>
+            <Logo size={36} showWordmark={false} />
           </div>
-          <h2 className="font-sans text-2xl font-semibold tracking-[-0.04em]">
+          <p className="text-xs font-semibold tracking-[0.16em] text-[#e9c349] uppercase">
+            Start here
+          </p>
+          <h2 className="mt-2 font-sans text-2xl font-semibold tracking-[-0.04em]">
             {isSignUp ? "Create your account" : "Welcome back"}
           </h2>
-          <p className="mt-2 text-sm text-[#5f5e5e]">
-            {isSignUp
-              ? "Join Lexep and start your journey today."
-              : "Please enter your details to continue."}
-          </p>
         </div>
 
         {/* Success Message */}
         {success && (
-          <div className="mb-6 flex items-center gap-3 rounded-lg bg-green-50 p-4 text-sm text-green-700">
+          <div className="mb-6 flex items-center gap-3 rounded-lg bg-green-500/20 p-4 text-sm text-green-300">
             <CheckCircle2 size={18} className="flex-shrink-0" />
             Account created successfully! Redirecting...
           </div>
@@ -125,7 +122,7 @@ export function AuthForm({ mode, className }: AuthFormProps) {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 rounded-lg bg-red-50 p-4 text-sm text-red-600" role="alert">
+          <div className="mb-6 rounded-lg bg-red-500/20 p-4 text-sm text-red-300" role="alert">
             {error}
           </div>
         )}
@@ -134,36 +131,36 @@ export function AuthForm({ mode, className }: AuthFormProps) {
         <form onSubmit={handleSubmit} className="space-y-5">
           {isSignUp && (
             <div>
-              <label htmlFor="name" className="mb-2 block text-sm font-medium text-[#1b1c1c]">
-                Full Name
+              <label htmlFor="name" className="mb-2 block text-sm font-medium text-[#efeded]">
+                Your name
               </label>
               <div className="relative">
                 <User
                   size={17}
-                  className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#7f7663]"
+                  className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#aaa7a0]"
                 />
                 <input
                   id="name"
                   required
                   name="name"
                   autoComplete="name"
-                  placeholder="Jane Doe"
+                  placeholder="e.g. Amina Okafor"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full rounded-md border border-[#d0c5af] bg-white py-3 pr-4 pl-11 text-sm text-[#1b1c1c] transition outline-none placeholder:text-[#aaa7a0] focus:border-[#735c00] focus:ring-2 focus:ring-[#735c00]/20"
+                  className="w-full rounded-md border border-[#626263] bg-[#3b3b3c] py-3 pr-4 pl-11 text-sm text-white transition outline-none placeholder:text-[#aaa7a0] focus:border-[#d4af37]"
                 />
               </div>
             </div>
           )}
 
           <div>
-            <label htmlFor="email" className="mb-2 block text-sm font-medium text-[#1b1c1c]">
+            <label htmlFor="email" className="mb-2 block text-sm font-medium text-[#efeded]">
               Email address
             </label>
             <div className="relative">
               <Mail
                 size={17}
-                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#7f7663]"
+                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#aaa7a0]"
               />
               <input
                 id="email"
@@ -171,22 +168,22 @@ export function AuthForm({ mode, className }: AuthFormProps) {
                 type="email"
                 name="email"
                 autoComplete="email"
-                placeholder="jane@example.com"
+                placeholder="you@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-md border border-[#d0c5af] bg-white py-3 pr-4 pl-11 text-sm text-[#1b1c1c] transition outline-none placeholder:text-[#aaa7a0] focus:border-[#735c00] focus:ring-2 focus:ring-[#735c00]/20"
+                className="w-full rounded-md border border-[#626263] bg-[#3b3b3c] py-3 pr-4 pl-11 text-sm text-white transition outline-none placeholder:text-[#aaa7a0] focus:border-[#d4af37]"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="password" className="mb-2 block text-sm font-medium text-[#1b1c1c]">
+            <label htmlFor="password" className="mb-2 block text-sm font-medium text-[#efeded]">
               Password
             </label>
             <div className="relative">
               <Lock
                 size={17}
-                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#7f7663]"
+                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#aaa7a0]"
               />
               <input
                 id="password"
@@ -198,11 +195,11 @@ export function AuthForm({ mode, className }: AuthFormProps) {
                 minLength={isSignUp ? 8 : undefined}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-[#d0c5af] bg-white py-3 pr-12 pl-11 text-sm text-[#1b1c1c] transition outline-none placeholder:text-[#aaa7a0] focus:border-[#735c00] focus:ring-2 focus:ring-[#735c00]/20"
+                className="w-full rounded-md border border-[#626263] bg-[#3b3b3c] py-3 pr-12 pl-11 text-sm text-white transition outline-none placeholder:text-[#aaa7a0] focus:border-[#d4af37]"
               />
               <button
                 type="button"
-                className="absolute top-1/2 right-4 -translate-y-1/2 text-[#7f7663] transition hover:text-[#735c00]"
+                className="absolute top-1/2 right-4 -translate-y-1/2 text-[#aaa7a0] transition hover:text-[#e9c349]"
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 onClick={() => setShowPassword((current) => !current)}
               >
@@ -213,17 +210,17 @@ export function AuthForm({ mode, className }: AuthFormProps) {
 
           {!isSignUp && (
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 text-sm text-[#5f5e5e]">
+              <label className="flex items-center gap-2 text-sm text-[#aaa7a0]">
                 <input
                   type="checkbox"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
-                  className="h-4 w-4 rounded border-[#d0c5af] text-[#735c00] focus:ring-[#735c00]/20"
+                  className="h-4 w-4 rounded border-[#626263] bg-[#3b3b3c] text-[#d4af37] focus:ring-[#d4af37]/20"
                 />
                 Remember me
               </label>
               <Link
-                className="text-sm font-medium text-[#735c00] transition hover:text-[#554300]"
+                className="text-sm font-medium text-[#e9c349] transition hover:text-[#d4af37]"
                 href="/forgot-password"
               >
                 Forgot password?
@@ -232,19 +229,19 @@ export function AuthForm({ mode, className }: AuthFormProps) {
           )}
 
           {isSignUp && (
-            <label className="flex items-start gap-2 text-sm text-[#5f5e5e]">
+            <label className="flex items-start gap-2 text-sm text-[#aaa7a0]">
               <input
                 type="checkbox"
                 required
-                className="mt-0.5 h-4 w-4 rounded border-[#d0c5af] text-[#735c00] focus:ring-[#735c00]/20"
+                className="mt-0.5 h-4 w-4 rounded border-[#626263] bg-[#3b3b3c] text-[#d4af37] focus:ring-[#d4af37]/20"
               />
               <span>
                 I agree to the{" "}
-                <Link href="#terms" className="text-[#735c00] transition hover:text-[#554300]">
+                <Link href="#terms" className="text-[#e9c349] transition hover:text-[#d4af37]">
                   Terms
                 </Link>{" "}
                 and{" "}
-                <Link href="#privacy" className="text-[#735c00] transition hover:text-[#554300]">
+                <Link href="#privacy" className="text-[#e9c349] transition hover:text-[#d4af37]">
                   Privacy Policy
                 </Link>
                 .
@@ -255,7 +252,7 @@ export function AuthForm({ mode, className }: AuthFormProps) {
           <button
             type="submit"
             disabled={isLoading || success}
-            className="w-full rounded-md bg-[#735c00] py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(115,92,0,0.18)] transition hover:bg-[#554300] disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-md bg-[#d4af37] py-3.5 text-sm font-semibold text-[#241a00] shadow-[0_4px_20px_rgba(115,92,0,0.12)] transition hover:bg-[#e9c349] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isLoading
               ? isSignUp
@@ -269,23 +266,23 @@ export function AuthForm({ mode, className }: AuthFormProps) {
 
         {/* Divider */}
         <div className="my-6 flex items-center gap-4">
-          <div className="h-px flex-1 bg-[#e4e2e2]" />
-          <span className="text-xs text-[#7f7663]">Or continue with</span>
-          <div className="h-px flex-1 bg-[#e4e2e2]" />
+          <div className="h-px flex-1 bg-[#555556]" />
+          <span className="text-xs text-[#aaa7a0]">Or continue with</span>
+          <div className="h-px flex-1 bg-[#555556]" />
         </div>
 
         {/* Social Buttons */}
         <div className="grid grid-cols-2 gap-3">
           <button
             type="button"
-            className="flex items-center justify-center gap-2 rounded-md border border-[#d0c5af] py-3 text-sm font-semibold text-[#4d4635] transition hover:bg-[#fbf9f8]"
+            className="flex items-center justify-center gap-2 rounded-md border border-[#626263] bg-[#3b3b3c] py-3 text-sm font-semibold text-white transition hover:bg-[#454546]"
           >
             <GoogleIcon />
             Google
           </button>
           <button
             type="button"
-            className="flex items-center justify-center gap-2 rounded-md border border-[#d0c5af] py-3 text-sm font-semibold text-[#4d4635] transition hover:bg-[#fbf9f8]"
+            className="flex items-center justify-center gap-2 rounded-md border border-[#626263] bg-[#3b3b3c] py-3 text-sm font-semibold text-white transition hover:bg-[#454546]"
           >
             <LinkedInIcon />
             LinkedIn
@@ -294,18 +291,18 @@ export function AuthForm({ mode, className }: AuthFormProps) {
 
         {/* Badge */}
         {isSignUp && (
-          <div className="mt-6 flex items-center gap-2 rounded-lg bg-[#fbf9f8] p-4 text-sm text-[#5f5e5e]">
+          <div className="mt-6 flex items-center gap-2 rounded-lg bg-[#3b3b3c] p-4 text-sm text-[#aaa7a0]">
             <span className="text-lg">🎉</span> Join the growing African youth shaping the future
           </div>
         )}
       </div>
 
       {/* Footer */}
-      <div className="mt-6 text-center text-sm text-[#5f5e5e]">
+      <div className="mt-6 text-center text-sm text-[#aaa7a0]">
         {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
         <Link
           href={isSignUp ? "/sign-in" : "/sign-up"}
-          className="font-semibold text-[#735c00] transition hover:text-[#554300]"
+          className="font-semibold text-[#e9c349] transition hover:text-[#d4af37]"
         >
           {isSignUp ? "Log in instead" : "Create an account"}
         </Link>

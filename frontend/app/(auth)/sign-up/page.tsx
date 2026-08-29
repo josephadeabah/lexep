@@ -13,7 +13,7 @@ export default function SignUpPage() {
       <div className="mx-auto flex min-h-screen max-w-[1280px] flex-col px-6 py-8">
         <header className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2" aria-label="Lexep home">
-            <Logo size={64} showWordMark={false} />
+            <Logo size={64} showWordmark={false} />
             <span className="font-sans text-xl font-semibold tracking-[-0.04em]">Lexep</span>
           </Link>
           <Link
