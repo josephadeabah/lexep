@@ -24,7 +24,7 @@ export default function CreateGrantGroupPage() {
       const group = await api.createGrantGroup({
         name,
         category,
-        goal_amount: Number(goal || 0),
+        goal_amount: goal ? parseFloat(goal) : 0,  // Ensure valid float
         visibility,
       });
       router.push(`/grants/${group.id}`);
