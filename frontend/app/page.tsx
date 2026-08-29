@@ -15,6 +15,7 @@ export default function Page() {
       <header className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-5 lg:px-12">
         <Link href="/" className="flex items-center gap-2" aria-label="Lexep home">
           <Logo size={64} showWordmark={false} />
+          <span className="font-sans text-xl font-semibold tracking-[-0.04em]">Lexep</span>
         </Link>
         <nav className="flex items-center gap-3 text-sm font-semibold">
           <button
@@ -35,14 +36,14 @@ export default function Page() {
       <section className="mx-auto grid max-w-[1280px] items-center gap-12 px-6 pt-16 pb-24 lg:grid-cols-12 lg:px-12 lg:pt-24 lg:pb-32">
         <div className="lg:col-span-7">
           <p className="mb-6 text-xs font-semibold tracking-[0.18em] text-[#735c00] uppercase">
-            A clearer path forward
+            Your path to opportunity
           </p>
           <h1 className="max-w-3xl font-sans text-5xl leading-[1.08] font-bold tracking-[-0.055em] text-[#1b1c1c] sm:text-6xl lg:text-7xl">
-            Build the career you&apos;re meant to lead.
+            Build your career. Find your mentor. Fund your future.
           </h1>
           <p className="mt-7 max-w-xl text-lg leading-8 text-[#4d4635]">
-            Lexep gives ambitious professionals the structure, insight, and momentum to turn career
-            goals into meaningful progress.
+            Lexep connects ambitious African professionals with paid internships, practical
+            mentorship, and community-funded grants to turn potential into progress.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <button
@@ -59,7 +60,7 @@ export default function Page() {
             </a>
           </div>
           <p className="mt-5 text-xs text-[#7f7663]">
-            Designed for the next generation of African professionals.
+            Built for the next generation of African talent.
           </p>
         </div>
         <div className="relative overflow-hidden rounded-xl bg-[#303031] p-6 text-white shadow-[0_18px_50px_rgba(48,48,49,0.14)] sm:p-8 lg:col-span-5">
@@ -112,14 +113,26 @@ export default function Page() {
                 The Lexep approach
               </p>
               <h2 className="mt-4 font-sans text-3xl leading-tight font-semibold tracking-[-0.04em]">
-                Progress feels different when it has direction.
+                Opportunity, mentorship, and funding in one place.
               </h2>
             </div>
             <div className="grid gap-10 sm:grid-cols-3 lg:col-span-8 lg:gap-8">
               {[
-                ["01", "Know your edge", "Clarify your strengths and make your value visible."],
-                ["02", "Shape your path", "Build practical skills around the future you want."],
-                ["03", "Move with intent", "Make confident decisions and keep momentum."],
+                [
+                  "01",
+                  "Find internships",
+                  "Discover paid opportunities with companies that invest in your growth.",
+                ],
+                [
+                  "02",
+                  "Get mentorship",
+                  "Connect with experienced mentors who guide your career decisions.",
+                ],
+                [
+                  "03",
+                  "Fund your goals",
+                  "Access community-backed grants to support your learning and development.",
+                ],
               ].map(([number, title, copy]) => (
                 <article key={number} className="border-t-2 border-[#d4af37] pt-5">
                   <p className="font-mono text-xs text-[#735c00]">{number}</p>
@@ -136,10 +149,10 @@ export default function Page() {
         <div className="flex flex-col items-start justify-between gap-8 rounded-xl bg-[#303031] px-7 py-10 text-white sm:px-12 lg:flex-row lg:items-center">
           <div>
             <p className="text-xs font-semibold tracking-[0.18em] text-[#e9c349] uppercase">
-              Your next chapter starts here
+              Your career starts here
             </p>
             <h2 className="mt-4 max-w-xl font-sans text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">
-              Make your ambition practical.
+              Gain real experience. Build real connections.
             </h2>
           </div>
           <button
@@ -156,7 +169,7 @@ export default function Page() {
 
       <footer className="mx-auto flex max-w-[1280px] items-center justify-between border-t border-[#e4e2e2] px-6 py-7 text-xs text-[#7f7663] lg:px-12">
         <span>© 2026 Lexep</span>
-        <span>Career development, with direction.</span>
+        <span>Internships. Mentorship. Grants.</span>
       </footer>
     </main>
   );
