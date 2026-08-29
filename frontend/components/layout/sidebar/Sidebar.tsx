@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 interface SidebarItem {
   label: string;
-  icon?: React.ComponentType<{ size?: number }>;
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
   href?: string;
   onClick?: () => void;
 }
@@ -58,12 +58,17 @@ export function Sidebar({
       {/* Sidebar */}
       <aside
         className={cn(
-          "bg-sidebar text-sidebar-foreground sticky top-0 flex h-screen flex-col",
-          "w-[350px] flex-[0_0_350px] overflow-y-auto transition-all duration-300",
-          "max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-50 max-md:w-[285px] max-md:max-w-[86vw]",
-          "max-md:-translate-x-full max-md:transform max-md:transition-transform max-md:duration-250",
-          isOpen && "max-md:translate-x-0",
-          isCollapsed ? "w-0 flex-[0_0_0] overflow-hidden" : "w-[350px] flex-[0_0_350px]"
+          "bg-sidebar text-sidebar-foreground sticky top-0 flex h-screen flex-col overflow-y-auto",
+          "transition-all duration-300 ease-in-out",
+          // Desktop - collapse/expand
+          "hidden md:flex",
+          isCollapsed
+            ? "w-0 flex-[0_0_0] overflow-hidden opacity-0"
+            : "w-[350px] flex-[0_0_350px] opacity-100",
+          // Mobile - always fixed
+          "max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-50 max-md:flex max-md:w-[285px] max-md:max-w-[86vw]",
+          "max-md:-translate-x-full max-md:transition-transform max-md:duration-250",
+          isOpen && "max-md:translate-x-0"
         )}
       >
         {/* Brand */}
@@ -71,7 +76,7 @@ export function Sidebar({
           <div className="bg-sidebar flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full">
             <Logo variant="light" size={64} showWordmark={false} />
           </div>
-          <div>
+          <div className={cn("transition-opacity duration-200", isCollapsed && "hidden opacity-0")}>
             <strong className="block font-serif text-xl font-bold text-[#f4d36a]">{brand}</strong>
             <span className="mt-0.5 block text-sm text-[#bdbbb8]">{tagline}</span>
           </div>
@@ -79,7 +84,12 @@ export function Sidebar({
 
         {/* User Summary */}
         {userSummary && (
-          <div className="mx-8 mb-4 flex items-center gap-3 rounded-lg bg-white/5 p-3 whitespace-nowrap">
+          <div
+            className={cn(
+              "mx-8 mb-4 flex items-center gap-3 rounded-lg bg-white/5 p-3 whitespace-nowrap",
+              isCollapsed && "hidden"
+            )}
+          >
             <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
             <div className="min-w-0">
               <p className="truncate font-semibold text-[#f4d36a]">{userSummary.name}</p>
@@ -90,7 +100,7 @@ export function Sidebar({
 
         {/* CTA Button */}
         {ctaLabel && (
-          <div className="mx-8 my-4 whitespace-nowrap">
+          <div className={cn("mx-8 my-4 whitespace-nowrap", isCollapsed && "hidden")}>
             <Link
               href={ctaHref || "#"}
               className="flex h-11 w-full items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition-colors hover:bg-[#c9a32e]"
@@ -113,11 +123,14 @@ export function Sidebar({
                   "flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-[30px] py-[19px] text-[18px] whitespace-nowrap transition-colors",
                   active
                     ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-[#f3d36a] font-bold"
-                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50"
+                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50",
+                  isCollapsed && "justify-center px-0"
                 )}
               >
-                <Icon size={21} />
-                {item.label}
+                <Icon size={21} className="flex-shrink-0" />
+                <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+                  {item.label}
+                </span>
               </Link>
             );
           })}
@@ -129,27 +142,42 @@ export function Sidebar({
             <Link
               key={item.label}
               href={item.href || "#"}
-              className="text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors"
+              className={cn(
+                "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+                isCollapsed && "justify-center px-0"
+              )}
             >
-              {item.icon && <item.icon size={21} />}
-              {item.label}
+              {item.icon && <item.icon size={21} className="flex-shrink-0" />}
+              <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+                {item.label}
+              </span>
             </Link>
           ))}
 
           <Link
             href="/help"
-            className="text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors"
+            className={cn(
+              "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+              isCollapsed && "justify-center px-0"
+            )}
           >
-            <HelpCircle size={21} />
-            Help Center
+            <HelpCircle size={21} className="flex-shrink-0" />
+            <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+              Help Center
+            </span>
           </Link>
 
           <button
             onClick={onLogout}
-            className="text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors"
+            className={cn(
+              "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+              isCollapsed && "justify-center px-0"
+            )}
           >
-            <LogOut size={21} />
-            Logout
+            <LogOut size={21} className="flex-shrink-0" />
+            <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+              Logout
+            </span>
           </button>
         </div>
       </aside>
