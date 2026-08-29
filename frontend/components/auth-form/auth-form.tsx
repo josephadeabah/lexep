@@ -4,7 +4,6 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Mail, Lock, User, CheckCircle2 } from "lucide-react";
-import { Logo } from "@/components/ui/Logo";
 import { useAuthStore } from "@/lib/auth-store";
 import { ApiError } from "@/lib/api";
 import { cn } from "@/lib/utils";
@@ -101,9 +100,6 @@ export function AuthForm({ mode, className }: AuthFormProps) {
       <div className="rounded-xl bg-[#303031] p-8 text-white">
         {/* Header */}
         <div className="mb-8">
-          <div className="mb-6 flex items-center gap-2">
-            <Logo size={36} showWordmark={false} />
-          </div>
           <p className="text-xs font-semibold tracking-[0.16em] text-[#e9c349] uppercase">
             Start here
           </p>
