@@ -28,7 +28,7 @@ export default function MentorStudentsPage() {
       </div>
 
       {/* Metrics */}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card className="p-6">
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f7edc9]">
@@ -69,7 +69,7 @@ export default function MentorStudentsPage() {
         {/* Active Mentees Table */}
         <Card className="overflow-hidden p-0">
           <div className="flex items-center justify-between border-b border-[#e0d8c9]/40 p-6">
-            <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
+            <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c] sm:text-2xl">
               Active Mentees
             </h2>
             <div className="flex gap-2">
@@ -85,75 +85,77 @@ export default function MentorStudentsPage() {
           {students.isLoading ? (
             <p className="p-6 text-base text-[#6d6a66]">Loading…</p>
           ) : students.data && students.data.length > 0 ? (
-            <table className="w-full text-left">
-              <thead className="bg-[#f5f3f3] text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
-                <tr>
-                  <th className="px-6 py-3 font-normal">Student</th>
-                  <th className="px-6 py-3 font-normal">Package & Progress</th>
-                  <th className="px-6 py-3 font-normal">Next Session</th>
-                  <th className="px-6 py-3 text-right font-normal">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#e0d8c9]/40">
-                {students.data.slice(0, 2).map((s, index) => (
-                  <tr key={s.id}>
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-3">
-                        <Avatar
-                          name={s.learner_name ?? "Student"}
-                          size={48}
-                          className="rounded-full"
-                        />
-                        <div>
-                          <p className="text-base font-semibold text-[#1b1c1c]">
-                            {s.learner_name}
-                          </p>
-                          <p className="text-sm text-[#6d6a66]">Year 4, B.Arch</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <div>
-                        <p className="text-sm font-semibold text-[#1b1c1c]">
-                          {s.session_type ?? "Portfolio Review"}
-                        </p>
-                        <div className="mt-2">
-                          <div className="flex items-center gap-2">
-                            <ProgressBar value={index === 0 ? 67 : 40} className="w-24" />
-                            <span className="text-xs text-[#6d6a66]">
-                              {index === 0 ? "2/3 Done" : "Waiting for Feedback"}
-                            </span>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[600px] text-left">
+                <thead className="bg-[#f5f3f3] text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                  <tr>
+                    <th className="px-6 py-3 font-normal">Student</th>
+                    <th className="px-6 py-3 font-normal">Package & Progress</th>
+                    <th className="px-6 py-3 font-normal">Next Session</th>
+                    <th className="px-6 py-3 text-right font-normal">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#e0d8c9]/40">
+                  {students.data.slice(0, 2).map((s, index) => (
+                    <tr key={s.id}>
+                      <td className="px-6 py-5">
+                        <div className="flex items-center gap-3">
+                          <Avatar
+                            name={s.learner_name ?? "Student"}
+                            size={48}
+                            className="rounded-full"
+                          />
+                          <div>
+                            <p className="text-base font-semibold text-[#1b1c1c]">
+                              {s.learner_name}
+                            </p>
+                            <p className="text-sm text-[#6d6a66]">Year 4, B.Arch</p>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-2 text-sm text-[#6d6a66]">
-                        <CalendarClock className="h-4 w-4" />
-                        {s.confirmed_time
-                          ? `${formatDate(s.confirmed_time)}, ${formatTime(s.confirmed_time)}`
-                          : "Not scheduled"}
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <div className="flex justify-end gap-2">
-                        <button className="flex h-9 w-9 items-center justify-center rounded-md border border-[#e0d8c9] hover:bg-[#f5f3f3]">
-                          <MessageSquare className="h-4 w-4 text-[#6d6a66]" />
-                        </button>
-                        <button className="flex h-9 w-9 items-center justify-center rounded-md border border-[#e0d8c9] hover:bg-[#f5f3f3]">
-                          <Folder className="h-4 w-4 text-[#6d6a66]" />
-                        </button>
-                        {index === 1 && (
-                          <Button size="sm" className="bg-[#1b1c1c] font-semibold">
-                            Review Now
-                          </Button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      </td>
+                      <td className="px-6 py-5">
+                        <div>
+                          <p className="text-sm font-semibold text-[#1b1c1c]">
+                            {s.session_type ?? "Portfolio Review"}
+                          </p>
+                          <div className="mt-2">
+                            <div className="flex items-center gap-2">
+                              <ProgressBar value={index === 0 ? 67 : 40} className="w-24" />
+                              <span className="text-xs text-[#6d6a66]">
+                                {index === 0 ? "2/3 Done" : "Waiting for Feedback"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-5">
+                        <div className="flex items-center gap-2 text-sm text-[#6d6a66]">
+                          <CalendarClock className="h-4 w-4" />
+                          {s.confirmed_time
+                            ? `${formatDate(s.confirmed_time)}, ${formatTime(s.confirmed_time)}`
+                            : "Not scheduled"}
+                        </div>
+                      </td>
+                      <td className="px-6 py-5">
+                        <div className="flex justify-end gap-2">
+                          <button className="flex h-9 w-9 items-center justify-center rounded-md border border-[#e0d8c9] hover:bg-[#f5f3f3]">
+                            <MessageSquare className="h-4 w-4 text-[#6d6a66]" />
+                          </button>
+                          <button className="flex h-9 w-9 items-center justify-center rounded-md border border-[#e0d8c9] hover:bg-[#f5f3f3]">
+                            <Folder className="h-4 w-4 text-[#6d6a66]" />
+                          </button>
+                          {index === 1 && (
+                            <Button size="sm" className="bg-[#1b1c1c] font-semibold">
+                              Review Now
+                            </Button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <p className="p-6 text-base text-[#6d6a66]">No active mentees yet.</p>
           )}
