@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { X, Globe2, Lock, Copy } from "lucide-react";
+import { X, Globe2, Lock, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input/Input";
@@ -34,98 +34,110 @@ export default function CreateGrantGroupPage() {
   }
 
   return (
-    <div className="bg-surface-container-low px-gutter py-xl min-h-screen">
-      <div className="pb-md mx-auto flex max-w-2xl items-center justify-between">
-        <h1 className="text-headline-md text-on-background flex items-center gap-2">
-          <span className="text-primary">Lexep Impact</span>
-        </h1>
-        <Link
-          href="/grants"
-          className="text-label-md text-on-surface-variant hover:text-primary flex items-center gap-1"
-        >
-          <X className="h-4 w-4" /> Cancel
-        </Link>
-      </div>
-      <p className="mb-lg text-body-md text-on-surface-variant mx-auto -mt-4 max-w-2xl">
-        Establish a dedicated space for targeted community contributions.
-      </p>
+    <div className="flex min-h-screen items-center justify-center bg-[#fbf9f8] px-4 py-12">
+      <div className="w-full max-w-2xl">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h1 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
+            Create a Grant Group
+          </h1>
+          <p className="mt-2 text-base text-[#6d6a66]">
+            Establish a dedicated space for targeted community contributions.
+          </p>
+        </div>
 
-      <div className="card-level1 p-md mx-auto max-w-2xl">
-        <div className="gap-md flex flex-col">
-          <Input
-            label="Group Name"
-            placeholder="e.g. Clean Water Initiative 2025"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          <Select
-            label="Purpose / Grant Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="">Select a primary focus area</option>
-            <option>Software Engineering</option>
-            <option>Design</option>
-            <option>Entrepreneurship</option>
-            <option>STEM Education</option>
-          </Select>
-
-          <div className="border-outline-variant/40 pt-md border-t">
-            <Input
-              label="Funding Goal (Amount)"
-              placeholder="100,000"
-              icon={<span className="text-body-md">$</span>}
-              hint="Set a realistic target based on your project scope."
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-            />
-          </div>
-
-          <div className="border-outline-variant/40 pt-md border-t">
-            <p className="text-label-md text-on-surface mb-2">Visibility</p>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => setVisibility("public")}
-                className={cn(
-                  "flex flex-col items-start gap-2 rounded-md border p-4 text-left transition",
-                  visibility === "public"
-                    ? "border-primary-container bg-surface-container-low"
-                    : "border-outline-variant"
-                )}
-              >
-                <Globe2 className="text-on-surface h-5 w-5" />
-                <p className="text-label-md text-on-background">Public</p>
-                <p className="text-label-sm text-on-surface-variant">
-                  Anyone can discover and join.
-                </p>
-              </button>
-              <button
-                onClick={() => setVisibility("private")}
-                className={cn(
-                  "flex flex-col items-start gap-2 rounded-md border p-4 text-left transition",
-                  visibility === "private"
-                    ? "border-primary-container bg-surface-container-low"
-                    : "border-outline-variant"
-                )}
-              >
-                <Lock className="text-on-surface h-5 w-5" />
-                <p className="text-label-md text-on-background">Private</p>
-                <p className="text-label-sm text-on-surface-variant">Invite only access.</p>
-              </button>
+        {/* Form Card */}
+        <div className="rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm">
+          <div className="flex flex-col gap-6">
+            {/* Group Name */}
+            <div>
+              <Input
+                label="Group Name"
+                placeholder="e.g. Clean Water Initiative 2025"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="h-12 rounded-lg border-[#e0d8c9]"
+              />
             </div>
-          </div>
 
-          <div className="border-outline-variant/40 pt-md flex items-center justify-between border-t">
-            <Link
-              href="/grants"
-              className="text-label-md text-on-surface-variant hover:text-primary"
-            >
-              Cancel
-            </Link>
-            <Button onClick={handleCreate} disabled={!name || isSubmitting}>
-              {isSubmitting ? "Creating…" : "Create Group →"}
-            </Button>
+            {/* Category */}
+            <div>
+              <Select
+                label="Purpose / Grant Category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="h-12 rounded-lg border-[#e0d8c9]"
+              >
+                <option value="">Select a primary focus area</option>
+                <option>Software Engineering</option>
+                <option>Design</option>
+                <option>Entrepreneurship</option>
+                <option>STEM Education</option>
+              </Select>
+            </div>
+
+            {/* Funding Goal */}
+            <div className="border-t border-[#e0d8c9]/40 pt-6">
+              <Input
+                label="Funding Goal (Amount)"
+                placeholder="100,000"
+                icon={<span className="text-lg">$</span>}
+                hint="Set a realistic target based on your project scope."
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+                className="h-12 rounded-lg border-[#e0d8c9]"
+              />
+            </div>
+
+            {/* Visibility */}
+            <div className="border-t border-[#e0d8c9]/40 pt-6">
+              <p className="mb-3 text-sm font-semibold text-[#1b1c1c]">Visibility</p>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <button
+                  onClick={() => setVisibility("public")}
+                  className={cn(
+                    "flex flex-col items-start gap-2 rounded-lg border p-5 text-left transition",
+                    visibility === "public"
+                      ? "border-[#d4af37] bg-[#fffdf8]"
+                      : "border-[#e0d8c9] hover:border-[#d4af37]"
+                  )}
+                >
+                  <Globe2 className="h-5 w-5 text-[#735c00]" />
+                  <p className="text-base font-semibold text-[#1b1c1c]">Public</p>
+                  <p className="text-sm text-[#6d6a66]">Anyone can discover and join.</p>
+                </button>
+                <button
+                  onClick={() => setVisibility("private")}
+                  className={cn(
+                    "flex flex-col items-start gap-2 rounded-lg border p-5 text-left transition",
+                    visibility === "private"
+                      ? "border-[#d4af37] bg-[#fffdf8]"
+                      : "border-[#e0d8c9] hover:border-[#d4af37]"
+                  )}
+                >
+                  <Lock className="h-5 w-5 text-[#735c00]" />
+                  <p className="text-base font-semibold text-[#1b1c1c]">Private</p>
+                  <p className="text-sm text-[#6d6a66]">Invite only access.</p>
+                </button>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center justify-between border-t border-[#e0d8c9]/40 pt-6">
+              <Link
+                href="/grants"
+                className="text-sm font-semibold text-[#6d6a66] hover:text-[#735c00]"
+              >
+                Cancel
+              </Link>
+              <Button
+                onClick={handleCreate}
+                disabled={!name || isSubmitting}
+                className="bg-[#d4af37] font-semibold hover:bg-[#c9a32e]"
+              >
+                {isSubmitting ? "Creating…" : "Create Group"} <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
