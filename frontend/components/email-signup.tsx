@@ -23,19 +23,16 @@ export function EmailSignup() {
 
   return (
     <form onSubmit={subscribe} className="w-full">
-      <label
-        htmlFor="email"
-        className="mb-2 block text-[13px] font-bold text-[#171714]"
-      >
+      <label htmlFor="email" className="mb-2 block text-[13px] font-bold text-[#171714]">
         Get the first edition
       </label>
-      
+
       <div className="flex flex-col gap-3 sm:flex-row">
         {/* Email Input */}
         <div className="relative flex-1">
           <Mail
             size={16}
-            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#686861]"
+            className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#686861]"
           />
           <input
             id="email"
@@ -44,7 +41,7 @@ export function EmailSignup() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
-            className="h-12 w-full rounded-lg border border-[#e8e8e2] bg-white pl-11 pr-4 text-sm text-[#171714] outline-none transition focus:border-[#c49a3a] focus:ring-2 focus:ring-[#c49a3a]/20"
+            className="h-12 w-full rounded-lg border border-[#e8e8e2] bg-white pr-4 pl-11 text-sm text-[#171714] transition outline-none focus:border-[#c49a3a] focus:ring-2 focus:ring-[#c49a3a]/20"
           />
         </div>
 

@@ -1,54 +1,98 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { useState } from 'react'
-import { ArrowUpRight, Check, Menu, X } from 'lucide-react'
-import { EmailSignup } from '@/components/email-signup'
-import { Logo } from '@/components/ui/Logo'
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { ArrowUpRight, Check, Menu, X } from "lucide-react";
+import { EmailSignup } from "@/components/email-signup";
+import { Logo } from "@/components/ui/Logo";
 
-const companies = ['MEST Africa', 'mPharma', 'Hubtel', 'MTN Ghana', 'GIZ Ghana', 'Andela']
+const companies = ["MEST Africa", "mPharma", "Hubtel", "MTN Ghana", "GIZ Ghana", "Andela"];
 const benefits = [
-  ['Find your next move', 'Discover roles, internships, and practical opportunities matched to where you are now.'],
-  ['Learn from people ahead', 'Build real skills with mentors and practitioners who know the work from the inside.'],
-  ['Get the support to grow', 'Access guidance, grants, and a community that keeps your progress moving.'],
-]
+  [
+    "Find your next move",
+    "Discover roles, internships, and practical opportunities matched to where you are now.",
+  ],
+  [
+    "Learn from people ahead",
+    "Build real skills with mentors and practitioners who know the work from the inside.",
+  ],
+  [
+    "Get the support to grow",
+    "Access guidance, grants, and a community that keeps your progress moving.",
+  ],
+];
 
 export default function Page() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <main className="min-h-screen bg-white text-[#171714] font-sans">
+    <main className="min-h-screen bg-white font-sans text-[#171714]">
       {/* HEADER */}
       <header className="mx-auto flex min-h-[76px] w-[calc(100%-64px)] max-w-[1200px] items-center gap-7 border-b border-[#e8e8e2]">
         <Link href="#top" className="inline-flex items-center" aria-label="Lexep home">
           <Logo size={64} showWordmark={false} />
         </Link>
-        
+
         {/* Desktop Nav */}
-        <nav className="ml-auto hidden gap-7 text-[13px] text-[#686861] md:flex" aria-label="Main navigation">
-          <Link href="#how-it-works" className="hover:text-[#171714]">How it works</Link>
-          <Link href="#mentorship" className="hover:text-[#171714]">Mentorship</Link>
-          <Link href="#opportunities" className="hover:text-[#171714]">Opportunities</Link>
+        <nav
+          className="ml-auto hidden gap-7 text-[13px] text-[#686861] md:flex"
+          aria-label="Main navigation"
+        >
+          <Link href="#how-it-works" className="hover:text-[#171714]">
+            How it works
+          </Link>
+          <Link href="#mentorship" className="hover:text-[#171714]">
+            Mentorship
+          </Link>
+          <Link href="#opportunities" className="hover:text-[#171714]">
+            Opportunities
+          </Link>
         </nav>
 
         {/* Mobile Nav */}
         {menuOpen && (
-          <nav className="absolute left-5 right-5 top-[76px] z-50 flex flex-col border-b border-[#e8e8e2] bg-white md:hidden" aria-label="Mobile navigation">
-            <Link href="#how-it-works" onClick={() => setMenuOpen(false)} className="border-t border-[#e8e8e2] p-4">How it works</Link>
-            <Link href="#mentorship" onClick={() => setMenuOpen(false)} className="border-t border-[#e8e8e2] p-4">Mentorship</Link>
-            <Link href="#opportunities" onClick={() => setMenuOpen(false)} className="border-t border-[#e8e8e2] p-4">Opportunities</Link>
+          <nav
+            className="absolute top-[76px] right-5 left-5 z-50 flex flex-col border-b border-[#e8e8e2] bg-white md:hidden"
+            aria-label="Mobile navigation"
+          >
+            <Link
+              href="#how-it-works"
+              onClick={() => setMenuOpen(false)}
+              className="border-t border-[#e8e8e2] p-4"
+            >
+              How it works
+            </Link>
+            <Link
+              href="#mentorship"
+              onClick={() => setMenuOpen(false)}
+              className="border-t border-[#e8e8e2] p-4"
+            >
+              Mentorship
+            </Link>
+            <Link
+              href="#opportunities"
+              onClick={() => setMenuOpen(false)}
+              className="border-t border-[#e8e8e2] p-4"
+            >
+              Opportunities
+            </Link>
           </nav>
         )}
 
         <div className="ml-auto flex items-center gap-4 text-[13px] md:ml-0">
-          <Link className="font-medium text-[#686861] hover:text-[#171714]" href="/sign-in">Sign in</Link>
-          <Link className="inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]" href="/sign-up">
+          <Link className="font-medium text-[#686861] hover:text-[#171714]" href="/sign-in">
+            Sign in
+          </Link>
+          <Link
+            className="inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]"
+            href="/sign-up"
+          >
             Get started <ArrowUpRight size={14} />
           </Link>
-          <button 
-            className="border-0 bg-transparent md:hidden" 
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'} 
+          <button
+            className="border-0 bg-transparent md:hidden"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X /> : <Menu />}
@@ -57,23 +101,34 @@ export default function Page() {
       </header>
 
       {/* HERO */}
-      <section className="mx-auto grid w-[calc(100%-64px)] max-w-[1200px] items-center gap-20 py-[72px] md:min-h-[650px] md:grid-cols-2" id="top">
+      <section
+        className="mx-auto grid w-[calc(100%-64px)] max-w-[1200px] items-center gap-20 py-[72px] md:min-h-[650px] md:grid-cols-2"
+        id="top"
+      >
         <div>
-          <p className="mb-5 font-bold text-[#c49a3a] text-[11px] tracking-[0.13em]">
+          <p className="mb-5 text-[11px] font-bold tracking-[0.13em] text-[#c49a3a]">
             CAREER SUPPORT FOR AFRICA&apos;S NEXT GENERATION
           </p>
           <h1 className="font-serif text-[clamp(54px,7vw,92px)] leading-[0.95] font-bold tracking-[-0.05em]">
-            Build a career<br />
-            <em className="not-italic text-[#c49a3a]">that moves.</em>
+            Build a career
+            <br />
+            <em className="text-[#c49a3a] not-italic">that moves.</em>
           </h1>
           <p className="mt-7 max-w-[490px] text-[19px] leading-relaxed text-[#686861]">
-            Lexep connects ambitious learners with the mentors, opportunities, and practical support to move from uncertain to unstoppable.
+            Lexep connects ambitious learners with the mentors, opportunities, and practical support
+            to move from uncertain to unstoppable.
           </p>
           <div className="mt-6 flex items-center gap-6">
-            <Link className="inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]" href="/sign-up">
+            <Link
+              className="inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]"
+              href="/sign-up"
+            >
               Start your journey <ArrowUpRight size={16} />
             </Link>
-            <Link className="inline-flex items-center gap-2 font-bold hover:text-[#c49a3a]" href="#how-it-works">
+            <Link
+              className="inline-flex items-center gap-2 font-bold hover:text-[#c49a3a]"
+              href="#how-it-works"
+            >
               See how it works <ArrowUpRight size={14} />
             </Link>
           </div>
@@ -82,12 +137,17 @@ export default function Page() {
           </p>
         </div>
 
-        <div className="relative min-h-[440px] overflow-hidden bg-[#f1f0ea]" aria-label="Learner and mentor career connection">
+        <div
+          className="relative min-h-[440px] overflow-hidden bg-[#f1f0ea]"
+          aria-label="Learner and mentor career connection"
+        >
           {/* Visual Card */}
-          <div className="absolute left-[34px] top-[40px] z-10 w-[230px] bg-[#171714] p-6 text-white">
+          <div className="absolute top-[40px] left-[34px] z-10 w-[230px] bg-[#171714] p-6 text-white">
             <span className="text-[10px] tracking-[0.12em] text-[#d8bf78]">YOUR NEXT MOVE</span>
-            <strong className="mt-4 block font-serif text-[26px] font-medium leading-[1.05]">
-              More clarity.<br />More momentum.
+            <strong className="mt-4 block font-serif text-[26px] leading-[1.05] font-medium">
+              More clarity.
+              <br />
+              More momentum.
             </strong>
             <div className="mt-7 flex items-center gap-2 text-[10px] text-[#b8b8ae]">
               <i className="h-[2px] w-8 bg-[#c49a3a]" />
@@ -97,57 +157,92 @@ export default function Page() {
 
           {/* Orbit Labels */}
           <div className="pointer-events-none absolute inset-0">
-            <span className="absolute right-[9%] top-[20%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">MENTOR</span>
-            <span className="absolute left-[11%] bottom-[19%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">LEARN</span>
-            <span className="absolute right-[18%] bottom-[11%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">GROW</span>
-            
+            <span className="absolute top-[20%] right-[9%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">
+              MENTOR
+            </span>
+            <span className="absolute bottom-[19%] left-[11%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">
+              LEARN
+            </span>
+            <span className="absolute right-[18%] bottom-[11%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">
+              GROW
+            </span>
+
             {/* New labels */}
-            <span className="absolute left-[2%] top-[12%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">GRANTS</span>
-            <span className="absolute right-[4%] top-[45%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">JOBS</span>
-            <span className="absolute left-[8%] top-[55%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">CAREER</span>
+            <span className="absolute top-[12%] left-[2%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">
+              GRANTS
+            </span>
+            <span className="absolute top-[45%] right-[4%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">
+              JOBS
+            </span>
+            <span className="absolute top-[55%] left-[8%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">
+              CAREER
+            </span>
           </div>
 
-          <Image 
-            className="absolute right-0 bottom-0 h-[72%] w-[72%] object-cover mix-blend-multiply" 
-            src="/images/mentorship.jpg" 
-            alt="Mentor and learner collaborating" 
-            width={760} 
-            height={620} 
-            priority 
+          <Image
+            className="absolute right-0 bottom-0 h-[72%] w-[72%] object-cover mix-blend-multiply"
+            src="/images/mentorship.jpg"
+            alt="Mentor and learner collaborating"
+            width={760}
+            height={620}
+            priority
           />
         </div>
       </section>
 
       {/* TRUST BAR */}
-      <section className="mx-auto flex w-[calc(100%-64px)] max-w-[1200px] items-center justify-between gap-8 border-y border-[#e8e8e2] py-6 text-[12px] text-[#686861]" aria-label="Organizations in the Lexep network">
+      <section
+        className="mx-auto flex w-[calc(100%-64px)] max-w-[1200px] items-center justify-between gap-8 border-y border-[#e8e8e2] py-6 text-[12px] text-[#686861]"
+        aria-label="Organizations in the Lexep network"
+      >
         <span>Trusted by people building what&apos;s next</span>
         <div className="flex flex-wrap justify-end gap-6">
           {companies.map((company) => (
-            <strong key={company} className="text-[13px] text-[#171714]">{company}</strong>
+            <strong key={company} className="text-[13px] text-[#171714]">
+              {company}
+            </strong>
           ))}
         </div>
       </section>
 
       {/* INTRO */}
-      <section className="mx-auto flex w-[calc(100%-64px)] max-w-[1200px] py-[150px] pb-[70px]" id="how-it-works">
-        <p className="mb-5 font-bold text-[#c49a3a] text-[11px] tracking-[0.13em]">A BETTER WAY FORWARD</p>
-        <h2 className="font-serif text-[clamp(54px,7vw,92px)] font-bold leading-[0.95] tracking-[-0.05em]">
-          Career support,<br />
-          <em className="not-italic text-[#c49a3a]">without the guesswork.</em>
-        </h2>
-        <p className="mt-7 max-w-[560px] text-[18px] leading-relaxed text-[#686861]">
-          Whether you&apos;re looking for your first opportunity or ready for your next one, Lexep brings the right people and pathways into one focused place.
-        </p>
+      <section
+        className="mx-auto w-[calc(100%-64px)] max-w-[1200px] py-[150px] pb-[70px]"
+        id="how-it-works"
+      >
+        <div className="max-w-[760px]">
+          <p className="mb-5 text-[11px] font-bold tracking-[0.13em] text-[#c49a3a]">
+            A BETTER WAY FORWARD
+          </p>
+          <h2 className="font-serif text-[clamp(54px,7vw,92px)] leading-[0.95] font-bold tracking-[-0.05em]">
+            Career support,
+            <br />
+            <em className="text-[#c49a3a] not-italic">without the guesswork.</em>
+          </h2>
+          <p className="mt-7 max-w-[560px] text-[18px] leading-relaxed text-[#686861]">
+            Whether you&apos;re looking for your first opportunity or ready for your next one, Lexep
+            brings the right people and pathways into one focused place.
+          </p>
+        </div>
       </section>
 
       {/* BENEFITS */}
-      <section className="mx-auto grid w-[calc(100%-64px)] max-w-[1200px] border-y border-[#e8e8e2] md:grid-cols-3" id="mentorship">
+      <section
+        className="mx-auto grid w-[calc(100%-64px)] max-w-[1200px] border-y border-[#e8e8e2] md:grid-cols-3"
+        id="mentorship"
+      >
         {benefits.map(([title, text], index) => (
-          <article key={title} className="p-[30px] pb-[38px] pr-[34px] md:border-l md:border-[#e8e8e2] md:first:border-l-0">
+          <article
+            key={title}
+            className="p-[30px] pr-[34px] pb-[38px] md:border-l md:border-[#e8e8e2] md:first:border-l-0"
+          >
             <span className="text-[12px] font-bold text-[#c49a3a]">0{index + 1}</span>
             <h3 className="mt-12 mb-4 font-serif text-[25px] font-semibold">{title}</h3>
             <p className="mb-6 min-h-[78px] text-[14px] leading-relaxed text-[#686861]">{text}</p>
-            <Link href="/sign-up" className="inline-flex items-center gap-2 text-[13px] font-bold text-[#c49a3a] hover:text-[#a87d2f]">
+            <Link
+              href="/sign-up"
+              className="inline-flex items-center gap-2 text-[13px] font-bold text-[#c49a3a] hover:text-[#a87d2f]"
+            >
               Explore <ArrowUpRight size={14} />
             </Link>
           </article>
@@ -155,19 +250,36 @@ export default function Page() {
       </section>
 
       {/* FEATURE */}
-      <section className="mx-auto grid w-[calc(100%-64px)] max-w-[1200px] items-center gap-20 py-[150px] md:grid-cols-2" id="opportunities">
+      <section
+        className="mx-auto grid w-[calc(100%-64px)] max-w-[1200px] items-center gap-20 py-[150px] md:grid-cols-2"
+        id="opportunities"
+      >
         <div className="h-[500px] overflow-hidden bg-[#f1f0ea]">
-          <Image src="/images/internship.jpg" alt="Professional team working together" width={900} height={700} className="h-full w-full object-cover mix-blend-multiply" />
+          <Image
+            src="/images/internship.jpg"
+            alt="Professional team working together"
+            width={900}
+            height={700}
+            className="h-full w-full object-cover mix-blend-multiply"
+          />
         </div>
         <div>
-          <p className="mb-5 font-bold text-[#c49a3a] text-[11px] tracking-[0.13em]">YOUR PEOPLE ARE YOUR POWER</p>
-          <h2 className="font-serif text-[clamp(54px,7vw,92px)] font-bold leading-[0.95] tracking-[-0.05em]">
-            Don&apos;t navigate<br />it <em className="not-italic text-[#c49a3a]">alone.</em>
+          <p className="mb-5 text-[11px] font-bold tracking-[0.13em] text-[#c49a3a]">
+            YOUR PEOPLE ARE YOUR POWER
+          </p>
+          <h2 className="font-serif text-[clamp(54px,7vw,92px)] leading-[0.95] font-bold tracking-[-0.05em]">
+            Don&apos;t navigate
+            <br />
+            it <em className="text-[#c49a3a] not-italic">alone.</em>
           </h2>
           <p className="mt-7 max-w-[430px] text-[17px] leading-relaxed text-[#686861]">
-            Get matched with mentors who have done the work, join a community that understands the journey, and find opportunities that meet you where you are.
+            Get matched with mentors who have done the work, join a community that understands the
+            journey, and find opportunities that meet you where you are.
           </p>
-          <Link className="mt-8 inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]" href="/sign-up">
+          <Link
+            className="mt-8 inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]"
+            href="/sign-up"
+          >
             Join the community <ArrowUpRight size={16} />
           </Link>
         </div>
@@ -176,10 +288,13 @@ export default function Page() {
       {/* CTA */}
       <section className="mx-auto flex w-[calc(100%-64px)] max-w-[1200px] items-end justify-between gap-[60px] border-t border-[#e8e8e2] py-[72px]">
         <div>
-          <p className="mb-5 font-bold text-[#c49a3a] text-[11px] tracking-[0.13em]">YOUR NEXT CHAPTER STARTS HERE</p>
-          <h2 className="font-serif text-[clamp(48px,6vw,76px)] font-bold leading-[0.95] tracking-[-0.05em]">
-            Ready to move<br />
-            <em className="not-italic text-[#c49a3a]">forward?</em>
+          <p className="mb-5 text-[11px] font-bold tracking-[0.13em] text-[#c49a3a]">
+            YOUR NEXT CHAPTER STARTS HERE
+          </p>
+          <h2 className="font-serif text-[clamp(48px,6vw,76px)] leading-[0.95] font-bold tracking-[-0.05em]">
+            Ready to move
+            <br />
+            <em className="text-[#c49a3a] not-italic">forward?</em>
           </h2>
         </div>
         <EmailSignup />
@@ -187,15 +302,25 @@ export default function Page() {
 
       {/* FOOTER */}
       <footer className="mx-auto flex w-[calc(100%-64px)] max-w-[1200px] items-center justify-between gap-6 border-t border-[#e8e8e2] py-[30px] text-[12px] text-[#686861]">
-        <Link href="#top" className="text-[#171714]"><Logo showWordmark /></Link>
+        <Link href="#top" className="text-[#171714]">
+          <Logo showWordmark />
+        </Link>
         <div className="flex gap-5">
-          <Link href="#how-it-works" className="hover:text-[#171714]">How it works</Link>
-          <Link href="#mentorship" className="hover:text-[#171714]">Mentorship</Link>
-          <Link href="#opportunities" className="hover:text-[#171714]">Opportunities</Link>
-          <Link href="/dashboard" className="hover:text-[#171714]">Dashboard</Link>
+          <Link href="#how-it-works" className="hover:text-[#171714]">
+            How it works
+          </Link>
+          <Link href="#mentorship" className="hover:text-[#171714]">
+            Mentorship
+          </Link>
+          <Link href="#opportunities" className="hover:text-[#171714]">
+            Opportunities
+          </Link>
+          <Link href="/dashboard" className="hover:text-[#171714]">
+            Careers
+          </Link>
         </div>
         <span>© 2026 Lexep, Ghana</span>
       </footer>
     </main>
-  )
+  );
 }
