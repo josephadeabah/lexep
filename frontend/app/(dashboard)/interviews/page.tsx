@@ -141,16 +141,18 @@ export default function InterviewsPage() {
                     {/* Candidate Info */}
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-3">
-                        <Avatar
-                          name={i.candidate_name ?? "Candidate"}
-                          size={44}
-                          className="rounded-full"
-                        />
-                        <div>
-                          <p className="text-sm font-semibold text-[#1b1c1c]">
+                        <div className="flex-shrink-0">
+                          <Avatar
+                            name={i.candidate_name ?? "Candidate"}
+                            size={44}
+                            className="rounded-full"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-semibold text-[#1b1c1c]">
                             {i.candidate_name}
                           </p>
-                          <p className="text-xs text-[#6d6a66]">
+                          <p className="truncate text-xs text-[#6d6a66]">
                             {i.opportunity_title}
                           </p>
                         </div>
@@ -197,11 +199,13 @@ export default function InterviewsPage() {
                   >
                     {/* Interview Info */}
                     <div className="flex items-start gap-4">
-                      <Avatar
-                        name={interview.candidate_name ?? "Candidate"}
-                        size={48}
-                        className="rounded-full"
-                      />
+                      <div className="flex-shrink-0">
+                        <Avatar
+                          name={interview.candidate_name ?? "Candidate"}
+                          size={48}
+                          className="rounded-full"
+                        />
+                      </div>
                       <div>
                         <p className="text-base font-semibold text-[#1b1c1c]">
                           {interview.candidate_name}
