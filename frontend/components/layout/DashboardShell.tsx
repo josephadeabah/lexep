@@ -124,7 +124,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isInitialized) return;
     if (!user) {
-      router.replace("/sign-in");
+      router.replace("/");
     } else if (user.role === "admin") {
       router.replace("/admin/applications");
     } else if (!user.role) {
@@ -165,7 +165,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         }}
         onLogout={() => {
           logout();
-          router.replace("/sign-in");
+          router.replace("/");
         }}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
