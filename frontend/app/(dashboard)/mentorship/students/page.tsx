@@ -86,13 +86,13 @@ export default function MentorStudentsPage() {
             <p className="p-6 text-base text-[#6d6a66]">Loading…</p>
           ) : students.data && students.data.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[600px] text-left">
+              <table className="w-full text-left">
                 <thead className="bg-[#f5f3f3] text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
                   <tr>
-                    <th className="px-6 py-3 font-normal">Student</th>
-                    <th className="px-6 py-3 font-normal">Package & Progress</th>
-                    <th className="px-6 py-3 font-normal">Next Session</th>
-                    <th className="px-6 py-3 text-right font-normal">Actions</th>
+                    <th className="min-w-[200px] px-6 py-3 font-normal">Student</th>
+                    <th className="min-w-[250px] px-6 py-3 font-normal">Package & Progress</th>
+                    <th className="min-w-[200px] px-6 py-3 font-normal">Next Session</th>
+                    <th className="min-w-[180px] px-6 py-3 text-right font-normal">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#e0d8c9]/40">
@@ -105,8 +105,8 @@ export default function MentorStudentsPage() {
                             size={48}
                             className="rounded-full"
                           />
-                          <div>
-                            <p className="text-base font-semibold text-[#1b1c1c]">
+                          <div className="min-w-0">
+                            <p className="truncate text-base font-semibold text-[#1b1c1c]">
                               {s.learner_name}
                             </p>
                             <p className="text-sm text-[#6d6a66]">Year 4, B.Arch</p>
@@ -120,7 +120,7 @@ export default function MentorStudentsPage() {
                           </p>
                           <div className="mt-2">
                             <div className="flex items-center gap-2">
-                              <ProgressBar value={index === 0 ? 67 : 40} className="w-24" />
+                              <ProgressBar value={index === 0 ? 67 : 40} className="w-32" />
                               <span className="text-xs text-[#6d6a66]">
                                 {index === 0 ? "2/3 Done" : "Waiting for Feedback"}
                               </span>
@@ -129,15 +129,14 @@ export default function MentorStudentsPage() {
                         </div>
                       </td>
                       <td className="px-6 py-5">
-                        <div className="flex items-center gap-2 text-sm text-[#6d6a66]">
-                          <CalendarClock className="h-4 w-4" />
+                        <div className="whitespace-nowrap text-sm text-[#6d6a66]">
                           {s.confirmed_time
                             ? `${formatDate(s.confirmed_time)}, ${formatTime(s.confirmed_time)}`
                             : "Not scheduled"}
                         </div>
                       </td>
                       <td className="px-6 py-5">
-                        <div className="flex justify-end gap-2">
+                        <div className="flex justify-end gap-2 whitespace-nowrap">
                           <button className="flex h-9 w-9 items-center justify-center rounded-md border border-[#e0d8c9] hover:bg-[#f5f3f3]">
                             <MessageSquare className="h-4 w-4 text-[#6d6a66]" />
                           </button>
