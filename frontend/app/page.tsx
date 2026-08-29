@@ -15,7 +15,6 @@ export default function Page() {
       <header className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-5 lg:px-12">
         <Link href="/" className="flex items-center gap-2" aria-label="Lexep home">
           <Logo size={64} showWordmark={false} />
-          <span className="font-sans text-xl font-semibold tracking-[-0.04em]">Lexep</span>
         </Link>
         <nav className="flex items-center gap-3 text-sm font-semibold">
           <button
