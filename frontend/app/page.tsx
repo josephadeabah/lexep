@@ -22,7 +22,7 @@ export default function Page() {
       {/* HEADER */}
       <header className="mx-auto flex min-h-[76px] w-[calc(100%-64px)] max-w-[1200px] items-center gap-7 border-b border-[#e8e8e2]">
         <Link href="#top" className="inline-flex items-center" aria-label="Lexep home">
-          <Logo showWordmark />
+          <Logo size={64} showWordmark={false} />
         </Link>
         
         {/* Desktop Nav */}
