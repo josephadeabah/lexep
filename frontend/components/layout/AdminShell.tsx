@@ -15,8 +15,8 @@ import {
   LogOut,
 } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
-import { Sidebar } from "./sidebar";
-import { OfflineBanner } from "./OfflineBanner";
+import { Sidebar } from "@/components/layout/sidebar/Sidebar";
+import { OfflineBanner } from "@/components/layout/OfflineBanner";
 import Link from "next/link";
 import {
   DropdownMenu,
