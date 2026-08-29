@@ -43,7 +43,7 @@ export default function Page() {
 
         <div className="ml-auto flex items-center gap-4 text-[13px] md:ml-0">
           <Link className="font-medium text-[#686861] hover:text-[#171714]" href="/sign-in">Sign in</Link>
-          <Link className="inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold text-white hover:bg-[#2a2a28]" href="/sign-up">
+          <Link className="inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]" href="/sign-up">
             Get started <ArrowUpRight size={14} />
           </Link>
           <button 
@@ -70,7 +70,7 @@ export default function Page() {
             Lexep connects ambitious learners with the mentors, opportunities, and practical support to move from uncertain to unstoppable.
           </p>
           <div className="mt-6 flex items-center gap-6">
-            <Link className="inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold text-white hover:bg-[#2a2a28]" href="/sign-up">
+            <Link className="inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]" href="/sign-up">
               Start your journey <ArrowUpRight size={16} />
             </Link>
             <Link className="inline-flex items-center gap-2 font-bold hover:text-[#c49a3a]" href="#how-it-works">
@@ -162,7 +162,7 @@ export default function Page() {
           <p className="mt-7 max-w-[430px] text-[17px] leading-relaxed text-[#686861]">
             Get matched with mentors who have done the work, join a community that understands the journey, and find opportunities that meet you where you are.
           </p>
-          <Link className="mt-8 inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold text-white hover:bg-[#2a2a28]" href="/sign-up">
+          <Link className="mt-8 inline-flex items-center justify-center gap-2 bg-[#171714] px-4 py-3 font-bold !text-white hover:bg-[#2a2a28]" href="/sign-up">
             Join the community <ArrowUpRight size={16} />
           </Link>
         </div>
