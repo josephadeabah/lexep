@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
@@ -12,7 +13,7 @@ const STATS = [
 
 export default function InsightsPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       <header className="border-b border-[#d8d1c4]">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-5 lg:px-12">
           <Link href="/" className="flex items-center gap-2" aria-label="Lexep home">
@@ -58,7 +59,7 @@ export default function InsightsPage() {
 
       <section className="mx-auto grid max-w-[1280px] items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:px-12 lg:py-24">
         <div>
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#735c00]">
+          <p className="mb-4 text-xs font-semibold tracking-[0.18em] text-[#735c00] uppercase">
             Insights
           </p>
           <h1 className="font-sans text-4xl font-bold tracking-[-0.055em] text-[#1b1c1c] sm:text-5xl lg:text-6xl">
@@ -74,9 +75,16 @@ export default function InsightsPage() {
           </Button>
         </div>
         <div className="overflow-hidden rounded-xl border border-[#d8d1c4] bg-[#303031] shadow-[0_18px_50px_rgba(48,48,49,0.14)]">
-          <div className="flex aspect-square items-center justify-center p-8 text-center">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#e9c349]">
+          <div className="relative flex aspect-square items-center justify-center">
+            <Image
+              src="/images/lexep-community.png"
+              alt="Africa Builds Future: Careers in Architecture & Design"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="relative z-10 p-8 text-center">
+              <p className="text-xs font-semibold tracking-[0.16em] text-[#e9c349] uppercase">
                 Featured
               </p>
               <h2 className="mt-4 font-sans text-2xl font-semibold tracking-[-0.04em] text-white sm:text-3xl">
@@ -95,7 +103,7 @@ export default function InsightsPage() {
               <p className="font-sans text-4xl font-bold tracking-[-0.04em] text-[#d4af37] sm:text-5xl">
                 {stat.value}
               </p>
-              <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-[#c9c7c6]">
+              <p className="mt-2 text-xs font-semibold tracking-wider text-[#c9c7c6] uppercase">
                 {stat.label}
               </p>
             </div>
@@ -104,20 +112,20 @@ export default function InsightsPage() {
       </section>
 
       <section id="spotlight" className="mx-auto max-w-[1280px] px-6 py-20 lg:px-12 lg:py-24">
-        <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-[#735c00]">
+        <p className="mb-4 text-center text-xs font-semibold tracking-[0.18em] text-[#735c00] uppercase">
           Featured Story
         </p>
         <h2 className="text-center font-sans text-3xl font-semibold tracking-[-0.04em] text-[#1b1c1c] sm:text-4xl">
           Spotlight Journey
         </h2>
         <div className="mt-12 grid gap-8 rounded-xl border border-[#d8d1c4] bg-white p-8 md:grid-cols-2">
-          <div className="flex aspect-video items-center justify-center rounded-lg bg-[#303031] md:aspect-auto">
-            <div className="p-8 text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#e9c349]">
-                Featured
-              </p>
-              <p className="mt-2 text-sm text-[#c9c7c6]">Photo: Amara N. on site</p>
-            </div>
+          <div className="relative aspect-video overflow-hidden rounded-lg md:aspect-auto">
+            <Image
+              src="/images/professional.jpg"
+              alt="Amara N. on site"
+              fill
+              className="object-cover"
+            />
           </div>
           <div className="flex flex-col justify-center">
             <span className="flex w-fit items-center gap-1 rounded-full bg-[#f7edc9] px-3 py-1 text-xs font-semibold text-[#735c00]">

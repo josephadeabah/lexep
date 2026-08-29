@@ -17,7 +17,7 @@ export default function PricingPage() {
   const premiumEnabled = config.data?.premium_features_enabled ?? false;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       <header className="border-b border-[#d8d1c4]">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-5 lg:px-12">
           <Link href="/" className="flex items-center gap-2" aria-label="Lexep home">
@@ -70,7 +70,7 @@ export default function PricingPage() {
       </header>
 
       <div className="mx-auto max-w-[1280px] px-6 py-20 text-center lg:px-12 lg:py-24">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#735c00]">
+        <p className="mb-4 text-xs font-semibold tracking-[0.18em] text-[#735c00] uppercase">
           Pricing
         </p>
         <h1 className="font-sans text-4xl font-bold tracking-[-0.055em] text-[#1b1c1c] sm:text-5xl lg:text-6xl">
