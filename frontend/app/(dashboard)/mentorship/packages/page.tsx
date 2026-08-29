@@ -139,9 +139,7 @@ export default function MentorPackagesPage() {
                   onClick={() => handleToggle(pkg.id)}
                   className={cn(
                     "flex h-6 w-11 flex-shrink-0 items-center rounded-full px-0.5 transition",
-                    pkg.is_active
-                      ? "bg-[#d4af37] justify-end"
-                      : "bg-[#e0d8c9] justify-start"
+                    pkg.is_active ? "justify-end bg-[#d4af37]" : "justify-start bg-[#e0d8c9]"
                   )}
                 >
                   <span className="h-5 w-5 rounded-full bg-white shadow" />
@@ -152,7 +150,7 @@ export default function MentorPackagesPage() {
               <div className="mt-4 border-b border-[#e0d8c9]/40 pb-4">
                 <div className="flex gap-8">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                    <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                       Price
                     </p>
                     <p className="mt-1 font-['Hanken_Grotesk'] text-3xl font-bold text-[#1b1c1c]">
@@ -160,7 +158,7 @@ export default function MentorPackagesPage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                    <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                       Duration
                     </p>
                     <p className="mt-1 text-base font-semibold text-[#1b1c1c]">

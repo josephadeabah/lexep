@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HelpCircle, LogOut } from "lucide-react";
+import { HelpCircle, LogOut, ChevronRight } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { Logo } from "@/components/ui/Logo";
 import type { NavItem } from "@/lib/nav-config";
-import styles from "./sidebar.module.css";
+import { cn } from "@/lib/utils";
 
 interface SidebarItem {
   label: string;
@@ -46,46 +46,62 @@ export function Sidebar({
 
   return (
     <>
-      {isOpen && <button className={styles.scrim} aria-label="Close sidebar" onClick={onClose} />}
+      {/* Mobile Scrim */}
+      {isOpen && (
+        <button
+          className="fixed inset-0 z-40 border-0 bg-black/45 md:hidden"
+          aria-label="Close sidebar"
+          onClick={onClose}
+        />
+      )}
 
+      {/* Sidebar */}
       <aside
-        className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ""} ${
-          isCollapsed ? styles.sidebarCollapsed : ""
-        }`}
+        className={cn(
+          "bg-sidebar text-sidebar-foreground sticky top-0 flex h-screen flex-col",
+          "w-[350px] flex-[0_0_350px] overflow-y-auto transition-all duration-300",
+          "max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-50 max-md:w-[285px] max-md:max-w-[86vw]",
+          "max-md:-translate-x-full max-md:transform max-md:transition-transform max-md:duration-250",
+          isOpen && "max-md:translate-x-0",
+          isCollapsed ? "w-0 flex-[0_0_0] overflow-hidden" : "w-[350px] flex-[0_0_350px]"
+        )}
       >
         {/* Brand */}
-        <div className={styles.brand}>
-          <div className={styles.avatar}>
+        <div className="flex items-center gap-4 px-8 py-8 whitespace-nowrap">
+          <div className="bg-sidebar flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full">
             <Logo variant="light" size={64} showWordmark={false} />
           </div>
           <div>
-            <strong>{brand}</strong>
-            <span>{tagline}</span>
+            <strong className="block font-serif text-xl font-bold text-[#f4d36a]">{brand}</strong>
+            <span className="mt-0.5 block text-sm text-[#bdbbb8]">{tagline}</span>
           </div>
         </div>
 
         {/* User Summary */}
         {userSummary && (
-          <div className={styles.userSummary}>
+          <div className="mx-8 mb-4 flex items-center gap-3 rounded-lg bg-white/5 p-3 whitespace-nowrap">
             <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
             <div className="min-w-0">
-              <p className={styles.userSummaryName}>{userSummary.name}</p>
-              <p className={styles.userSummaryRole}>{userSummary.roleLabel}</p>
+              <p className="truncate font-semibold text-[#f4d36a]">{userSummary.name}</p>
+              <p className="truncate text-sm text-[#bdbbb8]">{userSummary.roleLabel}</p>
             </div>
           </div>
         )}
 
         {/* CTA Button */}
         {ctaLabel && (
-          <div className={styles.ctaWrapper}>
-            <Link href={ctaHref || "#"} className={styles.ctaButton}>
+          <div className="mx-8 my-4 whitespace-nowrap">
+            <Link
+              href={ctaHref || "#"}
+              className="flex h-11 w-full items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition-colors hover:bg-[#c9a32e]"
+            >
               {ctaLabel}
             </Link>
           </div>
         )}
 
         {/* Navigation */}
-        <nav className={styles.nav}>
+        <nav className="flex flex-col">
           {navItems.map((item) => {
             const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
             const Icon = item.icon;
@@ -93,7 +109,12 @@ export function Sidebar({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
+                className={cn(
+                  "flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-[30px] py-[19px] text-[18px] whitespace-nowrap transition-colors",
+                  active
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-[#f3d36a] font-bold"
+                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50"
+                )}
               >
                 <Icon size={21} />
                 {item.label}
@@ -103,23 +124,30 @@ export function Sidebar({
         </nav>
 
         {/* Bottom Section */}
-        <div className={styles.bottom}>
-          {/* Additional sidebar items (e.g. Post Internship for company) */}
+        <div className="mt-auto flex flex-col px-[30px] pb-8 whitespace-nowrap">
           {sidebarBottom.map((item) => (
-            <Link key={item.label} href={item.href || "#"} className={styles.navItem}>
+            <Link
+              key={item.label}
+              href={item.href || "#"}
+              className="text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors"
+            >
               {item.icon && <item.icon size={21} />}
               {item.label}
             </Link>
           ))}
 
-          {/* Help/Support */}
-          <Link href="/help" className={styles.navItem}>
+          <Link
+            href="/help"
+            className="text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors"
+          >
             <HelpCircle size={21} />
             Help Center
           </Link>
 
-          {/* Logout */}
-          <button onClick={onLogout} className={styles.navItem}>
+          <button
+            onClick={onLogout}
+            className="text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors"
+          >
             <LogOut size={21} />
             Logout
           </button>

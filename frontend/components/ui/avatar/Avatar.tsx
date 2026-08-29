@@ -13,10 +13,7 @@ interface AvatarProps {
 export function Avatar({ src, name, size = 40, className }: AvatarProps) {
   if (src) {
     return (
-      <div
-        className={cn(styles.avatar, className)}
-        style={{ width: size, height: size }}
-      >
+      <div className={cn(styles.avatar, className)} style={{ width: size, height: size }}>
         <Image
           src={src}
           alt={name}
@@ -28,10 +25,7 @@ export function Avatar({ src, name, size = 40, className }: AvatarProps) {
     );
   }
   return (
-    <div
-      className={cn(styles.avatarFallback, className)}
-      style={{ width: size, height: size }}
-    >
+    <div className={cn(styles.avatarFallback, className)} style={{ width: size, height: size }}>
       {initials(name)}
     </div>
   );

@@ -17,6 +17,8 @@ import {
   Briefcase,
   PanelLeftClose,
   PanelLeftOpen,
+  HelpCircle,
+  LogOut,
 } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { OfflineBanner } from "./OfflineBanner";
@@ -30,8 +32,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu/dropdown-menu";
-import { HelpCircle, LogOut } from "lucide-react";
-import { Sidebar } from "./sidebar/Sidebar";
+import { Sidebar } from "./sidebar";
 import { cn } from "@/lib/utils";
 
 const BRAND_BY_ROLE: Record<
@@ -135,7 +136,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   if (!isInitialized || !user || !user.role) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#fbf9f8]">
+      <div className="bg-background flex h-screen items-center justify-center">
         Loading your workspace…
       </div>
     );
@@ -148,7 +149,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const sidebarBottom = SIDEBAR_BOTTOM_BY_ROLE[role] || [];
 
   return (
-    <div className="flex min-h-screen bg-[#fbfaf8]">
+    <div className="bg-background flex min-h-screen">
       {/* Sidebar */}
       <Sidebar
         brand={brandConfig.brand}
@@ -174,10 +175,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Top Navigation - sticky */}
-        <header className="sticky top-0 z-30 flex min-h-20 items-center gap-4 border-b border-[#d8d1c4] bg-[#fbf9f8] px-5 sm:px-8">
+        <header className="bg-background sticky top-0 z-30 flex min-h-20 items-center gap-4 border-b border-[#d8d1c4] px-5 sm:px-8">
           {/* Desktop sidebar toggle */}
           <button
-            className="hidden border-0 bg-transparent p-1 text-[#38342d] hover:text-[#735c00] md:block"
+            className="hover:text-primary hidden border-0 bg-transparent p-1 text-[#38342d] transition-colors md:block"
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             aria-label={sidebarCollapsed ? "Open sidebar" : "Close sidebar"}
           >
@@ -216,8 +217,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   className={cn(
                     "hidden rounded-md px-3 py-2 text-sm font-semibold transition sm:block",
                     isActive
-                      ? "border-b-2 border-[#d4af37] text-[#1b1c1c]"
-                      : "text-[#6d6a66] hover:text-[#1b1c1c]"
+                      ? "border-gold text-foreground border-b-2"
+                      : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   {link.label}

@@ -70,9 +70,7 @@ export default function ProposeInterviewPage() {
             <h1 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c] sm:text-2xl">
               Schedule Interview
             </h1>
-            <p className="mt-1 text-sm text-[#6d6a66]">
-              Send an invitation to the candidate
-            </p>
+            <p className="mt-1 text-sm text-[#6d6a66]">Send an invitation to the candidate</p>
           </div>
           <button
             onClick={() => router.back()}
@@ -151,9 +149,7 @@ export default function ProposeInterviewPage() {
                 onChange={(e) => setMessage(e.target.value)}
                 className="min-h-[100px] rounded-lg border-[#e0d8c9]"
               />
-              <p className="mt-1 text-xs text-[#6d6a66]">
-                Standard template will be appended.
-              </p>
+              <p className="mt-1 text-xs text-[#6d6a66]">Standard template will be appended.</p>
             </div>
           </div>
         </div>

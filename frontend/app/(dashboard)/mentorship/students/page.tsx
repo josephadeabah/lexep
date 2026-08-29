@@ -1,6 +1,14 @@
 "use client";
 
-import { Users, CalendarClock, AlertCircle, MessageSquare, Folder, Bell, CheckCircle2 } from "lucide-react";
+import {
+  Users,
+  CalendarClock,
+  AlertCircle,
+  MessageSquare,
+  Folder,
+  Bell,
+  CheckCircle2,
+} from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card/Card";
@@ -87,7 +95,7 @@ export default function MentorStudentsPage() {
           ) : students.data && students.data.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-[#f5f3f3] text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                <thead className="bg-[#f5f3f3] text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                   <tr>
                     <th className="min-w-[200px] px-6 py-3 font-normal">Student</th>
                     <th className="min-w-[250px] px-6 py-3 font-normal">Package & Progress</th>
@@ -129,7 +137,7 @@ export default function MentorStudentsPage() {
                         </div>
                       </td>
                       <td className="px-6 py-5">
-                        <div className="whitespace-nowrap text-sm text-[#6d6a66]">
+                        <div className="text-sm whitespace-nowrap text-[#6d6a66]">
                           {s.confirmed_time
                             ? `${formatDate(s.confirmed_time)}, ${formatTime(s.confirmed_time)}`
                             : "Not scheduled"}
@@ -168,7 +176,7 @@ export default function MentorStudentsPage() {
 
           <div className="mt-4 space-y-6">
             {/* Activity Item 1 */}
-            <div className="relative pl-6 before:absolute before:left-0 before:top-1.5 before:h-2 before:w-2 before:rounded-full before:bg-[#d4af37]">
+            <div className="relative pl-6 before:absolute before:top-1.5 before:left-0 before:h-2 before:w-2 before:rounded-full before:bg-[#d4af37]">
               <p className="text-sm font-semibold text-[#1b1c1c]">Portfolio Submitted</p>
               <p className="mt-1 text-sm text-[#6d6a66]">
                 Kwame Mensah uploaded 'Final Year Project V2' for review.
@@ -177,7 +185,7 @@ export default function MentorStudentsPage() {
             </div>
 
             {/* Activity Item 2 */}
-            <div className="relative pl-6 before:absolute before:left-0 before:top-1.5 before:h-2 before:w-2 before:rounded-full before:bg-[#e0d8c9]">
+            <div className="relative pl-6 before:absolute before:top-1.5 before:left-0 before:h-2 before:w-2 before:rounded-full before:bg-[#e0d8c9]">
               <p className="text-sm font-semibold text-[#1b1c1c]">Session Completed</p>
               <p className="mt-1 text-sm text-[#6d6a66]">
                 Intro to Firm Culture with Amara Okafor.
@@ -186,7 +194,7 @@ export default function MentorStudentsPage() {
             </div>
 
             {/* Activity Item 3 */}
-            <div className="relative pl-6 before:absolute before:left-0 before:top-1.5 before:h-2 before:w-2 before:rounded-full before:bg-[#e0d8c9]">
+            <div className="relative pl-6 before:absolute before:top-1.5 before:left-0 before:h-2 before:w-2 before:rounded-full before:bg-[#e0d8c9]">
               <p className="text-sm font-semibold text-[#1b1c1c]">New Message</p>
               <p className="mt-1 text-sm text-[#6d6a66]">
                 "Thank you for the notes on my resume!" - Chioma E.

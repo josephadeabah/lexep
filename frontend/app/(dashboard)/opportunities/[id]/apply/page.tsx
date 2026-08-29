@@ -123,9 +123,7 @@ export default function ApplyForInternshipPage() {
                   <span
                     className={cn(
                       "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold",
-                      done || active
-                        ? "bg-[#d4af37] text-[#1b1c1c]"
-                        : "bg-[#f5f3f3] text-[#6d6a66]"
+                      done || active ? "bg-[#d4af37] text-[#1b1c1c]" : "bg-[#f5f3f3] text-[#6d6a66]"
                     )}
                   >
                     {done ? <Check className="h-4 w-4" /> : index}
@@ -249,24 +247,18 @@ export default function ApplyForInternshipPage() {
                   <span className="text-base font-semibold text-[#735c00]">
                     Upload a file or drag and drop
                   </span>
-                  <span className="text-sm text-[#6d6a66]">
-                    PDF, DOC, DOCX up to 10MB
-                  </span>
+                  <span className="text-sm text-[#6d6a66]">PDF, DOC, DOCX up to 10MB</span>
                   <input
                     type="file"
                     className="hidden"
                     onChange={(e) => handleResumeUpload(e.target.files?.[0])}
                   />
                 </label>
-                {isUploadingResume && (
-                  <p className="mt-2 text-sm text-[#6d6a66]">Uploading…</p>
-                )}
+                {isUploadingResume && <p className="mt-2 text-sm text-[#6d6a66]">Uploading…</p>}
                 {resumeFilename && !isUploadingResume && (
                   <div className="mt-2 flex items-center gap-2 rounded-lg border border-[#e0d8c9] p-3">
                     <FileText className="h-4 w-4 text-[#735c00]" />
-                    <span className="text-sm font-semibold text-[#1b1c1c]">
-                      {resumeFilename}
-                    </span>
+                    <span className="text-sm font-semibold text-[#1b1c1c]">{resumeFilename}</span>
                     <Check className="h-4 w-4 text-[#735c00]" />
                   </div>
                 )}
@@ -325,23 +317,19 @@ export default function ApplyForInternshipPage() {
 
                 <div className="mt-6 grid gap-6 sm:grid-cols-2">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                    <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                       Full Name
                     </p>
-                    <p className="mt-1 text-base font-semibold text-[#1b1c1c]">
-                      {user?.full_name}
-                    </p>
+                    <p className="mt-1 text-base font-semibold text-[#1b1c1c]">{user?.full_name}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                    <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                       Email Address
                     </p>
-                    <p className="mt-1 text-base font-semibold text-[#1b1c1c]">
-                      {user?.email}
-                    </p>
+                    <p className="mt-1 text-base font-semibold text-[#1b1c1c]">{user?.email}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                    <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                       Qualification
                     </p>
                     <p className="mt-1 text-base font-semibold text-[#1b1c1c]">
@@ -349,7 +337,7 @@ export default function ApplyForInternshipPage() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                    <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                       Experience
                     </p>
                     <p className="mt-1 text-base font-semibold text-[#1b1c1c]">
@@ -358,7 +346,7 @@ export default function ApplyForInternshipPage() {
                   </div>
                   {portfolioLink && (
                     <div className="sm:col-span-2">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                      <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                         Portfolio Link
                       </p>
                       <a
@@ -371,7 +359,7 @@ export default function ApplyForInternshipPage() {
                   )}
                   {resumeFilename && (
                     <div className="sm:col-span-2">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-[#6d6a66]">
+                      <p className="text-xs font-semibold tracking-wider text-[#6d6a66] uppercase">
                         Uploaded Documents
                       </p>
                       <div className="mt-2 flex items-center gap-3 rounded-lg border border-[#e0d8c9] bg-white p-3">

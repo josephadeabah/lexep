@@ -4,12 +4,20 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/auth-store";
 import { ADMIN_NAV } from "@/lib/nav-config";
-import { Bell, Settings, Menu, X, Search, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import {
+  Bell,
+  Settings,
+  Menu,
+  X,
+  Search,
+  PanelLeftClose,
+  PanelLeftOpen,
+  LogOut,
+} from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
-import { Sidebar } from "./sidebar/Sidebar";
+import { Sidebar } from "./sidebar";
 import { OfflineBanner } from "./OfflineBanner";
 import Link from "next/link";
-import { LogOut } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,11 +48,11 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }, [isInitialized, user, router]);
 
   if (!isInitialized || !user || user.role !== "admin") {
-    return <div className="flex h-screen items-center justify-center bg-[#fbf9f8]">Loading…</div>;
+    return <div className="bg-background flex h-screen items-center justify-center">Loading…</div>;
   }
 
   return (
-    <div className="flex min-h-screen bg-[#fbfaf8]">
+    <div className="bg-background flex min-h-screen">
       {/* Sidebar */}
       <Sidebar
         brand="Lexep Admin"
@@ -69,10 +77,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Top Navigation - sticky */}
-        <header className="sticky top-0 z-30 flex min-h-20 items-center gap-4 border-b border-[#d8d1c4] bg-[#fbf9f8] px-5 sm:px-8">
+        <header className="bg-background sticky top-0 z-30 flex min-h-20 items-center gap-4 border-b border-[#d8d1c4] px-5 sm:px-8">
           {/* Desktop sidebar toggle */}
           <button
-            className="hidden border-0 bg-transparent p-1 text-[#38342d] hover:text-[#735c00] md:block"
+            className="hover:text-primary hidden border-0 bg-transparent p-1 text-[#38342d] transition-colors md:block"
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             aria-label={sidebarCollapsed ? "Open sidebar" : "Close sidebar"}
           >
@@ -101,13 +109,22 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             className="ml-auto flex items-center gap-6 text-[15px]"
             aria-label="Account navigation"
           >
-            <a href="#analytics" className="hidden text-[#38342d] hover:text-[#735c00] sm:block">
+            <a
+              href="#analytics"
+              className="hover:text-primary hidden text-[#38342d] transition-colors sm:block"
+            >
               Analytics
             </a>
-            <a href="#users" className="hidden text-[#38342d] hover:text-[#735c00] sm:block">
+            <a
+              href="#users"
+              className="hover:text-primary hidden text-[#38342d] transition-colors sm:block"
+            >
               Users
             </a>
-            <a href="#help" className="hidden text-[#38342d] hover:text-[#735c00] sm:block">
+            <a
+              href="#help"
+              className="hover:text-primary hidden text-[#38342d] transition-colors sm:block"
+            >
               Help
             </a>
           </nav>

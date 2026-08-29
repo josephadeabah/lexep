@@ -3,11 +3,11 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useAuthStore } from "@/lib/auth-store";
 import { ApiError } from "@/lib/api";
-import styles from "./auth-form.module.css";
+import { cn } from "@/lib/utils";
 
 // Inline SVG icons for Google and LinkedIn
 function GoogleIcon() {
@@ -46,9 +46,10 @@ function LinkedInIcon() {
 
 interface AuthFormProps {
   mode: "sign-in" | "sign-up";
+  className?: string;
 }
 
-export function AuthForm({ mode }: AuthFormProps) {
+export function AuthForm({ mode, className }: AuthFormProps) {
   const router = useRouter();
   const isSignUp = mode === "sign-up";
   const login = useAuthStore((s) => s.login);
@@ -61,15 +62,20 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+    setSuccess(false);
 
     try {
       if (isSignUp) {
         await register(email, fullName, password);
-        router.push("/onboarding/choose-role");
+        setSuccess(true);
+        setTimeout(() => {
+          router.push("/onboarding/choose-role");
+        }, 1500);
         return;
       }
 
@@ -90,44 +96,77 @@ export function AuthForm({ mode }: AuthFormProps) {
   }
 
   return (
-    <main className={styles.shell}>
-      {/* Header */}
-      <div className={styles.header}>
-        <div className={styles.logoWrapper}>
-          <Link href="/" className={styles.logo}>
-            <Logo showWordmark size={36} />
-          </Link>
+    <div className={cn("w-full", className)}>
+      {/* Card Container */}
+      <div className="rounded-xl border border-[#d0c5af] bg-white p-8 shadow-[0_18px_50px_rgba(48,48,49,0.08)]">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="mb-6 flex items-center gap-2">
+            <Logo size={36} showWordMark={false} />
+            <span className="text-lg font-semibold tracking-[-0.04em]">Lexep</span>
+          </div>
+          <h2 className="font-sans text-2xl font-semibold tracking-[-0.04em]">
+            {isSignUp ? "Create your account" : "Welcome back"}
+          </h2>
+          <p className="mt-2 text-sm text-[#5f5e5e]">
+            {isSignUp
+              ? "Join Lexep and start your journey today."
+              : "Please enter your details to continue."}
+          </p>
         </div>
-        <h1>{isSignUp ? "Create an account" : "Welcome back"}</h1>
-        <p>
-          {isSignUp ? "Join Lexep and start your journey today." : "Please enter your details."}
-        </p>
-      </div>
 
-      {/* Card */}
-      <div className={styles.card}>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        {/* Success Message */}
+        {success && (
+          <div className="mb-6 flex items-center gap-3 rounded-lg bg-green-50 p-4 text-sm text-green-700">
+            <CheckCircle2 size={18} className="flex-shrink-0" />
+            Account created successfully! Redirecting...
+          </div>
+        )}
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 rounded-lg bg-red-50 p-4 text-sm text-red-600" role="alert">
+            {error}
+          </div>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
           {isSignUp && (
-            <label className={styles.field}>
-              <span>Full Name</span>
-              <div className={styles.inputWrapper}>
+            <div>
+              <label htmlFor="name" className="mb-2 block text-sm font-medium text-[#1b1c1c]">
+                Full Name
+              </label>
+              <div className="relative">
+                <User
+                  size={17}
+                  className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#7f7663]"
+                />
                 <input
+                  id="name"
                   required
                   name="name"
                   autoComplete="name"
                   placeholder="Jane Doe"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
+                  className="w-full rounded-md border border-[#d0c5af] bg-white py-3 pr-4 pl-11 text-sm text-[#1b1c1c] transition outline-none placeholder:text-[#aaa7a0] focus:border-[#735c00] focus:ring-2 focus:ring-[#735c00]/20"
                 />
               </div>
-            </label>
+            </div>
           )}
 
-          <label className={styles.field}>
-            <span>Email address</span>
-            <div className={styles.inputWrapper}>
-              <Mail size={17} className={styles.inputIcon} />
+          <div>
+            <label htmlFor="email" className="mb-2 block text-sm font-medium text-[#1b1c1c]">
+              Email address
+            </label>
+            <div className="relative">
+              <Mail
+                size={17}
+                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#7f7663]"
+              />
               <input
+                id="email"
                 required
                 type="email"
                 name="email"
@@ -135,15 +174,22 @@ export function AuthForm({ mode }: AuthFormProps) {
                 placeholder="jane@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="w-full rounded-md border border-[#d0c5af] bg-white py-3 pr-4 pl-11 text-sm text-[#1b1c1c] transition outline-none placeholder:text-[#aaa7a0] focus:border-[#735c00] focus:ring-2 focus:ring-[#735c00]/20"
               />
             </div>
-          </label>
+          </div>
 
-          <label className={styles.field}>
-            <span>Password</span>
-            <div className={styles.passwordWrapper}>
-              <Lock size={17} className={styles.inputIconLeft} />
+          <div>
+            <label htmlFor="password" className="mb-2 block text-sm font-medium text-[#1b1c1c]">
+              Password
+            </label>
+            <div className="relative">
+              <Lock
+                size={17}
+                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[#7f7663]"
+              />
               <input
+                id="password"
                 required
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -152,51 +198,65 @@ export function AuthForm({ mode }: AuthFormProps) {
                 minLength={isSignUp ? 8 : undefined}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-md border border-[#d0c5af] bg-white py-3 pr-12 pl-11 text-sm text-[#1b1c1c] transition outline-none placeholder:text-[#aaa7a0] focus:border-[#735c00] focus:ring-2 focus:ring-[#735c00]/20"
               />
               <button
                 type="button"
-                className={styles.passwordToggle}
+                className="absolute top-1/2 right-4 -translate-y-1/2 text-[#7f7663] transition hover:text-[#735c00]"
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 onClick={() => setShowPassword((current) => !current)}
               >
                 {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
               </button>
             </div>
-          </label>
+          </div>
 
           {!isSignUp && (
-            <div className={styles.options}>
-              <label className={styles.check}>
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 text-sm text-[#5f5e5e]">
                 <input
                   type="checkbox"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
+                  className="h-4 w-4 rounded border-[#d0c5af] text-[#735c00] focus:ring-[#735c00]/20"
                 />
-                <span>Remember me</span>
+                Remember me
               </label>
-              <Link className={styles.forgot} href="/forgot-password">
+              <Link
+                className="text-sm font-medium text-[#735c00] transition hover:text-[#554300]"
+                href="/forgot-password"
+              >
                 Forgot password?
               </Link>
             </div>
           )}
 
           {isSignUp && (
-            <label className={styles.check}>
-              <input type="checkbox" required />
+            <label className="flex items-start gap-2 text-sm text-[#5f5e5e]">
+              <input
+                type="checkbox"
+                required
+                className="mt-0.5 h-4 w-4 rounded border-[#d0c5af] text-[#735c00] focus:ring-[#735c00]/20"
+              />
               <span>
-                I agree to the <Link href="#terms">Terms</Link> and{" "}
-                <Link href="#privacy">Privacy Policy</Link>.
+                I agree to the{" "}
+                <Link href="#terms" className="text-[#735c00] transition hover:text-[#554300]">
+                  Terms
+                </Link>{" "}
+                and{" "}
+                <Link href="#privacy" className="text-[#735c00] transition hover:text-[#554300]">
+                  Privacy Policy
+                </Link>
+                .
               </span>
             </label>
           )}
 
-          {error && (
-            <p className={styles.error} role="alert">
-              {error}
-            </p>
-          )}
-
-          <button className={styles.submit} type="submit" disabled={isLoading}>
+          <button
+            type="submit"
+            disabled={isLoading || success}
+            className="w-full rounded-md bg-[#735c00] py-3.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(115,92,0,0.18)] transition hover:bg-[#554300] disabled:cursor-not-allowed disabled:opacity-60"
+          >
             {isLoading
               ? isSignUp
                 ? "Creating account..."
@@ -208,15 +268,25 @@ export function AuthForm({ mode }: AuthFormProps) {
         </form>
 
         {/* Divider */}
-        <div className={styles.divider}>Or continue with</div>
+        <div className="my-6 flex items-center gap-4">
+          <div className="h-px flex-1 bg-[#e4e2e2]" />
+          <span className="text-xs text-[#7f7663]">Or continue with</span>
+          <div className="h-px flex-1 bg-[#e4e2e2]" />
+        </div>
 
         {/* Social Buttons */}
-        <div className={styles.socialButtons}>
-          <button className={styles.socialButton} type="button">
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            className="flex items-center justify-center gap-2 rounded-md border border-[#d0c5af] py-3 text-sm font-semibold text-[#4d4635] transition hover:bg-[#fbf9f8]"
+          >
             <GoogleIcon />
             Google
           </button>
-          <button className={styles.socialButton} type="button">
+          <button
+            type="button"
+            className="flex items-center justify-center gap-2 rounded-md border border-[#d0c5af] py-3 text-sm font-semibold text-[#4d4635] transition hover:bg-[#fbf9f8]"
+          >
             <LinkedInIcon />
             LinkedIn
           </button>
@@ -224,19 +294,22 @@ export function AuthForm({ mode }: AuthFormProps) {
 
         {/* Badge */}
         {isSignUp && (
-          <div className={styles.badge}>
-            <span>🎉</span> Join the growing African youth shaping the future
+          <div className="mt-6 flex items-center gap-2 rounded-lg bg-[#fbf9f8] p-4 text-sm text-[#5f5e5e]">
+            <span className="text-lg">🎉</span> Join the growing African youth shaping the future
           </div>
         )}
       </div>
 
       {/* Footer */}
-      <div className={styles.footer}>
+      <div className="mt-6 text-center text-sm text-[#5f5e5e]">
         {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-        <Link href={isSignUp ? "/sign-in" : "/sign-up"}>
+        <Link
+          href={isSignUp ? "/sign-in" : "/sign-up"}
+          className="font-semibold text-[#735c00] transition hover:text-[#554300]"
+        >
           {isSignUp ? "Log in instead" : "Create an account"}
         </Link>
       </div>
-    </main>
+    </div>
   );
 }

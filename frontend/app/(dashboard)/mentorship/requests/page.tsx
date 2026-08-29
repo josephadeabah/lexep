@@ -41,18 +41,15 @@ export default function MentorRequestsPage() {
         ) : requests.data && requests.data.length > 0 ? (
           <ul className="divide-y divide-[#e0d8c9]/40">
             {requests.data.map((r) => (
-              <li key={r.id} className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+              <li
+                key={r.id}
+                className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between"
+              >
                 {/* Learner Info */}
                 <div className="flex items-start gap-4">
-                  <Avatar
-                    name={r.learner_name ?? "Learner"}
-                    size={48}
-                    className="rounded-full"
-                  />
+                  <Avatar name={r.learner_name ?? "Learner"} size={48} className="rounded-full" />
                   <div>
-                    <p className="text-base font-semibold text-[#1b1c1c]">
-                      {r.learner_name}
-                    </p>
+                    <p className="text-base font-semibold text-[#1b1c1c]">{r.learner_name}</p>
                     <p className="mt-1 flex items-center gap-2 text-sm text-[#6d6a66]">
                       <CalendarClock className="h-3.5 w-3.5" />
                       {r.session_type ?? "Mentorship session"} · Requested{" "}
@@ -63,9 +60,7 @@ export default function MentorRequestsPage() {
                     {r.message && (
                       <div className="mt-3 flex items-start gap-2 rounded-lg bg-[#f5f3f3] p-3">
                         <MessageSquare className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#735c00]" />
-                        <p className="text-sm italic text-[#6d6a66]">
-                          &ldquo;{r.message}&rdquo;
-                        </p>
+                        <p className="text-sm text-[#6d6a66] italic">&ldquo;{r.message}&rdquo;</p>
                       </div>
                     )}
 
@@ -73,10 +68,7 @@ export default function MentorRequestsPage() {
                     {r.proposed_times.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {r.proposed_times.slice(0, 3).map((time, index) => (
-                          <Badge
-                            key={index}
-                            className="bg-[#f5f3f3] text-[#6d6a66]"
-                          >
+                          <Badge key={index} className="bg-[#f5f3f3] text-[#6d6a66]">
                             {formatDate(time)}, {formatTime(time)}
                           </Badge>
                         ))}
@@ -107,9 +99,7 @@ export default function MentorRequestsPage() {
             ))}
           </ul>
         ) : (
-          <p className="p-6 text-base text-[#6d6a66]">
-            No pending requests right now.
-          </p>
+          <p className="p-6 text-base text-[#6d6a66]">No pending requests right now.</p>
         )}
       </Card>
     </div>

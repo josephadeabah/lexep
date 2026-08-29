@@ -36,7 +36,7 @@ function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
             onClick={() =>
               setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))
             }
-            className="hover:bg-[#f5f3f3] rounded-md px-2 py-1 text-[#6d6a66]"
+            className="rounded-md px-2 py-1 text-[#6d6a66] hover:bg-[#f5f3f3]"
           >
             ‹
           </button>
@@ -44,7 +44,7 @@ function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
             onClick={() =>
               setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))
             }
-            className="hover:bg-[#f5f3f3] rounded-md px-2 py-1 text-[#6d6a66]"
+            className="rounded-md px-2 py-1 text-[#6d6a66] hover:bg-[#f5f3f3]"
           >
             ›
           </button>
@@ -152,9 +152,7 @@ export default function InterviewsPage() {
                           <p className="truncate text-sm font-semibold text-[#1b1c1c]">
                             {i.candidate_name}
                           </p>
-                          <p className="truncate text-xs text-[#6d6a66]">
-                            {i.opportunity_title}
-                          </p>
+                          <p className="truncate text-xs text-[#6d6a66]">{i.opportunity_title}</p>
                         </div>
                       </div>
                       <Mail className="h-4 w-4 flex-shrink-0 text-[#6d6a66]" />
@@ -162,9 +160,7 @@ export default function InterviewsPage() {
 
                     {/* Requested Time */}
                     <div className="mt-3 border-t border-[#e0d8c9]/40 pt-3">
-                      <p className="text-xs text-[#6d6a66]">
-                        Requested 2 days ago
-                      </p>
+                      <p className="text-xs text-[#6d6a66]">Requested 2 days ago</p>
                     </div>
                   </li>
                 ))}
@@ -210,9 +206,7 @@ export default function InterviewsPage() {
                         <p className="text-base font-semibold text-[#1b1c1c]">
                           {interview.candidate_name}
                         </p>
-                        <p className="text-sm text-[#6d6a66]">
-                          {interview.opportunity_title}
-                        </p>
+                        <p className="text-sm text-[#6d6a66]">{interview.opportunity_title}</p>
                         <div className="mt-2 flex items-center gap-3 text-sm text-[#6d6a66]">
                           <span className="flex items-center gap-1">
                             <CalendarClock className="h-3.5 w-3.5" />
@@ -241,15 +235,9 @@ export default function InterviewsPage() {
                           <Video className="h-3.5 w-3.5" /> Join Meeting
                         </Button>
                       ) : (
-                        <span className="text-center text-sm text-[#6d6a66]">
-                          Starting later
-                        </span>
+                        <span className="text-center text-sm text-[#6d6a66]">Starting later</span>
                       )}
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="w-full border-[#e0d8c9]"
-                      >
+                      <Button size="sm" variant="outline" className="w-full border-[#e0d8c9]">
                         View Profile
                       </Button>
                     </div>
@@ -257,9 +245,7 @@ export default function InterviewsPage() {
                 ))}
             </ul>
           ) : (
-            <p className="mt-4 text-base text-[#6d6a66]">
-              No interviews scheduled yet.
-            </p>
+            <p className="mt-4 text-base text-[#6d6a66]">No interviews scheduled yet.</p>
           )}
         </Card>
       </div>

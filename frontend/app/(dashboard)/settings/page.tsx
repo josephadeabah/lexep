@@ -107,10 +107,7 @@ function AccountTab() {
             className="h-12 rounded-lg border-[#e0d8c9] bg-[#f5f3f3]"
           />
         </div>
-        <Button
-          variant="outline"
-          className="h-12 border-[#e0d8c9] font-semibold"
-        >
+        <Button variant="outline" className="h-12 border-[#e0d8c9] font-semibold">
           Change Password
         </Button>
       </div>
@@ -189,7 +186,7 @@ function NotificationsTab() {
         onClick={() => setPrefs((p) => ({ ...p, [optKey]: !p[optKey] }))}
         className={cn(
           "flex h-7 w-12 flex-shrink-0 items-center rounded-full px-1 transition",
-          on ? "bg-[#d4af37] justify-end" : "bg-[#e0d8c9] justify-start"
+          on ? "justify-end bg-[#d4af37]" : "justify-start bg-[#e0d8c9]"
         )}
       >
         <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white shadow">
@@ -215,7 +212,7 @@ function NotificationsTab() {
       </div>
 
       {/* Email Notifications */}
-      <p className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+      <p className="mt-6 flex items-center gap-2 text-xs font-bold tracking-wider text-[#6d6a66] uppercase">
         <Mail className="h-4 w-4" /> Email Notifications
       </p>
       <div className="mt-2 flex flex-col divide-y divide-[#e0d8c9]/40">
@@ -231,7 +228,7 @@ function NotificationsTab() {
       </div>
 
       {/* Push Notifications */}
-      <p className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#6d6a66]">
+      <p className="mt-6 flex items-center gap-2 text-xs font-bold tracking-wider text-[#6d6a66] uppercase">
         <Smartphone className="h-4 w-4" /> Push Notifications
       </p>
       <div className="mt-2 flex flex-col divide-y divide-[#e0d8c9]/40">

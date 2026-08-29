@@ -1,7 +1,16 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { MapPin, Clock, Wallet, CheckCircle2, Briefcase, Users, CalendarClock, Building2 } from "lucide-react";
+import {
+  MapPin,
+  Clock,
+  Wallet,
+  CheckCircle2,
+  Briefcase,
+  Users,
+  CalendarClock,
+  Building2,
+} from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
@@ -37,8 +46,7 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
     (a) => a.opportunity_title === opportunity.data?.title
   );
 
-  if (opportunity.isLoading)
-    return <p className="text-base text-[#6d6a66]">Loading…</p>;
+  if (opportunity.isLoading) return <p className="text-base text-[#6d6a66]">Loading…</p>;
   const o = opportunity.data;
   if (!o) return <p className="text-base text-[#ba1a1a]">Opportunity not found.</p>;
 
@@ -74,7 +82,7 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
                     <MapPin className="mr-1 h-3 w-3" /> {o.location}
                   </Badge>
                 )}
-                <Badge className="bg-[#f5f3f3] capitalize text-[#6d6a66]">
+                <Badge className="bg-[#f5f3f3] text-[#6d6a66] capitalize">
                   <Briefcase className="mr-1 h-3 w-3" /> {o.work_mode}
                 </Badge>
               </div>
@@ -86,7 +94,7 @@ function LearnerOpportunityDetail({ id }: { id: number }) {
             <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
               About the Role
             </h2>
-            <p className="mt-4 whitespace-pre-line text-base leading-relaxed text-[#6d6a66]">
+            <p className="mt-4 text-base leading-relaxed whitespace-pre-line text-[#6d6a66]">
               {o.description || "No description provided yet."}
             </p>
           </Card>
@@ -174,9 +182,7 @@ function CompanyApplicantReview({ id }: { id: number }) {
     <div className="flex flex-col gap-8">
       {/* Breadcrumb & Header */}
       <div>
-        <p className="text-sm text-[#6d6a66]">
-          Opportunities &gt; {opportunity.data?.title}
-        </p>
+        <p className="text-sm text-[#6d6a66]">Opportunities &gt; {opportunity.data?.title}</p>
         <h1 className="mt-1 font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
           Applicant Review
         </h1>
