@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ArrowUpRight, Check, Menu, X } from 'lucide-react'
 import { EmailSignup } from '@/components/email-signup'
-import { Logo } from '@/components/logo'
+import { Logo } from '@/components/ui/logo'
 
 const companies = ['MEST Africa', 'mPharma', 'Hubtel', 'MTN Ghana', 'GIZ Ghana', 'Andela']
 const benefits = [
