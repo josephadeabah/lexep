@@ -100,6 +100,11 @@ export default function Page() {
             <span className="absolute right-[9%] top-[20%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">MENTOR</span>
             <span className="absolute left-[11%] bottom-[19%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">LEARN</span>
             <span className="absolute right-[18%] bottom-[11%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">GROW</span>
+            
+            {/* New labels */}
+            <span className="absolute left-[2%] top-[12%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">GRANTS</span>
+            <span className="absolute right-[4%] top-[45%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">JOBS</span>
+            <span className="absolute left-[8%] top-[55%] rounded-full border border-[#c49a3a]/70 bg-[#f1f0ea]/80 px-3 py-2 text-[10px] font-bold tracking-[0.1em] text-[#c49a3a]">CAREER</span>
           </div>
 
           <Image 
@@ -124,7 +129,7 @@ export default function Page() {
       </section>
 
       {/* INTRO */}
-      <section className="mx-auto w-[calc(100%-64px)] max-w-[760px] py-[150px] pb-[70px]" id="how-it-works">
+      <section className="mx-auto flex w-[calc(100%-64px)] max-w-[1200px] py-[150px] pb-[70px]" id="how-it-works">
         <p className="mb-5 font-bold text-[#c49a3a] text-[11px] tracking-[0.13em]">A BETTER WAY FORWARD</p>
         <h2 className="font-serif text-[clamp(54px,7vw,92px)] font-bold leading-[0.95] tracking-[-0.05em]">
           Career support,<br />
