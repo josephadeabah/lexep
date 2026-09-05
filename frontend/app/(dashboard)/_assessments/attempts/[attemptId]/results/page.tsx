@@ -196,7 +196,7 @@ export default function AssessmentResultsPage() {
 
                 {/* Action Button */}
                 {path.title === "Material Stress Workshop" ? (
-                  <Button variant="outline" className="mt-4 w-full">
+                  <Button className="mt-4 w-full">
                     Book Mentor
                   </Button>
                 ) : (
