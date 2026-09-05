@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "./Sidebar";
 import { OfflineBanner } from "./OfflineBanner";
 import { useAuthStore } from "@/lib/auth-store";
 import { NAV_BY_ROLE, BRAND_BY_ROLE } from "@/lib/nav-config";
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 /** Shell for the four non-admin roles (learner/mentor/company). Admins are
  * routed to /admin/* (see components/layout/AdminShell.tsx) — routes that
@@ -14,6 +16,7 @@ import { NAV_BY_ROLE, BRAND_BY_ROLE } from "@/lib/nav-config";
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { user, isInitialized, hydrate, logout } = useAuthStore();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!isInitialized) hydrate();
@@ -32,6 +35,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     }
   }, [isInitialized, user, router]);
 
+  // Close sidebar on route change (mobile)
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [router]);
+
   if (!isInitialized || !user || !user.role || user.role === "admin") {
     return (
       <div className="flex h-screen items-center justify-center bg-surface text-on-surface-variant text-body-md">
@@ -45,6 +53,19 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen bg-surface">
+      {/* Mobile Navbar */}
+      <div className="fixed top-0 z-30 flex w-full items-center justify-between bg-[#1a1a1a] px-4 py-3 md:hidden">
+        <button
+          onClick={() => setIsSidebarOpen(true)}
+          className="text-inverse-on-surface"
+          aria-label="Open menu"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+        <span className="font-serif text-xl font-bold text-[#f4d36a]">{config.brand}</span>
+        <div className="w-6" /> {/* Spacer for alignment */}
+      </div>
+
       <Sidebar
         brand={config.brand}
         tagline={config.tagline}
@@ -56,8 +77,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           logout();
           router.replace("/sign-in");
         }}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto pt-16 md:pt-0">
         <OfflineBanner />
         <div className="px-md py-lg md:px-xl md:py-xl">
           <div className="mx-auto w-full max-w-container-max">{children}</div>
