@@ -21,7 +21,7 @@ import {
   LogOut,
   type LucideIcon,
 } from "lucide-react";
-import { Avatar } from "@/components/ui/avatar/Avatar";
+import { Avatar } from "@/components/ui/Avatar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { OfflineBanner } from "@/components/layout/OfflineBanner";
 import Link from "next/link";
@@ -33,7 +33,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 const BRAND_BY_ROLE: Record<
