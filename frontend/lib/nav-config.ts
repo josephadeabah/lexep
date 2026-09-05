@@ -22,10 +22,6 @@ export interface NavItem {
   icon: LucideIcon;
 }
 
-// Every route below is role-aware server-side (e.g. /courses renders
-// 'Explore Learning Paths' for a learner but 'Curriculum Management' for
-// admin/company) — one physical route per concern, no duplicate pages per
-// role, and no nav item pointing at a route that doesn't exist for that role.
 export const NAV_BY_ROLE: Record<UserRole, NavItem[]> = {
   learner: [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -33,7 +29,7 @@ export const NAV_BY_ROLE: Record<UserRole, NavItem[]> = {
     { label: "Assessments", href: "/assessments", icon: Award },
     { label: "Mentorship", href: "/mentorship", icon: Users },
     { label: "Opportunities", href: "/opportunities", icon: Briefcase },
-    { label: "My Applications", href: "/applications", icon: ClipboardList },
+    // "My Applications" is in the navbar, not the sidebar
     { label: "Notifications", href: "/notifications", icon: Bell },
     { label: "Settings", href: "/settings", icon: Settings },
   ],
@@ -99,13 +95,15 @@ export const BRAND_BY_ROLE: Record<UserRole, BrandConfig> = {
   mentor: {
     brand: "Architect Portal",
     tagline: "Empowering African Youth",
+    ctaLabel: "Upgrade to Pro",
+    ctaHref: "/upgrade?plan=mentor_pro",
     roleLabel: "Mentor",
   },
   company: {
     brand: "Architect Portal",
     tagline: "Empowering African Youth",
-    ctaLabel: "New Application",
-    ctaHref: "/opportunities/new",
+    ctaLabel: "Upgrade Plan",
+    ctaHref: "/upgrade",
     roleLabel: "Company",
   },
   admin: {
