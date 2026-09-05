@@ -17,13 +17,11 @@ import {
   Briefcase,
   PanelLeftClose,
   PanelLeftOpen,
-  HelpCircle,
   LogOut,
   type LucideIcon,
-  Users,
 } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { Sidebar } from "@/components/layout/sidebar/Sidebar";
 import { OfflineBanner } from "@/components/layout/OfflineBanner";
 import Link from "next/link";
 import type { UserRole } from "@/lib/types";
@@ -139,7 +137,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   if (!isInitialized || !user || !user.role) {
     return (
-      <div className="bg-background flex h-screen items-center justify-center">
+      <div className="bg-surface flex h-screen items-center justify-center">
         Loading your workspace…
       </div>
     );
@@ -154,7 +152,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const sidebarBottom = SIDEBAR_BOTTOM_BY_ROLE[role] || [];
 
   return (
-    <div className="bg-background flex min-h-screen">
+    <div className="bg-surface flex min-h-screen">
       {/* Sidebar */}
       <Sidebar
         brand={brandConfig.brand}
@@ -180,10 +178,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Top Navigation - sticky */}
-        <header className="bg-background sticky top-0 z-30 flex min-h-20 items-center gap-4 border-b border-[#d8d1c4] px-5 sm:px-8">
+        <header className="bg-surface-container-lowest sticky top-0 z-30 flex min-h-20 items-center gap-4 border-b border-outline-variant px-5 sm:px-8">
           {/* Desktop sidebar toggle */}
           <button
-            className="hover:text-primary hidden border-0 bg-transparent p-1 text-[#38342d] transition-colors md:block"
+            className="hover:text-primary hidden border-0 bg-transparent p-1 text-on-surface transition-colors md:block"
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             aria-label={sidebarCollapsed ? "Open sidebar" : "Close sidebar"}
           >
@@ -199,7 +197,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <label className="flex h-11 w-full max-w-[320px] flex-1 items-center gap-3 rounded-md border border-[#cbbfae] bg-white px-4">
+          <label className="flex h-11 w-full max-w-[320px] flex-1 items-center gap-3 rounded-md border border-outline-variant bg-surface-container-lowest px-4">
             <Search size={17} aria-hidden="true" />
             <span className="sr-only">Search</span>
             <input
@@ -229,8 +227,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   className={cn(
                     "hidden items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition sm:flex",
                     isActive
-                      ? "border-gold text-foreground border-b-2"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "border-primary-container text-on-surface border-b-2"
+                      : "text-on-surface-variant hover:text-on-surface"
                   )}
                 >
                   <Icon size={16} />
@@ -241,14 +239,14 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </nav>
 
           <button
-            className="grid place-items-center border-0 bg-transparent p-1 text-[#38342d]"
+            className="grid place-items-center border-0 bg-transparent p-1 text-on-surface"
             aria-label="Notifications"
           >
             <Bell size={22} />
           </button>
 
           <button
-            className="hidden border-0 bg-transparent p-1 text-[#38342d] sm:grid"
+            className="hidden border-0 bg-transparent p-1 text-on-surface sm:grid"
             aria-label="Settings"
           >
             <Settings size={22} />
@@ -265,7 +263,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <DropdownMenuLabel>
                 <div className="flex flex-col">
                   <span className="text-sm font-semibold">{user.full_name}</span>
-                  <span className="text-muted-foreground text-xs">{brandConfig.roleLabel}</span>
+                  <span className="text-on-surface-variant text-xs">{brandConfig.roleLabel}</span>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -282,7 +280,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               })}
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                className="text-red-600 focus:text-red-600"
+                className="text-error focus:text-error"
                 onClick={() => {
                   logout();
                   router.replace("/sign-in");
@@ -298,7 +296,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         {/* Main Content */}
         <main className="flex-1 px-4 py-8 sm:px-8 sm:py-12">
           <OfflineBanner />
-          <div className="mx-auto w-full max-w-7xl">{children}</div>
+          <div className="mx-auto w-full max-w-container-max">{children}</div>
         </main>
       </div>
     </div>

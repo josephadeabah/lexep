@@ -58,7 +58,7 @@ export function Sidebar({
       {/* Sidebar */}
       <aside
         className={cn(
-          "bg-sidebar text-sidebar-foreground sticky top-0 flex h-screen flex-col overflow-y-auto",
+          "bg-inverse-surface text-inverse-on-surface sticky top-0 flex h-screen flex-col overflow-y-auto",
           "transition-all duration-300 ease-in-out",
           // Desktop - collapse/expand
           "hidden md:flex",
@@ -73,12 +73,16 @@ export function Sidebar({
       >
         {/* Brand */}
         <div className="flex items-center gap-4 px-8 py-8 whitespace-nowrap">
-          <div className="bg-sidebar flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full">
+          <div className="bg-inverse-surface flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full">
             <Logo variant="light" size={64} showWordmark={false} />
           </div>
           <div className={cn("transition-opacity duration-200", isCollapsed && "hidden opacity-0")}>
-            <strong className="block font-serif text-xl font-bold text-[#f4d36a]">{brand}</strong>
-            <span className="mt-0.5 block text-sm text-[#bdbbb8]">{tagline}</span>
+            <strong className="block font-serif text-xl font-bold text-primary-container">
+              {brand}
+            </strong>
+            <span className="mt-0.5 block text-sm text-on-surface-variant">
+              {tagline}
+            </span>
           </div>
         </div>
 
@@ -92,8 +96,12 @@ export function Sidebar({
           >
             <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
             <div className="min-w-0">
-              <p className="truncate font-semibold text-[#f4d36a]">{userSummary.name}</p>
-              <p className="truncate text-sm text-[#bdbbb8]">{userSummary.roleLabel}</p>
+              <p className="truncate font-semibold text-primary-container">
+                {userSummary.name}
+              </p>
+              <p className="truncate text-sm text-on-surface-variant">
+                {userSummary.roleLabel}
+              </p>
             </div>
           </div>
         )}
@@ -103,7 +111,7 @@ export function Sidebar({
           <div className={cn("mx-8 my-4 whitespace-nowrap", isCollapsed && "hidden")}>
             <Link
               href={ctaHref || "#"}
-              className="flex h-11 w-full items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition-colors hover:bg-[#c9a32e]"
+              className="flex h-11 w-full items-center justify-center rounded-md bg-primary-container font-bold text-on-primary-container transition-colors hover:bg-primary-fixed-dim"
             >
               {ctaLabel}
             </Link>
@@ -122,8 +130,8 @@ export function Sidebar({
                 className={cn(
                   "flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-[30px] py-[19px] text-[18px] whitespace-nowrap transition-colors",
                   active
-                    ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-[#f3d36a] font-bold"
-                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50",
+                    ? "bg-surface-container-high text-primary-container border-l-primary-container font-bold"
+                    : "text-on-surface-variant hover:bg-surface-container-high/50",
                   isCollapsed && "justify-center px-0"
                 )}
               >
@@ -145,7 +153,7 @@ export function Sidebar({
                 key={item.label}
                 href={item.href || "#"}
                 className={cn(
-                  "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+                  "text-on-surface-variant hover:bg-surface-container-high/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
                   isCollapsed && "justify-center px-0"
                 )}
               >
@@ -160,7 +168,7 @@ export function Sidebar({
           <Link
             href="/help"
             className={cn(
-              "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+              "text-on-surface-variant hover:bg-surface-container-high/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
               isCollapsed && "justify-center px-0"
             )}
           >
@@ -173,7 +181,7 @@ export function Sidebar({
           <button
             onClick={onLogout}
             className={cn(
-              "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+              "text-on-surface-variant hover:bg-surface-container-high/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
               isCollapsed && "justify-center px-0"
             )}
           >
