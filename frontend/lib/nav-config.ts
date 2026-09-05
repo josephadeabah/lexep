@@ -33,6 +33,7 @@ export const NAV_BY_ROLE: Record<UserRole, NavItem[]> = {
     { label: "Assessments", href: "/assessments", icon: Award },
     { label: "Mentorship", href: "/mentorship", icon: Users },
     { label: "Opportunities", href: "/opportunities", icon: Briefcase },
+    { label: "My Applications", href: "/applications", icon: ClipboardList },
     { label: "Notifications", href: "/notifications", icon: Bell },
     { label: "Settings", href: "/settings", icon: Settings },
   ],
