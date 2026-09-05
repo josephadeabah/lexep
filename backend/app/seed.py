@@ -4,18 +4,22 @@ Seeds demo data so the frontend has something to render immediately
 
     python -m app.seed
 """
-
 from datetime import datetime, timedelta, timezone
 
 from app.core.database import SessionLocal
 from app.core.security import hash_password
 from app.init_db import init_db
-from app.models.assessment import Assessment, AssessmentQuestion
+from app.models.assessment import Assessment, AssessmentAttempt, AssessmentQuestion
 from app.models.billing import Subscription
+from app.models.course import Course, CourseModule, Enrollment
+from app.models.notification import Notification
 from app.models.enums import (
     ApplicationStatus,
+    AssessmentAttemptStatus,
     BillingCycle,
+    CourseStatus,
     MentorApplicationStatus,
+    NotificationType,
     OpportunityStatus,
     SubscriptionPlan,
     SubscriptionStatus,
@@ -24,13 +28,7 @@ from app.models.enums import (
 )
 from app.models.grant import Contribution, GrantGroup
 from app.models.opportunity import Application, Opportunity
-from app.models.user import (
-    CompanyProfile,
-    LearnerProfile,
-    MentorPackage,
-    MentorProfile,
-    User,
-)
+from app.models.user import CompanyProfile, LearnerProfile, MentorPackage, MentorProfile, User
 
 
 def run():
@@ -76,38 +74,14 @@ def run():
 
         # --- Learners / applicants ------------------------------------
         applicants = [
-            dict(
-                name="Amina Diop",
-                email="amina@example.com",
-                institution="University of Nairobi",
-                field="B.Sc. Computer Science (Expected 2025)",
-                skills=["React", "Python", "Node.js"],
-                score=95,
-            ),
-            dict(
-                name="Kwame Osei",
-                email="kwame@example.com",
-                institution="Ashesi University",
-                field="B.Eng. Software Engineering (2024)",
-                skills=["Java", "Spring Boot", "SQL"],
-                score=82,
-            ),
-            dict(
-                name="Zola Mbeki",
-                email="zola@example.com",
-                institution="University of Cape Town",
-                field="B.Sc. Information Systems (2025)",
-                skills=["HTML/CSS", "Python", "Design"],
-                score=68,
-            ),
-            dict(
-                name="Chinedu Eze",
-                email="chinedu@example.com",
-                institution="Lagos State University",
-                field="M.Sc. Computer Science (2024)",
-                skills=["Go", "Kubernetes", "AWS"],
-                score=91,
-            ),
+            dict(name="Amina Diop", email="amina@example.com", institution="University of Nairobi",
+                 field="B.Sc. Computer Science (Expected 2025)", skills=["React", "Python", "Node.js"], score=95),
+            dict(name="Kwame Osei", email="kwame@example.com", institution="Ashesi University",
+                 field="B.Eng. Software Engineering (2024)", skills=["Java", "Spring Boot", "SQL"], score=82),
+            dict(name="Zola Mbeki", email="zola@example.com", institution="University of Cape Town",
+                 field="B.Sc. Information Systems (2025)", skills=["HTML/CSS", "Python", "Design"], score=68),
+            dict(name="Chinedu Eze", email="chinedu@example.com", institution="Lagos State University",
+                 field="M.Sc. Computer Science (2024)", skills=["Go", "Kubernetes", "AWS"], score=91),
         ]
         for a in applicants:
             learner = User(
@@ -222,17 +196,9 @@ def run():
                 focus_area="Urban Design",
                 linkedin_url="https://linkedin.com/in/eliasthorne",
                 education=[
-                    {
-                        "degree": "Master of Architecture (MArch)",
-                        "institution": "University of Cape Town",
-                        "year": "2008",
-                    }
+                    {"degree": "Master of Architecture (MArch)", "institution": "University of Cape Town", "year": "2008"}
                 ],
-                credentials=[
-                    {
-                        "label": "Professional Architect — SACAP Registration: PrArch 7890"
-                    }
-                ],
+                credentials=[{"label": "Professional Architect — SACAP Registration: PrArch 7890"}],
                 credential_checklist={},
                 skills=["Urban Design", "Regulatory Compliance", "Design Philosophy"],
                 application_status=MentorApplicationStatus.PENDING,
@@ -240,11 +206,7 @@ def run():
             )
         )
         db.flush()
-        applicant_profile = (
-            db.query(MentorProfile)
-            .filter(MentorProfile.user_id == applicant_user.id)
-            .first()
-        )
+        applicant_profile = db.query(MentorProfile).filter(MentorProfile.user_id == applicant_user.id).first()
         db.add_all(
             [
                 MentorPackage(
@@ -389,22 +351,16 @@ def run():
             ),
             category="Software Engineering",
             goal_amount=50000,
-            raised_amount=5000,
+            raised_amount=45000,
             youth_sponsored=124,
         )
         db.add(group)
         db.flush()
         db.add_all(
             [
-                Contribution(
-                    group_id=group.id, contributor_name="Anonymous Donor", amount=2500
-                ),
-                Contribution(
-                    group_id=group.id, contributor_name="David K.", amount=1500
-                ),
-                Contribution(
-                    group_id=group.id, contributor_name="Amara Ventures", amount=1000
-                ),
+                Contribution(group_id=group.id, contributor_name="Anonymous Donor", amount=5000),
+                Contribution(group_id=group.id, contributor_name="David K.", amount=2500),
+                Contribution(group_id=group.id, contributor_name="Amara Ventures", amount=1000),
             ]
         )
 
@@ -422,93 +378,38 @@ def run():
         db.add(company_profile)
 
         for name, email, industry, location, tier, status in [
-            (
-                "Pan-African Finance",
-                "hiring@panafricanfinance.example",
-                "Finance",
-                "Nairobi, KE",
-                "pro",
-                "pending_review",
-            ),
-            (
-                "Creative Hub Ltd",
-                "hiring@creativehub.example",
-                "Design",
-                "Accra, GH",
-                "basic",
-                "active",
-            ),
+            ("Pan-African Finance", "hiring@panafricanfinance.example", "Finance", "Nairobi, KE", "pro", "pending_review"),
+            ("Creative Hub Ltd", "hiring@creativehub.example", "Design", "Accra, GH", "basic", "active"),
         ]:
             firm_user = User(
-                email=email,
-                full_name=name,
-                hashed_password=hash_password("password123"),
-                role=UserRole.COMPANY,
-                onboarding_completed=True,
+                email=email, full_name=name, hashed_password=hash_password("password123"),
+                role=UserRole.COMPANY, onboarding_completed=True,
             )
             db.add(firm_user)
             db.flush()
             db.add(
                 CompanyProfile(
-                    user_id=firm_user.id,
-                    company_name=name,
-                    industry_category=industry,
-                    location=location,
-                    subscription_tier=tier,
-                    onboarding_status=status,
+                    user_id=firm_user.id, company_name=name, industry_category=industry,
+                    location=location, subscription_tier=tier, onboarding_status=status,
                 )
             )
 
         for name, email, location, track, progress, status in [
-            (
-                "Amina Olayinka",
-                "amina.o@example.com",
-                "Lagos, NG",
-                "Frontend Engineering",
-                100,
-                "competency_verified",
-            ),
-            (
-                "Kwame Mensah",
-                "k.mensah@example.com",
-                "Accra, GH",
-                "Backend Architecture",
-                65,
-                "in_progress",
-            ),
-            (
-                "Nneka Uzo",
-                "n.uzo@example.com",
-                "Nairobi, KE",
-                "Data Science Foundation",
-                82,
-                "in_progress",
-            ),
-            (
-                "Tunde Jaja",
-                "t.jaja@example.com",
-                "Lagos, NG",
-                "UI/UX Principles",
-                100,
-                "needs_review",
-            ),
+            ("Amina Olayinka", "amina.o@example.com", "Lagos, NG", "Frontend Engineering", 100, "competency_verified"),
+            ("Kwame Mensah", "k.mensah@example.com", "Accra, GH", "Backend Architecture", 65, "in_progress"),
+            ("Nneka Uzo", "n.uzo@example.com", "Nairobi, KE", "Data Science Foundation", 82, "in_progress"),
+            ("Tunde Jaja", "t.jaja@example.com", "Lagos, NG", "UI/UX Principles", 100, "needs_review"),
         ]:
             learner_user = User(
-                email=email,
-                full_name=name,
-                hashed_password=hash_password("password123"),
-                role=UserRole.LEARNER,
-                onboarding_completed=True,
+                email=email, full_name=name, hashed_password=hash_password("password123"),
+                role=UserRole.LEARNER, onboarding_completed=True,
             )
             db.add(learner_user)
             db.flush()
             db.add(
                 LearnerProfile(
-                    user_id=learner_user.id,
-                    location=location,
-                    primary_track=track,
-                    progress_percent=progress,
-                    verification_status=status,
+                    user_id=learner_user.id, location=location, primary_track=track,
+                    progress_percent=progress, verification_status=status,
                 )
             )
 
@@ -516,39 +417,94 @@ def run():
 
         # --- Premium subscriptions demo data -----------------------------
         john = User(
-            email="john.d@example.com",
-            full_name="John Doe",
-            hashed_password=hash_password("password123"),
-            role=UserRole.LEARNER,
-            onboarding_completed=True,
+            email="john.d@example.com", full_name="John Doe",
+            hashed_password=hash_password("password123"), role=UserRole.LEARNER, onboarding_completed=True,
         )
         db.add(john)
         db.flush()
         db.add(
             Subscription(
-                user_id=john.id,
-                plan=SubscriptionPlan.LEARNER_PLUS,
-                billing_cycle=BillingCycle.MONTHLY,
-                status=SubscriptionStatus.ACTIVE,
-                amount=49,
-                currency="USD",
-                provider="mock",
-                provider_reference="seed_sub_john",
-                renews_at=datetime.now(timezone.utc) + timedelta(days=20),
+                user_id=john.id, plan=SubscriptionPlan.LEARNER_PLUS, billing_cycle=BillingCycle.MONTHLY,
+                status=SubscriptionStatus.ACTIVE, amount=49, currency="USD", provider="mock",
+                provider_reference="seed_sub_john", renews_at=datetime.now(timezone.utc) + timedelta(days=20),
             )
         )
         db.add(
             Subscription(
-                user_id=company_user.id,
-                plan=SubscriptionPlan.ENTERPRISE,
-                billing_cycle=BillingCycle.MONTHLY,
-                status=SubscriptionStatus.ACTIVE,
-                amount=2499,
-                currency="USD",
-                provider="mock",
-                provider_reference="seed_sub_technova",
-                renews_at=datetime.now(timezone.utc) + timedelta(days=32),
+                user_id=company_user.id, plan=SubscriptionPlan.ENTERPRISE, billing_cycle=BillingCycle.MONTHLY,
+                status=SubscriptionStatus.ACTIVE, amount=2499, currency="USD", provider="mock",
+                provider_reference="seed_sub_technova", renews_at=datetime.now(timezone.utc) + timedelta(days=32),
             )
+        )
+        db.commit()
+
+        # --- Courses (Admin + Company created) ---------------------------
+        admin_user = db.query(User).filter(User.email == "admin@lexep.org").first()
+        course1 = Course(
+            creator_id=admin_user.id, title="Urban Planning Fundamentals", category="Core Foundation",
+            level="Beginner", description="Master planning for high-density, resilient communities.",
+            status=CourseStatus.PUBLISHED, is_public=True, duration_weeks=6,
+        )
+        course2 = Course(
+            creator_id=company_user.id, title="Onboarding: Corporate Security", category="Internal",
+            level="Beginner", description="Mandatory security protocols for all interns.",
+            status=CourseStatus.PUBLISHED, is_public=False, duration_weeks=2,
+        )
+        db.add_all([course1, course2])
+        db.flush()
+        db.add_all(
+            [
+                CourseModule(course_id=course1.id, order=0, title="Introduction", duration_minutes=25),
+                CourseModule(course_id=course1.id, order=1, title="Master Planning Basics", duration_minutes=40),
+                CourseModule(course_id=course2.id, order=0, title="Security Protocols Overview", duration_minutes=20),
+            ]
+        )
+        db.add(Enrollment(course_id=course2.id, learner_id=applicant_user.id, progress_percent=92))
+        db.commit()
+
+        # --- Company internal assessment (for the Leaderboard) -----------
+        internal_assessment = Assessment(
+            owner_id=company_user.id, is_internal=True, title="Structural Engineering Quiz",
+            category="Engineering", level="Advanced", duration_minutes=45,
+        )
+        db.add(internal_assessment)
+        db.flush()
+        db.add(
+            AssessmentQuestion(
+                assessment_id=internal_assessment.id, order=0, topic="Structures", title="Load Paths",
+                prompt="Which system carries lateral loads most efficiently in a tall building?",
+                options=[{"id": "a", "text": "Moment frame"}, {"id": "b", "text": "Shear wall"}, {"id": "c", "text": "Flat slab"}, {"id": "d", "text": "Truss"}],
+                correct_option_id="b", explanation="Shear walls are highly efficient at resisting lateral loads in tall buildings.",
+            )
+        )
+        db.commit()
+
+        for learner_email, score in [("amina.o@example.com", 98), ("k.mensah@example.com", 94), ("n.uzo@example.com", 91)]:
+            learner_user = db.query(User).filter(User.email == learner_email).first()
+            if not learner_user:
+                continue
+            attempt = AssessmentAttempt(
+                assessment_id=internal_assessment.id, user_id=learner_user.id,
+                status=AssessmentAttemptStatus.COMPLETED, current_index=1, score=score,
+                completed_at=datetime.now(timezone.utc) - timedelta(days=2),
+            )
+            db.add(attempt)
+        db.commit()
+
+        # --- Notifications (in-app, demo data) ----------------------------
+        db.add_all(
+            [
+                Notification(
+                    user_id=john.id, type=NotificationType.NEW_COURSE, title="New Course Available",
+                    body='"Urban Planning Fundamentals" is now open for enrollment. Expand your skill set with industry experts.',
+                    action_label="View Details", action_url="/courses",
+                ),
+                Notification(
+                    user_id=john.id, type=NotificationType.ASSESSMENT_GRADED, title="Assessment Graded",
+                    body='Your "Studio Project 1: Urban Flow" has been reviewed. You scored 92%.',
+                    is_read=True,
+                ),
+            ]
         )
         db.commit()
         print("Seed complete.")

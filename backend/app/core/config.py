@@ -12,7 +12,6 @@ a feature on — no code changes required. When a flag is `false`, the app uses
 a no-op/mock implementation so every flow still works end-to-end for demos
 and local development without any real accounts.
 """
-
 from functools import lru_cache
 from typing import List
 
@@ -60,9 +59,6 @@ class Settings(BaseSettings):
     PAYSTACK_PUBLIC_KEY: str = ""
     PAYSTACK_WEBHOOK_SECRET: str = ""
 
-    # Default currency for payments (GHS = Ghanaian Cedi)
-    DEFAULT_CURRENCY: str = "GHS"
-
     # --- Email (Brevo today; provider is swappable) -----------------------
     EMAIL_ENABLED: bool = False
     EMAIL_PROVIDER: str = "brevo"  # only "brevo" is implemented today
@@ -85,6 +81,27 @@ class Settings(BaseSettings):
     SUPABASE_URL: str = ""
     SUPABASE_SERVICE_KEY: str = ""
     SUPABASE_BUCKET: str = "lexep-uploads"
+
+    # --- AI matching (mentor & opportunity recommendations) ----------------
+    # AI_PROVIDER=heuristic needs no setup at all and is the default — it's
+    # a transparent keyword/skill-overlap scorer, not a hosted model. Every
+    # LLM-backed provider below falls back to it automatically on any error
+    # (missing key, network issue, bad response), so recommendations always
+    # work even if a provider is misconfigured.
+    AI_PROVIDER: str = "heuristic"  # "heuristic" | "deepinfra" | "openai" | "anthropic"
+
+    # DeepInfra hosts free/cheap open models (Qwen, DeepSeek, Llama, ...)
+    # behind an OpenAI-compatible API — recommended if you want a real LLM
+    # without OpenAI/Anthropic pricing.
+    DEEPINFRA_API_KEY: str = ""
+    DEEPINFRA_MODEL: str = "Qwen/Qwen2.5-72B-Instruct"
+    DEEPINFRA_BASE_URL: str = "https://api.deepinfra.com/v1/openai"
+
+    OPENAI_API_KEY: str = ""
+    OPENAI_MODEL: str = "gpt-4o-mini"
+
+    ANTHROPIC_API_KEY: str = ""
+    ANTHROPIC_MODEL: str = "claude-3-5-haiku-latest"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

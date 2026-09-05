@@ -26,22 +26,14 @@ def _slugify(name: str) -> str:
 
 
 def _group_to_out(group: GrantGroup) -> GrantGroupOut:
-    percent = (
-        round((group.raised_amount / group.goal_amount) * 100, 1)
-        if group.goal_amount
-        else 0.0
-    )
+    percent = round((group.raised_amount / group.goal_amount) * 100, 1) if group.goal_amount else 0.0
     data = GrantGroupOut.model_validate(group)
     data.percent_funded = percent
     return data
 
 
 @router.post("", response_model=GrantOut, status_code=201)
-def apply_for_grant(
-    payload: GrantCreate,
-    db: Session = Depends(get_db),
-    user: User = Depends(get_current_user),
-):
+def apply_for_grant(payload: GrantCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """3-step 'Grant Application' wizard — final submit."""
     grant = Grant(applicant_id=user.id, **payload.model_dump())
     db.add(grant)
@@ -56,16 +48,10 @@ def my_grants(db: Session = Depends(get_db), user: User = Depends(get_current_us
 
 
 @router.post("/groups", response_model=GrantGroupOut, status_code=201)
-def create_group(
-    payload: GrantGroupCreate,
-    db: Session = Depends(get_db),
-    user: User = Depends(get_current_user),
-):
+def create_group(payload: GrantGroupCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """Powers the 'Create Group' (Lexep Impact) flow."""
     group = GrantGroup(organizer_id=user.id, **payload.model_dump())
-    group.invite_link = (
-        f"lexep.org/join/{_slugify(payload.name)}-{secrets.token_hex(2)}"
-    )
+    group.invite_link = f"lexep.org/join/{_slugify(payload.name)}-{secrets.token_hex(2)}"
     db.add(group)
     db.commit()
     db.refresh(group)
@@ -73,9 +59,7 @@ def create_group(
 
 
 @router.get("/impact/summary")
-def impact_summary(
-    db: Session = Depends(get_db), user: User = Depends(get_current_user)
-):
+def impact_summary(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """Powers the 'Impact Dashboard' stat cards for a grant-group organizer."""
     groups = db.query(GrantGroup).filter(GrantGroup.organizer_id == user.id).all()
     return {
@@ -110,9 +94,7 @@ def top_contributors(group_id: int, db: Session = Depends(get_db)):
     )
 
 
-@router.post(
-    "/groups/{group_id}/contribute", response_model=ContributionOut, status_code=201
-)
+@router.post("/groups/{group_id}/contribute", response_model=ContributionOut, status_code=201)
 def contribute(
     group_id: int,
     payload: ContributionCreate,

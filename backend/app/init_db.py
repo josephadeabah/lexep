@@ -11,7 +11,6 @@ Run this module directly to create tables:
 
     python -m app.init_db
 """
-
 from app.core.database import Base, engine
 from app import models  # noqa: F401 — registers models on Base.metadata
 

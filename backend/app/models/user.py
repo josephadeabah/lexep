@@ -1,17 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from sqlalchemy import (
-    DateTime,
-    Enum,
-    ForeignKey,
-    Integer,
-    JSON,
-    String,
-    Boolean,
-    Float,
-    func,
-)
+from sqlalchemy import DateTime, Enum, ForeignKey, Integer, JSON, String, Boolean, Float, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
@@ -22,9 +12,7 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(
-        String(255), unique=True, index=True, nullable=False
-    )
+    email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
     hashed_password: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     full_name: Mapped[str] = mapped_column(String(255), nullable=False)
     avatar_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
@@ -39,9 +27,7 @@ class User(Base):
     notification_preferences: Mapped[dict] = mapped_column(JSON, default=dict)
     privacy_settings: Mapped[dict] = mapped_column(JSON, default=dict)
 
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
@@ -70,20 +56,14 @@ class LearnerProfile(Base):
     institution: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     career_interests: Mapped[list] = mapped_column(JSON, default=list)
 
-    goals: Mapped[list] = mapped_column(
-        JSON, default=list
-    )  # e.g. ["Finding a Mentor", ...]
-    weekly_time_commitment: Mapped[Optional[str]] = mapped_column(
-        String(50), nullable=True
-    )
+    goals: Mapped[list] = mapped_column(JSON, default=list)  # e.g. ["Finding a Mentor", ...]
+    weekly_time_commitment: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
 
     # Admin 'User Management' screen
     location: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     primary_track: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
     progress_percent: Mapped[int] = mapped_column(default=0)
-    verification_status: Mapped[str] = mapped_column(
-        String(30), default="in_progress"
-    )  # in_progress | needs_review | competency_verified
+    verification_status: Mapped[str] = mapped_column(String(30), default="in_progress")  # in_progress | needs_review | competency_verified
 
     user: Mapped["User"] = relationship(back_populates="learner_profile")
 
@@ -96,9 +76,7 @@ class MentorProfile(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), unique=True)
 
-    title: Mapped[Optional[str]] = mapped_column(
-        String(255), nullable=True
-    )  # "Current Role"
+    title: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)  # "Current Role"
     company: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     bio: Mapped[Optional[str]] = mapped_column(String(4000), nullable=True)
 
@@ -124,22 +102,12 @@ class MentorProfile(Base):
     # Admin review (Lexep Admin > Mentor Application Queue)
     location: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     focus_area: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
-    education: Mapped[list] = mapped_column(
-        JSON, default=list
-    )  # [{degree, institution, year}]
-    credentials: Mapped[list] = mapped_column(
-        JSON, default=list
-    )  # [{label, document_url}]
-    credential_checklist: Mapped[dict] = mapped_column(
-        JSON, default=dict
-    )  # {identity: bool, academic: bool, professional: bool}
+    education: Mapped[list] = mapped_column(JSON, default=list)  # [{degree, institution, year}]
+    credentials: Mapped[list] = mapped_column(JSON, default=list)  # [{label, document_url}]
+    credential_checklist: Mapped[dict] = mapped_column(JSON, default=dict)  # {identity: bool, academic: bool, professional: bool}
     admin_notes: Mapped[Optional[str]] = mapped_column(String(4000), nullable=True)
-    application_submitted_at: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
-    application_reviewed_at: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
+    application_submitted_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+    application_reviewed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
     languages: Mapped[list] = mapped_column(JSON, default=list)
     rating: Mapped[float] = mapped_column(Float, default=0.0)
@@ -193,11 +161,7 @@ class CompanyProfile(Base):
     # Admin 'Partner Firms Management' screen
     industry_category: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
     location: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
-    subscription_tier: Mapped[str] = mapped_column(
-        String(30), default="basic"
-    )  # basic | pro | enterprise
-    onboarding_status: Mapped[str] = mapped_column(
-        String(30), default="active"
-    )  # active | pending_review
+    subscription_tier: Mapped[str] = mapped_column(String(30), default="basic")  # basic | pro | enterprise
+    onboarding_status: Mapped[str] = mapped_column(String(30), default="active")  # active | pending_review
 
     user: Mapped["User"] = relationship(back_populates="company_profile")

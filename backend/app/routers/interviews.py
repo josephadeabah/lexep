@@ -5,15 +5,11 @@ from sqlalchemy.orm import Session
 
 from app.api_deps import get_current_user_optional, require_role
 from app.core.database import get_db
-from app.models.enums import ApplicationStatus, InterviewStatus, UserRole
+from app.models.enums import ApplicationStatus, InterviewStatus, NotificationType, UserRole
 from app.models.opportunity import Application, Interview, Opportunity
 from app.models.user import User
-from app.schemas.opportunity import (
-    InterviewCreate,
-    InterviewOut,
-    InterviewPropose,
-    InterviewSelectTime,
-)
+from app.schemas.opportunity import InterviewCreate, InterviewOut, InterviewPropose, InterviewSelectTime
+from app.services.notifications import notify
 
 router = APIRouter(prefix="/api/interviews", tags=["interviews"])
 
@@ -21,9 +17,7 @@ router = APIRouter(prefix="/api/interviews", tags=["interviews"])
 def _to_out(interview: Interview, db: Session) -> InterviewOut:
     application = db.get(Application, interview.application_id)
     candidate = db.get(User, application.applicant_id) if application else None
-    opportunity = (
-        db.get(Opportunity, application.opportunity_id) if application else None
-    )
+    opportunity = db.get(Opportunity, application.opportunity_id) if application else None
     out = InterviewOut.model_validate(interview)
     out.candidate_name = candidate.full_name if candidate else None
     out.opportunity_title = opportunity.title if opportunity else None
@@ -73,6 +67,18 @@ def propose_interview(
     )
     application.status = ApplicationStatus.INTERVIEW_SCHEDULED
     db.add_all([interview, application])
+    db.flush()
+
+    opportunity = db.get(Opportunity, application.opportunity_id)
+    notify(
+        db,
+        user_id=application.applicant_id,
+        type=NotificationType.INTERVIEW_SCHEDULED,
+        title="Interview Scheduled",
+        body=f"You've been invited to interview for {opportunity.title if opportunity else 'a role'}. Choose a time that works for you.",
+        action_label="Select a Time",
+        action_url=f"/interviews/{interview.id}/select-time",
+    )
     db.commit()
     db.refresh(interview)
     return _to_out(interview, db)
@@ -106,9 +112,7 @@ def select_interview_time(
 
     proposed = [datetime.fromisoformat(t) for t in interview.proposed_times]
     if proposed and payload.selected_time not in proposed:
-        raise HTTPException(
-            status_code=400, detail="Selected time is not one of the proposed slots."
-        )
+        raise HTTPException(status_code=400, detail="Selected time is not one of the proposed slots.")
 
     interview.selected_time = payload.selected_time
     interview.scheduled_at = payload.selected_time
@@ -116,6 +120,19 @@ def select_interview_time(
     if not interview.meeting_link:
         interview.meeting_link = f"https://meet.lexep.org/i/{interview.id}"
     db.add(interview)
+    db.flush()
+
+    application = db.get(Application, interview.application_id)
+    opportunity = db.get(Opportunity, application.opportunity_id) if application else None
+    if opportunity:
+        notify(
+            db,
+            user_id=opportunity.company_id,
+            type=NotificationType.INTERVIEW_CONFIRMED,
+            title="Interview Confirmed",
+            body=f"{learner.full_name} confirmed a time for the {opportunity.title} interview.",
+            action_url="/interviews",
+        )
     db.commit()
     db.refresh(interview)
     return _to_out(interview, db)
@@ -127,17 +144,9 @@ def upcoming_interviews(
     company: User = Depends(require_role(UserRole.COMPANY)),
 ):
     """Powers the 'Upcoming Interviews' / 'Interview Schedule' hub."""
-    opportunity_ids = [
-        o.id
-        for o in db.query(Opportunity)
-        .filter(Opportunity.company_id == company.id)
-        .all()
-    ]
+    opportunity_ids = [o.id for o in db.query(Opportunity).filter(Opportunity.company_id == company.id).all()]
     application_ids = [
-        a.id
-        for a in db.query(Application)
-        .filter(Application.opportunity_id.in_(opportunity_ids))
-        .all()
+        a.id for a in db.query(Application).filter(Application.opportunity_id.in_(opportunity_ids)).all()
     ]
     interviews = (
         db.query(Interview)
@@ -155,17 +164,9 @@ def pending_interviews_for_company(
     company: User = Depends(require_role(UserRole.COMPANY)),
 ):
     """Interviews awaiting the candidate's time selection — 'Pending Requests'."""
-    opportunity_ids = [
-        o.id
-        for o in db.query(Opportunity)
-        .filter(Opportunity.company_id == company.id)
-        .all()
-    ]
+    opportunity_ids = [o.id for o in db.query(Opportunity).filter(Opportunity.company_id == company.id).all()]
     application_ids = [
-        a.id
-        for a in db.query(Application)
-        .filter(Application.opportunity_id.in_(opportunity_ids))
-        .all()
+        a.id for a in db.query(Application).filter(Application.opportunity_id.in_(opportunity_ids)).all()
     ]
     interviews = (
         db.query(Interview)

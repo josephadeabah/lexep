@@ -6,18 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.core.config import settings
 from app.core.idempotency import IdempotencyMiddleware
-from app.routers import (
-    admin,
-    assessments,
-    auth,
-    grants,
-    interviews,
-    mentors,
-    opportunities,
-    payments,
-    uploads,
-    users,
-)
+from app.routers import admin, assessments, auth, courses, grants, interviews, mentors, notifications, opportunities, payments, uploads, users
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -48,6 +37,8 @@ app.include_router(admin.router)
 app.include_router(assessments.router)
 app.include_router(payments.router)
 app.include_router(uploads.router)
+app.include_router(courses.router)
+app.include_router(notifications.router)
 
 # Local-storage fallback for file uploads when SUPABASE_ENABLED=false —
 # see integrations/storage/local_storage.py.

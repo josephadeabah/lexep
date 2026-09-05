@@ -9,6 +9,8 @@ This repo contains two independent, deployable apps:
 
 Both are wired together and were built directly against the `DESIGN.md` design system and the UI screens supplied (sign-in/up, onboarding, dashboards, opportunities, mentorship, grants, settings).
 
+See **[`PITCH_DECK.md`](./PITCH_DECK.md)** for an executive summary of what Lexep is and the opportunity it represents — written for co-founder/investor conversations.
+
 ---
 
 ## Quick start (Docker — recommended)
@@ -151,7 +153,6 @@ Everything the screens showed is backed by real endpoints and a real Postgres sc
 - **Meeting links** generated on interview confirmation are placeholder URLs (`https://meet.lexep.org/i/{id}`) rather than real Google Meet/Zoom API integrations.
 
 ## Feature flags & third-party integrations
-
 Every paid feature and third-party integration in this app is off by default and controlled entirely through environment variables — flip a flag, add credentials, and the feature turns on with no code changes. See `backend/.env.example` for the full list. Summary:
 
 | Feature | Flag | Provider | Behavior when off |
@@ -177,6 +178,56 @@ The frontend queues mutating requests (applying to an internship, contributing t
 - `public/sw.js` is a minimal service worker (cache-first for static assets, network-first-with-fallback for pages) so pages the user has already visited keep rendering while offline, rather than showing the browser's default offline error.
 
 This is a real, working implementation, not a stub — but it's intentionally scoped to the actions most worth protecting (applications, contributions, mentorship requests) rather than every possible mutation in the app. Extending coverage to a new action is just passing an `offlineDescription` through the existing `api.ts` methods; the queuing/replay/idempotency plumbing is already there.
+
+## Courses & Assessments (Admin/Company only)
+
+Per the platform's content model, only **Admin** and **Company** accounts can create courses and assessments — learners browse and take them, they never author them. This is enforced server-side (`require_role(UserRole.ADMIN, UserRole.COMPANY)` in `routers/courses.py` and `routers/assessments.py`), not just hidden in the UI.
+
+- **Courses** (`/courses`) — one physical route, role-aware: admin/company see "Curriculum Management" (their own course directory, stats, a 3-step Content Creator wizard at `/courses/new`); learners see "Explore Learning Paths" (browse published courses, enroll, track progress).
+- **Assessments** (`/assessments`) — same pattern: admin/company see a management view + a "New Assessment" builder (`/assessments/new`) for authoring questions inline; learners see the Skill Assessment Hub (take assessments, resume in-progress attempts, view scored results with a topic-by-topic breakdown).
+- **Internship Assessment Leaderboard** (`/assessments/leaderboard`) — **company-only**, enforced server-side. A company's own assessments are marked `is_internal=True` so they never leak into the general learner-facing Skill Assessment Hub, and the leaderboard only ever ranks attempts on that company's own assessments — one company can never see another's candidate data.
+
+## AI-powered matching
+
+Learners get **AI-ranked recommendations** for both mentors (`GET /api/mentors/recommended`) and opportunities (`GET /api/opportunities/recommended`), surfaced as a "Recommended for You" section at the top of the Mentorship and Opportunities pages.
+
+This is implemented behind a provider interface (`backend/app/integrations/ai/`), controlled by `AI_PROVIDER`:
+
+- **`heuristic`** (the default) — a transparent skill/keyword-overlap scorer. Needs no API key, no external calls, and always works. This is not a trained ML model — it's a clear, inspectable starting point that a real model can drop in behind the same interface later.
+- **`deepinfra`** — routes matching through an LLM prompt to DeepInfra's OpenAI-compatible endpoint, which hosts free/cheap open models (Qwen, DeepSeek, Llama, ...). Set `DEEPINFRA_API_KEY` (and optionally `DEEPINFRA_MODEL`) to enable.
+- **`openai`** / **`anthropic`** — same pattern against OpenAI or Anthropic directly, for teams that prefer those providers or want a stronger fallback model.
+
+Every LLM-backed provider automatically falls back to the heuristic provider on **any** failure — missing key, network error, malformed response — so a recommendations page can never break because of a provider outage; it just quietly serves the heuristic ranking instead.
+
+## In-app notifications
+
+A real notification system, not a static mock: `backend/app/models/notification.py` + `routers/notifications.py`, with a service helper (`services/notifications.py`) that other routers call at the moment something notification-worthy happens. Wired into: interview proposed/confirmed, mentorship request accepted/declined, mentor application approved/declined, assessment graded, and more — each call is one line (`notify(db, user_id=..., type=..., title=..., ...)`) inside the same DB transaction as the triggering change, so a notification and the event it describes are always consistent.
+
+The frontend Notification Center (`/notifications`) has All / Unread / Mentorship tabs, mark-as-read (single and bulk), and a live unread-count badge on the sidebar's Notifications item that polls in the background.
+
+## Pagination
+
+List endpoints introduced in this batch (Courses, Notifications, the Internship Assessment Leaderboard, and the Admin learner directory) return a consistent `Page<T>` shape (`items`, `total`, `page`, `page_size`, `total_pages` — see `backend/app/schemas/pagination.py`) and are paired with a single reusable `<Pagination />` component on the frontend (`components/ui/Pagination.tsx`). Earlier list endpoints (Opportunities, Mentors, Grant groups) predate this pattern and still return plain arrays — extending them to `Page<T>` is a mechanical, low-risk change using the same `paginate()` helper, intentionally left for a follow-up pass rather than risking regressions across every page that already consumes them.
+
+## Role-based navigation
+
+Every sidebar nav item points at a route that's meaningful for that role — there are no dead links and no duplicate pages per concern. Several routes are **role-aware at the page level** rather than duplicated per role (one URL, different rendered content by role): `/dashboard`, `/opportunities`, `/courses`, and `/assessments` all do this. Two routes — Courses and Notifications — needed to work for **every** role including Admin, whose other pages live under a separate `/admin/*` shell; `components/layout/SharedShell.tsx` exists specifically to serve those without redirecting admins away or duplicating the page. See `lib/nav-config.ts` for the full per-role nav definitions and `BRAND_BY_ROLE`/`ADMIN_NAV` config shared between `DashboardShell`, `AdminShell`, and `SharedShell`.
+
+## Testing
+
+- **Backend** — `pytest` (`backend/tests/`), run against an isolated in-memory SQLite database per test (no shared state, no real Postgres needed). Covers auth, opportunities, mentors, courses, assessments (including the company-only leaderboard guard), grants/payments, admin guards, and the notification triggers. Run with:
+  ```bash
+  cd backend
+  pip install -r requirements.txt
+  pytest
+  ```
+- **Frontend** — `vitest` + `@testing-library/react` (`lib/__tests__/`, `components/ui/__tests__/`). Covers the formatting utilities and core UI components (Button, Badge, Pagination). Run with:
+  ```bash
+  cd frontend
+  npm install
+  npm test
+  ```
+  Both suites are intentionally a foundation, not exhaustive coverage — the patterns (fixtures in `tests/conftest.py`, `render`/`screen` in the frontend) are meant to be extended as new features land, not re-invented.
 
 ## Branding
 

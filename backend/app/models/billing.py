@@ -5,13 +5,7 @@ from sqlalchemy import DateTime, Enum, Float, ForeignKey, JSON, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
-from app.models.enums import (
-    BillingCycle,
-    SubscriptionPlan,
-    SubscriptionStatus,
-    TransactionStatus,
-    TransactionType,
-)
+from app.models.enums import BillingCycle, SubscriptionPlan, SubscriptionStatus, TransactionStatus, TransactionType
 
 
 class Subscription(Base):
@@ -23,27 +17,17 @@ class Subscription(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
     plan: Mapped[SubscriptionPlan] = mapped_column(Enum(SubscriptionPlan))
-    billing_cycle: Mapped[BillingCycle] = mapped_column(
-        Enum(BillingCycle), default=BillingCycle.MONTHLY
-    )
-    status: Mapped[SubscriptionStatus] = mapped_column(
-        Enum(SubscriptionStatus), default=SubscriptionStatus.PENDING
-    )
+    billing_cycle: Mapped[BillingCycle] = mapped_column(Enum(BillingCycle), default=BillingCycle.MONTHLY)
+    status: Mapped[SubscriptionStatus] = mapped_column(Enum(SubscriptionStatus), default=SubscriptionStatus.PENDING)
 
     amount: Mapped[float] = mapped_column(Float, default=0)
     currency: Mapped[str] = mapped_column(String(10), default="USD")
 
     provider: Mapped[str] = mapped_column(String(30), default="mock")
-    provider_reference: Mapped[Optional[str]] = mapped_column(
-        String(255), nullable=True
-    )
+    provider_reference: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
 
-    renews_at: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    renews_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class Transaction(Base):
@@ -54,30 +38,20 @@ class Transaction(Base):
     __tablename__ = "transactions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("users.id"), nullable=True
-    )
+    user_id: Mapped[Optional[int]] = mapped_column(ForeignKey("users.id"), nullable=True)
 
     purpose: Mapped[TransactionType] = mapped_column(Enum(TransactionType))
-    reference_id: Mapped[Optional[int]] = mapped_column(
-        nullable=True
-    )  # e.g. subscription_id or grant_group_id
+    reference_id: Mapped[Optional[int]] = mapped_column(nullable=True)  # e.g. subscription_id or grant_group_id
 
     amount: Mapped[float] = mapped_column(Float)
     currency: Mapped[str] = mapped_column(String(10), default="USD")
     provider: Mapped[str] = mapped_column(String(30), default="mock")
     provider_reference: Mapped[str] = mapped_column(String(255), unique=True)
-    status: Mapped[TransactionStatus] = mapped_column(
-        Enum(TransactionStatus), default=TransactionStatus.PENDING
-    )
+    status: Mapped[TransactionStatus] = mapped_column(Enum(TransactionStatus), default=TransactionStatus.PENDING)
     meta: Mapped[dict] = mapped_column(JSON, default=dict)
 
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-    verified_at: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    verified_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class IdempotencyRecord(Base):
@@ -94,6 +68,4 @@ class IdempotencyRecord(Base):
     endpoint: Mapped[str] = mapped_column(String(255))
     status_code: Mapped[int] = mapped_column()
     response_body: Mapped[dict] = mapped_column(JSON)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

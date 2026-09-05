@@ -1,10 +1,7 @@
 import secrets
-import hmac
-import hashlib
-import json
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Header
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api_deps import get_current_user
@@ -33,15 +30,12 @@ from app.schemas.billing import (
 
 router = APIRouter(prefix="/api", tags=["payments"])
 
-# Use GHS as default currency
-DEFAULT_CURRENCY = "GHS"
-
 PLAN_PRICING: dict[SubscriptionPlan, dict] = {
     SubscriptionPlan.LEARNER_PLUS: dict(
         name="Learner Plus",
         audience="Accelerate your learning and secure internships.",
-        monthly_price=150,  # GHS 150
-        annual_price=1440,  # GHS 1,440
+        monthly_price=15,
+        annual_price=144,
         features=[
             "Access to all advanced learning paths",
             "Priority internship placement",
@@ -52,8 +46,8 @@ PLAN_PRICING: dict[SubscriptionPlan, dict] = {
     SubscriptionPlan.MENTOR_PRO: dict(
         name="Mentor Pro",
         audience="Expand your influence and track student progress.",
-        monthly_price=490,  # GHS 490
-        annual_price=4700,  # GHS 4,700
+        monthly_price=49,
+        annual_price=470,
         is_popular=True,
         features=[
             "Enhanced visibility in mentor directory",
@@ -90,34 +84,23 @@ def public_config():
 @router.get("/plans", response_model=list[PricingPlanOut])
 def list_plans():
     """Powers the public Pricing page."""
-    return [
-        PricingPlanOut(id=plan_id, **data) for plan_id, data in PLAN_PRICING.items()
-    ]
+    return [PricingPlanOut(id=plan_id, **data) for plan_id, data in PLAN_PRICING.items()]
 
 
 def _price_for(plan: SubscriptionPlan, cycle: BillingCycle) -> float:
     data = PLAN_PRICING.get(plan)
     if not data or data.get("is_custom"):
-        raise HTTPException(
-            status_code=400, detail="This plan requires contacting sales."
-        )
-    return (
-        data["annual_price"] if cycle == BillingCycle.ANNUAL else data["monthly_price"]
-    )
+        raise HTTPException(status_code=400, detail="This plan requires contacting sales.")
+    return data["annual_price"] if cycle == BillingCycle.ANNUAL else data["monthly_price"]
 
 
 @router.post("/checkout/subscription", response_model=CheckoutResponse)
 def checkout_subscription(
-    payload: CheckoutSubscriptionRequest,
-    db: Session = Depends(get_db),
-    user: User = Depends(get_current_user),
+    payload: CheckoutSubscriptionRequest, db: Session = Depends(get_db), user: User = Depends(get_current_user)
 ):
     """Powers the 'Select Your Plan' -> Checkout flow."""
     if not settings.PREMIUM_FEATURES_ENABLED:
-        raise HTTPException(
-            status_code=403,
-            detail="Premium features are not enabled on this platform yet.",
-        )
+        raise HTTPException(status_code=403, detail="Premium features are not enabled on this platform yet.")
 
     amount = _price_for(payload.plan, payload.billing_cycle)
     reference = f"sub_{secrets.token_hex(8)}"
@@ -128,7 +111,7 @@ def checkout_subscription(
         billing_cycle=payload.billing_cycle,
         status=SubscriptionStatus.PENDING,
         amount=amount,
-        currency=DEFAULT_CURRENCY,
+        currency="USD",
         provider=settings.PAYMENTS_PROVIDER if settings.PAYMENTS_ENABLED else "mock",
         provider_reference=reference,
     )
@@ -140,7 +123,7 @@ def checkout_subscription(
         purpose=TransactionType.SUBSCRIPTION,
         reference_id=subscription.id,
         amount=amount,
-        currency=DEFAULT_CURRENCY,
+        currency="USD",
         provider=subscription.provider,
         provider_reference=reference,
         status=TransactionStatus.PENDING,
@@ -151,25 +134,20 @@ def checkout_subscription(
     provider = get_payment_provider()
     initialized = provider.initialize_transaction(
         amount=amount,
-        currency=DEFAULT_CURRENCY,
+        currency="USD",
         email=user.email,
         reference=reference,
         metadata={"purpose": "subscription", "subscription_id": subscription.id},
     )
     return CheckoutResponse(
-        reference=initialized.reference,
-        authorization_url=initialized.authorization_url,
-        provider=initialized.provider,
-        amount=amount,
-        currency=DEFAULT_CURRENCY,
+        reference=initialized.reference, authorization_url=initialized.authorization_url,
+        provider=initialized.provider, amount=amount, currency="USD",
     )
 
 
 @router.post("/checkout/contribution", response_model=CheckoutResponse)
 def checkout_contribution(
-    payload: CheckoutContributionRequest,
-    db: Session = Depends(get_db),
-    user: User = Depends(get_current_user),
+    payload: CheckoutContributionRequest, db: Session = Depends(get_db), user: User = Depends(get_current_user)
 ):
     """Powers the 'Contribute Now' payment flow on a grant group page."""
     group = db.get(GrantGroup, payload.group_id)
@@ -182,7 +160,7 @@ def checkout_contribution(
         purpose=TransactionType.GRANT_CONTRIBUTION,
         reference_id=group.id,
         amount=payload.amount,
-        currency=DEFAULT_CURRENCY,
+        currency="USD",
         provider=settings.PAYMENTS_PROVIDER if settings.PAYMENTS_ENABLED else "mock",
         provider_reference=reference,
         status=TransactionStatus.PENDING,
@@ -194,53 +172,35 @@ def checkout_contribution(
     provider = get_payment_provider()
     initialized = provider.initialize_transaction(
         amount=payload.amount,
-        currency=DEFAULT_CURRENCY,
+        currency="USD",
         email=user.email,
         reference=reference,
         metadata={"purpose": "grant_contribution", "group_id": group.id},
     )
     return CheckoutResponse(
-        reference=initialized.reference,
-        authorization_url=initialized.authorization_url,
-        provider=initialized.provider,
-        amount=payload.amount,
-        currency=DEFAULT_CURRENCY,
+        reference=initialized.reference, authorization_url=initialized.authorization_url,
+        provider=initialized.provider, amount=payload.amount, currency="USD",
     )
 
 
 @router.post("/checkout/verify/{reference}", response_model=VerifyPaymentResponse)
-def verify_payment(
-    reference: str,
-    db: Session = Depends(get_db),
-    user: User = Depends(get_current_user),
-):
+def verify_payment(reference: str, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     """Powers the checkout callback / 'Upgrade Successful' page — call this
     after redirect back from the payment provider (or immediately, when
     running with the mock provider) to finalize the transaction."""
-    transaction = (
-        db.query(Transaction)
-        .filter(Transaction.provider_reference == reference)
-        .first()
-    )
+    transaction = db.query(Transaction).filter(Transaction.provider_reference == reference).first()
     if not transaction:
         raise HTTPException(status_code=404, detail="Transaction not found.")
 
     if transaction.status == TransactionStatus.SUCCESS:
         return VerifyPaymentResponse(
-            reference=reference,
-            status=transaction.status,
-            purpose=transaction.purpose,
-            amount=transaction.amount,
+            reference=reference, status=transaction.status, purpose=transaction.purpose, amount=transaction.amount
         )
 
     provider = get_payment_provider()
     verified = provider.verify_transaction(reference)
 
-    transaction.status = (
-        TransactionStatus.SUCCESS
-        if verified.status == "success"
-        else TransactionStatus.FAILED
-    )
+    transaction.status = TransactionStatus.SUCCESS if verified.status == "success" else TransactionStatus.FAILED
     db.add(transaction)
 
     if transaction.status == TransactionStatus.SUCCESS:
@@ -257,8 +217,7 @@ def verify_payment(
                     Contribution(
                         group_id=group.id,
                         contributor_id=user.id,
-                        contributor_name=transaction.meta.get("contributor_name")
-                        or user.full_name,
+                        contributor_name=transaction.meta.get("contributor_name") or user.full_name,
                         amount=transaction.amount,
                     )
                 )
@@ -266,128 +225,16 @@ def verify_payment(
 
     db.commit()
     return VerifyPaymentResponse(
-        reference=reference,
-        status=transaction.status,
-        purpose=transaction.purpose,
-        amount=transaction.amount,
+        reference=reference, status=transaction.status, purpose=transaction.purpose, amount=transaction.amount
     )
 
 
 @router.get("/subscriptions/me", response_model=Optional[SubscriptionOut])
-def my_subscription(
-    db: Session = Depends(get_db), user: User = Depends(get_current_user)
-):
+def my_subscription(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
     sub = (
         db.query(Subscription)
-        .filter(
-            Subscription.user_id == user.id,
-            Subscription.status == SubscriptionStatus.ACTIVE,
-        )
+        .filter(Subscription.user_id == user.id, Subscription.status == SubscriptionStatus.ACTIVE)
         .order_by(Subscription.created_at.desc())
         .first()
     )
     return sub
-
-
-@router.post("/webhooks/paystack")
-async def paystack_webhook(
-    request: Request,
-    db: Session = Depends(get_db),
-    x_paystack_signature: str = Header(None),
-):
-    """
-    Handle Paystack webhook notifications.
-    This endpoint receives payment events from Paystack.
-    """
-    # Get raw request body for signature verification
-    payload = await request.body()
-
-    # Verify the webhook signature
-    if not verify_paystack_signature(payload, x_paystack_signature):
-        raise HTTPException(status_code=400, detail="Invalid signature")
-
-    # Parse the webhook data
-    try:
-        data = json.loads(payload)
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=400, detail="Invalid JSON payload")
-
-    # Handle the event
-    event_type = data.get("event")
-    event_data = data.get("data", {})
-
-    if event_type == "charge.success":
-        reference = event_data.get("reference")
-
-        # Find the transaction
-        transaction = (
-            db.query(Transaction)
-            .filter(Transaction.provider_reference == reference)
-            .first()
-        )
-
-        if transaction:
-            # Verify with Paystack API
-            provider = get_payment_provider()
-            verified = provider.verify_transaction(reference)
-
-            if verified.status == "success":
-                # Update transaction status
-                transaction.status = TransactionStatus.SUCCESS
-                db.add(transaction)
-
-                # Update related records
-                if transaction.purpose == TransactionType.SUBSCRIPTION:
-                    subscription = db.get(Subscription, transaction.reference_id)
-                    if subscription:
-                        subscription.status = SubscriptionStatus.ACTIVE
-                        db.add(subscription)
-
-                elif transaction.purpose == TransactionType.GRANT_CONTRIBUTION:
-                    group = db.get(GrantGroup, transaction.reference_id)
-                    if group:
-                        group.raised_amount += transaction.amount
-                        db.add(
-                            Contribution(
-                                group_id=group.id,
-                                contributor_id=transaction.user_id,
-                                contributor_name=transaction.meta.get(
-                                    "contributor_name"
-                                )
-                                or "Anonymous",
-                                amount=transaction.amount,
-                            )
-                        )
-                        db.add(group)
-
-                db.commit()
-                print(f"Payment successful for reference: {reference}")
-
-    elif event_type == "charge.failed":
-        reference = event_data.get("reference")
-        transaction = (
-            db.query(Transaction)
-            .filter(Transaction.provider_reference == reference)
-            .first()
-        )
-        if transaction:
-            transaction.status = TransactionStatus.FAILED
-            db.add(transaction)
-            db.commit()
-            print(f"Payment failed for reference: {reference}")
-
-    # Always return 200 to acknowledge receipt
-    return {"status": "success"}
-
-
-def verify_paystack_signature(payload: bytes, signature: str) -> bool:
-    """Verify that the webhook request is genuinely from Paystack."""
-    if not signature or not settings.PAYSTACK_SECRET_KEY:
-        return False
-
-    # Paystack signs the payload using HMAC-SHA512 with the secret key
-    computed_signature = hmac.new(
-        settings.PAYSTACK_SECRET_KEY.encode("utf-8"), payload, hashlib.sha512
-    ).hexdigest()
-
-    return hmac.compare_digest(computed_signature, signature)

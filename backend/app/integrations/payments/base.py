@@ -7,7 +7,6 @@ but adding a second provider (Stripe, Flutterwave, ...) means writing one new
 class here and adding a branch in the factory — nothing else in the app
 needs to change.
 """
-
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Optional
@@ -16,9 +15,7 @@ from typing import Optional
 @dataclass
 class InitializedTransaction:
     reference: str
-    authorization_url: Optional[
-        str
-    ]  # None for providers that don't redirect (e.g. a mock)
+    authorization_url: Optional[str]  # None for providers that don't redirect (e.g. a mock)
     provider: str
 
 
@@ -35,13 +32,7 @@ class VerifiedTransaction:
 class PaymentProvider(ABC):
     @abstractmethod
     def initialize_transaction(
-        self,
-        *,
-        amount: float,
-        currency: str,
-        email: str,
-        reference: str,
-        metadata: dict
+        self, *, amount: float, currency: str, email: str, reference: str, metadata: dict
     ) -> InitializedTransaction: ...
 
     @abstractmethod

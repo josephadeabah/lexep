@@ -88,3 +88,26 @@ class TransactionStatus(str, enum.Enum):
     PENDING = "pending"
     SUCCESS = "success"
     FAILED = "failed"
+
+
+class CourseStatus(str, enum.Enum):
+    DRAFT = "draft"
+    PUBLISHED = "published"
+
+
+class CourseContentType(str, enum.Enum):
+    COURSE_MODULE = "course_module"
+    ASSESSMENT = "assessment"
+
+
+class NotificationType(str, enum.Enum):
+    NEW_COURSE = "new_course"
+    INTERVIEW_SCHEDULED = "interview_scheduled"
+    INTERVIEW_CONFIRMED = "interview_confirmed"
+    MENTORSHIP_ACCEPTED = "mentorship_accepted"
+    MENTORSHIP_DECLINED = "mentorship_declined"
+    MENTOR_APPLICATION_DECISION = "mentor_application_decision"
+    ASSESSMENT_GRADED = "assessment_graded"
+    GRANT_CONTRIBUTION = "grant_contribution"
+    APPLICATION_STATUS = "application_status"
+    GENERAL = "general"

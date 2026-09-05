@@ -25,6 +25,34 @@ class QuestionOption(BaseModel):
     text: str
 
 
+class QuestionCreate(BaseModel):
+    topic: Optional[str] = None
+    title: Optional[str] = None
+    prompt: str
+    options: list[QuestionOption]
+    correct_option_id: str
+    explanation: Optional[str] = None
+
+
+class AssessmentCreate(BaseModel):
+    title: str
+    category: Optional[str] = None
+    level: Optional[str] = None
+    description: Optional[str] = None
+    duration_minutes: int = 45
+    featured: bool = False
+    questions: list[QuestionCreate] = []
+
+
+class LeaderboardEntry(BaseModel):
+    rank: int
+    candidate_name: str
+    candidate_avatar: Optional[str] = None
+    assessment_title: str
+    score: float
+    completed_at: Optional[datetime] = None
+
+
 class QuestionOut(BaseModel):
     """Question shape sent to the client — never includes the correct answer."""
 

@@ -6,10 +6,12 @@ from sqlalchemy.orm import Session
 
 from app.api_deps import get_current_user, require_role
 from app.core.database import get_db
-from app.models.enums import MentorApplicationStatus, MentorshipRequestStatus, UserRole
+from app.integrations.ai import get_ai_match_provider
+from app.models.enums import MentorApplicationStatus, MentorshipRequestStatus, NotificationType, UserRole
 from app.models.mentorship import MentorshipRequest
-from app.models.user import MentorPackage, MentorProfile, User
+from app.models.user import LearnerProfile, MentorPackage, MentorProfile, User
 from app.schemas.mentorship import MentorshipRequestCreate, MentorshipRequestOut
+from app.services.notifications import notify
 from app.schemas.user import (
     MentorApplicationStep1,
     MentorApplicationStep2,
@@ -55,11 +57,8 @@ def find_mentors(
 
 # --- Mentor's own packages (management) --------------------------------
 
-
 @router.get("/me/packages", response_model=list[MentorPackageOut])
-def my_packages(
-    db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))
-):
+def my_packages(db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))):
     return db.query(MentorPackage).filter(MentorPackage.mentor_id == mentor.id).all()
 
 
@@ -112,11 +111,39 @@ def toggle_package(
     return package
 
 
+@router.get("/recommended", response_model=list[MentorProfileOut])
+def recommended_mentors(
+    db: Session = Depends(get_db), learner: User = Depends(require_role(UserRole.LEARNER))
+):
+    """AI-ranked mentor recommendations for the current learner (see
+    integrations/ai/ — swap AI_PROVIDER to plug in a real LLM)."""
+    profile = db.query(LearnerProfile).filter(LearnerProfile.user_id == learner.id).first()
+    mentors = (
+        db.query(MentorProfile)
+        .join(User, User.id == MentorProfile.user_id)
+        .filter(MentorProfile.application_status == MentorApplicationStatus.APPROVED)
+        .filter(MentorProfile.accepting_mentees.is_(True))
+        .all()
+    )
+    if not mentors:
+        return []
+
+    learner_dict = {
+        "career_interests": profile.career_interests if profile else [],
+        "goals": profile.goals if profile else [],
+        "field_of_study": profile.field_of_study if profile else None,
+    }
+    candidates = [{"id": m.user_id, "title": m.title, "skills": m.skills, "category": m.focus_area} for m in mentors]
+
+    provider = get_ai_match_provider()
+    ranked = provider.rank(learner_dict, candidates)
+    by_id = {m.user_id: m for m in mentors}
+    return [by_id[r.candidate_id] for r in ranked if r.candidate_id in by_id]
+
+
 @router.get("/{mentor_user_id}", response_model=MentorProfileOut)
 def get_mentor_profile(mentor_user_id: int, db: Session = Depends(get_db)):
-    profile = (
-        db.query(MentorProfile).filter(MentorProfile.user_id == mentor_user_id).first()
-    )
+    profile = db.query(MentorProfile).filter(MentorProfile.user_id == mentor_user_id).first()
     if not profile:
         raise HTTPException(status_code=404, detail="Mentor not found.")
     return profile
@@ -127,15 +154,12 @@ def list_mentor_packages(mentor_user_id: int, db: Session = Depends(get_db)):
     """Public: powers the 'Mentorship Packages' section on a mentor's profile."""
     return (
         db.query(MentorPackage)
-        .filter(
-            MentorPackage.mentor_id == mentor_user_id, MentorPackage.is_active.is_(True)
-        )
+        .filter(MentorPackage.mentor_id == mentor_user_id, MentorPackage.is_active.is_(True))
         .all()
     )
 
 
 # --- Mentorship requests (Request Session flow) --------------------------
-
 
 @router.post("/requests", response_model=MentorshipRequestOut, status_code=201)
 def request_mentorship(
@@ -159,16 +183,11 @@ def request_mentorship(
 
 
 @router.get("/me/requests", response_model=list[MentorshipRequestOut])
-def my_pending_requests(
-    db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))
-):
+def my_pending_requests(db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))):
     """Powers 'Pending Requests' on the mentor dashboard and Requests page."""
     requests = (
         db.query(MentorshipRequest)
-        .filter(
-            MentorshipRequest.mentor_id == mentor.id,
-            MentorshipRequest.status == MentorshipRequestStatus.PENDING,
-        )
+        .filter(MentorshipRequest.mentor_id == mentor.id, MentorshipRequest.status == MentorshipRequestStatus.PENDING)
         .order_by(MentorshipRequest.created_at.desc())
         .all()
     )
@@ -177,9 +196,7 @@ def my_pending_requests(
 
 @router.post("/me/requests/{request_id}/accept", response_model=MentorshipRequestOut)
 def accept_request(
-    request_id: int,
-    db: Session = Depends(get_db),
-    mentor: User = Depends(require_role(UserRole.MENTOR)),
+    request_id: int, db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))
 ):
     """Accepting confirms the first proposed time slot (simplification — a full
     implementation would let the mentor pick among the learner's proposed times)."""
@@ -192,6 +209,15 @@ def accept_request(
     else:
         request.confirmed_time = datetime.now(timezone.utc) + timedelta(days=1)
     db.add(request)
+    db.flush()
+    notify(
+        db,
+        user_id=request.learner_id,
+        type=NotificationType.MENTORSHIP_ACCEPTED,
+        title="Mentorship Request Accepted",
+        body=f"{mentor.full_name} accepted your mentorship request.",
+        action_url="/mentorship",
+    )
     db.commit()
     db.refresh(request)
     return _request_out(request, db)
@@ -199,31 +225,33 @@ def accept_request(
 
 @router.post("/me/requests/{request_id}/decline", response_model=MentorshipRequestOut)
 def decline_request(
-    request_id: int,
-    db: Session = Depends(get_db),
-    mentor: User = Depends(require_role(UserRole.MENTOR)),
+    request_id: int, db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))
 ):
     request = db.get(MentorshipRequest, request_id)
     if not request or request.mentor_id != mentor.id:
         raise HTTPException(status_code=404, detail="Request not found.")
     request.status = MentorshipRequestStatus.DECLINED
     db.add(request)
+    db.flush()
+    notify(
+        db,
+        user_id=request.learner_id,
+        type=NotificationType.MENTORSHIP_DECLINED,
+        title="Mentorship Request Update",
+        body=f"{mentor.full_name} wasn't able to take on your request this time.",
+        action_url="/mentorship",
+    )
     db.commit()
     db.refresh(request)
     return _request_out(request, db)
 
 
 @router.get("/me/students", response_model=list[MentorshipRequestOut])
-def my_students(
-    db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))
-):
+def my_students(db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))):
     """Powers 'My Students' / 'Active Mentees' — accepted requests, most recent first."""
     requests = (
         db.query(MentorshipRequest)
-        .filter(
-            MentorshipRequest.mentor_id == mentor.id,
-            MentorshipRequest.status == MentorshipRequestStatus.ACCEPTED,
-        )
+        .filter(MentorshipRequest.mentor_id == mentor.id, MentorshipRequest.status == MentorshipRequestStatus.ACCEPTED)
         .order_by(MentorshipRequest.confirmed_time.asc())
         .all()
     )
@@ -231,39 +259,20 @@ def my_students(
 
 
 @router.get("/me/dashboard")
-def mentor_dashboard_stats(
-    db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))
-):
+def mentor_dashboard_stats(db: Session = Depends(get_db), mentor: User = Depends(require_role(UserRole.MENTOR))):
     """Powers the mentor dashboard's stat cards + Today's Schedule."""
     accepted = (
         db.query(MentorshipRequest)
-        .filter(
-            MentorshipRequest.mentor_id == mentor.id,
-            MentorshipRequest.status == MentorshipRequestStatus.ACCEPTED,
-        )
+        .filter(MentorshipRequest.mentor_id == mentor.id, MentorshipRequest.status == MentorshipRequestStatus.ACCEPTED)
         .all()
     )
-    packages_by_id = {
-        p.id: p
-        for p in db.query(MentorPackage)
-        .filter(MentorPackage.mentor_id == mentor.id)
-        .all()
-    }
-    total_earnings = sum(
-        (
-            packages_by_id.get(r.package_id).price
-            if r.package_id and r.package_id in packages_by_id
-            else 0
-        )
-        for r in accepted
-    )
+    packages_by_id = {p.id: p for p in db.query(MentorPackage).filter(MentorPackage.mentor_id == mentor.id).all()}
+    total_earnings = sum((packages_by_id.get(r.package_id).price if r.package_id and r.package_id in packages_by_id else 0) for r in accepted)
 
     profile = db.query(MentorProfile).filter(MentorProfile.user_id == mentor.id).first()
 
     today = datetime.now(timezone.utc).date()
-    todays_sessions = [
-        r for r in accepted if r.confirmed_time and r.confirmed_time.date() == today
-    ]
+    todays_sessions = [r for r in accepted if r.confirmed_time and r.confirmed_time.date() == today]
 
     schedule = []
     for r in sorted(todays_sessions, key=lambda r: r.confirmed_time):
@@ -329,10 +338,7 @@ def mentor_application_step3(
 ):
     """Mentor Application — Step 3 of 3: Motivation & Submission."""
     if not payload.agreed_to_terms:
-        raise HTTPException(
-            status_code=400,
-            detail="You must agree to the Terms & Mentor Code of Conduct.",
-        )
+        raise HTTPException(status_code=400, detail="You must agree to the Terms & Mentor Code of Conduct.")
 
     profile = db.query(MentorProfile).filter(MentorProfile.user_id == mentor.id).first()
     if not profile:

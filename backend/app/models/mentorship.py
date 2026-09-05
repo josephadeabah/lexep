@@ -22,24 +22,14 @@ class MentorshipRequest(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     mentor_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     learner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    package_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("mentor_packages.id"), nullable=True
-    )
+    package_id: Mapped[Optional[int]] = mapped_column(ForeignKey("mentor_packages.id"), nullable=True)
 
-    session_type: Mapped[Optional[str]] = mapped_column(
-        String(120), nullable=True
-    )  # e.g. "30-min Intro"
+    session_type: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)  # e.g. "30-min Intro"
     message: Mapped[Optional[str]] = mapped_column(String(2000), nullable=True)
-    proposed_times: Mapped[list] = mapped_column(
-        JSON, default=list
-    )  # list of ISO datetime strings
-    confirmed_time: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
+    proposed_times: Mapped[list] = mapped_column(JSON, default=list)  # list of ISO datetime strings
+    confirmed_time: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
     status: Mapped[MentorshipRequestStatus] = mapped_column(
         Enum(MentorshipRequestStatus), default=MentorshipRequestStatus.PENDING
     )
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
