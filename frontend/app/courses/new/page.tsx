@@ -13,8 +13,20 @@ import { Select } from "@/components/ui/Select";
 import { Radio } from "@/components/ui/Radio";
 import { useAuthStore } from "@/lib/auth-store";
 import { api } from "@/lib/api";
+import { useAsync } from "@/lib/use-async";
 
 const STEPS = ["Basics", "Media", "Settings"];
+
+// Category options from file 2
+const CATEGORY_OPTIONS = [
+  { value: "", label: "Select a category" },
+  { value: "Core Foundation", label: "Core Foundation" },
+  { value: "Advanced Seminar", label: "Advanced Seminar" },
+  { value: "Practicum", label: "Practicum" },
+  { value: "Technology", label: "Technology" },
+  { value: "Business", label: "Business" },
+  { value: "Creative", label: "Creative" },
+];
 
 function ContentCreatorContent() {
   const router = useRouter();
@@ -39,12 +51,17 @@ function ContentCreatorContent() {
   const [videoFilename, setVideoFilename] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
-  // Step 3
-  const [isPublic, setIsPublic] = useState(true);
-  const [enrollmentLimit, setEnrollmentLimit] = useState("");
-  const [isPaid, setIsPaid] = useState(false);
-  const [price, setPrice] = useState("0.00");
-  const [issueCertificate, setIssueCertificate] = useState(true);
+  // Step 3 - Using better state management from file 2
+  const [settings, setSettings] = useState({
+    isPublic: true,
+    enrollmentLimit: "",
+    isPaid: false,
+    price: "0.00",
+    issueCertificate: true,
+  });
+
+  // Stats from file 2 (shows course stats if available)
+  const stats = useAsync(() => api.courseStats(), []);
 
   async function handleContinueToMedia() {
     setIsSubmitting(true);
@@ -97,11 +114,11 @@ function ContentCreatorContent() {
     setIsSubmitting(true);
     try {
       await api.updateCourseSettings(courseId, {
-        is_public: isPublic,
-        enrollment_limit: enrollmentLimit ? Number(enrollmentLimit) : null,
-        is_paid: isPaid,
-        price: isPaid ? Number(price || 0) : 0,
-        issue_certificate: issueCertificate,
+        is_public: settings.isPublic,
+        enrollment_limit: settings.enrollmentLimit ? Number(settings.enrollmentLimit) : null,
+        is_paid: settings.isPaid,
+        price: settings.isPaid ? Number(settings.price || 0) : 0,
+        issue_certificate: settings.issueCertificate,
       });
       await api.publishCourse(courseId);
       router.push("/courses");
@@ -109,6 +126,11 @@ function ContentCreatorContent() {
       setIsSubmitting(false);
     }
   }
+
+  // Toggle helper from file 2
+  const toggleSetting = (key: keyof typeof settings) => {
+    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
   return (
     <div className="mx-auto max-w-2xl">
@@ -123,6 +145,31 @@ function ContentCreatorContent() {
         </p>
       </div>
 
+      {/* Stats Cards from file 2 - optional, show if available */}
+      {stats.data && (
+        <div className="mb-lg grid gap-md sm:grid-cols-3">
+          <div className="card-level1 p-md">
+            <p className="text-label-sm text-on-surface-variant">TOTAL ACTIVE COURSES</p>
+            <p className="mt-2 text-display-lg text-on-background" style={{ fontSize: 32, lineHeight: "40px" }}>
+              {stats.data.active_courses ?? "—"}
+            </p>
+          </div>
+          <div className="card-level1 p-md">
+            <p className="text-label-sm text-on-surface-variant">TOTAL ENROLLED STUDENTS</p>
+            <p className="mt-2 text-display-lg text-on-background" style={{ fontSize: 32, lineHeight: "40px" }}>
+              {stats.data.total_enrolled ?? "—"}
+            </p>
+          </div>
+          <div className="card-level1 p-md">
+            <p className="text-label-sm text-on-surface-variant">AVG. COMPLETION RATE</p>
+            <p className="mt-2 text-display-lg text-on-background" style={{ fontSize: 32, lineHeight: "40px" }}>
+              {stats.data.avg_completion_rate ?? "—"}%
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Progress Steps */}
       <div className="mb-lg flex items-center">
         {STEPS.map((label, i) => {
           const index = i + 1;
@@ -153,6 +200,8 @@ function ContentCreatorContent() {
         {step === 1 && (
           <div className="flex flex-col gap-md">
             <h2 className="text-headline-md text-on-background">Basic Information</h2>
+            
+            {/* Content Type - from file 1 with better styling */}
             <div>
               <p className="mb-2 text-label-md text-on-surface">Content Type</p>
               <div className="grid grid-cols-2 gap-3">
@@ -178,15 +227,30 @@ function ContentCreatorContent() {
                 </button>
               </div>
             </div>
-            <Input label="Title" placeholder="e.g., Introduction to Sustainable Architecture" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <Textarea label="Description" placeholder="Provide a brief overview of the content…" value={description} onChange={(e) => setDescription(e.target.value)} />
+
+            <Input 
+              label="Title" 
+              placeholder="e.g., Introduction to Sustainable Architecture" 
+              value={title} 
+              onChange={(e) => setTitle(e.target.value)} 
+            />
+            
+            <Textarea 
+              label="Description" 
+              placeholder="Provide a brief overview of the content…" 
+              value={description} 
+              onChange={(e) => setDescription(e.target.value)} 
+            />
+            
+            {/* Categories from file 2 */}
             <Select label="Category" value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option value="">Select a category</option>
-              <option>Core Foundation</option>
-              <option>Advanced Seminar</option>
-              <option>Practicum</option>
-              <option>Internal</option>
+              {CATEGORY_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
             </Select>
+
             <div className="mt-md flex items-center justify-between border-t border-outline-variant/40 pt-md">
               <Link href="/courses" className="text-label-md text-on-surface-variant hover:text-primary">
                 Cancel
@@ -202,14 +266,26 @@ function ContentCreatorContent() {
           <div className="flex flex-col gap-md">
             <h2 className="text-headline-md text-on-background">Media Upload</h2>
             <p className="text-body-md text-on-surface-variant">Upload your primary video content or supporting documents for this module.</p>
-            <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-outline-variant bg-surface-container-low py-xl text-center">
+            
+            {/* File Upload - from file 1 with improved styling */}
+            <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-outline-variant bg-surface-container-low py-xl text-center hover:border-primary-container transition">
               <UploadCloud className="h-8 w-8 text-outline" />
               <span className="text-label-md text-primary">Click to upload or drag and drop</span>
               <span className="text-label-sm text-on-surface-variant">MP4, PDF, DOCX (Max 500MB)</span>
-              <input type="file" className="hidden" onChange={(e) => handleVideoUpload(e.target.files?.[0])} />
+              <input 
+                type="file" 
+                className="hidden" 
+                onChange={(e) => handleVideoUpload(e.target.files?.[0])} 
+                accept=".mp4,.pdf,.docx"
+              />
             </label>
+            
             {isUploading && <p className="text-label-sm text-on-surface-variant">Uploading…</p>}
-            {videoFilename && !isUploading && <p className="text-label-sm text-primary">{videoFilename} uploaded</p>}
+            {videoFilename && !isUploading && (
+              <p className="text-label-sm text-primary flex items-center gap-2">
+                <Check className="h-4 w-4" /> {videoFilename} uploaded
+              </p>
+            )}
 
             <p className="mt-md text-headline-md text-on-background">External Integrations</p>
             <Input
@@ -236,6 +312,7 @@ function ContentCreatorContent() {
             <h2 className="text-headline-md text-on-background">Final Settings</h2>
             <p className="text-body-md text-on-surface-variant">Configure visibility, pricing, and certification details before publishing your content.</p>
 
+            {/* Visibility & Access - from file 1 with toggle pattern from file 2 */}
             <div className="rounded-md border border-outline-variant p-md">
               <p className="flex items-center gap-2 text-label-md text-on-background">
                 <Eye className="h-4 w-4" /> Visibility &amp; Access
@@ -245,10 +322,10 @@ function ContentCreatorContent() {
                   <div className="flex items-center justify-between">
                     <span className="text-label-md text-on-background">Public Course</span>
                     <button
-                      onClick={() => setIsPublic((v) => !v)}
+                      onClick={() => toggleSetting("isPublic")}
                       className={cn(
                         "flex h-6 w-11 items-center rounded-full px-0.5 transition",
-                        isPublic ? "justify-end bg-primary-container" : "justify-start bg-outline-variant"
+                        settings.isPublic ? "justify-end bg-primary-container" : "justify-start bg-outline-variant"
                       )}
                     >
                       <span className="h-5 w-5 rounded-full bg-white shadow" />
@@ -261,31 +338,40 @@ function ContentCreatorContent() {
                   placeholder="e.g., 50"
                   icon={<Users className="h-4 w-4" />}
                   hint="Leave blank for unlimited."
-                  value={enrollmentLimit}
-                  onChange={(e) => setEnrollmentLimit(e.target.value)}
+                  value={settings.enrollmentLimit}
+                  onChange={(e) => setSettings((prev) => ({ ...prev, enrollmentLimit: e.target.value }))}
                 />
               </div>
             </div>
 
+            {/* Pricing - from file 1 */}
             <div className="rounded-md border border-outline-variant p-md">
               <p className="flex items-center gap-2 text-label-md text-on-background">
                 <Wallet className="h-4 w-4" /> Pricing
               </p>
               <div className="mt-3 flex gap-md">
                 <label className="flex items-center gap-2">
-                  <Radio checked={!isPaid} onChange={() => setIsPaid(false)} /> Free Course
+                  <Radio checked={!settings.isPaid} onChange={() => setSettings((prev) => ({ ...prev, isPaid: false }))} />
+                  Free Course
                 </label>
                 <label className="flex items-center gap-2">
-                  <Radio checked={isPaid} onChange={() => setIsPaid(true)} /> Paid Course
+                  <Radio checked={settings.isPaid} onChange={() => setSettings((prev) => ({ ...prev, isPaid: true }))} />
+                  Paid Course
                 </label>
               </div>
-              {isPaid && (
+              {settings.isPaid && (
                 <div className="mt-3 max-w-xs">
-                  <Input label="Price (USD)" icon={<span className="text-body-md">$</span>} value={price} onChange={(e) => setPrice(e.target.value)} />
+                  <Input 
+                    label="Price (USD)" 
+                    icon={<span className="text-body-md">$</span>} 
+                    value={settings.price} 
+                    onChange={(e) => setSettings((prev) => ({ ...prev, price: e.target.value }))} 
+                  />
                 </div>
               )}
             </div>
 
+            {/* Certificate Toggle - from file 1 with toggle pattern */}
             <div className="flex items-center justify-between rounded-md border border-outline-variant p-md">
               <div className="flex items-start gap-3">
                 <Award className="mt-0.5 h-5 w-5 text-on-surface-variant" />
@@ -297,10 +383,10 @@ function ContentCreatorContent() {
                 </div>
               </div>
               <button
-                onClick={() => setIssueCertificate((v) => !v)}
+                onClick={() => toggleSetting("issueCertificate")}
                 className={cn(
                   "flex h-6 w-11 flex-shrink-0 items-center rounded-full px-0.5 transition",
-                  issueCertificate ? "justify-end bg-primary-container" : "justify-start bg-outline-variant"
+                  settings.issueCertificate ? "justify-end bg-primary-container" : "justify-start bg-outline-variant"
                 )}
               >
                 <span className="h-5 w-5 rounded-full bg-white shadow" />
