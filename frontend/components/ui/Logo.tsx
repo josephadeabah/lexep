@@ -17,13 +17,7 @@ export function Logo({ variant = "light", size = 28, showWordmark = true, classN
   const src = variant === "dark" ? "/brand/lexep-mark-white.png" : "/brand/lexep-mark-gold.png";
   return (
     <span className={cn("inline-flex items-center gap-2", className)}>
-      <Image
-        src={src}
-        alt="Lexep"
-        width={size}
-        height={size}
-        style={{ width: size, height: "auto" }}
-      />
+      <Image src={src} alt="Lexep" width={size} height={size} style={{ width: size, height: "auto" }} />
       {showWordmark && (
         <span
           className={cn(

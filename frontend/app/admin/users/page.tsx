@@ -4,18 +4,15 @@ import { useState } from "react";
 import { Search, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/card/Card";
-import { Input } from "@/components/ui/input/Input";
-import { Select } from "@/components/ui/select/Select";
-import { Badge } from "@/components/ui/badge/Badge";
+import { Card } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Avatar } from "@/components/ui/avatar/Avatar";
-import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
+import { Avatar } from "@/components/ui/Avatar";
+import { ProgressBar } from "@/components/ui/ProgressBar";
 
-const STATUS_LABEL: Record<
-  string,
-  { label: string; tone: "success" | "warning" | "primary" | "neutral" }
-> = {
+const STATUS_LABEL: Record<string, { label: string; tone: "success" | "warning" | "primary" | "neutral" }> = {
   competency_verified: { label: "Competency Verified", tone: "success" },
   in_progress: { label: "In Progress", tone: "warning" },
   needs_review: { label: "Needs Review", tone: "primary" },
@@ -29,8 +26,7 @@ export default function AdminUsersPage() {
   const [inviting, setInviting] = useState(false);
 
   const learners = useAsync(
-    () =>
-      api.adminListLearners({ q: query || undefined, status_filter: status || undefined, page }),
+    () => api.adminListLearners({ q: query || undefined, status_filter: status || undefined, page }),
     [query, status, page]
   );
 
@@ -48,7 +44,7 @@ export default function AdminUsersPage() {
   const totalPages = learners.data ? Math.ceil(learners.data.total / learners.data.page_size) : 1;
 
   return (
-    <div className="gap-lg flex flex-col">
+    <div className="flex flex-col gap-lg">
       <div>
         <h1 className="text-headline-lg text-on-background">User Management</h1>
       </div>
@@ -65,26 +61,14 @@ export default function AdminUsersPage() {
             }}
           />
         </div>
-        <Select
-          value={status}
-          onChange={(e) => {
-            setStatus(e.target.value);
-            setPage(1);
-          }}
-          className="sm:w-48"
-        >
+        <Select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }} className="sm:w-48">
           <option value="">All Statuses</option>
           <option value="competency_verified">Competency Verified</option>
           <option value="in_progress">In Progress</option>
           <option value="needs_review">Needs Review</option>
         </Select>
         <div className="flex gap-2">
-          <Input
-            placeholder="learner@email.com"
-            value={inviteEmail}
-            onChange={(e) => setInviteEmail(e.target.value)}
-            className="sm:w-56"
-          />
+          <Input placeholder="learner@email.com" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} className="sm:w-56" />
           <Button onClick={handleInvite} disabled={inviting || !inviteEmail}>
             <Plus className="h-4 w-4" /> Invite Learner
           </Button>
@@ -106,7 +90,7 @@ export default function AdminUsersPage() {
                   <th className="px-md py-3 font-normal">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-outline-variant/40 divide-y">
+              <tbody className="divide-y divide-outline-variant/40">
                 {learners.data.results.map((row) => (
                   <tr key={row.user_id}>
                     <td className="px-md py-4">
@@ -118,20 +102,12 @@ export default function AdminUsersPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-md text-body-md text-on-surface py-4">
-                      {row.location ?? "—"}
-                    </td>
-                    <td className="px-md text-body-md text-on-surface py-4">
-                      {row.primary_track ?? "—"}
-                    </td>
+                    <td className="px-md py-4 text-body-md text-on-surface">{row.location ?? "—"}</td>
+                    <td className="px-md py-4 text-body-md text-on-surface">{row.primary_track ?? "—"}</td>
                     <td className="px-md py-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-24">
-                          <ProgressBar value={row.progress_percent} />
-                        </div>
-                        <span className="text-label-sm text-on-surface-variant">
-                          {row.progress_percent}%
-                        </span>
+                        <div className="w-24"><ProgressBar value={row.progress_percent} /></div>
+                        <span className="text-label-sm text-on-surface-variant">{row.progress_percent}%</span>
                       </div>
                     </td>
                     <td className="px-md py-4">
@@ -143,17 +119,16 @@ export default function AdminUsersPage() {
                 ))}
               </tbody>
             </table>
-            <div className="border-outline-variant/40 p-md flex items-center justify-between border-t">
+            <div className="flex items-center justify-between border-t border-outline-variant/40 p-md">
               <p className="text-label-sm text-on-surface-variant">
                 Showing {(page - 1) * learners.data.page_size + 1} to{" "}
-                {Math.min(page * learners.data.page_size, learners.data.total)} of{" "}
-                {learners.data.total} learners
+                {Math.min(page * learners.data.page_size, learners.data.total)} of {learners.data.total} learners
               </p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="border-outline-variant rounded-md border p-2 disabled:opacity-40"
+                  className="rounded-md border border-outline-variant p-2 disabled:opacity-40"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
@@ -163,7 +138,7 @@ export default function AdminUsersPage() {
                 <button
                   onClick={() => setPage((p) => (p < totalPages ? p + 1 : p))}
                   disabled={page >= totalPages}
-                  className="border-outline-variant rounded-md border p-2 disabled:opacity-40"
+                  className="rounded-md border border-outline-variant p-2 disabled:opacity-40"
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>

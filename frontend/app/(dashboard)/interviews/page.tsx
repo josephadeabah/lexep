@@ -1,13 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Video, Mail, CalendarClock, Link2 } from "lucide-react";
+import { Video, Mail } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/card/Card";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Avatar } from "@/components/ui/avatar/Avatar";
-import { Badge } from "@/components/ui/badge/Badge";
+import { Avatar } from "@/components/ui/Avatar";
 import { formatDate, formatTime, cn } from "@/lib/utils";
 
 function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
@@ -26,36 +25,29 @@ function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
   const highlightedDates = new Set(highlighted.map((d) => d.toDateString()));
 
   return (
-    <Card className="p-6">
+    <Card>
       <div className="flex items-center justify-between">
-        <p className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
+        <p className="text-headline-md text-on-background">
           {viewDate.toLocaleDateString("en-US", { month: "long", year: "numeric" })}
         </p>
         <div className="flex gap-1">
           <button
-            onClick={() =>
-              setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))
-            }
-            className="rounded-md px-2 py-1 text-[#6d6a66] hover:bg-[#f5f3f3]"
+            onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))}
+            className="rounded-md px-2 py-1 hover:bg-surface-container-low"
           >
             ‹
           </button>
           <button
-            onClick={() =>
-              setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))
-            }
-            className="rounded-md px-2 py-1 text-[#6d6a66] hover:bg-[#f5f3f3]"
+            onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))}
+            className="rounded-md px-2 py-1 hover:bg-surface-container-low"
           >
             ›
           </button>
         </div>
       </div>
-
-      <div className="mt-4 grid grid-cols-7 gap-1 text-center">
+      <div className="mt-3 grid grid-cols-7 gap-1 text-center text-label-sm text-on-surface-variant">
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-          <span key={i} className="text-xs font-semibold text-[#6d6a66]">
-            {d}
-          </span>
+          <span key={i}>{d}</span>
         ))}
         {days.map((day, i) => {
           if (!day) return <span key={i} />;
@@ -66,12 +58,9 @@ function MiniCalendar({ highlighted }: { highlighted: Date[] }) {
             <span
               key={i}
               className={cn(
-                "flex h-9 w-full items-center justify-center rounded-full text-sm font-medium",
-                isToday
-                  ? "bg-[#d4af37] text-[#1b1c1c]"
-                  : hasEvent
-                    ? "bg-[#f7edc9] text-[#735c00]"
-                    : "text-[#1b1c1c]"
+                "flex h-8 items-center justify-center rounded-full text-body-md",
+                isToday && "bg-primary-container text-on-primary-container",
+                !isToday && hasEvent && "bg-surface-container-high"
               )}
             >
               {day}
@@ -92,160 +81,88 @@ export default function InterviewsPage() {
     .filter((d): d is Date => !!d);
 
   return (
-    <div className="flex flex-col gap-8">
-      {/* Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-lg">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-['Hanken_Grotesk'] text-4xl font-bold tracking-[-0.045em] text-[#1b1c1c]">
-            Interview Schedule
-          </h1>
-          <p className="mt-2 text-base text-[#6d6a66]">
-            Manage your upcoming and pending candidate interviews.
-          </p>
-        </div>
-
-        {/* Integration Badges */}
-        <div className="flex flex-wrap gap-2">
-          <Badge className="bg-[#f5f3f3] text-[#6d6a66]">
-            <Link2 className="mr-1 h-3 w-3" /> Google Meet Linked
-          </Badge>
-          <Badge className="bg-[#f5f3f3] text-[#6d6a66]">
-            <Link2 className="mr-1 h-3 w-3" /> Zoom Linked
-          </Badge>
+          <h1 className="text-headline-lg text-on-background">Interview Schedule</h1>
+          <p className="mt-1 text-body-md text-on-surface-variant">Manage your upcoming and pending candidate interviews.</p>
         </div>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-[320px_1fr]">
-        {/* Left Sidebar */}
-        <div className="flex flex-col gap-6">
-          {/* Mini Calendar */}
+      <div className="grid gap-md lg:grid-cols-[320px_1fr]">
+        <div className="flex flex-col gap-md">
           <MiniCalendar highlighted={highlighted} />
 
-          {/* Pending Requests */}
-          <Card className="p-6">
+          <Card>
             <div className="flex items-center justify-between">
-              <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
-                Pending Requests
-              </h2>
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f5f3f3] text-sm font-semibold text-[#6d6a66]">
+              <h2 className="text-headline-md text-on-background">Pending Requests</h2>
+              <span className="rounded-full bg-surface-container-high px-2 py-0.5 text-label-sm">
                 {pending.data?.length ?? 0}
               </span>
             </div>
-
             {pending.isLoading ? (
-              <p className="mt-4 text-base text-[#6d6a66]">Loading…</p>
+              <p className="mt-3 text-body-md text-on-surface-variant">Loading…</p>
             ) : pending.data && pending.data.length > 0 ? (
-              <ul className="mt-4 flex flex-col gap-4">
+              <ul className="mt-3 flex flex-col gap-3">
                 {pending.data.map((i) => (
-                  <li key={i.id} className="rounded-xl border border-[#e0d8c9] p-4">
-                    {/* Candidate Info */}
-                    <div className="flex min-w-0 items-start justify-between gap-2">
-                      <div className="flex min-w-0 flex-1 items-start gap-3">
-                        <div className="flex-shrink-0">
-                          <Avatar
-                            name={i.candidate_name ?? "Candidate"}
-                            size={44}
-                            className="rounded-full"
-                          />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-semibold text-[#1b1c1c]">
-                            {i.candidate_name}
-                          </p>
-                          <p className="truncate text-xs text-[#6d6a66]">{i.opportunity_title}</p>
+                  <li key={i.id} className="rounded-md border border-outline-variant p-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Avatar name={i.candidate_name ?? "Candidate"} size={32} />
+                        <div>
+                          <p className="text-label-md text-on-background">{i.candidate_name}</p>
+                          <p className="text-label-sm text-on-surface-variant">{i.opportunity_title}</p>
                         </div>
                       </div>
-                      <Mail className="h-4 w-4 flex-shrink-0 text-[#6d6a66]" />
+                      <Mail className="h-4 w-4 text-outline" />
                     </div>
-
-                    {/* Requested Time */}
-                    <div className="mt-3 border-t border-[#e0d8c9]/40 pt-3">
-                      <p className="text-xs text-[#6d6a66]">Requested 2 days ago</p>
-                    </div>
+                    <p className="mt-2 text-label-sm text-on-surface-variant">
+                      Awaiting candidate&apos;s time selection
+                    </p>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="mt-4 text-base text-[#6d6a66]">No pending requests.</p>
+              <p className="mt-3 text-body-md text-on-surface-variant">No pending requests.</p>
             )}
           </Card>
         </div>
 
-        {/* Upcoming Interviews */}
-        <Card className="p-6">
-          <div className="flex items-center justify-between border-b border-[#e0d8c9]/40 pb-4">
-            <h2 className="font-['Hanken_Grotesk'] text-2xl font-semibold text-[#1b1c1c]">
-              Upcoming Interviews
-            </h2>
-            <button className="text-sm font-semibold text-[#735c00] hover:underline">
-              View All →
-            </button>
-          </div>
-
+        <Card>
+          <h2 className="text-headline-md text-on-background">Upcoming Interviews</h2>
           {interviews.isLoading ? (
-            <p className="mt-4 text-base text-[#6d6a66]">Loading…</p>
+            <p className="mt-3 text-body-md text-on-surface-variant">Loading…</p>
           ) : interviews.data && interviews.data.length > 0 ? (
-            <ul className="mt-4 flex flex-col gap-4">
+            <ul className="mt-3 flex flex-col gap-3">
               {interviews.data
                 .filter((i) => i.status === "scheduled")
                 .map((interview) => (
-                  <li
-                    key={interview.id}
-                    className="flex flex-col gap-4 rounded-lg border border-[#e0d8c9] p-5 sm:flex-row sm:items-center sm:justify-between"
-                  >
-                    {/* Interview Info */}
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0">
-                        <Avatar
-                          name={interview.candidate_name ?? "Candidate"}
-                          size={48}
-                          className="rounded-full"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-base font-semibold text-[#1b1c1c]">
-                          {interview.candidate_name}
-                        </p>
-                        <p className="text-sm text-[#6d6a66]">{interview.opportunity_title}</p>
-                        <div className="mt-2 flex items-center gap-3 text-sm text-[#6d6a66]">
-                          <span className="flex items-center gap-1">
-                            <CalendarClock className="h-3.5 w-3.5" />
-                            {interview.scheduled_at &&
-                              `${formatDate(interview.scheduled_at)} · ${formatTime(interview.scheduled_at)}`}
-                          </span>
-                          {interview.meeting_service && (
-                            <span className="flex items-center gap-1">
-                              <Video className="h-3.5 w-3.5" />
-                              {interview.meeting_service}
-                            </span>
+                  <li key={interview.id} className="rounded-md border border-outline-variant p-md">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <Avatar name={interview.candidate_name ?? "Candidate"} size={44} />
+                        <div>
+                          <p className="text-label-md text-on-background">{interview.candidate_name}</p>
+                          <p className="text-body-md text-on-surface-variant">{interview.opportunity_title}</p>
+                          {interview.scheduled_at && (
+                            <p className="mt-1 flex items-center gap-2 text-label-sm text-on-surface-variant">
+                              {formatDate(interview.scheduled_at)} · {formatTime(interview.scheduled_at)}
+                              {interview.meeting_service && ` · ${interview.meeting_service}`}
+                            </p>
                           )}
                         </div>
                       </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex flex-col gap-2 sm:w-[180px]">
-                      {interview.meeting_link ? (
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          href={interview.meeting_link}
-                          className="w-full bg-[#1b1c1c] font-semibold text-white hover:bg-[#2a2b2b]"
-                        >
+                      {interview.meeting_link && (
+                        <Button size="sm" variant="secondary" href={interview.meeting_link}>
                           <Video className="h-3.5 w-3.5" /> Join Meeting
                         </Button>
-                      ) : (
-                        <span className="text-center text-sm text-[#6d6a66]">Starting later</span>
                       )}
-                      <Button size="sm" variant="outline" className="w-full border-[#e0d8c9]">
-                        View Profile
-                      </Button>
                     </div>
                   </li>
                 ))}
             </ul>
           ) : (
-            <p className="mt-4 text-base text-[#6d6a66]">No interviews scheduled yet.</p>
+            <p className="mt-3 text-body-md text-on-surface-variant">No interviews scheduled yet.</p>
           )}
         </Card>
       </div>

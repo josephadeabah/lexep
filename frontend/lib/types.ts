@@ -40,7 +40,11 @@ export interface Opportunity {
 }
 
 export type ApplicationStatus =
-  "applied" | "under_review" | "interview_scheduled" | "accepted" | "declined";
+  | "applied"
+  | "under_review"
+  | "interview_scheduled"
+  | "accepted"
+  | "declined";
 
 export interface Applicant {
   id: number;
@@ -351,4 +355,102 @@ export interface AdminCompaniesResponse {
   pending_onboarding: number;
   total_interns_placed: number;
   companies: AdminCompanyRow[];
+}
+
+// --- Pagination -----------------------------------------------------
+
+export interface Page<T> {
+  items: T[];
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
+
+// --- Courses -----------------------------------------------------
+
+export type CourseContentType = "course_module" | "assessment";
+export type CourseStatus = "draft" | "published";
+
+export interface CourseModuleItem {
+  id: number;
+  order: number;
+  title: string;
+  video_url: string | null;
+  external_link: string | null;
+  duration_minutes: number | null;
+}
+
+export interface Course {
+  id: number;
+  creator_id: number;
+  creator_name: string | null;
+  content_type: CourseContentType;
+  title: string;
+  description: string | null;
+  category: string | null;
+  level: string | null;
+  image_url: string | null;
+  duration_weeks: number | null;
+  is_public: boolean;
+  enrollment_limit: number | null;
+  is_paid: boolean;
+  price: number;
+  issue_certificate: boolean;
+  status: CourseStatus;
+  enrolled_count: number;
+  completion_rate: number;
+  created_at: string;
+  modules: CourseModuleItem[];
+}
+
+export interface Enrollment {
+  id: number;
+  course_id: number;
+  course_title: string | null;
+  progress_percent: number;
+  enrolled_at: string;
+  completed_at: string | null;
+}
+
+export interface CourseStats {
+  active_courses: number;
+  total_enrolled: number;
+  avg_completion_rate: number;
+}
+
+// --- Notifications -----------------------------------------------------
+
+export type NotificationType =
+  | "new_course"
+  | "interview_scheduled"
+  | "interview_confirmed"
+  | "mentorship_accepted"
+  | "mentorship_declined"
+  | "mentor_application_decision"
+  | "assessment_graded"
+  | "grant_contribution"
+  | "application_status"
+  | "general";
+
+export interface AppNotification {
+  id: number;
+  type: NotificationType;
+  title: string;
+  body: string | null;
+  action_label: string | null;
+  action_url: string | null;
+  is_read: boolean;
+  created_at: string;
+}
+
+// --- Assessment creation / leaderboard ------------------------------------
+
+export interface LeaderboardEntry {
+  rank: number;
+  candidate_name: string;
+  candidate_avatar: string | null;
+  assessment_title: string;
+  score: number;
+  completed_at: string | null;
 }

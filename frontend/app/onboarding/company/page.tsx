@@ -5,28 +5,16 @@ import { useRouter } from "next/navigation";
 import { Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input/Input";
-import { Select } from "@/components/ui/select/Select";
-import { Checkbox } from "@/components/ui/checkbox/Checkbox";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 
 const GOALS = [
-  {
-    id: "Finding Interns",
-    title: "Finding Interns",
-    description: "Source top entry-level talent.",
-  },
-  {
-    id: "Sponsoring Youth Projects",
-    title: "Sponsoring Youth Projects",
-    description: "Support guided learning.",
-  },
-  {
-    id: "Brand Awareness in Tech",
-    title: "Brand Awareness in Tech",
-    description: "Build presence among students.",
-  },
+  { id: "Finding Interns", title: "Finding Interns", description: "Source top entry-level talent." },
+  { id: "Sponsoring Youth Projects", title: "Sponsoring Youth Projects", description: "Support guided learning." },
+  { id: "Brand Awareness in Tech", title: "Brand Awareness in Tech", description: "Build presence among students." },
 ];
 
 export default function CompanyOnboardingPage() {
@@ -64,116 +52,87 @@ export default function CompanyOnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fbf9f8]">
-      <div className="mx-auto max-w-2xl px-4 py-12">
-        <div className="rounded-2xl border border-[#e0d8c9] bg-white shadow-sm">
-          {/* Header */}
-          <div className="border-b border-[#e0d8c9]/40 bg-[#f5f3f3] px-8 py-6">
-            <p className="flex items-center gap-2 text-xs font-bold tracking-wider text-[#6d6a66] uppercase">
-              <Building2 className="h-4 w-4" /> Step 1 of 1
-            </p>
-            <h2 className="mt-2 font-['Hanken_Grotesk'] text-2xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
-              Set Up Your Company Profile
-            </h2>
-            <p className="mt-1 text-sm text-[#6d6a66]">
-              Complete your profile to start connecting with top emerging talent.
-            </p>
+    <div className="min-h-screen bg-surface px-gutter py-xl">
+      <div className="mx-auto max-w-2xl card-level1 overflow-hidden p-0">
+        <div className="bg-surface-container-low px-md py-md">
+          <p className="flex items-center gap-2 text-label-sm text-on-surface-variant">
+            <Building2 className="h-4 w-4" /> Step 1 of 1
+          </p>
+          <h1 className="mt-2 text-headline-lg text-on-background">Set Up Your Company Profile</h1>
+          <p className="mt-1 text-body-md text-on-surface-variant">
+            Complete your profile to start connecting with top emerging talent.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-lg p-md">
+          <div>
+            <h2 className="text-headline-md text-on-background">Company Details</h2>
+            <div className="mt-3 grid gap-md sm:grid-cols-2">
+              <Input
+                label="Industry"
+                placeholder="e.g. Technology, Finance"
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+              />
+              <Select label="Company Size" value={companySize} onChange={(e) => setCompanySize(e.target.value)}>
+                <option value="">Select size</option>
+                <option value="1-10">1-10</option>
+                <option value="11-50">11-50</option>
+                <option value="51-200">51-200</option>
+                <option value="200+">200+</option>
+              </Select>
+              <div className="sm:col-span-2">
+                <Input
+                  label="Website URL"
+                  placeholder="https://www.example.com"
+                  value={websiteUrl}
+                  onChange={(e) => setWebsiteUrl(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-8 p-8">
-            {/* Company Details */}
-            <div>
-              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
-                Company Details
-              </h2>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <Input
-                  label="Industry"
-                  placeholder="e.g. Technology, Finance"
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                />
-                <Select
-                  label="Company Size"
-                  value={companySize}
-                  onChange={(e) => setCompanySize(e.target.value)}
+          <div>
+            <h2 className="text-headline-md text-on-background">Hiring Goals</h2>
+            <p className="text-label-sm text-on-surface-variant">
+              What are you hoping to achieve on this platform? (Select all that apply)
+            </p>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              {GOALS.map((goal) => (
+                <label
+                  key={goal.id}
+                  className={cn(
+                    "flex cursor-pointer flex-col gap-2 rounded-md border p-4",
+                    goals.includes(goal.id) ? "border-primary-container bg-surface-container-low" : "border-outline-variant"
+                  )}
                 >
-                  <option value="">Select size</option>
-                  <option value="1-10">1-10</option>
-                  <option value="11-50">11-50</option>
-                  <option value="51-200">51-200</option>
-                  <option value="200+">200+</option>
-                </Select>
-                <div className="sm:col-span-2">
-                  <Input
-                    label="Website URL"
-                    placeholder="https://www.example.com"
-                    value={websiteUrl}
-                    onChange={(e) => setWebsiteUrl(e.target.value)}
-                  />
-                </div>
-              </div>
+                  <Checkbox checked={goals.includes(goal.id)} onChange={() => toggleGoal(goal.id)} label={goal.title} />
+                  <span className="pl-8 text-label-sm text-on-surface-variant">{goal.description}</span>
+                </label>
+              ))}
             </div>
+          </div>
 
-            {/* Hiring Goals */}
-            <div>
-              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
-                Hiring Goals
-              </h2>
-              <p className="mt-1 text-sm text-[#6d6a66]">
-                What are you hoping to achieve on this platform? (Select all that apply)
-              </p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                {GOALS.map((goal) => (
-                  <label
-                    key={goal.id}
-                    className={cn(
-                      "flex cursor-pointer flex-col gap-2 rounded-lg border p-4 transition",
-                      goals.includes(goal.id)
-                        ? "border-[#d4af37] bg-[#fffdf8]"
-                        : "border-[#e0d8c9] hover:border-[#d4af37]"
-                    )}
-                  >
-                    <Checkbox
-                      checked={goals.includes(goal.id)}
-                      onChange={() => toggleGoal(goal.id)}
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-[#1b1c1c]">{goal.title}</p>
-                      <p className="mt-1 text-xs text-[#6d6a66]">{goal.description}</p>
-                    </div>
-                  </label>
-                ))}
-              </div>
+          <div>
+            <h2 className="text-headline-md text-on-background">Preferred Outreach</h2>
+            <div className="mt-3 flex flex-col gap-3">
+              <Checkbox
+                label="Receive regular email digests of top candidates."
+                checked={emailDigests}
+                onChange={(e) => setEmailDigests(e.target.checked)}
+              />
+              <Checkbox
+                label="Allow students to send direct inquiries."
+                checked={directInquiries}
+                onChange={(e) => setDirectInquiries(e.target.checked)}
+              />
             </div>
+          </div>
 
-            {/* Preferred Outreach */}
-            <div>
-              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
-                Preferred Outreach
-              </h2>
-              <div className="mt-4 space-y-3">
-                <Checkbox
-                  label="Receive regular email digests of top candidates."
-                  checked={emailDigests}
-                  onChange={(e) => setEmailDigests(e.target.checked)}
-                  className="rounded-lg border border-[#e0d8c9] p-4"
-                />
-                <Checkbox
-                  label="Allow students to send direct inquiries."
-                  checked={directInquiries}
-                  onChange={(e) => setDirectInquiries(e.target.checked)}
-                  className="rounded-lg border border-[#e0d8c9] p-4"
-                />
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="flex justify-end border-t border-[#e0d8c9]/40 pt-6">
-              <Button onClick={handleSubmit} disabled={isSubmitting}>
-                {isSubmitting ? "Saving…" : "Finish Setup"}
-              </Button>
-            </div>
+          <div className="flex justify-end border-t border-outline-variant/40 pt-md">
+            <Button onClick={handleSubmit} disabled={isSubmitting}>
+              {isSubmitting ? "Saving…" : "Finish Setup"}
+            </Button>
           </div>
         </div>
       </div>

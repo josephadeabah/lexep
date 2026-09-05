@@ -1,10 +1,10 @@
-import { Card } from "@/components/ui/card/Card";
+import { Card } from "@/components/ui/Card";
 
 export default function ResourcesPage() {
   return (
     <div>
       <h1 className="text-headline-lg text-on-background">Resources</h1>
-      <p className="text-body-md text-on-surface-variant mt-1">
+      <p className="mt-1 text-body-md text-on-surface-variant">
         Guides, templates, and playbooks for mentors and companies. More resources are on the way.
       </p>
       <Card className="mt-lg">

@@ -2,58 +2,23 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Terminal,
-  TrendingUp,
-  ClipboardEdit,
-  MessagesSquare,
-  MessageCircle,
-  Video,
-  ImageIcon,
-} from "lucide-react";
+import { Terminal, TrendingUp, ClipboardEdit, MessagesSquare, MessageCircle, Video, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/checkbox/Checkbox";
+import { Checkbox } from "@/components/ui/Checkbox";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 
 const STYLES = [
-  {
-    id: "technical_guidance",
-    title: "Technical Guidance",
-    description: "Focus on code reviews, architecture, and technical skill building.",
-    icon: Terminal,
-  },
-  {
-    id: "career_coaching",
-    title: "Career Coaching",
-    description: "Navigation, leadership, and long-term professional growth.",
-    icon: TrendingUp,
-  },
-  {
-    id: "project_review",
-    title: "Project Review",
-    description: "Feedback on portfolios, specific deliverables, and presentations.",
-    icon: ClipboardEdit,
-  },
+  { id: "technical_guidance", title: "Technical Guidance", description: "Focus on code reviews, architecture, and technical skill building.", icon: Terminal },
+  { id: "career_coaching", title: "Career Coaching", description: "Navigation, leadership, and long-term professional growth.", icon: TrendingUp },
+  { id: "project_review", title: "Project Review", description: "Feedback on portfolios, specific deliverables, and presentations.", icon: ClipboardEdit },
 ];
 
 const LEVELS = [
-  {
-    id: "beginner",
-    title: "Beginner",
-    description: "Early in their journey, needs foundational guidance.",
-  },
-  {
-    id: "intermediate",
-    title: "Intermediate",
-    description: "Has basic experience, looking to specialize or level up.",
-  },
-  {
-    id: "advanced",
-    title: "Advanced",
-    description: "Experienced professionals seeking specific high-level advice.",
-  },
+  { id: "beginner", title: "Beginner", description: "Early in their journey, needs foundational guidance." },
+  { id: "intermediate", title: "Intermediate", description: "Has basic experience, looking to specialize or level up." },
+  { id: "advanced", title: "Advanced", description: "Experienced professionals seeking specific high-level advice." },
 ];
 
 const TOOLS = [
@@ -96,120 +61,86 @@ export default function MentorOnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fbf9f8]">
-      <div className="mx-auto max-w-3xl px-4 py-12">
-        {/* Progress */}
-        <div className="mb-6 flex items-center justify-between text-xs font-semibold">
-          <span className="text-[#6d6a66]">STEP 1 OF 1</span>
-          <span className="text-[#735c00]">Finalizing Profile</span>
+    <div className="min-h-screen bg-surface px-gutter py-xl">
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-6 flex items-center justify-between text-label-sm text-on-surface-variant">
+          <span>STEP 1 OF 1</span>
+          <span className="text-primary font-label-md">Finalizing Profile</span>
         </div>
-        <div className="mb-8 h-1 rounded-full bg-[#e0d8c9]">
-          <div className="h-1 rounded-full bg-[#d4af37]" style={{ width: "100%" }} />
-        </div>
+        <div className="mb-lg h-1 w-full rounded-full bg-primary-container" />
 
-        <div className="rounded-2xl border border-[#e0d8c9] bg-white p-8 shadow-sm sm:p-10">
-          {/* Header */}
-          <div className="mb-8 text-center">
-            <h2 className="font-['Hanken_Grotesk'] text-3xl font-bold tracking-[-0.03em] text-[#1b1c1c]">
-              Refine Your Mentorship Profile
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg text-[#6d6a66]">
+        <div className="card-level1 p-md">
+          <div className="text-center">
+            <h1 className="text-headline-lg text-on-background">Refine Your Mentorship Profile</h1>
+            <p className="mx-auto mt-2 max-w-lg text-body-md text-on-surface-variant">
               Help us connect you with the right mentees by defining your approach and preferences.
             </p>
           </div>
 
-          <div className="space-y-8">
-            {/* Mentoring Style */}
-            <div>
-              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
-                Mentoring Style
-              </h2>
-              <p className="mt-1 text-sm text-[#6d6a66]">
-                What is your primary approach to guiding mentees?
-              </p>
-              <div className="mt-4 grid gap-4 sm:grid-cols-3">
-                {STYLES.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => setStyle(s.id)}
-                    className={cn(
-                      "flex flex-col items-start gap-2 rounded-xl border p-5 text-left transition",
-                      style === s.id
-                        ? "border-[#d4af37] bg-[#fffdf8]"
-                        : "border-[#e0d8c9] hover:border-[#d4af37]"
-                    )}
-                  >
-                    <s.icon className="h-5 w-5 text-[#1b1c1c]" />
-                    <p className="text-sm font-semibold text-[#1b1c1c]">{s.title}</p>
-                    <p className="text-xs text-[#6d6a66]">{s.description}</p>
-                  </button>
-                ))}
-              </div>
+          <div className="mt-lg">
+            <h2 className="text-headline-md text-on-background">Mentoring Style</h2>
+            <p className="text-label-sm text-on-surface-variant">What is your primary approach to guiding mentees?</p>
+            <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              {STYLES.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => setStyle(s.id)}
+                  className={cn(
+                    "flex flex-col items-start gap-2 rounded-md border p-4 text-left transition",
+                    style === s.id ? "border-primary-container bg-surface-container-low" : "border-outline-variant hover:bg-surface-container-low"
+                  )}
+                >
+                  <s.icon className="h-5 w-5 text-on-surface" />
+                  <p className="text-label-md text-on-background">{s.title}</p>
+                  <p className="text-label-sm text-on-surface-variant">{s.description}</p>
+                </button>
+              ))}
             </div>
+          </div>
 
-            {/* Preferred Mentee Level */}
-            <div>
-              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
-                Preferred Mentee Level
-              </h2>
-              <p className="mt-1 text-sm text-[#6d6a66]">
-                Select all that apply based on your current capacity.
-              </p>
-              <div className="mt-4 space-y-3">
-                {LEVELS.map((level) => (
-                  <label
-                    key={level.id}
-                    className={cn(
-                      "flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition",
-                      levels.includes(level.id)
-                        ? "border-[#d4af37] bg-[#fffdf8]"
-                        : "border-[#e0d8c9] hover:border-[#d4af37]"
-                    )}
-                  >
-                    <Checkbox
-                      checked={levels.includes(level.id)}
-                      onChange={() => toggleLevel(level.id)}
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-[#1b1c1c]">{level.title}</p>
-                      <p className="text-xs text-[#6d6a66]">{level.description}</p>
-                    </div>
-                  </label>
-                ))}
-              </div>
+          <div className="mt-lg border-t border-outline-variant/40 pt-md">
+            <h2 className="text-headline-md text-on-background">Preferred Mentee Level</h2>
+            <p className="text-label-sm text-on-surface-variant">Select all that apply based on your current capacity.</p>
+            <div className="mt-3 flex flex-col gap-2">
+              {LEVELS.map((level) => (
+                <label
+                  key={level.id}
+                  className="flex cursor-pointer items-center gap-3 rounded-md border border-outline-variant px-4 py-3 hover:bg-surface-container-low"
+                >
+                  <Checkbox checked={levels.includes(level.id)} onChange={() => toggleLevel(level.id)} />
+                  <span>
+                    <span className="block text-body-md text-on-surface">{level.title}</span>
+                    <span className="block text-label-sm text-on-surface-variant">{level.description}</span>
+                  </span>
+                </label>
+              ))}
             </div>
+          </div>
 
-            {/* Communication Tools */}
-            <div>
-              <h2 className="font-['Hanken_Grotesk'] text-xl font-semibold text-[#1b1c1c]">
-                Communication Tools
-              </h2>
-              <p className="mt-1 text-sm text-[#6d6a66]">How do you prefer to conduct sessions?</p>
-              <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {TOOLS.map((tool) => (
-                  <button
-                    key={tool.id}
-                    onClick={() => toggleTool(tool.id)}
-                    className={cn(
-                      "flex flex-col items-center gap-2 rounded-xl border p-4 transition",
-                      tools.includes(tool.id)
-                        ? "border-[#d4af37] bg-[#fffdf8]"
-                        : "border-[#e0d8c9] hover:border-[#d4af37]"
-                    )}
-                  >
-                    <tool.icon className="h-5 w-5 text-[#1b1c1c]" />
-                    <span className="text-sm font-medium text-[#1b1c1c]">{tool.id}</span>
-                  </button>
-                ))}
-              </div>
+          <div className="mt-lg border-t border-outline-variant/40 pt-md">
+            <h2 className="text-headline-md text-on-background">Communication Tools</h2>
+            <p className="text-label-sm text-on-surface-variant">How do you prefer to conduct sessions?</p>
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {TOOLS.map((tool) => (
+                <button
+                  key={tool.id}
+                  onClick={() => toggleTool(tool.id)}
+                  className={cn(
+                    "flex flex-col items-center gap-2 rounded-md border p-4 transition",
+                    tools.includes(tool.id) ? "border-primary-container bg-surface-container-low" : "border-outline-variant hover:bg-surface-container-low"
+                  )}
+                >
+                  <tool.icon className="h-5 w-5 text-on-surface" />
+                  <span className="text-label-sm text-on-surface">{tool.id}</span>
+                </button>
+              ))}
             </div>
+          </div>
 
-            {/* Footer */}
-            <div className="flex justify-end border-t border-[#e0d8c9]/40 pt-6">
-              <Button variant="secondary" onClick={handleSave} disabled={isSubmitting}>
-                {isSubmitting ? "Saving…" : "Save Profile →"}
-              </Button>
-            </div>
+          <div className="mt-lg flex justify-end border-t border-outline-variant/40 pt-md">
+            <Button variant="secondary" onClick={handleSave} disabled={isSubmitting}>
+              {isSubmitting ? "Saving…" : "Save Profile →"}
+            </Button>
           </div>
         </div>
       </div>

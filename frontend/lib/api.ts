@@ -10,12 +10,17 @@ import type {
   AdminLearnersResponse,
   AdminSubscriptionsResponse,
   AdminCompaniesResponse,
+  AppNotification,
   AuthResponse,
   CheckoutResponse,
   Contribution,
+  Course,
+  CourseStats,
+  Enrollment,
   Grant,
   GrantGroup,
   Interview,
+  LeaderboardEntry,
   MentorDashboardStats,
   MentorPackage,
   MentorProfile,
@@ -23,6 +28,7 @@ import type {
   MyApplication,
   MySubscription,
   Opportunity,
+  Page,
   PricingPlan,
   PublicConfig,
   User,
@@ -142,18 +148,10 @@ async function request<T>(
 export const api = {
   // --- Auth ------------------------------------------------------
   register: (data: { email: string; full_name: string; password: string }) =>
-    request<AuthResponse>("/api/auth/register", {
-      method: "POST",
-      body: JSON.stringify(data),
-      auth: false,
-    }),
+    request<AuthResponse>("/api/auth/register", { method: "POST", body: JSON.stringify(data), auth: false }),
 
   login: (data: { email: string; password: string }) =>
-    request<AuthResponse>("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-      auth: false,
-    }),
+    request<AuthResponse>("/api/auth/login", { method: "POST", body: JSON.stringify(data), auth: false }),
 
   me: () => request<User>("/api/auth/me"),
 
@@ -162,28 +160,19 @@ export const api = {
     request<User>("/api/users/me/role", { method: "POST", body: JSON.stringify({ role }) }),
 
   onboardLearner: (data: Record<string, unknown>) =>
-    request<User>("/api/users/me/onboarding/learner", {
-      method: "PUT",
-      body: JSON.stringify(data),
-    }),
+    request<User>("/api/users/me/onboarding/learner", { method: "PUT", body: JSON.stringify(data) }),
 
   onboardMentor: (data: Record<string, unknown>) =>
     request<User>("/api/users/me/onboarding/mentor", { method: "PUT", body: JSON.stringify(data) }),
 
   onboardCompany: (data: Record<string, unknown>) =>
-    request<User>("/api/users/me/onboarding/company", {
-      method: "PUT",
-      body: JSON.stringify(data),
-    }),
+    request<User>("/api/users/me/onboarding/company", { method: "PUT", body: JSON.stringify(data) }),
 
   updateAccount: (data: Record<string, unknown>) =>
     request<User>("/api/users/me/account", { method: "PUT", body: JSON.stringify(data) }),
 
   updateNotifications: (preferences: Record<string, unknown>) =>
-    request<User>("/api/users/me/notifications", {
-      method: "PUT",
-      body: JSON.stringify({ preferences }),
-    }),
+    request<User>("/api/users/me/notifications", { method: "PUT", body: JSON.stringify({ preferences }) }),
 
   updatePrivacy: (settings: Record<string, unknown>) =>
     request<User>("/api/users/me/privacy", { method: "PUT", body: JSON.stringify({ settings }) }),
@@ -250,22 +239,13 @@ export const api = {
     request("/api/mentors/requests", { method: "POST", body: JSON.stringify(data) }),
 
   mentorApplicationStep1: (data: Record<string, unknown>) =>
-    request<MentorProfile>("/api/mentors/application/step1", {
-      method: "PUT",
-      body: JSON.stringify(data),
-    }),
+    request<MentorProfile>("/api/mentors/application/step1", { method: "PUT", body: JSON.stringify(data) }),
 
   mentorApplicationStep2: (data: Record<string, unknown>) =>
-    request<MentorProfile>("/api/mentors/application/step2", {
-      method: "PUT",
-      body: JSON.stringify(data),
-    }),
+    request<MentorProfile>("/api/mentors/application/step2", { method: "PUT", body: JSON.stringify(data) }),
 
   mentorApplicationStep3: (data: Record<string, unknown>) =>
-    request<MentorProfile>("/api/mentors/application/step3", {
-      method: "PUT",
-      body: JSON.stringify(data),
-    }),
+    request<MentorProfile>("/api/mentors/application/step3", { method: "PUT", body: JSON.stringify(data) }),
 
   // --- Mentor packages ------------------------------------------------
   myPackages: () => request<MentorPackage[]>("/api/mentors/me/packages"),
@@ -274,16 +254,10 @@ export const api = {
     request<MentorPackage[]>(`/api/mentors/${mentorUserId}/packages`, { auth: false }),
 
   createPackage: (data: Record<string, unknown>) =>
-    request<MentorPackage>("/api/mentors/me/packages", {
-      method: "POST",
-      body: JSON.stringify(data),
-    }),
+    request<MentorPackage>("/api/mentors/me/packages", { method: "POST", body: JSON.stringify(data) }),
 
   updatePackage: (id: number, data: Record<string, unknown>) =>
-    request<MentorPackage>(`/api/mentors/me/packages/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    }),
+    request<MentorPackage>(`/api/mentors/me/packages/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
 
   togglePackage: (id: number) =>
     request<MentorPackage>(`/api/mentors/me/packages/${id}/toggle`, { method: "PATCH" }),
@@ -431,9 +405,7 @@ export const api = {
   },
 
   adminInviteLearner: (email: string) =>
-    request(`/api/admin/users/learners/invite?email=${encodeURIComponent(email)}`, {
-      method: "POST",
-    }),
+    request(`/api/admin/users/learners/invite?email=${encodeURIComponent(email)}`, { method: "POST" }),
 
   adminSubscriptions: () => request<AdminSubscriptionsResponse>("/api/admin/subscriptions"),
 
@@ -449,6 +421,68 @@ export const api = {
 
   adminReviewCompany: (userId: number, approve: boolean) =>
     request(`/api/admin/companies/${userId}/review?approve=${approve}`, { method: "POST" }),
+
+  // --- Courses ------------------------------------------------
+  listCourses: (
+    params: { mine_only?: boolean; published_only?: boolean; q?: string; category?: string; page?: number; page_size?: number } = {}
+  ) => {
+    const qs = new URLSearchParams(
+      Object.entries(params)
+        .filter(([, v]) => v !== undefined)
+        .map(([k, v]) => [k, String(v)])
+    ).toString();
+    return request<Page<Course>>(`/api/courses${qs ? `?${qs}` : ""}`, { auth: !!params.mine_only });
+  },
+
+  getCourse: (id: number) => request<Course>(`/api/courses/${id}`, { auth: false }),
+
+  courseStats: () => request<CourseStats>("/api/courses/stats"),
+
+  createCourseBasics: (data: Record<string, unknown>) =>
+    request<Course>("/api/courses", { method: "POST", body: JSON.stringify(data) }),
+
+  addCourseModule: (courseId: number, data: Record<string, unknown>) =>
+    request(`/api/courses/${courseId}/modules`, { method: "POST", body: JSON.stringify(data) }),
+
+  updateCourseSettings: (courseId: number, data: Record<string, unknown>) =>
+    request<Course>(`/api/courses/${courseId}/settings`, { method: "PUT", body: JSON.stringify(data) }),
+
+  publishCourse: (courseId: number) => request<Course>(`/api/courses/${courseId}/publish`, { method: "POST" }),
+
+  enrollInCourse: (courseId: number) =>
+    request<Enrollment>(`/api/courses/${courseId}/enroll`, { method: "POST", offlineDescription: "Enroll in course" }),
+
+  myEnrollments: () => request<Enrollment[]>("/api/courses/me/enrollments"),
+
+  // --- Notifications ------------------------------------------------
+  listNotifications: (filter?: "unread" | "mentorship", page = 1, pageSize = 10) => {
+    const params = new URLSearchParams({ page: String(page), page_size: String(pageSize) });
+    if (filter) params.set("filter", filter);
+    return request<Page<AppNotification>>(`/api/notifications?${params.toString()}`);
+  },
+
+  unreadNotificationCount: () => request<{ count: number }>("/api/notifications/unread-count"),
+
+  markNotificationRead: (id: number) => request<AppNotification>(`/api/notifications/${id}/read`, { method: "POST" }),
+
+  markAllNotificationsRead: () => request("/api/notifications/read-all", { method: "POST" }),
+
+  // --- Assessments: creation + leaderboard ------------------------------------------------
+  createAssessment: (data: Record<string, unknown>) =>
+    request<Assessment>("/api/assessments", { method: "POST", body: JSON.stringify(data) }),
+
+  myAssessments: () => request<Assessment[]>("/api/assessments/mine"),
+
+  assessmentLeaderboard: (assessmentId?: number, page = 1, pageSize = 10) => {
+    const params = new URLSearchParams({ page: String(page), page_size: String(pageSize) });
+    if (assessmentId) params.set("assessment_id", String(assessmentId));
+    return request<Page<LeaderboardEntry>>(`/api/assessments/leaderboard?${params.toString()}`);
+  },
+
+  // --- AI-powered recommendations ------------------------------------------------
+  recommendedMentors: () => request<MentorProfile[]>("/api/mentors/recommended"),
+
+  recommendedOpportunities: () => request<Opportunity[]>("/api/opportunities/recommended"),
 };
 
 export { ApiError };

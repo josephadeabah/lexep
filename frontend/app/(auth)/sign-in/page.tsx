@@ -1,37 +1,117 @@
-import { AuthForm } from "@/components/auth-form/auth-form";
-import { Logo } from "@/components/ui/Logo";
-import Link from "next/link";
+"use client";
 
-export const metadata = {
-  title: "Sign in — Lexep",
-  description: "Sign in to continue your Lexep journey.",
-};
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { Logo } from "@/components/ui/Logo";
+import { useAuthStore } from "@/lib/auth-store";
+import { ApiError } from "@/lib/api";
 
 export default function SignInPage() {
-  return (
-    <main className="min-h-screen bg-[#fbf9f8]">
-      <div className="mx-auto flex min-h-screen max-w-[1280px] flex-col px-6 py-8">
-        <header className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2" aria-label="Lexep home">
-            <Logo size={64} showWordmark={false} />
-            <span className="font-sans text-xl font-semibold tracking-[-0.04em]">Lexep</span>
-          </Link>
-          <Link
-            href="/sign-up"
-            className="rounded-md bg-[#d4af37] px-4 py-2 text-sm font-semibold text-[#241a00] shadow-[0_4px_20px_rgba(115,92,0,0.12)] transition hover:bg-[#e9c349]"
-          >
-            Create account
-          </Link>
-        </header>
+  const router = useRouter();
+  const login = useAuthStore((s) => s.login);
+  const isLoading = useAuthStore((s) => s.isLoading);
 
-        <div className="flex flex-1 items-center justify-center py-12">
-          <div className="w-full max-w-md">
-            <AuthForm mode="sign-in" />
-          </div>
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [remember, setRemember] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    try {
+      const user = await login(email, password);
+      if (user.role === "admin") router.push("/admin/applications");
+      else if (!user.role) router.push("/onboarding/choose-role");
+      else if (!user.onboarding_completed) router.push(`/onboarding/${user.role}`);
+      else router.push("/dashboard");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Something went wrong. Please try again.");
+    }
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-lg">
+      <div className="text-center">
+        <div className="flex justify-center"><Logo variant="light" size={32} /></div>
+        <p className="mt-2 text-body-md text-on-surface-variant">Welcome back. Please enter your details.</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="card-level1 w-full p-md flex flex-col gap-md">
+        <Input
+          label="Email"
+          type="email"
+          placeholder="Enter your email"
+          icon={<Mail className="h-4 w-4" />}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <Input
+          label="Password"
+          type={showPassword ? "text" : "password"}
+          placeholder="Enter your password"
+          icon={<Lock className="h-4 w-4" />}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          className="pr-10"
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword((v) => !v)}
+          className="-mt-2 self-end text-label-sm text-on-surface-variant hover:text-primary"
+        >
+          <span className="inline-flex items-center gap-1">
+            {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+            {showPassword ? "Hide password" : "Show password"}
+          </span>
+        </button>
+
+        <div className="flex items-center justify-between">
+          <Checkbox
+            label="Remember me"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+          />
+          <Link href="/forgot-password" className="text-label-md text-primary hover:underline">
+            Forgot password?
+          </Link>
         </div>
 
-        <footer className="text-center text-xs text-[#7f7663]">© 2026 Lexep</footer>
-      </div>
-    </main>
+        {error && <p className="text-label-sm text-error">{error}</p>}
+
+        <Button type="submit" disabled={isLoading} className="w-full">
+          {isLoading ? "Signing in…" : "Sign In"}
+        </Button>
+
+        <div className="relative my-1 text-center text-label-sm text-on-surface-variant">
+          <span className="relative bg-surface-container-lowest px-3">Or continue with</span>
+          <div className="absolute left-0 right-0 top-1/2 -z-10 h-px bg-outline-variant" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <Button type="button" variant="ghost" onClick={() => setError("Google sign-in isn't configured yet.")}>
+            Google
+          </Button>
+          <Button type="button" variant="ghost" onClick={() => setError("LinkedIn sign-in isn't configured yet.")}>
+            LinkedIn
+          </Button>
+        </div>
+      </form>
+
+      <p className="text-body-md text-on-surface-variant">
+        Don&apos;t have an account?{" "}
+        <Link href="/sign-up" className="font-label-md text-primary hover:underline">
+          Create an account
+        </Link>
+      </p>
+    </div>
   );
 }
