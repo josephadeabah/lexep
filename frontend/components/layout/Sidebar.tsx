@@ -58,7 +58,7 @@ export function Sidebar({
       {/* Sidebar */}
       <aside
         className={cn(
-          "bg-inverse-surface text-inverse-on-surface sticky top-0 flex h-screen flex-col overflow-y-auto",
+          "bg-[#1a1a1a] text-[#bdbbb8] sticky top-0 flex h-screen flex-col overflow-y-auto",
           "transition-all duration-300 ease-in-out",
           // Desktop - collapse/expand
           "hidden md:flex",
@@ -73,14 +73,14 @@ export function Sidebar({
       >
         {/* Brand */}
         <div className="flex items-center gap-4 px-8 py-8 whitespace-nowrap">
-          <div className="bg-inverse-surface flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full">
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full">
             <Logo variant="light" size={64} showWordmark={false} />
           </div>
           <div className={cn("transition-opacity duration-200", isCollapsed && "hidden opacity-0")}>
-            <strong className="block font-serif text-xl font-bold text-primary-container">
+            <strong className="block font-serif text-xl font-bold text-[#f4d36a]">
               {brand}
             </strong>
-            <span className="mt-0.5 block text-sm text-on-surface-variant">
+            <span className="mt-0.5 block text-sm text-[#8a8682]">
               {tagline}
             </span>
           </div>
@@ -96,10 +96,10 @@ export function Sidebar({
           >
             <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
             <div className="min-w-0">
-              <p className="truncate font-semibold text-primary-container">
+              <p className="truncate font-semibold text-[#f4d36a]">
                 {userSummary.name}
               </p>
-              <p className="truncate text-sm text-on-surface-variant">
+              <p className="truncate text-sm text-[#8a8682]">
                 {userSummary.roleLabel}
               </p>
             </div>
@@ -111,7 +111,7 @@ export function Sidebar({
           <div className={cn("mx-8 my-4 whitespace-nowrap", isCollapsed && "hidden")}>
             <Link
               href={ctaHref || "#"}
-              className="flex h-11 w-full items-center justify-center rounded-md bg-primary-container font-bold text-on-primary-container transition-colors hover:bg-primary-fixed-dim"
+              className="flex h-11 w-full items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition-colors hover:bg-[#c9a32e]"
             >
               {ctaLabel}
             </Link>
@@ -130,8 +130,8 @@ export function Sidebar({
                 className={cn(
                   "flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-[30px] py-[19px] text-[18px] whitespace-nowrap transition-colors",
                   active
-                    ? "bg-surface-container-high text-primary-container border-l-primary-container font-bold"
-                    : "text-on-surface-variant hover:bg-surface-container-high/50",
+                    ? "bg-[#2a2a2a] text-[#f4d36a] border-l-[#f4d36a] font-bold"
+                    : "text-[#8a8682] hover:bg-[#2a2a2a]/50 hover:text-[#bdbbb8]",
                   isCollapsed && "justify-center px-0"
                 )}
               >
@@ -153,7 +153,7 @@ export function Sidebar({
                 key={item.label}
                 href={item.href || "#"}
                 className={cn(
-                  "text-on-surface-variant hover:bg-surface-container-high/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+                  "text-[#8a8682] hover:bg-[#2a2a2a]/50 hover:text-[#bdbbb8] flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
                   isCollapsed && "justify-center px-0"
                 )}
               >
@@ -168,7 +168,7 @@ export function Sidebar({
           <Link
             href="/help"
             className={cn(
-              "text-on-surface-variant hover:bg-surface-container-high/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+              "text-[#8a8682] hover:bg-[#2a2a2a]/50 hover:text-[#bdbbb8] flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
               isCollapsed && "justify-center px-0"
             )}
           >
@@ -181,7 +181,7 @@ export function Sidebar({
           <button
             onClick={onLogout}
             className={cn(
-              "text-on-surface-variant hover:bg-surface-container-high/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+              "text-[#8a8682] hover:bg-[#2a2a2a]/50 hover:text-[#bdbbb8] flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
               isCollapsed && "justify-center px-0"
             )}
           >
