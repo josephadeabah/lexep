@@ -20,9 +20,10 @@ import {
   HelpCircle,
   LogOut,
   type LucideIcon,
+  Users,
 } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
-import { Sidebar } from "@/components/layout/sidebar/Sidebar";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { OfflineBanner } from "@/components/layout/OfflineBanner";
 import Link from "next/link";
 import type { UserRole } from "@/lib/types";
