@@ -19,6 +19,7 @@ import {
   PanelLeftOpen,
   HelpCircle,
   LogOut,
+  type LucideIcon,
 } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar/Avatar";
 import { Sidebar } from "@/components/layout/sidebar/Sidebar";
@@ -70,39 +71,41 @@ const BRAND_BY_ROLE: Record<
 };
 
 // Navbar links (shown in the top header bar) - these are role-specific
-const NAVBAR_LINKS_BY_ROLE: Record<
-  UserRole,
-  { label: string; href: string; icon?: React.ComponentType<{ size?: number }> }[]
-> = {
+type NavbarLink = {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+};
+
+const NAVBAR_LINKS_BY_ROLE: Record<UserRole, NavbarLink[]> = {
   learner: [
     { label: "Browse", href: "/opportunities", icon: Compass },
     { label: "Applications", href: "/applications", icon: FileText },
     { label: "Saved", href: "/saved", icon: Bookmark },
   ],
   mentor: [
-    { label: "Analytics", href: "/mentor/analytics" },
-    { label: "Learners", href: "/mentor/learners" },
+    { label: "Analytics", href: "/mentor/analytics", icon: Compass },
+    { label: "Learners", href: "/mentor/learners", icon: Users },
   ],
   company: [
-    { label: "Analytics", href: "/company/analytics" },
-    { label: "Talent Pool", href: "/company/talent" },
+    { label: "Analytics", href: "/company/analytics", icon: Compass },
+    { label: "Talent Pool", href: "/company/talent", icon: Users },
   ],
   admin: [
-    { label: "System", href: "/admin/system" },
-    { label: "Logs", href: "/admin/logs" },
+    { label: "System", href: "/admin/system", icon: ShieldCheck },
+    { label: "Logs", href: "/admin/logs", icon: FileText },
   ],
 };
 
 // Sidebar bottom items (role-specific)
-const SIDEBAR_BOTTOM_BY_ROLE: Record<
-  UserRole,
-  {
-    label: string;
-    icon?: React.ComponentType<{ size?: number }>;
-    href?: string;
-    onClick?: () => void;
-  }[]
-> = {
+type SidebarBottomItem = {
+  label: string;
+  icon?: LucideIcon;
+  href?: string;
+  onClick?: () => void;
+};
+
+const SIDEBAR_BOTTOM_BY_ROLE: Record<UserRole, SidebarBottomItem[]> = {
   learner: [],
   mentor: [],
   company: [{ label: "Post Internship", href: "/opportunities/new", icon: Briefcase }],
@@ -217,17 +220,19 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           >
             {navbarLinks.map((link) => {
               const isActive = pathname === link.href || pathname?.startsWith(`${link.href}/`);
+              const Icon = link.icon;
               return (
                 <Link
                   key={link.label}
                   href={link.href}
                   className={cn(
-                    "hidden rounded-md px-3 py-2 text-sm font-semibold transition sm:block",
+                    "hidden items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition sm:flex",
                     isActive
                       ? "border-gold text-foreground border-b-2"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
+                  <Icon size={16} />
                   {link.label}
                 </Link>
               );
@@ -263,11 +268,17 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {navbarLinks.map((link) => (
-                <DropdownMenuItem key={link.label} asChild>
-                  <Link href={link.href}>{link.label}</Link>
-                </DropdownMenuItem>
-              ))}
+              {navbarLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <DropdownMenuItem key={link.label} asChild>
+                    <Link href={link.href} className="flex items-center gap-2">
+                      <Icon size={16} />
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                );
+              })}
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="text-red-600 focus:text-red-600"

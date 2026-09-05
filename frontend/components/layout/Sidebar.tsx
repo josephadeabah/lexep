@@ -1,19 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HelpCircle, LogOut, ChevronRight } from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { HelpCircle, LogOut, type LucideIcon } from "lucide-react";
+import { Avatar } from "@/components/ui/avatar/Avatar";
 import { Logo } from "@/components/ui/Logo";
-import { cn } from "@/lib/utils";
-import { api } from "@/lib/api";
-import { useAuthStore } from "@/lib/auth-store";
 import type { NavItem } from "@/lib/nav-config";
+import { cn } from "@/lib/utils";
 
 interface SidebarItem {
   label: string;
-  icon?: React.ComponentType<{ size?: number; className?: string }>;
+  icon?: LucideIcon;
   href?: string;
   onClick?: () => void;
 }
@@ -46,16 +43,6 @@ export function Sidebar({
   isCollapsed = false,
 }: SidebarProps) {
   const pathname = usePathname();
-  const user = useAuthStore((s) => s.user);
-  const [unreadCount, setUnreadCount] = useState(0);
-
-  useEffect(() => {
-    if (!user) return;
-    api
-      .unreadNotificationCount()
-      .then((res) => setUnreadCount(res.count))
-      .catch(() => {});
-  }, [user, pathname]);
 
   return (
     <>
@@ -71,7 +58,7 @@ export function Sidebar({
       {/* Sidebar */}
       <aside
         className={cn(
-          "bg-[#1a1a1a] text-inverse-on-surface sticky top-0 flex h-screen flex-col overflow-y-auto",
+          "bg-sidebar text-sidebar-foreground sticky top-0 flex h-screen flex-col overflow-y-auto",
           "transition-all duration-300 ease-in-out",
           // Desktop - collapse/expand
           "hidden md:flex",
@@ -128,8 +115,6 @@ export function Sidebar({
           {navItems.map((item) => {
             const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
             const Icon = item.icon;
-            const isNotifications = item.href === "/notifications" || item.href === "/admin/notifications";
-            
             return (
               <Link
                 key={item.href}
@@ -146,16 +131,6 @@ export function Sidebar({
                 <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
                   {item.label}
                 </span>
-                {isNotifications && unreadCount > 0 && (
-                  <span
-                    className={cn(
-                      "ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-[#ddb839] px-1.5 text-label-sm font-bold text-[#171717]",
-                      isCollapsed && "hidden"
-                    )}
-                  >
-                    {unreadCount > 9 ? "9+" : unreadCount}
-                  </span>
-                )}
               </Link>
             );
           })}
@@ -163,21 +138,24 @@ export function Sidebar({
 
         {/* Bottom Section */}
         <div className="mt-auto flex flex-col px-[30px] pb-8 whitespace-nowrap">
-          {sidebarBottom.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href || "#"}
-              className={cn(
-                "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
-                isCollapsed && "justify-center px-0"
-              )}
-            >
-              {item.icon && <item.icon size={21} className="flex-shrink-0" />}
-              <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
-                {item.label}
-              </span>
-            </Link>
-          ))}
+          {sidebarBottom.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.label}
+                href={item.href || "#"}
+                className={cn(
+                  "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+                  isCollapsed && "justify-center px-0"
+                )}
+              >
+                {Icon && <Icon size={21} className="flex-shrink-0" />}
+                <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
 
           <Link
             href="/help"
