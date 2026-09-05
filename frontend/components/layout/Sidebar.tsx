@@ -3,13 +3,20 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HelpCircle, LogOut } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { HelpCircle, LogOut, ChevronRight } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
 import { Logo } from "@/components/ui/Logo";
+import { cn } from "@/lib/utils";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 import type { NavItem } from "@/lib/nav-config";
+
+interface SidebarItem {
+  label: string;
+  icon?: React.ComponentType<{ size?: number; className?: string }>;
+  href?: string;
+  onClick?: () => void;
+}
 
 interface SidebarProps {
   brand?: string;
@@ -17,18 +24,26 @@ interface SidebarProps {
   navItems: NavItem[];
   ctaLabel?: string;
   ctaHref?: string;
+  sidebarBottom?: SidebarItem[];
   userSummary?: { name: string; roleLabel: string; avatarUrl?: string | null };
   onLogout?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
+  isCollapsed?: boolean;
 }
 
 export function Sidebar({
   brand = "Architect Portal",
   tagline = "Empowering African Youth",
   navItems,
-  ctaLabel = "New Application",
-  ctaHref = "/opportunities/new",
+  ctaLabel = "Upgrade to Pro",
+  ctaHref = "/upgrade",
+  sidebarBottom = [],
   userSummary,
   onLogout,
+  isOpen = false,
+  onClose,
+  isCollapsed = false,
 }: SidebarProps) {
   const pathname = usePathname();
   const user = useAuthStore((s) => s.user);
@@ -36,61 +51,108 @@ export function Sidebar({
 
   useEffect(() => {
     if (!user) return;
-    api.unreadNotificationCount().then((res) => setUnreadCount(res.count)).catch(() => {});
+    api
+      .unreadNotificationCount()
+      .then((res) => setUnreadCount(res.count))
+      .catch(() => {});
   }, [user, pathname]);
 
   return (
-    <aside className="hidden md:flex h-screen w-sidebar flex-shrink-0 flex-col justify-between bg-[#1a1a1a] px-md py-lg text-inverse-on-surface">
-      <div className="flex flex-col gap-lg">
-        <div>
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <Logo variant="dark" size={24} showWordmark={false} />
-            <span className="text-headline-md text-primary-fixed-dim">{brand}</span>
-          </Link>
-          <p className="mt-1 text-label-sm text-[#a8a6a5]">{tagline}</p>
+    <>
+      {/* Mobile Scrim */}
+      {isOpen && (
+        <button
+          className="fixed inset-0 z-40 border-0 bg-black/45 md:hidden"
+          aria-label="Close sidebar"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={cn(
+          "bg-[#1a1a1a] text-inverse-on-surface sticky top-0 flex h-screen flex-col overflow-y-auto",
+          "transition-all duration-300 ease-in-out",
+          // Desktop - collapse/expand
+          "hidden md:flex",
+          isCollapsed
+            ? "w-0 flex-[0_0_0] overflow-hidden opacity-0"
+            : "w-[350px] flex-[0_0_350px] opacity-100",
+          // Mobile - always fixed
+          "max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-50 max-md:flex max-md:w-[285px] max-md:max-w-[86vw]",
+          "max-md:-translate-x-full max-md:transition-transform max-md:duration-250",
+          isOpen && "max-md:translate-x-0"
+        )}
+      >
+        {/* Brand */}
+        <div className="flex items-center gap-4 px-8 py-8 whitespace-nowrap">
+          <div className="bg-sidebar flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full">
+            <Logo variant="light" size={64} showWordmark={false} />
+          </div>
+          <div className={cn("transition-opacity duration-200", isCollapsed && "hidden opacity-0")}>
+            <strong className="block font-serif text-xl font-bold text-[#f4d36a]">{brand}</strong>
+            <span className="mt-0.5 block text-sm text-[#bdbbb8]">{tagline}</span>
+          </div>
         </div>
 
+        {/* User Summary */}
         {userSummary && (
-          <div className="flex items-center gap-3 rounded-md bg-white/5 p-3">
+          <div
+            className={cn(
+              "mx-8 mb-4 flex items-center gap-3 rounded-lg bg-white/5 p-3 whitespace-nowrap",
+              isCollapsed && "hidden"
+            )}
+          >
             <Avatar name={userSummary.name} src={userSummary.avatarUrl} size={36} />
             <div className="min-w-0">
-              <p className="truncate text-label-md text-inverse-on-surface">{userSummary.name}</p>
-              <p className="truncate text-label-sm text-[#a8a6a5]">{userSummary.roleLabel}</p>
+              <p className="truncate font-semibold text-[#f4d36a]">{userSummary.name}</p>
+              <p className="truncate text-sm text-[#bdbbb8]">{userSummary.roleLabel}</p>
             </div>
           </div>
         )}
 
+        {/* CTA Button */}
         {ctaLabel && (
-          <Link
-            href={ctaHref || "#"}
-            className="flex h-11 items-center justify-center rounded-md bg-primary-container px-4 text-label-md text-on-primary-container hover:brightness-95"
-          >
-            {ctaLabel}
-          </Link>
+          <div className={cn("mx-8 my-4 whitespace-nowrap", isCollapsed && "hidden")}>
+            <Link
+              href={ctaHref || "#"}
+              className="flex h-11 w-full items-center justify-center rounded-md bg-[#ddb839] font-bold text-[#171717] transition-colors hover:bg-[#c9a32e]"
+            >
+              {ctaLabel}
+            </Link>
+          </div>
         )}
 
-        <nav className="flex flex-col gap-1">
+        {/* Navigation */}
+        <nav className="flex flex-col">
           {navItems.map((item) => {
             const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
             const Icon = item.icon;
+            const isNotifications = item.href === "/notifications" || item.href === "/admin/notifications";
+            
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative flex items-center gap-3 rounded-md px-3 py-2.5 text-label-md transition",
+                  "flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-[30px] py-[19px] text-[18px] whitespace-nowrap transition-colors",
                   active
-                    ? "bg-white/10 text-primary-fixed-dim"
-                    : "text-[#c9c7c6] hover:bg-white/5 hover:text-inverse-on-surface"
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-[#f3d36a] font-bold"
+                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50",
+                  isCollapsed && "justify-center px-0"
                 )}
               >
-                {active && (
-                  <span className="absolute left-0 top-1 bottom-1 w-[3px] rounded-full bg-primary-container" />
-                )}
-                <Icon className="h-4 w-4" />
-                {item.label}
-                {item.href === "/notifications" && unreadCount > 0 && (
-                  <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-container px-1.5 text-label-sm text-on-primary-container">
+                <Icon size={21} className="flex-shrink-0" />
+                <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+                  {item.label}
+                </span>
+                {isNotifications && unreadCount > 0 && (
+                  <span
+                    className={cn(
+                      "ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-[#ddb839] px-1.5 text-label-sm font-bold text-[#171717]",
+                      isCollapsed && "hidden"
+                    )}
+                  >
                     {unreadCount > 9 ? "9+" : unreadCount}
                   </span>
                 )}
@@ -98,24 +160,52 @@ export function Sidebar({
             );
           })}
         </nav>
-      </div>
 
-      <div className="flex flex-col gap-1 border-t border-white/10 pt-md">
-        <Link
-          href="/help"
-          className="flex items-center gap-3 rounded-md px-3 py-2.5 text-label-md text-[#c9c7c6] hover:bg-white/5"
-        >
-          <HelpCircle className="h-4 w-4" />
-          Help Center
-        </Link>
-        <button
-          onClick={onLogout}
-          className="flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-label-md text-[#c9c7c6] hover:bg-white/5"
-        >
-          <LogOut className="h-4 w-4" />
-          Logout
-        </button>
-      </div>
-    </aside>
+        {/* Bottom Section */}
+        <div className="mt-auto flex flex-col px-[30px] pb-8 whitespace-nowrap">
+          {sidebarBottom.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href || "#"}
+              className={cn(
+                "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+                isCollapsed && "justify-center px-0"
+              )}
+            >
+              {item.icon && <item.icon size={21} className="flex-shrink-0" />}
+              <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+                {item.label}
+              </span>
+            </Link>
+          ))}
+
+          <Link
+            href="/help"
+            className={cn(
+              "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+              isCollapsed && "justify-center px-0"
+            )}
+          >
+            <HelpCircle size={21} className="flex-shrink-0" />
+            <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+              Help Center
+            </span>
+          </Link>
+
+          <button
+            onClick={onLogout}
+            className={cn(
+              "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 flex w-full items-center gap-[18px] border-l-[5px] border-transparent px-0 py-[19px] text-[18px] transition-colors",
+              isCollapsed && "justify-center px-0"
+            )}
+          >
+            <LogOut size={21} className="flex-shrink-0" />
+            <span className={cn("transition-opacity duration-200", isCollapsed && "hidden")}>
+              Logout
+            </span>
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
