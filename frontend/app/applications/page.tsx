@@ -1,6 +1,7 @@
 // app/applications/page.tsx
 "use client";
 
+import { DashboardShell } from "@/components/layout/DashboardShell";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/Card";
@@ -14,7 +15,7 @@ const STATUS_TONE: Record<string, "neutral" | "success" | "warning" | "error"> =
   declined: "error",
 };
 
-export default function MyApplicationsPage() {
+function MyApplicationsContent() {
   const applications = useAsync(() => api.myApplications(), []);
 
   return (
@@ -50,13 +51,21 @@ export default function MyApplicationsPage() {
           </ul>
         ) : (
           <p className="p-md text-body-md text-on-surface-variant">
-            You haven't applied to any opportunities yet. 
-            <a href="/opportunities" className="ml-1 text-primary hover:underline">
+            You haven't applied to any opportunities yet.{" "}
+            <a href="/opportunities" className="text-primary hover:underline">
               Browse opportunities →
             </a>
           </p>
         )}
       </Card>
     </div>
+  );
+}
+
+export default function MyApplicationsPage() {
+  return (
+    <DashboardShell>
+      <MyApplicationsContent />
+    </DashboardShell>
   );
 }
