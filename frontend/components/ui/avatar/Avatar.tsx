@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { initials } from "@/lib/utils";
-import styles from "./avatar.module.css";
+import { cn, initials } from "@/lib/utils";
 
 interface AvatarProps {
   src?: string | null;
@@ -13,7 +11,10 @@ interface AvatarProps {
 export function Avatar({ src, name, size = 40, className }: AvatarProps) {
   if (src) {
     return (
-      <div className={cn(styles.avatar, className)} style={{ width: size, height: size }}>
+      <div
+        className={cn("rounded-full overflow-hidden flex-shrink-0", className)}
+        style={{ width: size, height: size }}
+      >
         <Image
           src={src}
           alt={name}
@@ -25,7 +26,19 @@ export function Avatar({ src, name, size = 40, className }: AvatarProps) {
     );
   }
   return (
-    <div className={cn(styles.avatarFallback, className)} style={{ width: size, height: size }}>
+    <div
+      className={cn(
+        "flex items-center justify-center rounded-full overflow-hidden flex-shrink-0",
+        "bg-primary-container text-on-primary-container font-semibold",
+        className
+      )}
+      style={{
+        width: size,
+        height: size,
+        fontSize: Math.max(10, size * 0.35),
+        fontFamily: "var(--font-inter), Inter, sans-serif",
+      }}
+    >
       {initials(name)}
     </div>
   );
