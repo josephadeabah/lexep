@@ -114,7 +114,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background overflow-x-hidden">
       <header className="border-b border-outline-variant/40">
         <div className="mx-auto flex max-w-container-max items-center justify-between px-4 py-4 sm:px-gutter">
-          <Logo variant="light" size={26} />
+          <Logo variant="light" size={56} showWordmark={false} />
           <nav className="hidden items-center gap-lg md:flex">
             <Link href="#explore" className="text-body-md text-on-surface-variant hover:text-primary">
               Explore
