@@ -130,10 +130,10 @@ export default function LandingPage() {
             </Link>
           </nav>
           <div className="flex items-center gap-2 sm:gap-3">
-            <Button href="/sign-in" variant="ghost" className="hidden sm:inline-flex">
+            <Button href="/sign-in" variant="ghost" className="hidden sm:inline-flex h-10 px-4">
               Log In
             </Button>
-            <Button href="/sign-up" variant="primary" size="sm" className="sm:size-md">
+            <Button href="/sign-up" variant="primary" size="sm" className="sm:size-md sm:h-10">
               Get Started
             </Button>
           </div>
