@@ -17,34 +17,34 @@ export default function PricingPage() {
   const premiumEnabled = config.data?.premium_features_enabled ?? false;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <header className="border-b border-outline-variant/40">
-        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
-          <Link href="/"><Logo variant="light" /></Link>
+        <div className="mx-auto flex max-w-container-max items-center justify-between px-4 py-4 sm:px-gutter">
+          <Link href="/"><Logo variant="light" size={26} /></Link>
           <nav className="hidden items-center gap-lg md:flex">
             <Link href="/" className="text-body-md text-on-surface-variant hover:text-primary">Explore</Link>
             <Link href="/mentorship" className="text-body-md text-on-surface-variant hover:text-primary">Mentors</Link>
             <Link href="/pricing" className="text-body-md text-primary underline">Pricing</Link>
             <Link href="/insights" className="text-body-md text-on-surface-variant hover:text-primary">About</Link>
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {user ? (
-              <Button href="/dashboard" variant="primary">Dashboard</Button>
+              <Button href="/dashboard" variant="primary" size="sm" className="sm:size-md">Dashboard</Button>
             ) : (
               <>
-                <Button href="/sign-in" variant="ghost">Log In</Button>
-                <Button href="/sign-up" variant="primary">Get Started</Button>
+                <Button href="/sign-in" variant="ghost" className="hidden sm:inline-flex">Log In</Button>
+                <Button href="/sign-up" variant="primary" size="sm" className="sm:size-md">Get Started</Button>
               </>
             )}
           </div>
         </div>
       </header>
 
-      <div className="mx-auto max-w-container-max px-gutter py-xl text-center">
-        <h1 className="text-display-lg text-on-background" style={{ fontSize: 48 }}>
+      <div className="mx-auto max-w-container-max px-4 py-lg sm:px-gutter sm:py-xl text-center">
+        <h1 className="text-display-md sm:text-display-lg text-on-background" style={{ fontSize: 36, lineHeight: 1.2 }}>
           Invest in your architectural future.
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-body-lg text-on-surface-variant">
+        <p className="mx-auto mt-4 max-w-2xl text-body-md sm:text-body-lg text-on-surface-variant">
           Choose the plan that accelerates your career, whether you&apos;re a student building a portfolio, an
           expert sharing knowledge, or an enterprise sourcing top talent.
         </p>
@@ -55,7 +55,7 @@ export default function PricingPage() {
           </div>
         )}
 
-        <div className="mt-xl grid gap-md md:grid-cols-3">
+        <div className="mt-lg sm:mt-xl grid gap-4 sm:gap-md md:grid-cols-3">
           {plans.isLoading ? (
             <p className="text-body-md text-on-surface-variant">Loading plans…</p>
           ) : (
@@ -63,24 +63,24 @@ export default function PricingPage() {
               <div
                 key={plan.id}
                 className={cn(
-                  "relative rounded-lg border p-md text-left",
+                  "relative rounded-lg border p-4 sm:p-md text-left",
                   plan.is_popular ? "border-2 border-primary-container" : "border-outline-variant"
                 )}
               >
                 {plan.is_popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary-fixed px-3 py-1 text-label-sm text-on-primary-fixed-variant">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary-fixed px-3 py-1 text-label-sm text-on-primary-fixed-variant whitespace-nowrap">
                     Most Popular
                   </span>
                 )}
-                <h2 className="text-headline-md text-on-background">{plan.name}</h2>
+                <h2 className="text-headline-sm sm:text-headline-md text-on-background">{plan.name}</h2>
                 <p className="mt-2 text-body-md text-on-surface-variant">{plan.audience}</p>
-                <p className="mt-4 text-display-lg text-on-background" style={{ fontSize: plan.is_custom ? 40 : 48 }}>
+                <p className="mt-4 text-display-md sm:text-display-lg text-on-background" style={{ fontSize: plan.is_custom ? 36 : 44, lineHeight: 1.2 }}>
                   {plan.is_custom ? "Custom" : `$${plan.monthly_price}`}
-                  {!plan.is_custom && <span className="text-body-lg text-on-surface-variant">/month</span>}
+                  {!plan.is_custom && <span className="text-body-md sm:text-body-lg text-on-surface-variant">/month</span>}
                 </p>
                 <ul className="mt-6 flex flex-col gap-3">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-body-md text-on-surface">
+                    <li key={f} className="flex items-start gap-2 text-body-sm sm:text-body-md text-on-surface">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" /> {f}
                     </li>
                   ))}
@@ -89,6 +89,7 @@ export default function PricingPage() {
                   href={plan.is_custom ? "/help" : premiumEnabled ? `/upgrade?plan=${plan.id}` : "/sign-up"}
                   variant={plan.is_popular ? "primary" : plan.is_custom ? "ghost" : "secondary"}
                   className="mt-md w-full"
+                  size="lg"
                 >
                   {plan.is_custom ? "Contact Sales" : premiumEnabled ? `Start ${plan.name}` : "Get Started Free"}
                 </Button>
