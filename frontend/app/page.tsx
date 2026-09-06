@@ -74,12 +74,12 @@ function cnList(dark: boolean) {
  * copyright risk and never depends on an external asset. */
 function HeroMotif() {
   return (
-    <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-inverse-surface">
+    <div className="relative w-full overflow-hidden rounded-xl bg-inverse-surface aspect-square max-w-[500px] mx-auto">
       <div
         className="absolute inset-0 opacity-90"
         style={{ background: "radial-gradient(circle at 30% 20%, #554300 0%, #1a1a1a 55%, #1a1a1a 100%)" }}
       />
-      <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full" fill="none">
+      <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full" fill="none" preserveAspectRatio="xMidYMid meet">
         <g stroke="#e9c349" strokeOpacity="0.5" strokeWidth="1.5">
           <path d="M40 360 L40 140 L120 80 L200 140 L200 360" />
           <path d="M120 80 L120 360" />
@@ -97,7 +97,7 @@ function HeroMotif() {
           <path d="M0 380 L400 340" />
         </g>
       </svg>
-      <div className="absolute bottom-6 left-6 right-6 rounded-lg bg-black/30 p-4 backdrop-blur-sm">
+      <div className="absolute bottom-4 left-4 right-4 rounded-lg bg-black/30 p-3 backdrop-blur-sm">
         <p className="flex items-center gap-2 text-label-md text-inverse-on-surface">
           <Sparkles className="h-4 w-4 text-primary-fixed-dim" /> AI-matched mentors &amp; opportunities
         </p>
@@ -111,9 +111,9 @@ function HeroMotif() {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <header className="border-b border-outline-variant/40">
-        <div className="mx-auto flex max-w-container-max items-center justify-between px-gutter py-4">
+        <div className="mx-auto flex max-w-container-max items-center justify-between px-4 py-4 sm:px-gutter">
           <Logo variant="light" size={26} />
           <nav className="hidden items-center gap-lg md:flex">
             <Link href="#explore" className="text-body-md text-on-surface-variant hover:text-primary">
@@ -129,36 +129,36 @@ export default function LandingPage() {
               Insights
             </Link>
           </nav>
-          <div className="flex items-center gap-3">
-            <Button href="/sign-in" variant="ghost">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Button href="/sign-in" variant="ghost" className="hidden sm:inline-flex">
               Log In
             </Button>
-            <Button href="/sign-up" variant="primary">
+            <Button href="/sign-up" variant="primary" size="sm" className="sm:size-md">
               Get Started
             </Button>
           </div>
         </div>
       </header>
 
-      <section className="relative overflow-hidden px-gutter py-xl">
+      <section className="relative overflow-hidden px-4 py-lg sm:px-gutter sm:py-xl">
         <div
           className="pointer-events-none absolute inset-0 z-0 opacity-20"
           style={{ background: "radial-gradient(ellipse at top right, #d4af37, transparent 60%)" }}
         />
-        <div className="relative z-10 mx-auto grid max-w-container-max items-center gap-xl md:grid-cols-2">
-          <div>
+        <div className="relative z-10 mx-auto grid max-w-container-max items-center gap-lg md:grid-cols-2 md:gap-xl">
+          <div className="text-center md:text-left">
             <span className="inline-flex items-center gap-2 rounded-full bg-primary-fixed px-3 py-1 text-label-sm text-on-primary-fixed-variant">
               <Sparkles className="h-3.5 w-3.5" /> Free during our launch beta
             </span>
-            <h1 className="mt-6 text-display-lg text-on-background">
+            <h1 className="mt-4 text-display-md sm:mt-6 sm:text-display-lg text-on-background">
               Architecting the Future of <span className="text-primary-container">African Talent.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-body-lg text-on-surface-variant">
+            <p className="mt-4 max-w-xl text-body-md sm:mt-6 sm:text-body-lg text-on-surface-variant mx-auto md:mx-0">
               Lexep connects ambitious African youth with world-class mentors, real internships, and
               AI-matched opportunities — building the pipeline of architects, engineers, and builders
               shaping the continent&apos;s next generation of cities.
             </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:justify-center md:justify-start">
               <Button href="/sign-up" size="lg" variant="primary">
                 Start Learning Free <ArrowRight className="h-4 w-4" />
               </Button>
@@ -166,7 +166,7 @@ export default function LandingPage() {
                 Become a Mentor
               </Button>
             </div>
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-label-sm text-on-surface-variant">
+            <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-label-sm text-on-surface-variant md:justify-start">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4 text-primary" /> No credit card required
               </span>
@@ -178,15 +178,17 @@ export default function LandingPage() {
               </span>
             </div>
           </div>
-          <HeroMotif />
+          <div className="order-first md:order-none mb-6 md:mb-0">
+            <HeroMotif />
+          </div>
         </div>
       </section>
 
-      <section className="bg-inverse-surface py-lg">
-        <div className="mx-auto grid max-w-container-max grid-cols-2 gap-md px-gutter text-center md:grid-cols-4">
+      <section className="bg-inverse-surface py-md sm:py-lg">
+        <div className="mx-auto grid max-w-container-max grid-cols-2 gap-4 px-4 sm:gap-md sm:px-gutter text-center md:grid-cols-4">
           {STATS.map((stat) => (
             <div key={stat.label}>
-              <p className="text-display-lg text-primary-fixed-dim" style={{ fontSize: 36 }}>
+              <p className="text-display-md sm:text-display-lg text-primary-fixed-dim" style={{ fontSize: 32, lineHeight: 1.2 }}>
                 {stat.value}
               </p>
               <p className="mt-1 text-label-sm text-[#c9c7c6]">{stat.label}</p>
@@ -195,45 +197,45 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="explore" className="px-gutter py-xl">
+      <section id="explore" className="px-4 py-lg sm:px-gutter sm:py-xl">
         <div className="mx-auto max-w-container-max">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-headline-lg text-on-background">A Complete Ecosystem for Growth</h2>
-            <p className="mt-4 text-body-md text-on-surface-variant">
+            <h2 className="text-headline-md sm:text-headline-lg text-on-background">A Complete Ecosystem for Growth</h2>
+            <p className="mt-3 text-body-md text-on-surface-variant">
               Everything you need to transition from learning to earning, all in one seamless platform.
             </p>
           </div>
 
-          <div className="mt-xl grid gap-md md:grid-cols-3">
+          <div className="mt-lg grid gap-4 sm:mt-xl sm:gap-md md:grid-cols-3">
             {FEATURES.map((feature) => (
-              <div key={feature.title} className="card-level1 p-md">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-primary-container">
-                  <feature.icon className="h-6 w-6 text-on-primary-container" />
+              <div key={feature.title} className="card-level1 p-4 sm:p-md">
+                <div className="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-md bg-primary-container">
+                  <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-on-primary-container" />
                 </div>
-                <h3 className="text-headline-md text-on-background">{feature.title}</h3>
-                <p className="mt-2 text-body-md text-on-surface-variant">{feature.body}</p>
+                <h3 className="text-headline-sm sm:text-headline-md text-on-background">{feature.title}</h3>
+                <p className="mt-2 text-body-sm sm:text-body-md text-on-surface-variant">{feature.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="px-gutter py-xl">
+      <section className="px-4 py-lg sm:px-gutter sm:py-xl">
         <div className="mx-auto max-w-container-max">
-          <div className="grid gap-md md:grid-cols-3">
+          <div className="grid gap-4 sm:gap-md md:grid-cols-3">
             {AUDIENCES.map((a) => (
               <div
                 key={a.label}
                 className={
                   a.dark
-                    ? "flex flex-col rounded-lg bg-inverse-surface p-md text-inverse-on-surface"
-                    : "flex flex-col rounded-lg border border-outline-variant p-md"
+                    ? "flex flex-col rounded-lg bg-inverse-surface p-4 sm:p-md text-inverse-on-surface"
+                    : "flex flex-col rounded-lg border border-outline-variant p-4 sm:p-md"
                 }
               >
                 <span className={a.dark ? "text-label-sm text-primary-fixed-dim" : "text-label-sm text-primary"}>
                   {a.label.toUpperCase()}
                 </span>
-                <h3 className={a.dark ? "mt-2 text-headline-md text-inverse-on-surface" : "mt-2 text-headline-md text-on-background"}>
+                <h3 className={a.dark ? "mt-2 text-headline-sm sm:text-headline-md text-inverse-on-surface" : "mt-2 text-headline-sm sm:text-headline-md text-on-background"}>
                   {a.title}
                 </h3>
                 <ul className="mt-4 flex flex-1 flex-col gap-2">
@@ -260,23 +262,23 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="px-gutter py-xl">
-        <div className="mx-auto flex max-w-container-max flex-col items-center gap-6 rounded-xl bg-[#1a1a1a] px-md py-xl text-center text-inverse-on-surface">
-          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-container">
-            <Building2 className="h-6 w-6 text-on-primary-container" />
+      <section className="px-4 py-lg sm:px-gutter sm:py-xl">
+        <div className="mx-auto flex max-w-container-max flex-col items-center gap-6 rounded-xl bg-[#1a1a1a] p-6 sm:p-md sm:py-xl text-center text-inverse-on-surface">
+          <span className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-primary-container">
+            <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-on-primary-container" />
           </span>
-          <h2 className="text-headline-lg">Ready to build your future?</h2>
-          <p className="max-w-xl text-body-md text-[#c9c7c6]">
+          <h2 className="text-headline-md sm:text-headline-lg">Ready to build your future?</h2>
+          <p className="max-w-xl text-body-sm sm:text-body-md text-[#c9c7c6]">
             Join thousands of African youth, mentors, and companies shaping the continent&apos;s next
             generation of talent — free during our launch beta.
           </p>
-          <Button href="/sign-up" size="lg" variant="primary">
+          <Button href="/sign-up" size="lg" variant="primary" className="w-full sm:w-auto">
             Create your account <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
       </section>
 
-      <footer className="border-t border-outline-variant/40 px-gutter py-md">
+      <footer className="border-t border-outline-variant/40 px-4 py-md sm:px-gutter">
         <div className="mx-auto flex max-w-container-max flex-col items-center justify-between gap-4 text-label-sm text-on-surface-variant md:flex-row">
           <span>© {new Date().getFullYear()} Lexep. All rights reserved.</span>
           <div className="flex gap-md">
