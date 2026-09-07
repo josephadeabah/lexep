@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
 import { api } from "@/lib/api";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
 interface DraftQuestion {
   prompt: string;
@@ -165,8 +166,10 @@ function NewAssessmentContent() {
 
 export default function NewAssessmentPage() {
   return (
-    <SharedShell>
-      <NewAssessmentContent />
-    </SharedShell>
+    <RoleGuard allow={["admin", "company"]}>
+      <SharedShell>
+        <NewAssessmentContent />
+      </SharedShell>
+    </RoleGuard>
   );
 }

@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api_deps import get_current_user_optional, require_role
+from app.core.config import settings
 from app.core.database import get_db
 from app.models.enums import ApplicationStatus, InterviewStatus, NotificationType, UserRole
 from app.models.opportunity import Application, Interview, Opportunity
@@ -30,15 +31,44 @@ def schedule_interview(
     db: Session = Depends(get_db),
     company: User = Depends(require_role(UserRole.COMPANY)),
 ):
-    """Quick-schedule: sets a single confirmed time directly. Used by the
-    'Schedule' quick-action on the Applicant Review board."""
+    """Primary interview-scheduling path: the company picks a single direct
+    time and the candidate is notified immediately with a confirmed date —
+    no separate "select a time" step. Powers the 'Schedule' quick-action on
+    the Applicant Review board.
+
+    If no meeting_link is supplied, one is generated automatically from
+    MEETING_BASE_URL once the interview has an id (requires a flush first
+    so interview.id is populated before the URL is built)."""
     application = db.get(Application, payload.application_id)
     if not application:
         raise HTTPException(status_code=404, detail="Application not found.")
 
-    interview = Interview(status=InterviewStatus.SCHEDULED, **payload.model_dump())
+    data = payload.model_dump()
+    meeting_link = data.pop("meeting_link", None)
+    interview = Interview(status=InterviewStatus.SCHEDULED, **data)
     application.status = ApplicationStatus.INTERVIEW_SCHEDULED
     db.add_all([interview, application])
+    db.flush()  # assigns interview.id, needed below
+
+    if not meeting_link:
+        meeting_link = f"{settings.MEETING_BASE_URL}/{interview.id}"
+    interview.meeting_link = meeting_link
+    db.add(interview)
+
+    opportunity = db.get(Opportunity, application.opportunity_id)
+    notify(
+        db,
+        user_id=application.applicant_id,
+        type=NotificationType.INTERVIEW_CONFIRMED,
+        title="Interview Confirmed",
+        body=(
+            f"Your interview for {opportunity.title if opportunity else 'a role'} is confirmed for "
+            f"{interview.scheduled_at.strftime('%b %d, %Y at %I:%M %p') if interview.scheduled_at else 'the scheduled time'}."
+        ),
+        action_label="View Details",
+        action_url=f"/interviews/{interview.id}/confirmed",
+    )
+
     db.commit()
     db.refresh(interview)
     return _to_out(interview, db)
@@ -50,8 +80,10 @@ def propose_interview(
     db: Session = Depends(get_db),
     company: User = Depends(require_role(UserRole.COMPANY)),
 ):
-    """Powers the 'Schedule Interview' modal — offers multiple time slots for
-    the candidate to choose from (Interview Management Hub)."""
+    """DEPRECATED — kept only for backward compatibility with any existing
+    links/integrations. New scheduling should use POST /api/interviews
+    (schedule_interview above), which sets a single confirmed time directly
+    instead of asking the candidate to choose among several proposed slots."""
     application = db.get(Application, payload.application_id)
     if not application:
         raise HTTPException(status_code=404, detail="Application not found.")
@@ -90,8 +122,8 @@ def get_interview(
     db: Session = Depends(get_db),
     user: User | None = Depends(get_current_user_optional),
 ):
-    """Public-ish: powers the candidate 'Select Interview Time' and 'Interview
-    Confirmed' pages, reached via a direct link."""
+    """Public-ish: powers the candidate 'Select Interview Time' (deprecated
+    flow) and 'Interview Confirmed' pages, reached via a direct link."""
     interview = db.get(Interview, interview_id)
     if not interview:
         raise HTTPException(status_code=404, detail="Interview not found.")
@@ -105,7 +137,10 @@ def select_interview_time(
     db: Session = Depends(get_db),
     learner: User = Depends(require_role(UserRole.LEARNER)),
 ):
-    """Candidate confirms one of the proposed slots — powers 'Confirm Selection'."""
+    """DEPRECATED — candidate confirms one of the proposed slots. Only
+    reachable for interviews created via the deprecated /propose endpoint;
+    the primary flow (schedule_interview) never leaves an interview in
+    AWAITING_CANDIDATE status."""
     interview = db.get(Interview, interview_id)
     if not interview:
         raise HTTPException(status_code=404, detail="Interview not found.")
@@ -118,7 +153,7 @@ def select_interview_time(
     interview.scheduled_at = payload.selected_time
     interview.status = InterviewStatus.SCHEDULED
     if not interview.meeting_link:
-        interview.meeting_link = f"https://meet.lexep.org/i/{interview.id}"
+        interview.meeting_link = f"{settings.MEETING_BASE_URL}/{interview.id}"
     db.add(interview)
     db.flush()
 
@@ -163,7 +198,10 @@ def pending_interviews_for_company(
     db: Session = Depends(get_db),
     company: User = Depends(require_role(UserRole.COMPANY)),
 ):
-    """Interviews awaiting the candidate's time selection — 'Pending Requests'."""
+    """Interviews awaiting the candidate's time selection — 'Pending
+    Requests'. Only ever populated by the deprecated /propose flow, since
+    the primary schedule_interview path never creates AWAITING_CANDIDATE
+    interviews."""
     opportunity_ids = [o.id for o in db.query(Opportunity).filter(Opportunity.company_id == company.id).all()]
     application_ids = [
         a.id for a in db.query(Application).filter(Application.opportunity_id.in_(opportunity_ids)).all()

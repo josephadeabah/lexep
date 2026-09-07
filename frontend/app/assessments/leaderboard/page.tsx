@@ -11,6 +11,7 @@ import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Pagination } from "@/components/ui/Pagination";
 import { formatDate, cn } from "@/lib/utils";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
 function LeaderboardContent() {
   const [page, setPage] = useState(1);
@@ -105,8 +106,10 @@ function LeaderboardContent() {
 
 export default function LeaderboardPage() {
   return (
-    <SharedShell>
-      <LeaderboardContent />
-    </SharedShell>
+    <RoleGuard allow={["company"]}>
+      <SharedShell>
+        <LeaderboardContent />
+      </SharedShell>
+    </RoleGuard>
   );
 }

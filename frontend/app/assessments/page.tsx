@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Star, Plus, Trophy } from "lucide-react";
+import { Star, Plus, Trophy, WifiOff } from "lucide-react";
 import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { SharedShell } from "@/components/layout/SharedShell";
@@ -10,18 +11,31 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { useAuthStore } from "@/lib/auth-store";
+import { useOnlineStatus } from "@/lib/offline/useOnlineStatus";
 
 function LearnerAssessmentHub() {
   const router = useRouter();
+  const { isOnline } = useOnlineStatus();
   const assessments = useAsync(() => api.listAssessments(), []);
   const attempts = useAsync(() => api.myAttempts(), []);
+  const [startingId, setStartingId] = useState<number | null>(null);
 
   const featured = (assessments.data ?? []).find((a) => a.featured) ?? assessments.data?.[0];
   const inProgress = (attempts.data ?? []).filter((a) => a.status === "in_progress");
 
   async function start(assessmentId: number) {
-    const progress = await api.startAttempt(assessmentId);
-    router.push(`/assessments/${assessmentId}/take?attempt=${progress.attempt_id}`);
+    // Starting an assessment needs an immediate, real attempt_id/question
+    // to navigate to — that can't come from a queued offline request (it
+    // only resolves once connectivity returns), so this is disabled
+    // outright while offline rather than silently failing after a tap.
+    if (!isOnline) return;
+    setStartingId(assessmentId);
+    try {
+      const progress = await api.startAttempt(assessmentId);
+      router.push(`/assessments/${assessmentId}/take?attempt=${progress.attempt_id}`);
+    } finally {
+      setStartingId(null);
+    }
   }
 
   return (
@@ -32,6 +46,16 @@ function LearnerAssessmentHub() {
           Validate your expertise across domains and unlock advanced learning paths.
         </p>
       </div>
+
+      {!isOnline && (
+        <Card className="flex items-center gap-3 border-l-2 border-primary-container">
+          <WifiOff className="h-4 w-4 flex-shrink-0 text-on-surface-variant" />
+          <p className="text-body-md text-on-surface-variant">
+            You&apos;re offline — starting a new assessment needs a connection, since it can&apos;t be queued like
+            other actions. You can still browse below; reconnect to start or continue an attempt.
+          </p>
+        </Card>
+      )}
 
       {featured && (
         <Card className="grid gap-md sm:grid-cols-2">
@@ -47,8 +71,12 @@ function LearnerAssessmentHub() {
             <p className="mt-2 text-label-sm text-on-surface-variant">
               {featured.question_count} questions · {featured.duration_minutes} minutes
             </p>
-            <Button className="mt-4" onClick={() => start(featured.id)}>
-              Start Assessment
+            <Button
+              className="mt-4"
+              onClick={() => start(featured.id)}
+              disabled={!isOnline || startingId === featured.id}
+            >
+              {!isOnline ? "Offline — reconnect to start" : startingId === featured.id ? "Starting…" : "Start Assessment"}
             </Button>
           </div>
           <div className="hidden items-center justify-center rounded-lg bg-surface-container-high sm:flex">
@@ -107,8 +135,13 @@ function LearnerAssessmentHub() {
               <p className="mt-2 text-label-sm text-on-surface-variant">
                 {assessment.question_count} questions · {assessment.duration_minutes} min
               </p>
-              <Button variant="ghost" className="mt-4 w-full" onClick={() => start(assessment.id)}>
-                Start
+              <Button
+                variant="ghost"
+                className="mt-4 w-full"
+                onClick={() => start(assessment.id)}
+                disabled={!isOnline || startingId === assessment.id}
+              >
+                {!isOnline ? "Offline" : startingId === assessment.id ? "Starting…" : "Start"}
               </Button>
             </Card>
           ))}

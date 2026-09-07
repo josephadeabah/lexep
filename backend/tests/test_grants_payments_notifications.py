@@ -8,7 +8,7 @@ def test_grant_group_and_contribution_flow(client):
     res = client.post("/api/grants/groups", json={"name": "Tech Fund", "goal_amount": 1000}, headers=headers)
     assert res.status_code == 201
     group_id = res.json()["id"]
-    assert res.json()["invite_link"].startswith("lexep.org/join/")
+    assert "/join/" in res.json()["invite_link"]
 
     donor_headers, _ = register(client, "donor@example.com")
     set_role(client, donor_headers, "learner")
@@ -26,6 +26,22 @@ def test_grant_group_and_contribution_flow(client):
 
     res = client.get(f"/api/grants/groups/{group_id}")
     assert res.json()["raised_amount"] == 50
+
+
+def test_only_learners_can_apply_for_grants(client):
+    mentor_headers, _ = register(client, "grantmentor@example.com")
+    set_role(client, mentor_headers, "mentor")
+    res = client.post(
+        "/api/grants", json={"amount_requested": 500, "purpose": "Laptop"}, headers=mentor_headers
+    )
+    assert res.status_code == 403
+
+    learner_headers, _ = register(client, "grantlearner@example.com")
+    set_role(client, learner_headers, "learner")
+    res = client.post(
+        "/api/grants", json={"amount_requested": 500, "purpose": "Laptop"}, headers=learner_headers
+    )
+    assert res.status_code == 201
 
 
 def test_premium_checkout_blocked_while_disabled(client):

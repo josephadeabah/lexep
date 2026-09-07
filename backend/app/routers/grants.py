@@ -1,11 +1,14 @@
 import re
 import secrets
+from urllib.parse import urlparse
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.api_deps import get_current_user
+from app.api_deps import get_current_user, require_role
+from app.core.config import settings
 from app.core.database import get_db
+from app.models.enums import UserRole
 from app.models.grant import Contribution, Grant, GrantGroup
 from app.models.user import User
 from app.schemas.grant import (
@@ -25,6 +28,14 @@ def _slugify(name: str) -> str:
     return slug or "group"
 
 
+def _join_host() -> str:
+    """Derives a bare host (no scheme) from APP_BASE_URL for building invite
+    links, e.g. 'http://localhost:3000' -> 'localhost:3000'. Falls back to
+    the raw setting if it can't be parsed as a URL."""
+    parsed = urlparse(settings.APP_BASE_URL)
+    return parsed.netloc or settings.APP_BASE_URL
+
+
 def _group_to_out(group: GrantGroup) -> GrantGroupOut:
     percent = round((group.raised_amount / group.goal_amount) * 100, 1) if group.goal_amount else 0.0
     data = GrantGroupOut.model_validate(group)
@@ -33,8 +44,14 @@ def _group_to_out(group: GrantGroup) -> GrantGroupOut:
 
 
 @router.post("", response_model=GrantOut, status_code=201)
-def apply_for_grant(payload: GrantCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    """3-step 'Grant Application' wizard — final submit."""
+def apply_for_grant(
+    payload: GrantCreate,
+    db: Session = Depends(get_db),
+    user: User = Depends(require_role(UserRole.LEARNER)),
+):
+    """3-step 'Grant Application' wizard — final submit. Restricted to
+    learners; grant *groups* (below) remain open to any authenticated role
+    per the platform's community-funding model."""
     grant = Grant(applicant_id=user.id, **payload.model_dump())
     db.add(grant)
     db.commit()
@@ -49,9 +66,11 @@ def my_grants(db: Session = Depends(get_db), user: User = Depends(get_current_us
 
 @router.post("/groups", response_model=GrantGroupOut, status_code=201)
 def create_group(payload: GrantGroupCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    """Powers the 'Create Group' (Lexep Impact) flow."""
+    """Powers the 'Create Group' (Lexep Impact) flow. Intentionally open to
+    any authenticated role (mentors, companies, learners) — only the
+    individual grant application above is learner-restricted."""
     group = GrantGroup(organizer_id=user.id, **payload.model_dump())
-    group.invite_link = f"lexep.org/join/{_slugify(payload.name)}-{secrets.token_hex(2)}"
+    group.invite_link = f"{_join_host()}/join/{_slugify(payload.name)}-{secrets.token_hex(2)}"
     db.add(group)
     db.commit()
     db.refresh(group)

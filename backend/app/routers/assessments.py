@@ -167,24 +167,44 @@ def my_attempts(db: Session = Depends(get_db), user: User = Depends(get_current_
 
 @router.post("/{assessment_id}/attempts", response_model=AttemptProgressOut, status_code=201)
 def start_attempt(assessment_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user)):
-    """Powers 'Start Assessment' / 'New Assessment'."""
+    """Powers 'Start Assessment' / 'New Assessment'.
+
+    Idempotency guard: if the user already has an IN_PROGRESS attempt for
+    this assessment (e.g. a queued offline "start" request replayed after
+    reconnecting, or a double-tap), resume that attempt instead of creating
+    a new row. This fixes duplicated in-progress assessments that could
+    otherwise pile up after a flaky connection replays the same start
+    request more than once."""
     assessment = db.get(Assessment, assessment_id)
     if not assessment:
         raise HTTPException(status_code=404, detail="Assessment not found.")
 
-    attempt = AssessmentAttempt(assessment_id=assessment_id, user_id=user.id)
-    db.add(attempt)
-    db.commit()
-    db.refresh(attempt)
+    existing = (
+        db.query(AssessmentAttempt)
+        .filter(
+            AssessmentAttempt.assessment_id == assessment_id,
+            AssessmentAttempt.user_id == user.id,
+            AssessmentAttempt.status == AssessmentAttemptStatus.IN_PROGRESS,
+        )
+        .order_by(AssessmentAttempt.started_at.desc())
+        .first()
+    )
+    attempt = existing
+    if not attempt:
+        attempt = AssessmentAttempt(assessment_id=assessment_id, user_id=user.id)
+        db.add(attempt)
+        db.commit()
+        db.refresh(attempt)
 
-    first_question = assessment.questions[0] if assessment.questions else None
+    questions = assessment.questions
+    current_question = questions[attempt.current_index] if attempt.current_index < len(questions) else None
     return AttemptProgressOut(
         attempt_id=attempt.id,
         assessment_title=assessment.title,
-        total_questions=len(assessment.questions),
-        current_index=0,
+        total_questions=len(questions),
+        current_index=attempt.current_index,
         is_complete=False,
-        question=_question_out(first_question) if first_question else None,
+        question=_question_out(current_question) if current_question else None,
     )
 
 

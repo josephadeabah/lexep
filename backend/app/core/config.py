@@ -42,8 +42,20 @@ class Settings(BaseSettings):
     # OAuth (placeholders — wire up real client IDs/secrets when ready)
     GOOGLE_CLIENT_ID: str = ""
     GOOGLE_CLIENT_SECRET: str = ""
+    GOOGLE_REDIRECT_URI: str = ""
     LINKEDIN_CLIENT_ID: str = ""
     LINKEDIN_CLIENT_SECRET: str = ""
+    LINKEDIN_REDIRECT_URI: str = ""
+
+    # --- Currency (platform standardized on GHS / Cedis) --------------------
+    DEFAULT_CURRENCY: str = "GHS"
+    DEFAULT_CURRENCY_SYMBOL: str = "₵"
+
+    # --- Meeting links --------------------------------------------------
+    # Base URL used to auto-generate a meeting link when a company schedules
+    # an interview without supplying their own (see routers/interviews.py).
+    # Previously hardcoded as "https://meet.lexep.org/i" — now configurable.
+    MEETING_BASE_URL: str = "https://meet.lexep.org/i"
 
     # --- Premium / monetization -----------------------------------------
     # Master switch for the whole paywall. While false, the platform is
