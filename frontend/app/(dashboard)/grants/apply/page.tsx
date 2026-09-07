@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { api } from "@/lib/api";
 import { RoleGuard } from "@/components/layout/RoleGuard";
 
+
 const STEPS = ["Basic Info", "Details", "Documents"];
 
 function GrantApplicationContent() {
