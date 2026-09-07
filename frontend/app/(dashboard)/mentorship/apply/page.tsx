@@ -11,13 +11,14 @@ import { Select } from "@/components/ui/Select";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Textarea } from "@/components/ui/Textarea";
 import { api } from "@/lib/api";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
 const INDUSTRIES = ["Technology", "Design", "Finance", "Healthcare", "Education", "Marketing"];
 const SKILLS = ["UX Design", "Fullstack Dev", "Product Mgmt", "Data Science", "Digital Marketing", "Leadership"];
 const HOURS = ["1 - 2 hours", "3 - 5 hours", "5+ hours"];
 const TIMEFRAMES = ["Weekdays (Mornings)", "Weekdays (Evenings)", "Weekends"];
 
-export default function MentorApplicationPage() {
+function MentorApplicationContent() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -258,5 +259,13 @@ export default function MentorApplicationPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MentorApplicationPage() {
+  return (
+    <RoleGuard allow={["mentor"]}>
+      <MentorApplicationContent />
+    </RoleGuard>
   );
 }

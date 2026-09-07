@@ -6,8 +6,9 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Avatar } from "@/components/ui/Avatar";
 import { formatDate } from "@/lib/utils";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
-export default function MentorRequestsPage() {
+function MentorRequestsContent() {
   const requests = useAsync(() => api.myMentorRequests(), []);
 
   async function accept(id: number) {
@@ -60,5 +61,13 @@ export default function MentorRequestsPage() {
         )}
       </Card>
     </div>
+  );
+}
+
+export default function MentorRequestsPage() {
+  return (
+    <RoleGuard allow={["mentor"]}>
+      <MentorRequestsContent />
+    </RoleGuard>
   );
 }

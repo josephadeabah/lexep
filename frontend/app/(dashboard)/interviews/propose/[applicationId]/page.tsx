@@ -2,56 +2,48 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { X, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 import { api } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
+import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
-function nextBusinessSlots(): { label: string; iso: string }[] {
-  const slots: { label: string; iso: string }[] = [];
-  const base = new Date();
-  base.setDate(base.getDate() + 2);
-  const times = [10, 14, 11];
-  times.forEach((hour, i) => {
-    const d = new Date(base);
-    d.setDate(base.getDate() + i);
-    d.setHours(hour, 0, 0, 0);
-    slots.push({
-      label: d.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + ` ${hour % 12 || 12}:00 ${hour < 12 ? "AM" : "PM"}`,
-      iso: d.toISOString(),
-    });
-  });
-  return slots;
+/** Default suggestion: two business days from now at 10:00 AM local time,
+ * formatted for a <input type="datetime-local"> value. */
+function defaultDateTimeLocal(): string {
+  const d = new Date();
+  d.setDate(d.getDate() + 2);
+  d.setHours(10, 0, 0, 0);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-export default function ProposeInterviewPage() {
+function ScheduleInterviewContent() {
   const params = useParams<{ applicationId: string }>();
   const router = useRouter();
   const applicationId = Number(params.applicationId);
 
   const [interviewType, setInterviewType] = useState("Technical Assessment");
-  const [meetingService, setMeetingService] = useState("Google Meet");
+  const [dateTime, setDateTime] = useState(defaultDateTimeLocal());
+  const [durationMinutes, setDurationMinutes] = useState("45");
   const [message, setMessage] = useState("");
-  const [slots] = useState(nextBusinessSlots());
-  const [selected, setSelected] = useState<string[]>(slots.slice(0, 2).map((s) => s.iso));
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function toggleSlot(iso: string) {
-    setSelected((prev) => (prev.includes(iso) ? prev.filter((s) => s !== iso) : [...prev, iso]));
-  }
-
   async function handleSend() {
+    if (!dateTime) return;
     setIsSubmitting(true);
     try {
-      await api.proposeInterview({
+      // Direct scheduling — the company picks one time and the candidate is
+      // notified immediately with a confirmed date, rather than choosing
+      // among several proposed slots (see routers/interviews.py:schedule_interview).
+      await api.scheduleInterview({
         application_id: applicationId,
+        scheduled_at: new Date(dateTime).toISOString(),
+        duration_minutes: Number(durationMinutes || 45),
         interview_type: interviewType,
-        meeting_service: meetingService,
-        proposed_times: selected,
-        message_to_candidate: message,
+        message_to_candidate: message || undefined,
       });
       router.push("/interviews");
     } finally {
@@ -65,7 +57,7 @@ export default function ProposeInterviewPage() {
         <div className="flex items-center justify-between border-b border-outline-variant/40 p-md">
           <div>
             <h1 className="text-headline-md text-on-background">Schedule Interview</h1>
-            <p className="text-body-md text-on-surface-variant">Send an invitation to the candidate</p>
+            <p className="text-body-md text-on-surface-variant">Pick a time and confirm — the candidate is notified right away.</p>
           </div>
           <button onClick={() => router.back()} className="text-on-surface-variant hover:text-on-background">
             <X className="h-5 w-5" />
@@ -74,44 +66,26 @@ export default function ProposeInterviewPage() {
 
         <div className="max-h-[70vh] overflow-y-auto p-md">
           <div className="flex flex-col gap-md">
-            <div className="grid gap-md sm:grid-cols-2">
-              <Select label="Interview Type" value={interviewType} onChange={(e) => setInterviewType(e.target.value)}>
-                <option>Technical Assessment</option>
-                <option>Portfolio Review</option>
-                <option>Culture Fit</option>
-                <option>Final Round</option>
-              </Select>
-              <Select label="Meeting Service" value={meetingService} onChange={(e) => setMeetingService(e.target.value)}>
-                <option>Google Meet</option>
-                <option>Zoom</option>
-                <option>Microsoft Teams</option>
-              </Select>
-            </div>
+            <Select label="Interview Type" value={interviewType} onChange={(e) => setInterviewType(e.target.value)}>
+              <option>Technical Assessment</option>
+              <option>Portfolio Review</option>
+              <option>Culture Fit</option>
+              <option>Final Round</option>
+            </Select>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <p className="text-label-md text-on-surface">Offer Availability (Select multiple)</p>
-                <span className="text-label-sm text-on-surface-variant">Timezone: GMT</span>
-              </div>
-              <div className="mt-2 grid grid-cols-2 gap-2">
-                {slots.map((slot) => (
-                  <button
-                    key={slot.iso}
-                    onClick={() => toggleSlot(slot.iso)}
-                    className={cn(
-                      "rounded-md border p-3 text-left text-label-sm transition",
-                      selected.includes(slot.iso)
-                        ? "border-primary-container bg-primary-fixed text-on-primary-fixed-variant"
-                        : "border-outline-variant text-on-surface"
-                    )}
-                  >
-                    {slot.label}
-                  </button>
-                ))}
-                <button className="flex items-center justify-center gap-1 rounded-md border border-dashed border-outline-variant p-3 text-label-sm text-on-surface-variant">
-                  <Plus className="h-3.5 w-3.5" /> Suggest Time
-                </button>
-              </div>
+            <div className="grid gap-md sm:grid-cols-2">
+              <Input
+                label="Date & Time"
+                type="datetime-local"
+                value={dateTime}
+                onChange={(e) => setDateTime(e.target.value)}
+              />
+              <Input
+                label="Duration (mins)"
+                type="number"
+                value={durationMinutes}
+                onChange={(e) => setDurationMinutes(e.target.value)}
+              />
             </div>
 
             <Textarea
@@ -120,7 +94,10 @@ export default function ProposeInterviewPage() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <p className="text-label-sm text-on-surface-variant">Standard template will be appended.</p>
+            <p className="text-label-sm text-on-surface-variant">
+              The candidate will get an in-app notification with this date, time, and meeting details — no separate
+              time-selection step needed.
+            </p>
           </div>
         </div>
 
@@ -128,11 +105,19 @@ export default function ProposeInterviewPage() {
           <Button variant="ghost" onClick={() => router.back()}>
             Cancel
           </Button>
-          <Button onClick={handleSend} disabled={selected.length === 0 || isSubmitting}>
-            {isSubmitting ? "Sending…" : "Send Invitation ▷"}
+          <Button onClick={handleSend} disabled={!dateTime || isSubmitting}>
+            {isSubmitting ? "Scheduling…" : "Confirm & Notify Candidate"}
           </Button>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ScheduleInterviewPage() {
+  return (
+    <RoleGuard allow={["company"]}>
+      <ScheduleInterviewContent />
+    </RoleGuard>
   );
 }

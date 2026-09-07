@@ -10,6 +10,7 @@ import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { api } from "@/lib/api";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
 const STEP_LABELS = ["Basics", "Details", "Review"];
 
@@ -43,7 +44,7 @@ function StepHeader({ step }: { step: number }) {
   );
 }
 
-export default function NewOpportunityPage() {
+function NewOpportunityForm() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,6 +81,7 @@ export default function NewOpportunityPage() {
         duration,
         stipend_provided: stipendProvided,
         stipend_amount: stipendAmount ? Number(stipendAmount) : null,
+        stipend_currency: "GHS",
         description,
         required_skills: skills,
         application_deadline: deadline || null,
@@ -165,7 +167,7 @@ export default function NewOpportunityPage() {
                   <Input
                     label="Monthly Stipend Amount"
                     placeholder="e.g. 500"
-                    icon={<span className="text-body-md">$</span>}
+                    icon={<span className="text-body-md">₵</span>}
                     value={stipendAmount}
                     onChange={(e) => setStipendAmount(e.target.value)}
                   />
@@ -242,7 +244,7 @@ export default function NewOpportunityPage() {
                 </div>
                 <div>
                   <p className="text-label-sm text-on-surface-variant">Stipend</p>
-                  <p>{stipendProvided ? `Paid ($${stipendAmount || "0"}/mo)` : "Unpaid"}</p>
+                  <p>{stipendProvided ? `Paid (₵${stipendAmount || "0"}/mo)` : "Unpaid"}</p>
                 </div>
                 <div className="sm:col-span-2">
                   <p className="text-label-sm text-on-surface-variant">Description Summary</p>
@@ -279,5 +281,13 @@ export default function NewOpportunityPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function NewOpportunityPage() {
+  return (
+    <RoleGuard allow={["company"]}>
+      <NewOpportunityForm />
+    </RoleGuard>
   );
 }

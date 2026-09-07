@@ -5,13 +5,11 @@ import { useAsync } from "@/lib/use-async";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/Card";
 import { Avatar } from "@/components/ui/Avatar";
-import { Badge } from "@/components/ui/Badge";
 import { formatDate, formatTime } from "@/lib/utils";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
-export default function MentorStudentsPage() {
+function MentorStudentsContent() {
   const students = useAsync(() => api.myStudents(), []);
-
-  const pendingFeedback = (students.data ?? []).length; // placeholder metric — see note below
 
   return (
     <div className="flex flex-col gap-lg">
@@ -97,5 +95,13 @@ export default function MentorStudentsPage() {
         )}
       </Card>
     </div>
+  );
+}
+
+export default function MentorStudentsPage() {
+  return (
+    <RoleGuard allow={["mentor"]}>
+      <MentorStudentsContent />
+    </RoleGuard>
   );
 }

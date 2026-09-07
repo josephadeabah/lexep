@@ -9,8 +9,9 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { cn } from "@/lib/utils";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
-export default function MentorPackagesPage() {
+function MentorPackagesContent() {
   const packages = useAsync(() => api.myPackages(), []);
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
@@ -63,7 +64,7 @@ export default function MentorPackagesPage() {
           <Input label="Title" placeholder="e.g. Portfolio Review" value={title} onChange={(e) => setTitle(e.target.value)} />
           <Textarea label="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
           <div className="grid gap-md sm:grid-cols-3">
-            <Input label="Price (USD)" value={price} onChange={(e) => setPrice(e.target.value)} />
+            <Input label="Price (GHS)" value={price} onChange={(e) => setPrice(e.target.value)} />
             <Input label="Duration (mins)" value={duration} onChange={(e) => setDuration(e.target.value)} />
             <Input label="Sessions" value={sessions} onChange={(e) => setSessions(e.target.value)} />
           </div>
@@ -132,5 +133,13 @@ export default function MentorPackagesPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function MentorPackagesPage() {
+  return (
+    <RoleGuard allow={["mentor"]}>
+      <MentorPackagesContent />
+    </RoleGuard>
   );
 }

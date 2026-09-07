@@ -11,10 +11,11 @@ import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { api } from "@/lib/api";
+import { RoleGuard } from "@/components/layout/RoleGuard";
 
 const STEPS = ["Basic Info", "Details", "Documents"];
 
-export default function GrantApplicationPage() {
+function GrantApplicationContent() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,9 +87,9 @@ export default function GrantApplicationPage() {
             <h2 className="text-headline-md text-on-background">Funding Request</h2>
             <div className="grid gap-md sm:grid-cols-2">
               <Input
-                label="Amount Requested (USD)"
+                label="Amount Requested (GHS)"
                 placeholder="e.g. 1500"
-                icon={<span className="text-body-md">$</span>}
+                icon={<span className="text-body-md">₵</span>}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
@@ -166,5 +167,13 @@ export default function GrantApplicationPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function GrantApplicationPage() {
+  return (
+    <RoleGuard allow={["learner"]}>
+      <GrantApplicationContent />
+    </RoleGuard>
   );
 }
